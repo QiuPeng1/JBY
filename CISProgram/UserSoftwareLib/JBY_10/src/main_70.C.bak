@@ -88,7 +88,7 @@ int main(void)
 	/*端口配置及
 	初始化*/
 	MainInit();
-	delay_DelayMs(10);
+	
 
 	#ifdef USE_IWDG
 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);		
