@@ -111,20 +111,20 @@ enum
 	FS_OFF,
 };
 u8 g_colorFsRGB = FS_OFF;
-#define R_FS_GPIO_PORT              GPIOA
-#define R_FS_GPIO_PIN               GPIO_Pin_3
+#define R_FS_GPIO_PORT              GPIOB
+#define R_FS_GPIO_PIN               GPIO_Pin_12
 #define R_FS_GPIO_MODE              GPIO_Mode_Out_PP
 #define redFs_Off() GPIO_ResetBits(R_FS_GPIO_PORT, R_FS_GPIO_PIN)
 #define redFs_On() GPIO_SetBits(R_FS_GPIO_PORT, R_FS_GPIO_PIN);g_colorFsRGB = FS_RED
 
-#define G_FS_GPIO_PORT              GPIOA
-#define G_FS_GPIO_PIN               GPIO_Pin_1
+#define G_FS_GPIO_PORT              GPIOB
+#define G_FS_GPIO_PIN               GPIO_Pin_13
 #define G_FS_GPIO_MODE              GPIO_Mode_Out_PP
 #define greenFs_Off() GPIO_ResetBits(G_FS_GPIO_PORT, G_FS_GPIO_PIN)
 #define greenFs_On() GPIO_SetBits(G_FS_GPIO_PORT, G_FS_GPIO_PIN);g_colorFsRGB = FS_GREEN
 
-#define B_FS_GPIO_PORT              GPIOA
-#define B_FS_GPIO_PIN               GPIO_Pin_2
+#define B_FS_GPIO_PORT              GPIOB
+#define B_FS_GPIO_PIN               GPIO_Pin_14
 #define B_FS_GPIO_MODE              GPIO_Mode_Out_PP
 #define blueFs_Off() GPIO_ResetBits(B_FS_GPIO_PORT, B_FS_GPIO_PIN)
 #define blueFs_On() GPIO_SetBits(B_FS_GPIO_PORT, B_FS_GPIO_PIN);g_colorFsRGB = FS_BLUE
@@ -171,15 +171,15 @@ u8 g_colorFsStopWork = 0;
 位置8	PS8	PE11
 */
 
-#define PS1_GPIO_PORT       GPIOB
-#define PS1_GPIO_PIN        GPIO_Pin_12
-#define PS1_GPIO_MODE       GPIO_Mode_IN_FLOATING
-#define ps1_HaveNote()  (!GPIO_ReadInputDataBit(PS1_GPIO_PORT, PS1_GPIO_PIN))
+//#define PS1_GPIO_PORT       GPIOB
+//#define PS1_GPIO_PIN        GPIO_Pin_12
+//#define PS1_GPIO_MODE       GPIO_Mode_IN_FLOATING
+//#define ps1_HaveNote()  (!GPIO_ReadInputDataBit(PS1_GPIO_PORT, PS1_GPIO_PIN))
 
-#define PS2_GPIO_PORT       GPIOB
-#define PS2_GPIO_PIN        GPIO_Pin_13
-#define PS2_GPIO_MODE       GPIO_Mode_IN_FLOATING
-#define ps2_HaveNote()  (!GPIO_ReadInputDataBit(PS2_GPIO_PORT, PS2_GPIO_PIN))
+//#define PS2_GPIO_PORT       GPIOB
+//#define PS2_GPIO_PIN        GPIO_Pin_13
+//#define PS2_GPIO_MODE       GPIO_Mode_IN_FLOATING
+//#define ps2_HaveNote()  (!GPIO_ReadInputDataBit(PS2_GPIO_PORT, PS2_GPIO_PIN))
 
 // #define PS1_GPIO_PORT       GPIOC
 // #define PS1_GPIO_PIN        GPIO_Pin_12
@@ -301,9 +301,9 @@ u8 fbInUse = 0;
 
 DMA_InitTypeDef DMA_InitStructure;
 #define ADC1_DR_ADDRESS    ((uint32_t)0x4001244C)
-volatile u32 adcResult[3];
-u8 adData[6];
-#define CHANNELS_PER_DMA_GROUP 3
+volatile u32 adcResult[5];
+u8 adData[10];
+#define CHANNELS_PER_DMA_GROUP 5
 
 
 u8 irValue[REAL_IR_NUM];//测长红外灯
@@ -311,6 +311,7 @@ u8 mrValue[2];//磁头通道
 u8 colorRGB[4][3];//4个颜色通道 RGB值
 u8 UvValue;
 u8 enteranceSensorVal;
+u8 tdjsValue[2];
 u8 enteranceSensorValall[200];
 
 u8 IRlengthBuffer[8192];

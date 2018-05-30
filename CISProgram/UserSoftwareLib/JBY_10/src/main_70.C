@@ -1401,86 +1401,6 @@ void DispSensorViewMenu(void)
 {
 	u8 i,j,k;
 	u8 u8Temp;
-	
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置1:",6);
-// 	i += 6;
-// 	u8Temp = ps1_HaveNote();
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,0);
-// 	
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置2:",6);
-// 	i += 6;
-// 	u8Temp = ps2_HaveNote();
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,0);	
-// 	
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置3:",6);
-// 	i += 6;
-// 	u8Temp = ps3_HaveNote();
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,0);
-// 	
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置4:",6);
-// 	i += 6;
-// 	u8Temp = ps4_HaveNote();
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,0);
-// 	
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置5:",6);
-// 	i += 6;
-// 	u8Temp = psValue[0];
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,0);
-// 	
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置6:",6);
-// 	i += 6;
-// 	u8Temp = psValue[1];
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,0);
-// 	
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置7:",6);
-// 	i += 6;
-// 	u8Temp = ps7_HaveNote();
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,0);
-
-// 	i = 0;
-// 	memcpy(dispStr+i,"位置8:",6);
-// 	i += 6;
-// 	u8Temp = ps8_HaveNote();
-// 	U8ToStr(u8Temp,dispStr+i);
-// 	i += 3;
-// 	dispStr[i++] = ' ';
-// 	dispStr[i++] = '\0';
-// 	DispString(dispStr,1);
 
 	i = 0;
 	memcpy(dispStr+i,"测长:",5);
@@ -1629,20 +1549,18 @@ void DispSensorViewMenu(void)
 	dispStr[i++] = '\0';
 	DispString(dispStr,1);
 	
-	//PS1 PS2
+//	//PS1 PS2
 	i = 0;
 	memcpy(dispStr+i,"PS:",3);
 	i += 3;
-	u8Temp = ps1_HaveNote();
-	U8ToStr(u8Temp,dispStr+i);
+	U8ToStr(tdjsValue[0],dispStr+i);
 	i += 3;
 	dispStr[i++] = ' ';
 	dispStr[i++] = '\0';
 	DispString(dispStr,0);
 	
 	i = 0;
-	u8Temp = ps2_HaveNote();
-	U8ToStr(u8Temp,dispStr+i);
+	U8ToStr(tdjsValue[1],dispStr+i);
 	i += 3;
 	dispStr[i++] = ' ';
 	dispStr[i++] = '\0';
@@ -2621,11 +2539,11 @@ void adc_init(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_4;
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AIN; 
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_5;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5;
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AIN; 
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 	
@@ -2659,9 +2577,11 @@ IR1-7	PC1	ADC11	4051七选1
 IR15-21	PC3	ADC13	4051七选1	
 HOPPER	PC5	ADC15	不选
 */
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_15, 1, ADC_SampleTime_7Cycles5);//填充
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_7Cycles5);//MG-RGB
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 3, ADC_SampleTime_7Cycles5);//IR8-14
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_7Cycles5);//UV
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 2, ADC_SampleTime_7Cycles5);//RGB
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 3, ADC_SampleTime_7Cycles5);//MGR
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 4, ADC_SampleTime_7Cycles5);//IR8-14
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 5, ADC_SampleTime_7Cycles5);//MGL
 
 	/* Enable ADC1 DMA */
 	
@@ -2676,9 +2596,12 @@ HOPPER	PC5	ADC15	不选
 	ADC_Init(ADC2, &ADC_InitStructure);
 	/* ADC2 regular channels configuration */ 
 
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_11, 1, ADC_SampleTime_7Cycles5);//IR1-7
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_13, 2, ADC_SampleTime_7Cycles5);//IR15-21
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_15, 3, ADC_SampleTime_7Cycles5);//HOPPER
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_1, 1, ADC_SampleTime_7Cycles5);//TDJS2
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_2, 2, ADC_SampleTime_7Cycles5);//TDJS1
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_11, 3, ADC_SampleTime_7Cycles5);//IR1-7
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_13, 4, ADC_SampleTime_7Cycles5);//IR15-21
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_15, 5, ADC_SampleTime_7Cycles5);//HOPPER
+	
 	
 	/* Enable ADC2 external trigger conversion */
 	ADC_ExternalTrigConvCmd(ADC2, ENABLE);
@@ -2728,46 +2651,39 @@ void SampleOneRow(void)
 		}
 	/*
 	ADC1
-	PC0		填充									adData[0]
-	MG-RGB	PA4	ADC4	4051六选1 adData[2]
-	IR8-14	PC2	ADC12	4051七选1 adData[4]
+	UV		  PA0	ADC0						adData[0]
+	RGB	    PA4	ADC4	4051 4选1 adData[2]
+	MGR	    PC0	ADC10	          adData[4]
+	IR8-14	PC2	ADC12	4051 7选1 adData[6]
+	MGL	    PC4	ADC14	          adData[8]
+	
 
 	ADC2 
-	IR1-7	PC1	ADC11	4051七选1		adData[1]
-	IR15-21	PC3	ADC13	4051七选1	adData[3]
-	HOPPER	PC5	ADC15	不选			adData[5]
+	TDJS2 	PA1	ADC1 	不选			  adData[1]
+	TDJS1 	PA2	ADC2	不选			  adData[3]
+	IR1-7 	PC1	ADC11	4051七选1		adData[5]
+	IR15-21	PC3	ADC13	4051七选1	  adData[7]
+	HOPPER	PC5	ADC15	不选			  adData[9]
 	*/
 	
-// 	irValue[0] = adData[0];
-// 	irValue[1] = adData[1];
-// 	irValue[2] = adData[2];
-// 	irValue[3] = adData[3];
-// 	irValue[4] = adData[4];
-// 	irValue[5] = adData[5];
-// 	
-// 	mrValue[0] = adData[10];//MT
-// 	mrValue[1] = adData[6];
-// 	mrValue[2] = adData[7];
-// 	mrValue[3] = adData[8];
-// 	mrValue[4] = adData[9];
-// 	uvValue[0] = adData[11];
-// 	psValue[0] = adData[12];//PS5
-// 	psValue[1] = adData[13];//PS6
 // 	//enteranceSensorVal = adData[8];
-		enteranceSensorVal = adData[5];
+		enteranceSensorVal = adData[9];
+		tdjsValue[0] = adData[3];
+		tdjsValue[1] = adData[1];
+		UvValue = adData[0];
+		mrValue[0] = adData[4];
+		mrValue[1] = adData[8];
 		switch(chanelIndexOf4051)
 		{
 			case 0:
 				irValue[0] = adData[1];
 				irValue[7] = adData[4];
 				irValue[14] = adData[3];
-				mrValue[0] = adData[2];
 				break;
 			case 1:
 				irValue[1] = adData[1];
 				irValue[8] = adData[4];
 				irValue[15] = adData[3];
-				mrValue[1] = adData[2];
 				break;
 			case 2:
 				irValue[2] = adData[1];
@@ -2841,7 +2757,6 @@ void SampleOneRow(void)
 				irValue[6] = adData[1];
 				irValue[13] = adData[4];
 				irValue[20] = adData[3];
-				UvValue = adData[2];
 				break;
 		}
 		chanelIndexOf4051 ++;
@@ -3055,13 +2970,13 @@ void InitGpioInMain(void)
 	GPIO_Init(C_GPIO_PORT, &GPIO_InitStructure);		
 	set4051Chanel(0);
 	//红外对管
- 	GPIO_InitStructure.GPIO_Pin = PS1_GPIO_PIN;
- 	GPIO_InitStructure.GPIO_Mode = PS1_GPIO_MODE; 
- 	GPIO_Init(PS1_GPIO_PORT, &GPIO_InitStructure);
- 	
- 	GPIO_InitStructure.GPIO_Pin = PS2_GPIO_PIN;
- 	GPIO_InitStructure.GPIO_Mode = PS2_GPIO_MODE; 
- 	GPIO_Init(PS2_GPIO_PORT, &GPIO_InitStructure);
+// 	GPIO_InitStructure.GPIO_Pin = PS1_GPIO_PIN;
+// 	GPIO_InitStructure.GPIO_Mode = PS1_GPIO_MODE; 
+// 	GPIO_Init(PS1_GPIO_PORT, &GPIO_InitStructure);
+// 	
+// 	GPIO_InitStructure.GPIO_Pin = PS2_GPIO_PIN;
+// 	GPIO_InitStructure.GPIO_Mode = PS2_GPIO_MODE; 
+// 	GPIO_Init(PS2_GPIO_PORT, &GPIO_InitStructure);
 	
 	GPIO_InitStructure.GPIO_Pin = KEY0_GPIO_PIN;
 	GPIO_InitStructure.GPIO_Mode  = KEY0_GPIO_MODE; 
@@ -3841,20 +3756,41 @@ void DMA1_Channel1_IRQHandler(void)
 			adData[i*2+1] = (u8)(adcResult[i] >> 24);//高16位	ADC2 奇数通道
 		}
 
-		enteranceSensorVal = adData[5];
+		/*
+	ADC1
+	UV		  PA0	ADC0						adData[0]
+	RGB	    PA4	ADC4	4051 4选1 adData[2]
+	MGR	    PC0	ADC10	          adData[4]
+	IR8-14	PC2	ADC12	4051 7选1 adData[6]
+	MGL	    PC4	ADC14	          adData[8]
+	
+
+	ADC2 
+	TDJS2 	PA1	ADC1 	不选			  adData[1]
+	TDJS1 	PA2	ADC2	不选			  adData[3]
+	IR1-7 	PC1	ADC11	4051七选1		adData[5]
+	IR15-21	PC3	ADC13	4051七选1	  adData[7]
+	HOPPER	PC5	ADC15	不选			  adData[9]
+	*/
+	
+// 	//enteranceSensorVal = adData[8];
+		enteranceSensorVal = adData[9];
+		tdjsValue[0] = adData[3];
+		tdjsValue[1] = adData[1];
+		UvValue = adData[0];
+		mrValue[0] = adData[4];
+		mrValue[1] = adData[8];
 		switch(chanelIndexOf4051)
 		{
 			case 0:
 				irValue[0] = adData[1];
 				irValue[7] = adData[4];
 				irValue[14] = adData[3];
-				mrValue[0] = adData[2];
 				break;
 			case 1:
 				irValue[1] = adData[1];
 				irValue[8] = adData[4];
 				irValue[15] = adData[3];
-				mrValue[1] = adData[2];
 				break;
 			case 2:
 				irValue[2] = adData[1];
@@ -3928,7 +3864,6 @@ void DMA1_Channel1_IRQHandler(void)
 				irValue[6] = adData[1];
 				irValue[13] = adData[4];
 				irValue[20] = adData[3];
-				UvValue = adData[2];
 				break;
 		}
 		chanelIndexOf4051 ++;
