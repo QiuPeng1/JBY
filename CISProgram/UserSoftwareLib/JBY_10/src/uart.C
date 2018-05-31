@@ -59,47 +59,47 @@ void uart_Init
 	gb_needDealUart1Data = FALSE;
 	uart1DelayTimer = 0;
 	
-// 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+ 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 
-// 	//UART3 管脚配置：时钟、模式	
-// 	
-// 	GPIO_InitStructure.GPIO_Pin = UART3_RXD_GPIO_PIN;
-// 	GPIO_InitStructure.GPIO_Mode = UART3_RXD_GPIO_MODE; 
-// 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;	
-// 	GPIO_Init(UART3_RXD_GPIO_PORT, &GPIO_InitStructure);
+ 	//UART3 管脚配置：时钟、模式	
+ 	
+ 	GPIO_InitStructure.GPIO_Pin = UART3_RXD_GPIO_PIN;
+ 	GPIO_InitStructure.GPIO_Mode = UART3_RXD_GPIO_MODE; 
+ 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;	
+ 	GPIO_Init(UART3_RXD_GPIO_PORT, &GPIO_InitStructure);
 
-// 	GPIO_InitStructure.GPIO_Pin = UART3_TXD_GPIO_PIN;
-// 	GPIO_InitStructure.GPIO_Mode = UART3_TXD_GPIO_MODE; 
-// 	GPIO_Init(UART3_TXD_GPIO_PORT, &GPIO_InitStructure);
-// 	
-// 	USART_InitStructure.USART_BaudRate = 38400;
-// 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-// 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
-// 	USART_InitStructure.USART_Parity = USART_Parity_No;
-// 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-// 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-// 	
-// 	USART_Init(USART3, &USART_InitStructure);	
+ 	GPIO_InitStructure.GPIO_Pin = UART3_TXD_GPIO_PIN;
+ 	GPIO_InitStructure.GPIO_Mode = UART3_TXD_GPIO_MODE; 
+ 	GPIO_Init(UART3_TXD_GPIO_PORT, &GPIO_InitStructure);
+ 	
+ 	USART_InitStructure.USART_BaudRate = 115200;
+ 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+ 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+ 	USART_InitStructure.USART_Parity = USART_Parity_No;
+ 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+ 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+ 	
+ 	USART_Init(USART3, &USART_InitStructure);	
 
 
-// 	//配置nvic向量表
-// 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-// 	
-// 	/* Enable the USARTy Interrupt */
-// 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-// 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-// 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
-// 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-// 	NVIC_Init(&NVIC_InitStructure);	
+ 	//配置nvic向量表
+ 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+ 	
+ 	/* Enable the USARTy Interrupt */
+ 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+ 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+ 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+ 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 	NVIC_Init(&NVIC_InitStructure);	
 
-// 	/* Enable USART3 Receive and Transmit interrupts */
-// 	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
-// 	USART_ITConfig(USART3, USART_IT_TXE, DISABLE);		//一开始就是要关闭
+ 	/* Enable USART3 Receive and Transmit interrupts */
+ 	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
+ 	USART_ITConfig(USART3, USART_IT_TXE, DISABLE);		//一开始就是要关闭
 
-// 	/* Enable USART */
-// 	USART_Cmd(USART3, ENABLE);	
+ 	/* Enable USART */
+ 	USART_Cmd(USART3, ENABLE);	
 
-// 	gb_needDealUart3Data = 0;
+ 	gb_needDealUart3Data = 0;
 }
 
 //---------------------------------------------------------------------

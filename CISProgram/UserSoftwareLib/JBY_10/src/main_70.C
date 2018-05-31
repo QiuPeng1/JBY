@@ -239,7 +239,7 @@ int main(void)
 		
 		DealNotePass();
 		
-		DealPackageFromUart1();
+		DealPackageFromUart3();
 		
 	//	ScanKeyDown();
 		
@@ -333,20 +333,20 @@ void ScanKeyDown(void)
 }
 
 
-void DealPackageFromUart1(void)
+void DealPackageFromUart3(void)
 {
 	u8 cmd;
 	u8 i;
-	//处理usart1的数据包
-	if(gb_needDealUart1Data == 1)
+	//处理usart3的数据包
+	if(gb_needDealUart3Data == 1)
 	{
-		if (uart1infifo_count == 0)
+		if (uart3infifo_count == 0)
 		{
-			gb_needDealUart1Data = 0;
+			gb_needDealUart3Data = 0;
 		}
 		else
 		{	
-			cmd = uart1infifo_DataOut();//命令
+			cmd = uart3infifo_DataOut();//命令
 			if(gb_uartWorkMode == DEBUG_MODE)
 			{
 				switch (cmd)
@@ -578,8 +578,8 @@ void DealScanEnteracneSensor(void)
 				motor1_ForwardRun();
 				noteState |= STATE_FORWARD_COVER_ENTERANCE;
 				g_maxMpFromEnteranceToLength = MP_FROM_ENTERANCE_TO_LENGTH;
-				uvfs_On();
-				gb_uvNeedStartSampleCnt = 20;
+				gb_startRGBSample = 1;
+				gb_FristInPS2 = 1;
 				tempMgDataLen = 0;
 			}
 		}
@@ -590,7 +590,45 @@ void DealScanEnteracneSensor(void)
 				noteState &= (~STATE_BACKWARD_COVER_ENTERANCE);
 			}
 		}
+		if(gb_haveNoteInPS1 == 1)
+		{
+			if(((noteState&STATE_FORWARD_COVER_ENTERANCE)>0)&&(gb_startRGBSample == 1))//开始RGB采集
+			{
+				gb_startRGBSample = 0;
+				gb_colorSampleStart = 2;
+				gb_endRGBSample = 1;
+			}
+		}
+		else
+		{
+			if(((noteState&STATE_FORWARD_COVER_LENGTH)>0)&&(gb_endRGBSample == 1))//结束RGB采集
+			{
+				gb_startRGBSample = 0;
+				gb_colorSampleEnd = 2;
+				gb_endRGBSample = 0;
+			}		
+		}
+		
+		if(gb_haveNoteInPS2 == 1)
+		{
+			if(((noteState&STATE_FORWARD_COVER_LENGTH)>0)&&(gb_FristInPS2 == 1))//进入PS2
+			{
+				gb_FristInPS2 = 0;
+				gb_FristOutPS2 = 1;
+			}
+		}
+		else
+		{
+			if(((noteState&STATE_FORWARD_COVER_LENGTH)>0)&&(gb_FristOutPS2 == 1))//离开PS2
+			{
+				gb_FristOutPS2 = 0;
+				gb_oneNotePass = 1;	
+				noteState |= STATE_COMPUTE;	
+				noteState &= (~STATE_FORWARD_COVER_LENGTH);
+			}		
+		}
 	}
+	
 /*	
 	{
 	//如果手动模式，就检测有无按下复位键
@@ -1387,12 +1425,12 @@ void DispString(u8 *str,u8 enter)
 		return;
 	}
 	len = strlen(str);	
-	uart_SendDataToUart1(str,len);
+	uart_SendDataToUart3(str,len);
 	if(enter > 0)
 	{
 		buf[0] = 0x0d;
 		buf[1] = 0x0a;
-		uart_SendDataToUart1(buf,2);
+		uart_SendDataToUart3(buf,2);
 	}
 }
 
@@ -3335,7 +3373,7 @@ void SysTick_Handler(void)
 // 		}
 // 	}
 	//ScanKeyDown();
-	
+
 	if((gb_enableSample == 1)&&(systemState != SENSOR_VIEW))
 	{
 		//检测进钞接收
@@ -3354,6 +3392,28 @@ void SysTick_Handler(void)
 				if (entergatePulseNumCounter > 0)
 				{
 					entergatePulseNumCounter --;
+				}
+			}
+			if((tdjsValue[0] < TONGDAO_HAVENOTE_THRES))
+			{
+				ps1PulseNumCounter ++;
+			}
+			else
+			{
+				if (ps1PulseNumCounter > 0)
+				{
+					ps1PulseNumCounter --;
+				}
+			}
+			if((tdjsValue[1] < TONGDAO_HAVENOTE_THRES))
+			{
+				ps2PulseNumCounter ++;
+			}
+			else
+			{
+				if (ps2PulseNumCounter > 0)
+				{
+					ps2PulseNumCounter --;
 				}
 			}
 		}
@@ -3387,7 +3447,6 @@ void SysTick_Handler(void)
 			if(scanEntergateTimer >= SCAN_ENTERGATE_TIME)
 			{
 				scanEntergateTimer = 0;
-				
 				//进钞编码统计
 				if (entergatePulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
 				{
@@ -3400,7 +3459,31 @@ void SysTick_Handler(void)
 					//noMoneyOnEntergateCounter = 5;
 				}
 				entergatePulseNumCounter = 0;		
-			}
+				//PS1编码统计
+				if (ps1PulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
+				{
+					gb_haveNoteInPS1 = 1;
+					//noMoneyOnEntergateCounter = 0;
+				}
+				else
+				{
+					gb_haveNoteInPS1 = 0;
+					//noMoneyOnEntergateCounter = 5;
+				}
+				ps1PulseNumCounter = 0;	
+				//PS2编码统计
+				if (ps2PulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
+				{
+					gb_haveNoteInPS2 = 1;
+					//noMoneyOnEntergateCounter = 0;
+				}
+				else
+				{
+					gb_haveNoteInPS2 = 0;
+					//noMoneyOnEntergateCounter = 5;
+				}
+				ps2PulseNumCounter = 0;	
+			}	
 		}
 	}
 	
@@ -3445,30 +3528,30 @@ void USART1_IRQHandler(void)
 	}
 }
 
-// void USART3_IRQHandler(void)
-// {
-// 	if (USART_GetFlagStatus(USART3, USART_FLAG_RXNE))
-// 	{
-// 		/* Read one byte from the receive data register */
-// 		uart3infifo_DataIn(USART_ReceiveData(USART3));	//自动清除RXNE标志
-// // 		uart3DelayTimer = UART1_DATA_DELAY;
-// // 		gb_needDealUart3Data = 1;
+ void USART3_IRQHandler(void)
+ {
+ 	if (USART_GetFlagStatus(USART3, USART_FLAG_RXNE))
+ 	{
+ 		/* Read one byte from the receive data register */
+ 		uart3infifo_DataIn(USART_ReceiveData(USART3));	//自动清除RXNE标志
+ // 		uart3DelayTimer = UART1_DATA_DELAY;
+  	gb_needDealUart3Data = 1;
 
-// 	}
-// 	else if (USART_GetFlagStatus(USART3, USART_FLAG_TXE))
-// 	{		
-// 		if (uart3outfifo_count > 0)
-// 		{
-// 			/* Write one byte to the transmit data register */
-// 			USART_SendData(USART3, uart3outfifo_DataOut());	//顺便清除flag_TXE
-// 		}				
-// 		else
-// 		{
-// 		  /* Disable the USARTy Transmit interrupt */
-// 		  USART_ITConfig(USART3, USART_IT_TXE, DISABLE);		//实际上，发送为空的标志还在，只是关闭中断
-// 		}    
-// 	}
-// }
+ 	}
+ 	else if (USART_GetFlagStatus(USART3, USART_FLAG_TXE))
+ 	{		
+ 		if (uart3outfifo_count > 0)
+ 		{
+ 			/* Write one byte to the transmit data register */
+ 			USART_SendData(USART3, uart3outfifo_DataOut());	//顺便清除flag_TXE
+ 		}				
+ 		else
+ 		{
+ 		  /* Disable the USARTy Transmit interrupt */
+ 		  USART_ITConfig(USART3, USART_IT_TXE, DISABLE);		//实际上，发送为空的标志还在，只是关闭中断
+ 		}    
+ 	}
+ }
 
 
 //50us定时器
@@ -3567,19 +3650,19 @@ void DealLengthIrINT(void)
 				noteState |= STATE_FORWARD_COVER_LENGTH;
 				noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
 
+				gb_uvNeedStartSampleCnt = 4;
+				
 				g_lengthSampleIndex = 0;
 				g_lengthIrMpNum = 0;	
 				lengthMpCnt = 0;
-				//memset(lengthData[21],0,IR_DATA_MAX_LEN);
 				
 				g_mgSampleIndex = 0;
-				for(i = 0;i < 2;i++)//空闲的磁性拷贝过来
-				{
-					memcpy(mgData[i],lastMgData[i]+lastMgDataIndex,LAST_MG_DATA_MAX-lastMgDataIndex);
-					memcpy(mgData[i]+LAST_MG_DATA_MAX-lastMgDataIndex,lastMgData[i],lastMgDataIndex);
-				}
-				g_mgSampleIndex += LAST_MG_DATA_MAX;
-				g_colorSampleIndex = 0;
+//				for(i = 0;i < 2;i++)//空闲的磁性拷贝过来
+//				{
+//					memcpy(mgData[i],lastMgData[i]+lastMgDataIndex,LAST_MG_DATA_MAX-lastMgDataIndex);
+//					memcpy(mgData[i]+LAST_MG_DATA_MAX-lastMgDataIndex,lastMgData[i],lastMgDataIndex);
+//				}
+//				g_mgSampleIndex += LAST_MG_DATA_MAX;
 			}
 		}
 	}
@@ -3587,14 +3670,14 @@ void DealLengthIrINT(void)
 	{
 		if((lengthFlag&0x0f) == 0x00)//离开f1
 		{
-			gb_uvNeedStartSampleflag = 0;
+			gb_uvNeedEndSampleCnt = 6;
 			gb_lengthHaveNote = 0;
 			if(g_motor1State == MOTOR_FORWARD_RUN)
 			{
 				lengthDataLen = g_lengthSampleIndex;
-				gb_oneNotePass = 1;	
-				noteState |= STATE_COMPUTE;	
-				noteState &= (~STATE_FORWARD_COVER_LENGTH);
+//				gb_oneNotePass = 1;	
+//				noteState |= STATE_COMPUTE;	
+//				noteState &= (~STATE_FORWARD_COVER_LENGTH);
 			}
 			else if(g_motor1State == MOTOR_BACKWARD_RUN)
 			{
@@ -3638,7 +3721,7 @@ void DealMgSampleINT(void)
 				tempMgDataLen ++;
 		}
 
-		if(gb_lengthHaveNote == 1)
+		if(gb_uvNeedStartSampleflag == 1)
 		{
 			if(g_mgSampleIndex < MG_DATA_MAX_LEN)
 			{
@@ -3678,7 +3761,7 @@ void DealColorSampleINT(void)
 {
 	if(g_motor1State == MOTOR_FORWARD_RUN)
 	{
-		if(gb_lengthHaveNote == 1)
+		if(gb_colorSampleEnable == 1)
 		{
 			if(g_colorSampleIndex < COLOR_DATA_MAX_LEN)
 			{
@@ -4114,7 +4197,23 @@ void EXTI9_5_IRQHandler(void)
 // 			mgData[5][g_mgSampleIndex] = 0xff;
 // 		}
 		
-
+		if(gb_colorSampleStart > 0)
+		{
+			gb_colorSampleStart--;
+			if(gb_colorSampleStart == 0)
+			{
+				gb_colorSampleEnable = 1;
+				g_colorSampleIndex = 0;
+			}
+		}
+		if(gb_colorSampleEnd > 0)
+		{
+			gb_colorSampleEnd--;
+			if(gb_colorSampleEnd == 0)
+			{
+				gb_colorSampleEnable = 0;
+			}
+		}
 		if(g_haveNoNoteCounter > 0)
 		{
 			g_haveNoNoteCounter --;
@@ -4131,6 +4230,14 @@ void EXTI9_5_IRQHandler(void)
 			{
 				g_uvSampleIndex = 0;
 				gb_uvNeedStartSampleflag = 1;
+			}
+		}
+		if(gb_uvNeedEndSampleCnt > 0)
+		{
+			gb_uvNeedEndSampleCnt--;
+			if(gb_uvNeedEndSampleCnt == 0)
+			{
+				gb_uvNeedStartSampleflag = 0;
 			}
 		}
 		if(g_maxMpFromEnteranceToLength > 0)

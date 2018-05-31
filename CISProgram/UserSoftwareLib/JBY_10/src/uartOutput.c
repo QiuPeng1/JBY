@@ -48,7 +48,7 @@ void OutputMgColorDetailData(void)
 			memset(buffer + 2 + 2,0,12);
 		}
 				
-		uart_SendDataToUart1(buffer,ONE_MG_LINE_NUM);
+		uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);
 		while(uart1outfifo_count> 0)
 		{
 		}
@@ -64,7 +64,7 @@ void OutputMgColorDetailData(void)
 	buffer[8] = 0;
 	buffer[9] = 0;
 	buffer[10] = 0;
-	uart_SendDataToUart1(buffer,ONE_MG_LINE_NUM);
+	uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);
 	
 	//·¢ËÍ¸½¼ÓÊä³ö2
 	buffer[2] = 0;
@@ -76,7 +76,7 @@ void OutputMgColorDetailData(void)
 	buffer[8] = 0;//¿Õ
 	buffer[9] = 0;//¿Õ
 	buffer[10] = 0;//¿Õ
-	uart_SendDataToUart1(buffer,ONE_MG_LINE_NUM);	
+	uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);	
 	
 	//·¢ËÍ¸½¼ÓÊä³ö3
 	buffer[2] = 0;
@@ -88,7 +88,7 @@ void OutputMgColorDetailData(void)
 	buffer[8] = 0;//¿Õ
 	buffer[9] = 0;//¿Õ
 	buffer[10] = 0;//¿Õ
-	uart_SendDataToUart1(buffer,ONE_MG_LINE_NUM);	
+	uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);	
 	
 	//·¢ËÍ¸½¼ÓÊä³ö4
 	buffer[2] = 0;
@@ -100,7 +100,7 @@ void OutputMgColorDetailData(void)
 	buffer[8] = 0;//¿Õ
 	buffer[9] = 0;//¿Õ
 	buffer[10] = 0;//¿Õ
-	uart_SendDataToUart1(buffer,ONE_MG_LINE_NUM);	
+	uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);	
 	
 	//·¢ËÍ¸½¼ÓÊä³ö5
 	buffer[2] = 0;
@@ -112,7 +112,7 @@ void OutputMgColorDetailData(void)
 	buffer[8] = 0;//¿Õ
 	buffer[9] = 0;//¿Õ
 	buffer[10] = 0;//¿Õ
-	uart_SendDataToUart1(buffer,ONE_MG_LINE_NUM);	
+	uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);	
 	
 	
 	//6ÐÐÈ«Îª0xffµÄ·Ö¸ô·û
@@ -122,7 +122,7 @@ void OutputMgColorDetailData(void)
 		{
 			buffer[2+j] = 0xff;
 		}
-		uart_SendDataToUart1(buffer,ONE_MG_LINE_NUM);
+		uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);
 
 		//µÈ´ý´®¿Ú·¢ËÍÍê±Ï
 		while(uart1outfifo_count> 0)
@@ -149,7 +149,7 @@ void OutputLengthDetailData(void)
 			buffer[2+j] = lengthData[j][i];
 		}
 		
-		uart_SendDataToUart1(buffer,LENGTH_IR_CHANNEL_NUM+3);
+		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+3);
 
 		//µÈ´ý´®¿Ú·¢ËÍÍê±Ï
 		while(uart1outfifo_count> 0)
@@ -163,7 +163,7 @@ void OutputLengthDetailData(void)
 		{
 			buffer[2+j] = 0xff;
 		}
-		uart_SendDataToUart1(buffer,LENGTH_IR_CHANNEL_NUM+3);
+		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+3);
 
 		//µÈ´ý´®¿Ú·¢ËÍÍê±Ï
 		while(uart1outfifo_count> 0)
@@ -299,7 +299,7 @@ void OutputALLDetailData(void)
 				}
 			}
 		}
-		uart_SendDataToUart1(buffer,LENGTH_IR_CHANNEL_NUM+6);
+		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+6);
 
 		//µÈ´ý´®¿Ú·¢ËÍÍê±Ï
 		while(uart1outfifo_count> 0)
@@ -313,7 +313,7 @@ void OutputALLDetailData(void)
 		{
 			buffer[2+j] = 0xff;
 		}
-		uart_SendDataToUart1(buffer,LENGTH_IR_CHANNEL_NUM+6);
+		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+6);
 
 		//µÈ´ý´®¿Ú·¢ËÍÍê±Ï
 		while(uart1outfifo_count> 0)
@@ -332,5 +332,5 @@ void OutputSensorView(void)
 	buf[4] = irValue[2];
 	buf[5] = irValue[3];
 	buf[6] = 0x55;
-	uart_SendDataToUart1(buf,7);
+	uart_SendDataToUart3(buf,7);
 }

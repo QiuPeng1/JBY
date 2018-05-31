@@ -332,10 +332,24 @@ enum
 	MIN_HAVEMONEY_PULSENUM_COUNT = 30,//进钞口有纸币的最少脉冲数（在扫描间隔期内）
 	ENTERANCE_HAVENOTE_THRES = 120,
 	ENTERANCE_HAVENOTE_CHAZHI = 20,//50
+	TONGDAO_HAVENOTE_THRES = 120,
 };
 u8 entergatePulseNumCounter = 0;			//入钞口的计数器，如果有纸币，就会一直增加
-u8 scanEntergateTimer = 0;
+u8 ps1PulseNumCounter = 0;		    	//PS1的计数器，如果有纸币，就会一直增加
+u8 ps2PulseNumCounter = 0;		    	//PS2的计数器，如果有纸币，就会一直增加
+u8 scanEntergateTimer = 0; 
 u8 gb_haveNoteInEntergate = 0;
+u8 scanPS1Timer = 0; 
+u8 gb_haveNoteInPS1 = 0;
+
+u8 scanPS2Timer = 0; 
+u8 gb_haveNoteInPS2 = 0;
+
+u8 gb_startRGBSample = 0;
+u8 gb_endRGBSample = 0;
+u8 gb_colorSampleStart = 0;
+u8 gb_colorSampleEnd = 0;
+u8 gb_colorSampleEnable = 0;
 // u8 noMoneyOnEntergateCounter = 0;
 // bit gb_noMoneyOnEntergateForAWhile = 0;
 
@@ -583,10 +597,12 @@ u32 g_lengthSampleIndex;
 // u8 gb_needSampleIr = 0;
 u16 g_lengthIrMpNum;
 
-
+u8 gb_FristInPS2 = 0;
+u8 gb_FristOutPS2 = 0;
 // u8 mgData[2][MG_DATA_MAX_LEN]; 
 u8 gb_uvNeedStartSampleflag = 0;
 u8 gb_uvNeedStartSampleCnt = 0;
+u8 gb_uvNeedEndSampleCnt = 0;
 u16 g_uvSampleIndex;
 u16 g_mgSampleIndex;
 u8 gb_needSampleMr = 0;
@@ -898,7 +914,7 @@ void DispParaMenu(void);
 void DispLaoHuaTime(void);
 void InitCountIr(void);
 void dispSelfcheckError(u8 code);
-void DealPackageFromUart1(void);
+void DealPackageFromUart3(void);
 void DispString(u8 *str,u8 enter);
 void DealInMp(void);
 void U16ToStr04(u16 d1, u8 *pStr);
