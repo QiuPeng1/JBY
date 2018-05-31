@@ -592,7 +592,7 @@ void DealScanEnteracneSensor(void)
 		}
 		if(gb_haveNoteInPS1 == 1)
 		{
-			if(((noteState&STATE_FORWARD_COVER_ENTERANCE)>0)&&(gb_startRGBSample == 1))//开始RGB采集
+			if((gb_startRGBSample == 1))//开始RGB采集
 			{
 				gb_startRGBSample = 0;
 				gb_colorSampleStart = 2;
@@ -601,10 +601,10 @@ void DealScanEnteracneSensor(void)
 		}
 		else
 		{
-			if(((noteState&STATE_FORWARD_COVER_LENGTH)>0)&&(gb_endRGBSample == 1))//结束RGB采集
+			if((gb_endRGBSample == 1))//结束RGB采集
 			{
 				gb_startRGBSample = 0;
-				gb_colorSampleEnd = 2;
+				gb_colorSampleEnd = 5;
 				gb_endRGBSample = 0;
 			}		
 		}
@@ -2714,19 +2714,19 @@ void SampleOneRow(void)
 		switch(chanelIndexOf4051)
 		{
 			case 0:
-				irValue[0] = adData[1];
-				irValue[7] = adData[4];
-				irValue[14] = adData[3];
+				irValue[0] = adData[5];
+				irValue[7] = adData[6];
+				irValue[14] = adData[7];
 				break;
 			case 1:
-				irValue[1] = adData[1];
-				irValue[8] = adData[4];
-				irValue[15] = adData[3];
+				irValue[1] = adData[5];
+				irValue[8] = adData[6];
+				irValue[15] = adData[7];
 				break;
 			case 2:
-				irValue[2] = adData[1];
-				irValue[9] = adData[4];
-				irValue[16] = adData[3];
+				irValue[2] = adData[5];
+				irValue[9] = adData[6];
+				irValue[16] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[0][0] = adData[2];
@@ -2741,9 +2741,9 @@ void SampleOneRow(void)
 				}
 				break;
 			case 3:
-				irValue[3] = adData[1];
-				irValue[10] = adData[4];
-				irValue[17] = adData[3];
+				irValue[3] = adData[5];
+				irValue[10] = adData[6];
+				irValue[17] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[1][0] = adData[2];
@@ -2758,9 +2758,9 @@ void SampleOneRow(void)
 				}
 				break;
 			case 4:
-				irValue[4] = adData[1];
-				irValue[11] = adData[4];
-				irValue[18] = adData[3];
+				irValue[4] = adData[5];
+				irValue[11] = adData[6];
+				irValue[18] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[2][0] = adData[2];
@@ -2775,9 +2775,9 @@ void SampleOneRow(void)
 				}
 				break;
 			case 5:
-				irValue[5] = adData[1];
-				irValue[12] = adData[4];
-				irValue[19] = adData[3];
+				irValue[5] = adData[5];
+				irValue[12] = adData[6];
+				irValue[19] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[3][0] = adData[2];
@@ -2792,9 +2792,9 @@ void SampleOneRow(void)
 				}
 				break;
 			case 6:
-				irValue[6] = adData[1];
-				irValue[13] = adData[4];
-				irValue[20] = adData[3];
+				irValue[6] = adData[5];
+				irValue[13] = adData[6];
+				irValue[20] = adData[7];
 				break;
 		}
 		chanelIndexOf4051 ++;
@@ -2852,7 +2852,7 @@ void SetSmpleRatioTimer(u8 spd)
 // 	TIM_TimeBaseStructure.TIM_Prescaler = 180-1;
 // 	TIM_TimeBaseStructure.TIM_Period = 200-1;
 	TIM_TimeBaseStructure.TIM_Prescaler = 180-1;
-	TIM_TimeBaseStructure.TIM_Period = 400-1;//Period-1;
+	TIM_TimeBaseStructure.TIM_Period = 200-1;//Period-1;
 	
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
@@ -3394,7 +3394,7 @@ void SysTick_Handler(void)
 					entergatePulseNumCounter --;
 				}
 			}
-			if((tdjsValue[0] < TONGDAO_HAVENOTE_THRES))
+			if((tdjsValue[1] < TONGDAO_HAVENOTE_THRES))
 			{
 				ps1PulseNumCounter ++;
 			}
@@ -3405,7 +3405,7 @@ void SysTick_Handler(void)
 					ps1PulseNumCounter --;
 				}
 			}
-			if((tdjsValue[1] < TONGDAO_HAVENOTE_THRES))
+			if((tdjsValue[0] < TONGDAO_HAVENOTE_THRES))
 			{
 				ps2PulseNumCounter ++;
 			}
@@ -3866,19 +3866,19 @@ void DMA1_Channel1_IRQHandler(void)
 		switch(chanelIndexOf4051)
 		{
 			case 0:
-				irValue[0] = adData[1];
-				irValue[7] = adData[4];
-				irValue[14] = adData[3];
+				irValue[0] = adData[5];
+				irValue[7] = adData[6];
+				irValue[14] = adData[7];
 				break;
 			case 1:
-				irValue[1] = adData[1];
-				irValue[8] = adData[4];
-				irValue[15] = adData[3];
+				irValue[1] = adData[5];
+				irValue[8] = adData[6];
+				irValue[15] = adData[7];
 				break;
 			case 2:
-				irValue[2] = adData[1];
-				irValue[9] = adData[4];
-				irValue[16] = adData[3];
+				irValue[2] = adData[5];
+				irValue[9] = adData[6];
+				irValue[16] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[0][0] = adData[2];
@@ -3893,9 +3893,9 @@ void DMA1_Channel1_IRQHandler(void)
 				}
 				break;
 			case 3:
-				irValue[3] = adData[1];
-				irValue[10] = adData[4];
-				irValue[17] = adData[3];
+				irValue[3] = adData[5];
+				irValue[10] = adData[6];
+				irValue[17] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[1][0] = adData[2];
@@ -3910,9 +3910,9 @@ void DMA1_Channel1_IRQHandler(void)
 				}
 				break;
 			case 4:
-				irValue[4] = adData[1];
-				irValue[11] = adData[4];
-				irValue[18] = adData[3];
+				irValue[4] = adData[5];
+				irValue[11] = adData[6];
+				irValue[18] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[2][0] = adData[2];
@@ -3927,9 +3927,9 @@ void DMA1_Channel1_IRQHandler(void)
 				}
 				break;
 			case 5:
-				irValue[5] = adData[1];
-				irValue[12] = adData[4];
-				irValue[19] = adData[3];
+				irValue[5] = adData[5];
+				irValue[12] = adData[6];
+				irValue[19] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[3][0] = adData[2];
@@ -3944,9 +3944,9 @@ void DMA1_Channel1_IRQHandler(void)
 				}
 				break;
 			case 6:
-				irValue[6] = adData[1];
-				irValue[13] = adData[4];
-				irValue[20] = adData[3];
+				irValue[6] = adData[5];
+				irValue[13] = adData[6];
+				irValue[20] = adData[7];
 				break;
 		}
 		chanelIndexOf4051 ++;

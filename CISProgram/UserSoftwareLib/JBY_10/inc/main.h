@@ -332,7 +332,7 @@ enum
 	MIN_HAVEMONEY_PULSENUM_COUNT = 30,//进钞口有纸币的最少脉冲数（在扫描间隔期内）
 	ENTERANCE_HAVENOTE_THRES = 120,
 	ENTERANCE_HAVENOTE_CHAZHI = 20,//50
-	TONGDAO_HAVENOTE_THRES = 120,
+	TONGDAO_HAVENOTE_THRES = 180,
 };
 u8 entergatePulseNumCounter = 0;			//入钞口的计数器，如果有纸币，就会一直增加
 u8 ps1PulseNumCounter = 0;		    	//PS1的计数器，如果有纸币，就会一直增加
@@ -716,7 +716,7 @@ u8 g_maxMpFromComputeToLength = 0;
 
 #define MP_FROM_MG_TO_LENGTH 50 //15mm 91mp
 
-u8 gb_noteBackLeave = 1;
+u8 gb_noteBackLeave = 0;
 
 u8 gb_needStopMotor = 0;
 // u8 *menuPara[48];
