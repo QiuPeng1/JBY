@@ -1,0 +1,168 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.14.2
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Cortex-M3, qq, LIC=58574-FR7G4-MLVCI-T3M0J-B2KW3-A6LML
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.15.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 2 (build 169)
+Assembler:       Armasm.exe V5.05 update 2 (build 169)
+Linker/Locator:  ArmLink.exe V5.05 update 2 (build 169)
+Library Manager: ArmAr.exe V5.05 update 2 (build 169)
+Hex Converter:   FromElf.exe V5.05 update 2 (build 169)
+CPU DLL:         SARMCM3.DLL V5.15.0
+Dialog DLL:      DCM.DLL V1.13.2.0
+Target DLL:      Segger\JL2CM3.dll V2.99.15.0
+Dialog DLL:      TCM.DLL V1.14.5.0
+ 
+<h2>Project:</h2>
+D:\ProjectFile\JBY\CISProgram\A9\CISA9.uvprojx
+Project File Date:  06/01/2018
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'CISA9'
+compiling main_70.C...
+..\UserSoftwareLib\JBY_10\src\uartOutput.c(11): warning:  #223-D: function "memset" declared implicitly
+        memset(buffer,0,sizeof(buffer));
+..\UserSoftwareLib\JBY_10\src\uartOutput.c(51): warning:  #223-D: function "uart_SendDataToUart3" declared implicitly
+                uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);
+..\UserSoftwareLib\JBY_10\src\uartOutput.c(67): warning:  #223-D: function "uart_SendDataToUart3" declared implicitly
+        uart_SendDataToUart3(buffer,ONE_MG_LINE_NUM);
+..\UserSoftwareLib\JBY_10\src\uartOutput.c(302): warning:  #223-D: function "uart_SendDataToUart3" declared implicitly
+                uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+6);
+..\UserSoftwareLib\JBY_10\src\uartOutput.c(316): warning:  #223-D: function "uart_SendDataToUart3" declared implicitly
+                uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+6);
+..\UserSoftwareLib\JBY_10\src\uartOutput.c(177): warning:  #177-D: variable "maxLen" was declared but never referenced
+        u16 i,maxLen;
+..\UserSoftwareLib\JBY_10\src\uartOutput.c(335): warning:  #223-D: function "uart_SendDataToUart3" declared implicitly
+        uart_SendDataToUart3(buf,7);
+..\UserSoftwareLib\JBY_10\inc\menu.h(401): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\UserSoftwareLib\JBY_10\src\main_70.C(46): warning:  #177-D: variable "i" was declared but never referenced
+        u8 i,k;
+..\UserSoftwareLib\JBY_10\src\main_70.C(46): warning:  #177-D: variable "k" was declared but never referenced
+        u8 i,k;
+..\UserSoftwareLib\JBY_10\src\main_70.C(47): warning:  #177-D: variable "tmpBuf" was declared but never referenced
+        u8 tmpBuf[10];
+..\UserSoftwareLib\JBY_10\src\main_70.C(48): warning:  #177-D: variable "temp" was declared but never referenced
+        u16 temp;
+..\UserSoftwareLib\JBY_10\src\main_70.C(120): warning:  #223-D: function "memcpy" declared implicitly
+        memcpy(lengthIdleOriginValue,savedPara.adjustPara.irIdleStandard,REAL_IR_NUM);
+..\UserSoftwareLib\JBY_10\src\main_70.C(87): warning:  #177-D: variable "buffer" was declared but never referenced
+        u8 buffer[10];
+..\UserSoftwareLib\JBY_10\src\main_70.C(88): warning:  #177-D: variable "d" was declared but never referenced
+        u8 d;
+..\UserSoftwareLib\JBY_10\src\main_70.C(89): warning:  #177-D: variable "j" was declared but never referenced
+        u16 j,k;
+..\UserSoftwareLib\JBY_10\src\main_70.C(89): warning:  #177-D: variable "k" was declared but never referenced
+        u16 j,k;
+..\UserSoftwareLib\JBY_10\src\main_70.C(90): warning:  #177-D: variable "sum" was declared but never referenced
+        u32 sum;
+..\UserSoftwareLib\JBY_10\src\main_70.C(466): warning:  #223-D: function "memcpy" declared implicitly
+                                                memcpy(savedPara.adjustPara.irIdleStandard,irValue,REAL_IR_NUM);
+..\UserSoftwareLib\JBY_10\src\main_70.C(479): warning:  #223-D: function "memset" declared implicitly
+                                                memset(collabrationSum,0,REAL_IR_NUM*4);
+..\UserSoftwareLib\JBY_10\src\main_70.C(612): warning:  #69-D: integer conversion resulted in truncation
+                                g_maxMpFromEnteranceToLength = 
+P_FROM_ENTERANCE_TO_LENGTH;
+..\UserSoftwareLib\JBY_10\src\main_70.C(755): warning:  #177-D: variable "i" was declared but never referenced
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\main_70.C(895): warning:  #223-D: function "strlen" declared implicitly
+                for(j=2; j<strlen(pd); j++)
+..\UserSoftwareLib\JBY_10\src\main_70.C(903): warning:  #223-D: function "memset" declared implicitly
+                                        memset(tempString,'\0',sizeof(tempString));
+..\UserSoftwareLib\JBY_10\src\main_70.C(910): warning:  #223-D: function "memcpy" declared implicitly
+                                                memcpy(pCertainStr,tempString,k+1);
+..\UserSoftwareLib\JBY_10\src\main_70.C(917): warning:  #223-D: function "memset" declared implicitly
+                                        memset(tempString,'\0',sizeof(tempString));
+..\UserSoftwareLib\JBY_10\src\main_70.C(933): warning:  #223-D: function "memcpy" declared implicitly
+                                memcpy(pCertainStr,tempString,k+1);
+..\UserSoftwareLib\JBY_10\src\main_70.C(938): warning:  #940-D: missing return statement at end of non-void function "GetCertainStrFromLongStr"
+  }
+..\UserSoftwareLib\JBY_10\src\main_70.C(867): warning:  #177-D: variable "i" was declared but never referenced
+        u16 i,j;
+..\UserSoftwareLib\JBY_10\src\main_70.C(868): warning:  #177-D: variable "x" was declared but never referenced
+        u16 x,y;
+..\UserSoftwareLib\JBY_10\src\main_70.C(868): warning:  #177-D: variable "y" was declared but never referenced
+        u16 x,y;
+..\UserSoftwareLib\JBY_10\src\main_70.C(1030): warning:  #68-D: integer conversion resulted in a change of sign
+                disp_string(dispStr,CURRENCY_CHINESE_X,CURRENCY_CHINESE_Y);                             
+..\UserSoftwareLib\JBY_10\src\main_70.C(1015): warning:  #550-D: variable "r" was set but never used
+        u8 r;
+..\UserSoftwareLib\JBY_10\src\main_70.C(1036): warning:  #550-D: variable "oneMin" was set but never used
+        u8 oneMin;
+..\UserSoftwareLib\JBY_10\src\main_70.C(1037): warning:  #177-D: variable "u16Tmp" was declared but never referenced
+        u16 u16Tmp;
+..\UserSoftwareLib\JBY_10\src\main_70.C(1133): warning:  #223-D: function "memcpy" declared implicitly
+                memcpy(dispStr+k,DENO_STR[currentNoteType],8);
+..\UserSoftwareLib\JBY_10\src\main_70.C(1140): warning:  #223-D: function "memcpy" declared implicitly
+                memcpy(dispStr+k,DENO_STR[currentNoteType],12);
+..\UserSoftwareLib\JBY_10\src\main_70.C(1279): warning:  #223-D: function "memset" declared implicitly
+                        memset(collabrationSum,0,REAL_IR_NUM*4);
+..\UserSoftwareLib\JBY_10\src\main_70.C(1367): warning:  #177-D: variable "r" was declared but never referenced
+        u8 r;
+..\UserSoftwareLib\JBY_10\src\main_70.C(1459): warning:  #223-D: function "strlen" declared implicitly
+        len = strlen(str);      
+..\UserSoftwareLib\JBY_10\src\main_70.C(1460): warning:  #223-D: function "uart_SendDataToUart3" declared implicitly
+        uart_SendDataToUart3(str,len);
+..\UserSoftwareLib\JBY_10\src\main_70.C(1476): warning:  #223-D: function "memcpy" declared implicitly
+        memcpy(dispStr+i,"?â³?:",5);
+..\UserSoftwareLib\JBY_10\src\main_70.C(1472): warning:  #177-D: variable "k" was declared but never referenced
+        u8 i,j,k;
+..\UserSoftwareLib\JBY_10\src\main_70.C(1677): warning:  #223-D: function "motor1_Break" declared implicitly
+        motor1_Break();
+..\UserSoftwareLib\JBY_10\src\main_70.C(1695): warning:  #223-D: function "motor1_Break" declared implicitly
+        motor1_Break();
+..\UserSoftwareLib\JBY_10\src\main_70.C(1712): warning:  #223-D: function "memset" declared implicitly
+        memset(denoNoteNum,0,24);
+..\UserSoftwareLib\JBY_10\src\main_70.C(1839): warning:  #177-D: variable "key" was declared but never referenced
+        u8 key;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2053): warning:  #177-D: variable "i" was declared but never referenced
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2227): warning:  #188-D: enumerated type mixed with another type
+        systemState = d;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2235): warning:  #223-D: function "memcpy" declared implicitly
+                memcpy(dispStr," E",2);
+..\UserSoftwareLib\JBY_10\src\main_70.C(2261): warning:  #223-D: function "memset" declared implicitly
+        memset(savedPara.adjustPara.irBz40gStandard,0,REAL_IR_NUM*2);
+..\UserSoftwareLib\JBY_10\src\main_70.C(2406): warning:  #550-D: variable "g" was set but never used
+        u16  g;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2503): warning:  #177-D: variable "i" was declared but never referenced
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2701): warning:  #177-D: variable "k" was declared but never referenced
+        u8 i,j,k;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2702): warning:  #177-D: variable "index" was declared but never referenced
+        u8 index;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2703): warning:  #177-D: variable "colorBg" was declared but never referenced
+        u8 colorBg;
+..\UserSoftwareLib\JBY_10\src\main_70.C(2858): warning:  #550-D: variable "Period" was set but never used
+        u16 Period;
+..\UserSoftwareLib\JBY_10\src\main_70.C(3592): warning:  #177-D: variable "i" was declared but never referenced
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\main_70.C(3858): warning:  #177-D: variable "j" was declared but never referenced
+        u8 i,j;
+..\UserSoftwareLib\JBY_10\src\main_70.C(3859): warning:  #177-D: variable "index" was declared but never referenced
+        u8 index;
+..\UserSoftwareLib\JBY_10\src\main_70.C(4202): warning:  #177-D: variable "i" was declared but never referenced
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\main_70.C: 61 warnings, 0 errors
+linking...
+Program Size: Code=41508 RO-data=142784 RW-data=460 ZI-data=48308  
+FromELF: creating hex file...
+After Build - User command #1: fromelf --bin -o "D:\ProjectFile\JBY\CISProgram\A9\obj\JBY.bin" "D:\ProjectFile\JBY\CISProgram\A9\obj\JBY.axf"
+".\obj\JBY.axf" - 0 Error(s), 61 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  D:\ProjectFile\JBY\CISProgram\A9\RTE
+  C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include
+
+<h2>Collection of Component Files used:</h2>
+</pre>
+</body>
+</html>

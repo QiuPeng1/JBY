@@ -1,0 +1,440 @@
+#ifndef __EEPROM_H__
+#define __EEPROM_H__
+#include "user_includes.h"
+/* Private typedef -----------------------------------------------------------*/
+typedef enum {FAILED = 0, PASSED = !FAILED} TestStatus;
+//------------------------------灵敏度参数结构体-------------------------
+//定义码盘结构体
+typedef struct { 
+//------------------------------一些开关信号参数-------------------------------------------------
+	u16 Voice;			/*语音开关,0,1*/
+	u16 FakeCnt;		/*假币计数否,0 1*/
+	u16 LenPersent;		/*张数对比，0，关对比，显示面额，1，开对比*/
+	u16 DispSel;		/*外显示选择，0，电脑通信，1. 3位侧显示+1616外显  2,合计金额侧显示，3，3位侧显示+合计金额外显
+					4.合计外显+合计侧显*/
+	u16 MRSideVol;  	/*斜度纠错，0，不纠错，1，中级纠错，2，高级纠错*/
+	u16 BLTime; 		/*液晶背光关闭时间，时间单位为分钟*/
+	u16 BreakTime; 		/*刹车时间40-100*/
+
+//-------------------------------与机器使用相关的传感器灵敏度设置，不影响抓假------------------------------------------------
+
+	u16 StartVol;		/*启动光耦灵敏度,越小灵敏度越高*/
+	u16 ResetVol;		/*接钞光耦灵敏度,越小灵敏度越高*/
+	u16 IRCntVol;		/*计数管门槛,幅面变大调大*/
+	u16 HoleTime;		/*单计数管补漏时间。*/
+
+//---------------------------------与抓假相关的灵敏度设置-----------------------------------------
+
+	u16 Double;		/* 重张*/
+	u16 Chain;			/*连张*/
+//----------------------------------尺寸********预置101-------------------------------------------------------------
+	u16 Width;			/*调节幅面*/
+	u16 Len200K;		//200长度上限
+	u16 Len100K;		//100长度上限
+	u16 Len50K;		//50长度上限
+	u16 Len20K;		//20长度上限上限
+	u16 Len10K;		//10长度上限
+ 
+//----------------------------------光亮度设置的参数PWM 占空比  %----------预置102------------------------------------
+	u16 UPUVPWM;	/*上UV发射*/
+	u16 UPIRPWM;	/*上红外反射管发射   暂时无用*/
+	u16 LIRPWM;	    /*左计数对管发射*/
+	u16 RIRPWM;	    /*右计数对管发射*/
+	u16 DWUVPWM;	/*下UV发射*/
+	u16 DWIRPWM;	/*下荧光启动红外发射*/
+//-------------------------------------------------------------------------------    
+	u16 LenPWM;	    /*左右测长白光发射*/
+    u16 RGBPWM;	    /*下三色RGB白光发射*/
+//--------------------------------------------------------------------------------
+    u16 GCoef;                  /*绿色颜色值系数*/
+    u16 BCoef;                  /*蓝色颜色值系数*/
+//----------------------------------各种面额荧光门槛设置----------------预置103------------------------------   
+    u16 UVUPMaxValue;           /*上荧光识别门槛*/
+    u16 UVDNMaxValue;           /*下荧光识别门槛*/
+	
+	u16 UVUPMinValue;
+	u16 UVDNMinValue;
+//------------------------------------------------------------------------------------------------------
+    u16 UVUP500KVol;            /*500K上荧光门槛*/
+    u16 UVUP500KRageMin;        /*500K上荧光区最小范围*/
+    u16 UVUP500KRageMax;        /*500K上荧光区最大值*/
+    u16 UVUP500KJPositMin;         /*500K上荧光起始位置最小值*/
+    u16 UVUP500KJPositMax;         /*500K上荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVDN500KVol;            /*500K下荧光门槛*/
+    u16 UVDN500KRageMin;        /*500K下荧光区最小范围*/
+    u16 UVDN500KRageMax;        /*500K下荧光区最大值*/
+    u16 UVDN500KJPositMin;         /*500K下荧光起始位置最小值*/
+    u16 UVDN500KJPositMax;         /*500K下荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVUP200KVol;            /*200K上荧光门槛*/
+    u16 UVUP200KRageMin;        /*200K上荧光区最小范围*/
+    u16 UVUP200KRageMax;        /*200K上荧光区最大值*/
+    u16 UVUP200KJPositMin;         /*200K上荧光起始位置最小值*/
+    u16 UVUP200KJPositMax;         /*200K上荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVDN200KVol;            /*200K下荧光门槛*/
+    u16 UVDN200KRageMin;        /*200K下荧光区最小范围*/
+    u16 UVDN200KRageMax;        /*200K下荧光区最大值*/
+    u16 UVDN200KJPositMin;         /*200K下荧光起始位置最小值*/
+    u16 UVDN200KJPositMax;         /*200K下荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVUP100KVol;            /*100K上荧光门槛*/
+    u16 UVUP100KRageMin;        /*100K上荧光区最小范围*/
+    u16 UVUP100KRageMax;        /*100K上荧光区起始位置最大值*/
+    u16 UVUP100KJPositMin;         /*100K上荧光起始位置最小值*/
+    u16 UVUP100KJPositMax;         /*100K上荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVDN100KVol;            /*100K下荧光门槛*/
+    u16 UVDN100KRageMin;        /*100K下荧光区最小范围*/
+    u16 UVDN100KRageMax;        /*100K下荧光区最大值*/
+    u16 UVDN100KJPositMin;         /*100K下荧光起始位置最小值*/
+    u16 UVDN100KJPositMax;         /*100K下荧光起始位置最大值*/
+//---------------------------------------------------------    
+    u16 UVUP50KVol;             /*50K上荧光门槛*/
+    u16 UVUP50KRageMin;         /*50K上荧光区最小范围*/
+    u16 UVUP50KRageMax;         /*50K上荧光区最大值*/
+    u16 UVUP50KJPositMin;         /*50K上荧光起始位置最小值*/
+    u16 UVUP50KJPositMax;          /*50K上荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVDN50KVol;             /*50K下荧光门槛*/
+    u16 UVDN50KRageMin;         /*50K下荧光区最小范围*/
+    u16 UVDN50KRageMax;         /*50K下荧光区最大值*/
+    u16 UVDN50KJPositMin;         /*50K下荧光起始位置最小值*/
+    u16 UVDN50KJPositMax;          /*50K下荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVUP20KVol;             /*20K上荧光门槛*/
+    u16 UVUP20KRageMin;         /*20K上荧光区最小范围*/
+    u16 UVUP20KRageMax;         /*20K上荧光区最大值*/
+    u16 UVUP20KJPositMin;         /*20K上荧光起始位置最小值*/
+    u16 UVUP20KJPositMax;          /*20K上荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVDN20KVol;             /*20K下荧光门槛*/
+    u16 UVDN20KRageMin;         /*20K下荧光区最小范围*/
+    u16 UVDN20KRageMax;         /*20K下荧光区最大值*/
+    u16 UVDN20KJPositMin;         /*20K下荧光起始位置最小值*/
+    u16 UVDN20KJPositMax;          /*20K下荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVUP10KVol;             /*10K上荧光门槛*/
+    u16 UVUP10KRageMin;         /*10K上荧光区最小范围*/
+    u16 UVUP10KRageMax;         /*10K上荧光区最大值*/
+    u16 UVUP10KJPositMin;         /*10K上荧光起始位置最小值*/
+    u16 UVUP10KJPositMax;          /*10K上荧光起始位置最大值*/
+//---------------------------------------------------------
+    u16 UVDN10KVol;             /*10K下荧光门槛*/
+    u16 UVDN10KRageMin;         /*10K下荧光区最小范围*/
+    u16 UVDN10KRageMax;         /*10K下荧光区最大值*/
+    u16 UVDN10KJPositMin;         /*10K下荧光起始位置最小值*/
+    u16 UVDN10KJPositMax;          /*10K下荧光起始位置最大值*/
+//----------------------------------------------------------
+//---------------------------------------校验值------------------------------------------
+	u16 CRCH;
+	u16 CRCL;
+//------------------------------------END---------------------------------------------------------------------							 
+}_Sensitivity;
+extern _Sensitivity g_Sensitivity;
+//-------------------------------------------------------------------------------
+
+#define  CS_NUMS  		(sizeof(g_Sensitivity)/2)    //参数个数+2个u16的校验值
+#define  CS_CURNUM  	(CS_NUMS-2)   				//参数个数
+
+
+#define  CS_MAINNUM  	25   		//主要参数个数
+/****************************************************************/	
+//------------------------------一些开关信号参数-------------------------------------------------	
+#define		VOICE_VAULE					2	/*语音开关,0,1,2*/
+#define		VOICE_ON					1
+#define		VOICE_OFF					0	
+
+#define		FAKE_ADD_ON					1	/*假币计数否,0 1*/
+#define		FAKE_ADD_OFF				0
+
+#define		LENPRESENT_MAX			    80	/*长度门槛的百分比*/
+#define		LENPRESENT_MIN			    10
+
+#define		DISP_SEL_NUM				6	/*外显示选择，0，电脑通信，1. 3位侧显示+1616外显  2,合计金额侧显示，3，3位侧显示+合计金额外显*/						
+#define		DISP_SEL_OFF				0	/*4.合计外显+合计侧显*/
+
+#define		MRSIDEVOL_MIN				0	/*斜度纠错，0，不纠错，1，中级纠错，2，高级纠错*/
+#define		MRSIDEVOL_MAX				200
+
+#define		BLACKLIGHT_TIME_MIN			0	/*液晶背光关闭时间，时间单位为分钟*/
+#define		BLACKLIGHT_TIME_MAX			10
+	
+#define		BREAK_TIME_MIN				10	/*刹车时间40-100*/
+#define		BREAK_TIME_MAX				100	
+//-------------------------------与机器使用相关的传感器灵敏度设置，不影响抓假------------------------------------------------
+#define 	IN_VOL_MIN					0	/*启动光耦灵敏度,越小灵敏度越高*/
+#define		IN_VOL_MAX					9
+
+#define 	RESET_VOL_MIN				0	/*接钞光耦灵敏度,越小灵敏度越高*/
+#define		RESET_VOL_MAX				9
+
+#define 	LJ_RJ_VOL_MIN				0	/*计数管门槛,幅面变大调大*/
+#define		LJ_RJ_VOL_MAX				300
+
+#define 	HOLE_TIMES_MIN   			0 	/*单计数管补漏时间。*/
+#define		HOLE_TIMES_MAX  			200
+//---------------------------------与抓假相关的灵敏度设置-----------------------------------------
+#define 	DOUBLE_BILL_MIN   			0 	/* 重张*/
+#define		DOUBLE_BILL_MAX  			10
+
+#define 	LIAN_BILL_MIN   			0 	/*连张*/
+#define		LIAN_BILL_MAX  				5
+//----------------------------------------------------------------------------------------------
+
+#define 	WIDTH_MIN					0	/*调节幅面*/
+#define		WIDTH_MAX					80	
+
+#define 	LEN200K_MIN					0	//200长度上限
+#define		LEN200K_MAX					200	
+
+#define 	LEN100K_MIN					0	//100长度上限
+#define		LEN100K_MAX					200	
+
+#define 	LEN50K_MIN					0	//50长度上限
+#define		LEN50K_MAX					200	
+
+#define 	LEN20K_MIN					0	//20长度上限
+#define		LEN20K_MAX					200	
+
+#define 	LEN10K_MIN					0	//10长度上限
+#define		LEN10K_MAX					200			 
+//----------------------------------光亮度设置的参数PWM 占空比  %---------------------------------------------
+#define     LENPWM_MIN					1	/*左右测长白光发射*/
+#define     LENPWM_MAX					100
+
+#define     UPUVPWM_MIN					1	/*上UV发射*/
+#define     UPUVPWM_MAX					100
+
+#define     UPIRPWM_MIN					10	/*上红外反射管发射*/
+#define     UPIRPWM_MAX					100
+
+#define     LIRPWM_MIN					1	/*左计数对管发射*/
+#define     LIRPWM_MAX					100
+
+#define     RIRPWM_MIN					1	/*右计数对管发射*/
+#define     RIRPWM_MAX					100
+
+#define     DWUVPWM_MIN					1	/*下UV发射*/
+#define     DWUVPWM_MAX					100
+
+#define     DWIRPWM_MIN					1	/*下红外反射管发射*/
+#define     DWIRPWM_MAX					100
+
+#define     RGBPWM_MIN					1	/*下三色RGB白光发射*/
+#define     RGBPWM_MAX					100
+//----------------------------------------------------------------------------------------
+#define     GCOEF_MIN                           1
+#define     GCOEF_MAX                           50
+
+#define     BCOEF_MIN                           1
+#define     BCOEF_MAX                           80
+//----------------------------------------------------------------------------------------
+#define     UVUPMAXVALUE_MIN                    100
+#define     UVUPMAXVALUE_MAX                    320
+
+#define     UVDNMAXVALUE_MIN                    100
+#define     UVDNMAXVALUE_MAX                    320
+
+#define     UVUPMINVALUE_MAX					200
+#define     UVUPMINVALUE_MIN					50
+
+#define     UVDNMINVALUE_MAX					200
+#define     UVDNMINVALUE_MIN					50
+//----------------------------------各种面额荧光门槛设置---------------------------------------------   
+#define     UVUP500KVOL_MIN                     1   /*500K上荧光门槛*/
+#define     UVUP500KVOL_MAX                     250 /*500K上荧光门槛*/
+
+#define     UVUP500KRAGEMIN_MIN                 1   /*500K上荧光区域最小范围*/
+#define     UVUP500KRAGEMIN_MAX                 100 /*500K上荧光区域最小范围*/
+
+#define     UVUP500KRAGEMAX_MIN                 1   /*500K上荧光区域最大值*/
+#define     UVUP500KRAGEMAX_MAX                 200 /*500K上荧光区域最大值*/
+
+#define     UVUP500KJPOSITMIN_MIN                  1   /*500K上荧光位置*/
+#define     UVUP500KJPOSITMIN_MAX                  200 /*500K上荧光位置*/
+
+#define     UVUP500KJPOSITMAX_MIN                  1   /*500K上荧光位置*/
+#define     UVUP500KJPOSITMAX_MAX                  200 /*500K上荧光位置*/
+//-----------------------------------------------------------------
+#define     UVDN500KVOL_MIN                     1   /*500K下荧光门槛*/
+#define     UVDN500KVOL_MAX                     250 /*500K下荧光门槛*/
+
+#define     UVDN500KRAGEMIN_MIN                 1   /*500K下荧光区域最小范围*/
+#define     UVDN500KRAGEMIN_MAX                 100 /*500K下荧光区域最小范围*/
+
+#define     UVDN500KRAGEMAX_MIN                 1   /*500K下荧光门槛电压*/
+#define     UVDN500KRAGEMAX_MAX                 200 /*500K下荧光门槛电压*/
+
+#define     UVDN500KJPOSITMIN_MIN                  1   /*500K下荧光位置*/
+#define     UVDN500KJPOSITMIN_MAX                  200 /*500K下荧光位置*/
+
+#define     UVDN500KJPOSITMAX_MIN                  1   /*500K下荧光位置*/
+#define     UVDN500KJPOSITMAX_MAX                  200 /*500K下荧光位置*/
+//-----------------------------------------------------------------
+#define     UVUP200KVOL_MIN                     20  /*200K上荧光门槛*/
+#define     UVUP200KVOL_MAX                     250/*200K上荧光门槛*/
+
+#define     UVUP200KRAGEMIN_MIN                 1   /*200K上荧光门槛*/
+#define     UVUP200KRAGEMIN_MAX                 100/*200K上荧光门槛*/
+
+#define     UVUP200KRAGEMAX_MIN                 1   /*200K上荧光门槛电压*/
+#define     UVUP200KRAGEMAX_MAX                 200 /*200K上荧光门槛电压*/
+
+#define     UVUP200KJPOSITMIN_MIN                  1   
+#define     UVUP200KJPOSITMIN_MAX                  200 
+
+#define     UVUP200KJPOSITMAX_MIN                  1   
+#define     UVUP200KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVDN200KVOL_MIN                     1   /*200K下荧光门槛*/
+#define     UVDN200KVOL_MAX                     250/*200K下荧光门槛*/
+
+#define     UVDN200KRAGEMIN_MIN                 1   /*200K下荧光区域最小范围*/
+#define     UVDN200KRAGEMIN_MAX                 100 /*200K下荧光区域最小范围*/
+
+#define     UVDN200KRAGEMAX_MIN                 1   /*200K下荧光门槛电压*/
+#define     UVDN200KRAGEMAX_MAX                 200 /*200K下荧光门槛电压*/
+
+#define     UVDN200KJPOSITMIN_MIN                  1   
+#define     UVDN200KJPOSITMIN_MAX                  200 
+
+#define     UVDN200KJPOSITMAX_MIN                  1   
+#define     UVDN200KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVUP100KVOL_MIN                     20/*100K上荧光门槛*/
+#define     UVUP100KVOL_MAX                     250/*100K上荧光门槛*/
+
+#define     UVUP100KRAGEMIN_MIN                 1/*100K上荧光门槛*/
+#define     UVUP100KRAGEMIN_MAX                 100/*100K上荧光门槛*/
+
+#define     UVUP100KRAGEMAX_MIN                 1   /*100K上荧光门槛电压*/
+#define     UVUP100KRAGEMAX_MAX                 200 /*100K上荧光门槛电压*/
+
+#define     UVUP100KJPOSITMIN_MIN                  1   
+#define     UVUP100KJPOSITMIN_MAX                  200 
+
+#define     UVUP100KJPOSITMAX_MIN                  1   
+#define     UVUP100KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVDN100KVOL_MIN                     1   /*100K下荧光门槛*/
+#define     UVDN100KVOL_MAX                     250/*100K下荧光门槛*/
+
+#define     UVDN100KRAGEMIN_MIN                 1   /*100K下荧光区域最小范围*/
+#define     UVDN100KRAGEMIN_MAX                 100 /*100K下荧光区域最小范围*/
+
+#define     UVDN100KRAGEMAX_MIN                 1   /*100K下荧光门槛电压*/
+#define     UVDN100KRAGEMAX_MAX                 200 /*100K下荧光门槛电压*/
+
+#define     UVDN100KJPOSITMIN_MIN                  1   
+#define     UVDN100KJPOSITMIN_MAX                  200 
+
+#define     UVDN100KJPOSITMAX_MIN                  1   
+#define     UVDN100KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVUP50KVOL_MIN                      1   /*50K上荧光门槛*/
+#define     UVUP50KVOL_MAX                      250 /*50K上荧光门槛*/
+
+#define     UVUP50KRAGEMIN_MIN                  1   /*50K上荧光门槛*/
+#define     UVUP50KRAGEMIN_MAX                  100 /*50K上荧光门槛*/
+
+#define     UVUP50KRAGEMAX_MIN                  1   /*50K上荧光门槛电压*/
+#define     UVUP50KRAGEMAX_MAX                  200 /*50K上荧光门槛电压*/
+
+#define     UVUP50KJPOSITMIN_MIN                  1   
+#define     UVUP50KJPOSITMIN_MAX                  200 
+
+#define     UVUP50KJPOSITMAX_MIN                  1   
+#define     UVUP50KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVDN50KVOL_MIN                      1   /*50K下荧光门槛*/
+#define     UVDN50KVOL_MAX                      250 /*50K下荧光门槛*/
+
+#define     UVDN50KRAGEMIN_MIN                  1   /*50K下荧光区域最小范围*/
+#define     UVDN50KRAGEMIN_MAX                  100 /*50K下荧光区域最小范围*/
+
+#define     UVDN50KRAGEMAX_MIN                  1   /*50K下荧光门槛电压*/
+#define     UVDN50KRAGEMAX_MAX                  200 /*50K下荧光门槛电压*/
+
+#define     UVDN50KJPOSITMIN_MIN                  1   
+#define     UVDN50KJPOSITMIN_MAX                  200 
+
+#define     UVDN50KJPOSITMAX_MIN                  1   
+#define     UVDN50KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVUP20KVOL_MIN                      1   /*20K上荧光门槛*/
+#define     UVUP20KVOL_MAX                      250 /*20K上荧光门槛*/
+
+#define     UVUP20KRAGEMIN_MIN                  1   /*20K上荧光门槛*/
+#define     UVUP20KRAGEMIN_MAX                  100 /*20K上荧光门槛*/
+
+#define     UVUP20KRAGEMAX_MIN                  1   /*20K上荧光门槛电压*/
+#define     UVUP20KRAGEMAX_MAX                  200 /*20K上荧光门槛电压*/
+
+#define     UVUP20KJPOSITMIN_MIN                  1   
+#define     UVUP20KJPOSITMIN_MAX                  200 
+
+#define     UVUP20KJPOSITMAX_MIN                  1   
+#define     UVUP20KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVDN20KVOL_MIN                      20  /*20K下荧光门槛*/
+#define     UVDN20KVOL_MAX                      250 /*20K下荧光门槛*/
+
+#define     UVDN20KRAGEMIN_MIN                  1   /*20K下荧光区域最小范围*/
+#define     UVDN20KRAGEMIN_MAX                  100 /*20K下荧光区域最小范围*/
+
+#define     UVDN20KRAGEMAX_MIN                  1   /*20K下荧光门槛电压*/
+#define     UVDN20KRAGEMAX_MAX                  200 /*20K下荧光门槛电压*/
+
+#define     UVDN20KJPOSITMIN_MIN                  1   
+#define     UVDN20KJPOSITMIN_MAX                  200 
+
+#define     UVDN20KJPOSITMAX_MIN                  1   
+#define     UVDN20KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVUP10KVOL_MIN                      1   /*10K上荧光门槛*/
+#define     UVUP10KVOL_MAX                      250 /*10K上荧光门槛*/
+
+#define     UVUP10KRAGEMIN_MIN                  1   /*10K上荧光门槛*/
+#define     UVUP10KRAGEMIN_MAX                  100 /*10K上荧光门槛*/
+
+#define     UVUP10KRAGEMAX_MIN                  1   /*10K上荧光门槛电压*/
+#define     UVUP10KRAGEMAX_MAX                  200 /*10K上荧光门槛电压*/
+
+#define     UVUP10KJPOSITMIN_MIN                  1   
+#define     UVUP10KJPOSITMIN_MAX                  200 
+
+#define     UVUP10KJPOSITMAX_MIN                  1   
+#define     UVUP10KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+#define     UVDN10KVOL_MIN                      1   /*10K下荧光门槛*/
+#define     UVDN10KVOL_MAX                      250 /*10K下荧光门槛*/
+
+#define     UVDN10KRAGEMIN_MIN                  1    /*10K下荧光区域最小范围*/
+#define     UVDN10KRAGEMIN_MAX                  100  /*10K下荧光区域最小范围*/
+
+#define     UVDN10KRAGEMAX_MIN                  1    /*10K下荧光门槛电压*/
+#define     UVDN10KRAGEMAX_MAX                  200  /*10K下荧光门槛电压*/
+
+#define     UVDN10KJPOSITMIN_MIN                  1   
+#define     UVDN10KJPOSITMIN_MAX                  200 
+
+#define     UVDN10KJPOSITMAX_MIN                  1   
+#define     UVDN10KJPOSITMAX_MAX                  200 
+//-----------------------------------------------------------------
+
+//-----------------------------------------------------------------
+/*******************************************************/
+#define StartAddr  ((uint32_t)0x08038000)
+#define EndAddr    ((uint32_t)0x0803E000)   //分出一共8K给EEPROM使用。16个扇区
+/**********************************************************************/
+#define IRCNT_H		80
+#define IRCNT_L		70
+/**********************************************************************/
+void Save_EEPROM(void);
+void Read_CS(void);
+void First_Use(void);
+void Restore_CS(void);
+u8 CalibrPWM(void);
+#endif
