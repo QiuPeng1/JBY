@@ -70,6 +70,11 @@ void DealKeyDownOnNormal(u8 key)
 					ClearAllNoteNum();
 					DispMainMenu();			
 				break;
+			case LONG_KEY_FUN:
+					flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
+					delay_DelayMs(100);
+					NVIC_SystemReset();	
+				break;
 		}
 	}
 }
@@ -504,6 +509,33 @@ void DealPackageFromUart3(void)
 								greenFs_Off();
 								blueFs_Off();
 							}
+						break;
+					case 0xae:
+						if(g_colorFsRGB == FS_BLUE)
+						{
+							redFs_Off();
+							greenFs_Off();
+							blueFs_Off();
+							g_colorFsRGB = FS_OFF;
+						}
+						else if(g_colorFsRGB == FS_RED)
+						{
+							redFs_Off();
+							greenFs_On();
+							blueFs_Off();
+						}
+						else if(g_colorFsRGB == FS_GREEN)
+						{
+							redFs_Off();
+							greenFs_Off();
+							blueFs_On();
+						}
+						else
+						{
+							redFs_On();
+							greenFs_Off();
+							blueFs_Off();
+						}
 						break;
 					case 0xb1: //开始颜色校正
 						g_colorFsStopWork = 0;
@@ -1013,24 +1045,24 @@ void DispAutoRefreshMenu(void)//1秒钟显示一些需要自动刷新的界面
 			case NORMAL:
 				break;
 			case SENSOR_VIEW:
-				if(g_colorFsRGB == FS_BLUE)
-				{
-					redFs_On();
-					greenFs_Off();
-					blueFs_Off();
-				}
-				else if(g_colorFsRGB == FS_RED)
-				{
-					redFs_Off();
-					greenFs_On();
-					blueFs_Off();
-				}
-				else
-				{
-					redFs_Off();
-					greenFs_Off();
-					blueFs_On();
-				}
+//				if(g_colorFsRGB == FS_BLUE)
+//				{
+//					redFs_On();
+//					greenFs_Off();
+//					blueFs_Off();
+//				}
+//				else if(g_colorFsRGB == FS_RED)
+//				{
+//					redFs_Off();
+//					greenFs_On();
+//					blueFs_Off();
+//				}
+//				else
+//				{
+//					redFs_Off();
+//					greenFs_Off();
+//					blueFs_On();
+//				}
 				SampleOneRow();
 				DispSensorViewMenu();
 				break;
@@ -2479,7 +2511,7 @@ void MainInit(void)
 	//时钟
 	SystemInit();
 	#ifdef BOOT_APP
-	NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x4000); 
+	NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x10000); 
 	#endif
 	
 	RCC_PCLK1Config(RCC_HCLK_Div2);	//36M
@@ -2852,7 +2884,7 @@ void SetSmpleRatioTimer(u8 spd)
 // 	TIM_TimeBaseStructure.TIM_Prescaler = 180-1;
 // 	TIM_TimeBaseStructure.TIM_Period = 200-1;
 	TIM_TimeBaseStructure.TIM_Prescaler = 180-1;
-	TIM_TimeBaseStructure.TIM_Period = 200-1;//Period-1;
+	TIM_TimeBaseStructure.TIM_Period = 300-1;//Period-1;
 	
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
