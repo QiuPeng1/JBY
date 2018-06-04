@@ -52,7 +52,7 @@ void motor_Init(void)
 	//PWM≈‰÷√
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 
-	TIM_TimeBaseStructure.TIM_Prescaler = 24-1;
+	TIM_TimeBaseStructure.TIM_Prescaler = 720-1;//240-1;
 	TIM_TimeBaseStructure.TIM_Period = 254;		
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;	

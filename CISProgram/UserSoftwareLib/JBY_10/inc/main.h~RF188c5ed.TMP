@@ -333,7 +333,6 @@ enum
 	ENTERANCE_HAVENOTE_THRES = 60,
 	ENTERANCE_HAVENOTE_CHAZHI = 20,//50
 	TONGDAO_HAVENOTE_THRES = 180,
-	SCAN_MOTOR_TIME = 10,
 };
 u8 entergatePulseNumCounter = 0;			//入钞口的计数器，如果有纸币，就会一直增加
 u8 ps1PulseNumCounter = 0;		    	//PS1的计数器，如果有纸币，就会一直增加
@@ -343,8 +342,6 @@ u8 gb_haveNoteInEntergate = 0;
 u8 PS1Flag = 0;
 u8 PS2Flag = 0;
 u8 gb_haveNoteInPS1 = 0;
-
-u8 scanMotorTimer = 0; 
 
 u8 gb_haveNoteInPS2 = 0;
 
@@ -626,8 +623,6 @@ u16 tempMgDataLen = 0;
 u16 g_colorSampleIndex = 0;
 u16 csmpNumInCurrentCycle=0;
 
-u8 csmpNumCnt = 0;
-u16 csmpNumRecord[100];
 enum
 {
 	JAM_OK = 0,
@@ -711,23 +706,20 @@ enum
 };
 u16 noteState = 0;
 
-#define MP_FROM_PS1_TO_PS2 500//200//150 //55mm 91mp
-u8 g_maxMpFromPs1ToPs2 = 0;
+#define MP_FROM_ENTERANCE_TO_LENGTH 500//200//150 //55mm 91mp
+u8 g_maxMpFromEnteranceToLength = 0;
+#define MP_FROM_LENGTH_TO_ENTERANCE 40//200//150 //55mm 91mp
+u8 g_maxMpFromLengthToEnterance = 0;
 
-#define MP_FROM_ENTERANCE_TO_Ps1 500//200//150 //55mm 91mp
-u8 g_maxMpFromEnteranceToPs1 = 0;
-#define MP_FROM_PS1_TO_ENTERANCE 40//200//150 //55mm 91mp
-u8 g_maxMpFromPs1ToEnterance = 0;
+#define MP_FROM_LENGTH_TO_LEAVE 150//120 //50mm 82MP
+u8 g_maxMpFromLengthToLeave = 0;
 
-#define MP_FROM_PS2_TO_LEAVE 150//120 //50mm 82MP
-u8 g_maxMpFromPs2ToLeave = 0;
-
-#define MP_FROM_COMPUTE_TO_PS1 250 
-u8 g_maxMpFromComputeToPS1 = 0;
+#define MP_FROM_COMPUTE_TO_LENGTH 120 
+u8 g_maxMpFromComputeToLength = 0;
 
 #define MP_FROM_MG_TO_LENGTH 50 //15mm 91mp
 
-u8 gb_noteBackLeave = 1;//0向前转1向后转
+u8 gb_noteBackLeave = 0;
 
 u8 gb_needStopMotor = 0;
 // u8 *menuPara[48];
@@ -804,7 +796,7 @@ enum
 	INDEX_ENGLISH,
 };
 #define g_languageIndex INDEX_ENGLISH//savedPara.userWorkPara.d[INDEX_LANGUAGE]
-u8 g_currency = INDEX_USD; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
+#define g_currency INDEX_USD //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
 
 enum
 {
@@ -824,7 +816,6 @@ u16 noteDenoValue = 0;
 u16 denoNoteNum[10];
 u8 const RMB_NOTE_VALUE[] = {100,100,50,20,10,5,1,0,0,0};
 u8 const USD_NOTE_VALUE[] = {100,50,20,10,5,2,1,0,0,0};
-u16 const EUR_NOTE_VALUE[] = {500,200,100,50,20,10,5,0,0,0};
 
 void InitGpioInMain(void);
 void MainInit(void);
@@ -953,7 +944,7 @@ void DispNoteNum(void);//显示张数
 void DispNoteSum(void);//显示金额
 void DispNoteDenoValue(void);//显示币值
 void DispDetailNoteNum(void);//显示明细
-void DispJamInfo(void);
+
 void ClearAllNoteNum(void);
 		
 // void InitIrData(void);

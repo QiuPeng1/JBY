@@ -147,6 +147,14 @@ enum
 	ERROR_RMB10_20_MG_UNKNOWN,
 };
 
+//enum
+//{
+//	INDEX_USD,
+//	INDEX_EUR,
+//	ALL_NOTE_TYPE,
+//};
+
+
 #ifdef VC_PLUS_PLUS
 
 	#define DRAW_STATE
