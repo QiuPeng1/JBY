@@ -2,6 +2,7 @@
 #include "_bill.h"
 #include <math.h>
 #include "LW_USD_ValueFvt.h"
+#include "LW_EUR_ValueFvt.h"
 #include "LW_USD_ColorFvt.h"
 
 
@@ -373,7 +374,7 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 }
 
 
-u8 billIrad_Judge
+u8 billIrad_Judge_USD
 (
 	u8 *lengthData_Tmp		//参数含义
 )
@@ -497,6 +498,129 @@ u8 billIrad_Judge
 	return 0;
 }
 
+u8 billIrad_Judge_EUR
+(
+	u8 *lengthData_Tmp		//参数含义
+)
+{
+	int Min, MinPos, Max0, Max1, Max, MaxPos, whitePaperVal;
+	int i, j, k, m, count, t, t0, t1, t2, x[10], y[10];
+	int sum, iradAve, boDong, angle, wirePos, arv0, arv1;
+	short sxLeft, exLeft, sxRight, exRight, count1;
+	short sx, ex, sw, sh, iradVal, sy, ey;
+
+	float threK, d;
+	u8 *pImg;
+	double fvt, tt, max_t;
+	short *pFvt;
+	u8 *pNoteClass, *pf1;
+	u8 Class, min_i;
+	int fvtInt;
+
+	pImg = (u8 *)lengthData;
+	billIradMask = 0;
+
+	if (lengthDataLen < 100 || billValue == 0x0ff)
+	{
+		billIradMask = 1;
+		return 0;
+	}
+
+
+#ifdef DRAW_STATE1
+	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
+#endif
+
+	sy = 0;
+	ey = 21;
+	
+	for (i = 0; i < 21; i++)
+	{
+		count = 0;
+		for (j = 8; j < lengthDataLen-8; j++)
+		{
+			if(lengthData[i][j+0] > 240)
+			{
+				count++;
+			}
+		}
+		if (count < lengthDataLen/3)
+		{
+			sy = i+1;
+			break;
+		}
+	}
+
+	for (i = 20; i > 0; i--)
+	{
+		count = 0;
+		for (j = 8; j < lengthDataLen-8; j++)
+		{
+			if(lengthData[i][j+0] > 240)
+			{
+				count++;
+			}
+		}
+		if (count < lengthDataLen/3)
+		{
+			ey = i-1;
+			break;
+		}
+	}
+//	ey = 21;
+//	sy = 0;
+	sh = ey-sy;
+	k = 0;
+	for (i = sy; i < ey; i++)
+	{
+		for (j = 8; j < lengthDataLen-8; j+=4)
+		{
+			sum = (lengthData[i][j+0]+lengthData[i][j+1]+lengthData[i][j+2]+lengthData[i][j+3])/4;
+			lengthData_Tmp[k++] = sum;
+		}
+	}
+	sw = k/sh;
+	
+	memset(lengthData_Tmp2, 0, IRAD_FVT_DIM);
+	ResizeCharImgGray(lengthData_Tmp,sw,sh, lengthData_Tmp2, IRAD_DATA_RESIZE_W,IRAD_DATA_RESIZE_H);
+	//sh = 20;
+#ifdef DRAW_STATE1
+	Draw_Gray_Image(lengthData_Tmp, sw, sh, 800, 300, 1);
+	Draw_Gray_Image(lengthData_Tmp2, IRAD_DATA_RESIZE_W, IRAD_DATA_RESIZE_H, 800, 320, 1);
+#endif
+
+//	return;
+	
+	pNoteClass = g_EUR_noteClass;
+	pf1 = lengthData_Tmp2;
+	pFvt = (short *)EUR_iradFvt_Int;
+	Class = EUR_NOTE_CLASS;
+	max_t = 0.0;
+	for (i = 0; i < Class; i++)
+	{
+		fvtInt = 0;
+		for (j = 0; j < IRAD_FVT_DIM; j++)
+		{
+			fvtInt += (pf1[j]*pFvt[j*Class+i]);
+		}
+		fvt = ((double)(fvtInt))/100000;
+		fvt += ((double)(pFvt[j*Class+i]*200))/100000;
+
+		tt = exp(-fvt);	
+		fvt = 1/(1+tt);
+		
+		if (max_t < fvt)
+		{
+			max_t = fvt;
+			min_i = pNoteClass[i];
+		}
+	}
+	g_IradRes = min_i;
+	billValue = g_IradRes/4;
+	billFlag = g_IradRes%4;
+
+	return 0;
+}
 
 void FilterAverage_1(int *data,I32 l, int *dst)
 {

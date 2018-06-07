@@ -85,9 +85,17 @@ void DealKeyDownOnNormal(u8 key)
 					DispMainMenu();			
 				break;
 			case LONG_KEY_FUN:
-					flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
-					delay_DelayMs(100);
-					NVIC_SystemReset();	
+					if(g_needUpGrade == 1)
+					{
+						g_needUpGrade = 0;
+						flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
+						delay_DelayMs(100);
+						NVIC_SystemReset();	
+					}
+					else
+					{
+						g_needUpGradeCnt++;
+					}
 				break;
 		}
 	}
@@ -1469,11 +1477,11 @@ void DealNotePass(void)
 				//计算函数
 				if(g_currency == INDEX_USD)
 				{
-					billIrad_Judge(IRlengthBuffer);
+					billIrad_Judge_USD(IRlengthBuffer);
 				}
 				else
 				{
-					billIrad_Judge(IRlengthBuffer);
+					billIrad_Judge_EUR(IRlengthBuffer);
 				}
 				//billRGB_Judge();
 				//colorJudgeValue //颜色面额
@@ -1871,7 +1879,14 @@ void DispDetailNoteNum(void)//显示明细
 	{
 		U32ToStr(denoNoteNum[i],dispStr,4);
 		disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*1+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
-		denoSum = denoNoteNum[i]*USD_NOTE_VALUE[i];
+		if(g_currency == INDEX_USD)
+		{
+			denoSum = denoNoteNum[i]*USD_NOTE_VALUE[i];
+		}
+		else
+		{
+			denoSum = denoNoteNum[i]*EUR_NOTE_VALUE[i];
+		}
 		U32ToStr(denoSum,dispStr,5);
 		disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*2+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
 	}
@@ -3450,6 +3465,7 @@ void PendSV_Handler(void)
   */
 
 u16 oneSecCnt = 0;
+u16 gb_SecCnt = 0;
 u8 fiveMsCnt = 0;
 void SysTick_Handler(void)
 {
@@ -3464,8 +3480,21 @@ void SysTick_Handler(void)
 		gb_oneSec = 1;
 		gb_oneSecAutoRefresh = 1;
 		oneSecCnt = 0;
+		gb_SecCnt++;
+		if(gb_SecCnt > 20)
+		{
+			gb_SecCnt = 0;
+			if(g_needUpGradeCnt >= 3)
+			{
+				g_needUpGrade = 1;
+			}
+			else if(g_needUpGradeCnt > 0)
+			{
+				g_needUpGradeCnt--;
+			}
+		}
 	}
-	
+			
 	if(checkKeyCnt > 0)
 	{
 		checkKeyCnt --;

@@ -24,4 +24,5 @@
 .\obj\bill.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\obj\bill.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_USD_ValueFvt.h
+.\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_EUR_ValueFvt.h
 .\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_USD_ColorFvt.h

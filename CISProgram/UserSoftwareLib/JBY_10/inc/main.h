@@ -730,6 +730,8 @@ u8 g_maxMpFromComputeToPS1 = 0;
 u8 gb_noteBackLeave = 1;//0向前转1向后转
 
 u8 gb_needStopMotor = 0;
+u8 g_needUpGradeCnt = 0;
+u8 g_needUpGrade = 0;
 // u8 *menuPara[48];
 // u8 menuParaIndex = 0;
 // u8 menuMod[48];

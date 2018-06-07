@@ -172,11 +172,16 @@ BILL_EXT_FUNC u8 billUV_Judge
 	void		//参数含义
 );
 
-u8 billIrad_Judge
+u8 billIrad_Judge_USD
 (
 	u8 *dataIrad_Tmp		//参数含义
 );
 
+
+u8 billIrad_Judge_EUR
+(
+	u8 *dataIrad_Tmp		//参数含义
+);
 #ifdef __cplusplus
 }
 #endif
