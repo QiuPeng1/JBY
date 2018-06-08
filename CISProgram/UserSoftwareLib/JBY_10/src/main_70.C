@@ -85,17 +85,17 @@ void DealKeyDownOnNormal(u8 key)
 					DispMainMenu();			
 				break;
 			case LONG_KEY_FUN:
-					if(g_needUpGrade == 1)
-					{
+//					if(g_needUpGrade == 1)
+//					{
 						g_needUpGrade = 0;
 						flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
 						delay_DelayMs(100);
 						NVIC_SystemReset();	
-					}
-					else
-					{
-						g_needUpGradeCnt++;
-					}
+//					}
+//					else
+//					{
+//						g_needUpGradeCnt++;
+//					}
 				break;
 		}
 	}
@@ -3480,19 +3480,19 @@ void SysTick_Handler(void)
 		gb_oneSec = 1;
 		gb_oneSecAutoRefresh = 1;
 		oneSecCnt = 0;
-		gb_SecCnt++;
-		if(gb_SecCnt > 20)
-		{
-			gb_SecCnt = 0;
-			if(g_needUpGradeCnt >= 3)
-			{
-				g_needUpGrade = 1;
-			}
-			else if(g_needUpGradeCnt > 0)
-			{
-				g_needUpGradeCnt--;
-			}
-		}
+//		gb_SecCnt++;
+//		if(gb_SecCnt > 20)
+//		{
+//			gb_SecCnt = 0;
+//			if(g_needUpGradeCnt >= 3)
+//			{
+//				g_needUpGrade = 1;
+//			}
+//			else if(g_needUpGradeCnt > 0)
+//			{
+//				g_needUpGradeCnt--;
+//			}
+//		}
 	}
 			
 	if(checkKeyCnt > 0)
