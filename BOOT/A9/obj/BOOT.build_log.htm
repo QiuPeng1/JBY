@@ -1,0 +1,56 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.14.2
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Cortex-M3, qq, LIC=58574-FR7G4-MLVCI-T3M0J-B2KW3-A6LML
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.15.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 2 (build 169)
+Assembler:       Armasm.exe V5.05 update 2 (build 169)
+Linker/Locator:  ArmLink.exe V5.05 update 2 (build 169)
+Library Manager: ArmAr.exe V5.05 update 2 (build 169)
+Hex Converter:   FromElf.exe V5.05 update 2 (build 169)
+CPU DLL:         SARMCM3.DLL V5.15.0
+Dialog DLL:      DCM.DLL V1.13.2.0
+Target DLL:      Segger\JL2CM3.dll V2.99.15.0
+Dialog DLL:      TCM.DLL V1.14.5.0
+ 
+<h2>Project:</h2>
+D:\X项目资料\鉴别仪\project\BOOT\A9\CISA9.uvprojx
+Project File Date:  05/22/2018
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'CISA9'
+compiling main_70.C...
+..\UserSoftwareLib\JBY_10\src\main_70.C(155): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+        disp_string(upgradeFileName,0,dispIndex++*
+NE_LINE_H);
+..\UserSoftwareLib\JBY_10\src\main_70.C(215): warning:  #223-D: function "memset" declared implicitly
+                                                memset(readBuffer,0xff,((currentReadLen/2048)+1)*2048);//?詈?一?霾???2K?暮??娌?0xff
+..\UserSoftwareLib\JBY_10\src\main_70.C(255): warning:  #223-D: function "memset" declared implicitly
+                                                        memset(readBuffer,0xff,((currentReadLen/2048)+1)*2048);//?詈?一?霾???2K?暮??娌?0xff
+..\UserSoftwareLib\JBY_10\src\main_70.C(85): warning:  #550-D: variable "emptyFlash" was set but never used
+        u8 emptyFlash = 0;
+..\UserSoftwareLib\JBY_10\src\main_70.C(523): warning:  #223-D: function "strlen" declared implicitly
+        len = strlen(str);      
+..\UserSoftwareLib\JBY_10\src\main_70.C: 5 warnings, 0 errors
+linking...
+Program Size: Code=46748 RO-data=1488 RW-data=428 ZI-data=78228  
+FromELF: creating hex file...
+After Build - User command #1: fromelf --bin -o "D:\X项目资料\鉴别仪\project\BOOT\A9\obj\BOOT.bin" "D:\X项目资料\鉴别仪\project\BOOT\A9\obj\BOOT.axf"
+".\obj\BOOT.axf" - 0 Error(s), 5 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  D:\X项目资料\鉴别仪\project\BOOT\A9\RTE
+  C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include
+
+<h2>Collection of Component Files used:</h2>
+</pre>
+</body>
+</html>
