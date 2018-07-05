@@ -69,8 +69,8 @@ bit gb_uvVccIsOn;
 #define ENTERANCE_FS_GPIO_PIN               GPIO_Pin_5
 #define ENTERANCE_FS_GPIO_MODE              GPIO_Mode_Out_PP
 bit gb_jinChaoFaSheIsOn = 0;	
-#define jckfs_On()  GPIO_SetBits(ENTERANCE_FS_GPIO_PORT, ENTERANCE_FS_GPIO_PIN); gb_jinChaoFaSheIsOn = 1
-#define jckfs_Off()  GPIO_ResetBits(ENTERANCE_FS_GPIO_PORT, ENTERANCE_FS_GPIO_PIN); gb_jinChaoFaSheIsOn = 0
+#define jckfs_Off()  GPIO_SetBits(ENTERANCE_FS_GPIO_PORT, ENTERANCE_FS_GPIO_PIN); gb_jinChaoFaSheIsOn = 0
+#define jckfs_On()  GPIO_ResetBits(ENTERANCE_FS_GPIO_PORT, ENTERANCE_FS_GPIO_PIN); gb_jinChaoFaSheIsOn = 1
 
 
 //#define TEST_FS_GPIO_PORT              GPIOC
@@ -95,8 +95,8 @@ bit gb_jinChaoFaSheIsOn = 0;
 
 #define	KEY1_GPIO_PORT GPIOC
 #define	KEY1_GPIO_PIN GPIO_Pin_7
-#define	KEY1_GPIO_MODE GPIO_Mode_IPU
-#define readkey1()  (GPIO_ReadInputDataBit(KEY1_GPIO_PORT, KEY1_GPIO_PIN))
+#define	KEY1_GPIO_MODE GPIO_Mode_IN_FLOATING//GPIO_Mode_IPU
+#define readkey1()  0//(GPIO_ReadInputDataBit(KEY1_GPIO_PORT, KEY1_GPIO_PIN))
 
 #define	KEY2_GPIO_PORT GPIOC
 #define	KEY2_GPIO_PIN GPIO_Pin_8

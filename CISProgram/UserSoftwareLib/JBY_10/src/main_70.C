@@ -13,7 +13,7 @@ u8 readKey(void)
 	}
 	if(!readkey1())
 	{
-		return KEY_FUN;
+		//return KEY_FUN;
 	}
 	if(!readkey2())
 	{
@@ -87,10 +87,12 @@ void DealKeyDownOnNormal(u8 key)
 			case LONG_KEY_FUN:
 //					if(g_needUpGrade == 1)
 //					{
+						#ifdef BOOT_APP	
 						g_needUpGrade = 0;
 						flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
 						delay_DelayMs(100);
 						NVIC_SystemReset();	
+						#endif
 //					}
 //					else
 //					{
@@ -559,23 +561,23 @@ void DealPackageFromUart3(void)
 						}
 						else if(g_colorFsRGB == FS_RED)
 						{
-//							redFs_Off();
-//							greenFs_On();
-//							blueFs_Off();
+							redFs_Off();
+							greenFs_On();
+							blueFs_Off();
 							g_colorFsRGB = FS_GREEN;
 						}
 						else if(g_colorFsRGB == FS_GREEN)
 						{
-//							redFs_Off();
-//							greenFs_Off();
-//							blueFs_On();
-								g_colorFsRGB = FS_BLUE;
+							redFs_Off();
+							greenFs_Off();
+							blueFs_On();
+							g_colorFsRGB = FS_BLUE;
 						}
 						else
 						{
-//							redFs_On();
-//							greenFs_Off();
-//							blueFs_Off();
+							redFs_On();
+							greenFs_Off();
+							blueFs_Off();
 							g_colorFsRGB = FS_RED;
 						}
 						break;
@@ -1746,6 +1748,7 @@ void DispSensorViewMenu(void)
 	dispStr[i++] = '\0';
 	DispString(dispStr,0);
 	
+	i = 0;
 	u8Temp = readkey1();
 	U8ToStr(u8Temp,dispStr+i);
 	i += 3;
@@ -1753,6 +1756,7 @@ void DispSensorViewMenu(void)
 	dispStr[i++] = '\0';
 	DispString(dispStr,0);
 	
+	i = 0;
 	u8Temp = readkey2();
 	U8ToStr(u8Temp,dispStr+i);
 	i += 3;
@@ -2860,8 +2864,8 @@ void SampleOneRow(void)
 	
 // 	//enteranceSensorVal = adData[8];
 		enteranceSensorVal = adData[9];
-		tdjsValue[0] = adData[3];
-		tdjsValue[1] = adData[1];
+		tdjsValue[0] = adData[1];
+		tdjsValue[1] = adData[3];
 		UvValue = adData[0];
 		mrValue[0] = adData[4];
 		mrValue[1] = adData[8];
@@ -3751,7 +3755,7 @@ void DealEnteranceIr2INT(void)
 	if(gb_jinChaoFaSheIsOn == 1)//开灯时
 	{
 		PS1Flag <<= 1;
-		if(tdjsValue[1] < (TONGDAO_HAVENOTE_THRES))
+		if(tdjsValue[0] < (TONGDAO_HAVENOTE_THRES))
 		{
 			PS1Flag ++;
 		}
@@ -3816,7 +3820,7 @@ void DealPS2INT(void)
 	if(gb_jinChaoFaSheIsOn == 1)//开灯时
 	{
 		PS2Flag <<= 1;
-		if(tdjsValue[0] < (TONGDAO_HAVENOTE_THRES))
+		if(tdjsValue[1] < (TONGDAO_HAVENOTE_THRES))
 		{
 			PS2Flag ++;
 		}
@@ -4079,8 +4083,8 @@ void DMA1_Channel1_IRQHandler(void)
 	
 // 	//enteranceSensorVal = adData[8];
 		enteranceSensorVal = adData[9];
-		tdjsValue[0] = adData[3];
-		tdjsValue[1] = adData[1];
+		tdjsValue[0] = adData[1];
+		tdjsValue[1] = adData[3];
 		UvValue = adData[0];
 		mrValue[0] = adData[4];
 		mrValue[1] = adData[8];
