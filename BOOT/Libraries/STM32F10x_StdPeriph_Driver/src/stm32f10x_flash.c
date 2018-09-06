@@ -322,11 +322,11 @@ void FLASH_Unlock(void)
   FLASH->KEYR = FLASH_KEY1;
   FLASH->KEYR = FLASH_KEY2;
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   /* Authorize the FPEC of Bank2 Access */
   FLASH->KEYR2 = FLASH_KEY1;
   FLASH->KEYR2 = FLASH_KEY2;
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 }
 /**
   * @brief  Unlocks the FLASH Bank1 Program Erase Controller.
@@ -344,7 +344,7 @@ void FLASH_UnlockBank1(void)
   FLASH->KEYR = FLASH_KEY2;
 }
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
 /**
   * @brief  Unlocks the FLASH Bank2 Program Erase Controller.
   * @note   This function can be used only for STM32F10X_XL density devices.
@@ -358,7 +358,7 @@ void FLASH_UnlockBank2(void)
   FLASH->KEYR2 = FLASH_KEY2;
 
 }
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 
 /**
   * @brief  Locks the FLASH Program Erase Controller.
@@ -374,10 +374,10 @@ void FLASH_Lock(void)
   /* Set the Lock Bit to lock the FPEC and the CR of  Bank1 */
   FLASH->CR |= CR_LOCK_Set;
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   /* Set the Lock Bit to lock the FPEC and the CR of  Bank2 */
   FLASH->CR2 |= CR_LOCK_Set;
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 }
 
 /**
@@ -395,7 +395,7 @@ void FLASH_LockBank1(void)
   FLASH->CR |= CR_LOCK_Set;
 }
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
 /**
   * @brief  Locks the FLASH Bank2 Program Erase Controller.
   * @note   This function can be used only for STM32F10X_XL density devices.
@@ -407,7 +407,7 @@ void FLASH_LockBank2(void)
   /* Set the Lock Bit to lock the FPEC and the CR of  Bank2 */
   FLASH->CR2 |= CR_LOCK_Set;
 }
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 
 /**
   * @brief  Erases a specified FLASH page.
@@ -422,7 +422,7 @@ FLASH_Status FLASH_ErasePage(uint32_t Page_Address)
   /* Check the parameters */
   assert_param(IS_FLASH_ADDRESS(Page_Address));
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   if(Page_Address < FLASH_BANK1_END_ADDRESS)  
   {
     /* Wait for last operation to be completed */
@@ -459,24 +459,24 @@ FLASH_Status FLASH_ErasePage(uint32_t Page_Address)
       FLASH->CR2 &= CR_PER_Reset;
     }
   }
-#else
-  /* Wait for last operation to be completed */
-  status = FLASH_WaitForLastOperation(EraseTimeout);
-  
-  if(status == FLASH_COMPLETE)
-  { 
-    /* if the previous operation is completed, proceed to erase the page */
-    FLASH->CR|= CR_PER_Set;
-    FLASH->AR = Page_Address; 
-    FLASH->CR|= CR_STRT_Set;
-    
-    /* Wait for last operation to be completed */
-    status = FLASH_WaitForLastOperation(EraseTimeout);
-    
-    /* Disable the PER Bit */
-    FLASH->CR &= CR_PER_Reset;
-  }
-#endif /* STM32F10X_XL */
+//#else
+//  /* Wait for last operation to be completed */
+//  status = FLASH_WaitForLastOperation(EraseTimeout);
+//  
+//  if(status == FLASH_COMPLETE)
+//  { 
+//    /* if the previous operation is completed, proceed to erase the page */
+//    FLASH->CR|= CR_PER_Set;
+//    FLASH->AR = Page_Address; 
+//    FLASH->CR|= CR_STRT_Set;
+//    
+//    /* Wait for last operation to be completed */
+//    status = FLASH_WaitForLastOperation(EraseTimeout);
+//    
+//    /* Disable the PER Bit */
+//    FLASH->CR &= CR_PER_Reset;
+//  }
+//#endif /* STM32F10X_XL */
 
   /* Return the Erase Status */
   return status;
@@ -493,7 +493,7 @@ FLASH_Status FLASH_EraseAllPages(void)
 {
   FLASH_Status status = FLASH_COMPLETE;
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   /* Wait for last operation to be completed */
   status = FLASH_WaitForLastBank1Operation(EraseTimeout);
   
@@ -521,22 +521,22 @@ FLASH_Status FLASH_EraseAllPages(void)
     /* Disable the MER Bit */
     FLASH->CR2 &= CR_MER_Reset;
   }
-#else
-  /* Wait for last operation to be completed */
-  status = FLASH_WaitForLastOperation(EraseTimeout);
-  if(status == FLASH_COMPLETE)
-  {
-    /* if the previous operation is completed, proceed to erase all pages */
-     FLASH->CR |= CR_MER_Set;
-     FLASH->CR |= CR_STRT_Set;
-    
-    /* Wait for last operation to be completed */
-    status = FLASH_WaitForLastOperation(EraseTimeout);
+//#else
+//  /* Wait for last operation to be completed */
+//  status = FLASH_WaitForLastOperation(EraseTimeout);
+//  if(status == FLASH_COMPLETE)
+//  {
+//    /* if the previous operation is completed, proceed to erase all pages */
+//     FLASH->CR |= CR_MER_Set;
+//     FLASH->CR |= CR_STRT_Set;
+//    
+//    /* Wait for last operation to be completed */
+//    status = FLASH_WaitForLastOperation(EraseTimeout);
 
-    /* Disable the MER Bit */
-    FLASH->CR &= CR_MER_Reset;
-  }
-#endif /* STM32F10X_XL */
+//    /* Disable the MER Bit */
+//    FLASH->CR &= CR_MER_Reset;
+//  }
+//#endif /* STM32F10X_XL */
 
   /* Return the Erase Status */
   return status;
@@ -574,7 +574,7 @@ FLASH_Status FLASH_EraseAllBank1Pages(void)
   return status;
 }
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
 /**
   * @brief  Erases all Bank2 FLASH pages.
   * @note   This function can be used only for STM32F10x_XL density devices.
@@ -603,7 +603,7 @@ FLASH_Status FLASH_EraseAllBank2Pages(void)
   /* Return the Erase Status */
   return status;
 }
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 
 /**
   * @brief  Erases the FLASH option bytes.
@@ -686,7 +686,7 @@ FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data)
   /* Check the parameters */
   assert_param(IS_FLASH_ADDRESS(Address));
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   if(Address < FLASH_BANK1_END_ADDRESS - 2)
   { 
     /* Wait for last operation to be completed */
@@ -807,41 +807,41 @@ FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data)
       }
     }
   }
-#else
-  /* Wait for last operation to be completed */
-  status = FLASH_WaitForLastOperation(ProgramTimeout);
-  
-  if(status == FLASH_COMPLETE)
-  {
-    /* if the previous operation is completed, proceed to program the new first 
-    half word */
-    FLASH->CR |= CR_PG_Set;
-  
-    *(__IO uint16_t*)Address = (uint16_t)Data;
-    /* Wait for last operation to be completed */
-    status = FLASH_WaitForLastOperation(ProgramTimeout);
- 
-    if(status == FLASH_COMPLETE)
-    {
-      /* if the previous operation is completed, proceed to program the new second 
-      half word */
-      tmp = Address + 2;
+//#else
+//  /* Wait for last operation to be completed */
+//  status = FLASH_WaitForLastOperation(ProgramTimeout);
+//  
+//  if(status == FLASH_COMPLETE)
+//  {
+//    /* if the previous operation is completed, proceed to program the new first 
+//    half word */
+//    FLASH->CR |= CR_PG_Set;
+//  
+//    *(__IO uint16_t*)Address = (uint16_t)Data;
+//    /* Wait for last operation to be completed */
+//    status = FLASH_WaitForLastOperation(ProgramTimeout);
+// 
+//    if(status == FLASH_COMPLETE)
+//    {
+//      /* if the previous operation is completed, proceed to program the new second 
+//      half word */
+//      tmp = Address + 2;
 
-      *(__IO uint16_t*) tmp = Data >> 16;
-    
-      /* Wait for last operation to be completed */
-      status = FLASH_WaitForLastOperation(ProgramTimeout);
-        
-      /* Disable the PG Bit */
-      FLASH->CR &= CR_PG_Reset;
-    }
-    else
-    {
-      /* Disable the PG Bit */
-      FLASH->CR &= CR_PG_Reset;
-    }
-  }         
-#endif /* STM32F10X_XL */
+//      *(__IO uint16_t*) tmp = Data >> 16;
+//    
+//      /* Wait for last operation to be completed */
+//      status = FLASH_WaitForLastOperation(ProgramTimeout);
+//        
+//      /* Disable the PG Bit */
+//      FLASH->CR &= CR_PG_Reset;
+//    }
+//    else
+//    {
+//      /* Disable the PG Bit */
+//      FLASH->CR &= CR_PG_Reset;
+//    }
+//  }         
+//#endif /* STM32F10X_XL */
    
   /* Return the Program Status */
   return status;
@@ -861,7 +861,7 @@ FLASH_Status FLASH_ProgramHalfWord(uint32_t Address, uint16_t Data)
   /* Check the parameters */
   assert_param(IS_FLASH_ADDRESS(Address));
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   /* Wait for last operation to be completed */
   status = FLASH_WaitForLastOperation(ProgramTimeout);
   
@@ -895,23 +895,23 @@ FLASH_Status FLASH_ProgramHalfWord(uint32_t Address, uint16_t Data)
       FLASH->CR2 &= CR_PG_Reset;
     }
   }
-#else
-  /* Wait for last operation to be completed */
-  status = FLASH_WaitForLastOperation(ProgramTimeout);
-  
-  if(status == FLASH_COMPLETE)
-  {
-    /* if the previous operation is completed, proceed to program the new data */
-    FLASH->CR |= CR_PG_Set;
-  
-    *(__IO uint16_t*)Address = Data;
-    /* Wait for last operation to be completed */
-    status = FLASH_WaitForLastOperation(ProgramTimeout);
-    
-    /* Disable the PG Bit */
-    FLASH->CR &= CR_PG_Reset;
-  } 
-#endif  /* STM32F10X_XL */
+//#else
+//  /* Wait for last operation to be completed */
+//  status = FLASH_WaitForLastOperation(ProgramTimeout);
+//  
+//  if(status == FLASH_COMPLETE)
+//  {
+//    /* if the previous operation is completed, proceed to program the new data */
+//    FLASH->CR |= CR_PG_Set;
+//  
+//    *(__IO uint16_t*)Address = Data;
+//    /* Wait for last operation to be completed */
+//    status = FLASH_WaitForLastOperation(ProgramTimeout);
+//    
+//    /* Disable the PG Bit */
+//    FLASH->CR &= CR_PG_Reset;
+//  } 
+//#endif  /* STM32F10X_XL */
   
   /* Return the Program Status */
   return status;
@@ -1150,7 +1150,7 @@ FLASH_Status FLASH_UserOptionByteConfig(uint16_t OB_IWDG, uint16_t OB_STOP, uint
   return status;
 }
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
 /**
   * @brief  Configures to boot from Bank1 or Bank2.  
   * @note   This function can be used only for STM32F10x_XL density devices.
@@ -1204,7 +1204,7 @@ FLASH_Status FLASH_BootConfig(uint16_t FLASH_BOOT)
   /* Return the Option Byte program Status */
   return status;
 }
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 
 /**
   * @brief  Returns the FLASH User Option Bytes values.
@@ -1289,7 +1289,7 @@ FlagStatus FLASH_GetPrefetchBufferStatus(void)
   */
 void FLASH_ITConfig(uint32_t FLASH_IT, FunctionalState NewState)
 {
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   /* Check the parameters */
   assert_param(IS_FLASH_IT(FLASH_IT)); 
   assert_param(IS_FUNCTIONAL_STATE(NewState));
@@ -1320,22 +1320,22 @@ void FLASH_ITConfig(uint32_t FLASH_IT, FunctionalState NewState)
       FLASH->CR &= ~(uint32_t)FLASH_IT;
     }
   }
-#else
-  /* Check the parameters */
-  assert_param(IS_FLASH_IT(FLASH_IT)); 
-  assert_param(IS_FUNCTIONAL_STATE(NewState));
+//#else
+//  /* Check the parameters */
+//  assert_param(IS_FLASH_IT(FLASH_IT)); 
+//  assert_param(IS_FUNCTIONAL_STATE(NewState));
 
-  if(NewState != DISABLE)
-  {
-    /* Enable the interrupt sources */
-    FLASH->CR |= FLASH_IT;
-  }
-  else
-  {
-    /* Disable the interrupt sources */
-    FLASH->CR &= ~(uint32_t)FLASH_IT;
-  }
-#endif /* STM32F10X_XL */
+//  if(NewState != DISABLE)
+//  {
+//    /* Enable the interrupt sources */
+//    FLASH->CR |= FLASH_IT;
+//  }
+//  else
+//  {
+//    /* Disable the interrupt sources */
+//    FLASH->CR &= ~(uint32_t)FLASH_IT;
+//  }
+//#endif /* STM32F10X_XL */
 }
 
 /**
@@ -1358,7 +1358,7 @@ FlagStatus FLASH_GetFlagStatus(uint32_t FLASH_FLAG)
 {
   FlagStatus bitstatus = RESET;
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   /* Check the parameters */
   assert_param(IS_FLASH_GET_FLAG(FLASH_FLAG)) ;
   if(FLASH_FLAG == FLASH_FLAG_OPTERR) 
@@ -1397,32 +1397,32 @@ FlagStatus FLASH_GetFlagStatus(uint32_t FLASH_FLAG)
       }
     }
   }
-#else
-  /* Check the parameters */
-  assert_param(IS_FLASH_GET_FLAG(FLASH_FLAG)) ;
-  if(FLASH_FLAG == FLASH_FLAG_OPTERR) 
-  {
-    if((FLASH->OBR & FLASH_FLAG_OPTERR) != (uint32_t)RESET)
-    {
-      bitstatus = SET;
-    }
-    else
-    {
-      bitstatus = RESET;
-    }
-  }
-  else
-  {
-   if((FLASH->SR & FLASH_FLAG) != (uint32_t)RESET)
-    {
-      bitstatus = SET;
-    }
-    else
-    {
-      bitstatus = RESET;
-    }
-  }
-#endif /* STM32F10X_XL */
+//#else
+//  /* Check the parameters */
+//  assert_param(IS_FLASH_GET_FLAG(FLASH_FLAG)) ;
+//  if(FLASH_FLAG == FLASH_FLAG_OPTERR) 
+//  {
+//    if((FLASH->OBR & FLASH_FLAG_OPTERR) != (uint32_t)RESET)
+//    {
+//      bitstatus = SET;
+//    }
+//    else
+//    {
+//      bitstatus = RESET;
+//    }
+//  }
+//  else
+//  {
+//   if((FLASH->SR & FLASH_FLAG) != (uint32_t)RESET)
+//    {
+//      bitstatus = SET;
+//    }
+//    else
+//    {
+//      bitstatus = RESET;
+//    }
+//  }
+//#endif /* STM32F10X_XL */
 
   /* Return the new state of FLASH_FLAG (SET or RESET) */
   return bitstatus;
@@ -1442,7 +1442,7 @@ FlagStatus FLASH_GetFlagStatus(uint32_t FLASH_FLAG)
   */
 void FLASH_ClearFlag(uint32_t FLASH_FLAG)
 {
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   /* Check the parameters */
   assert_param(IS_FLASH_CLEAR_FLAG(FLASH_FLAG)) ;
 
@@ -1457,13 +1457,13 @@ void FLASH_ClearFlag(uint32_t FLASH_FLAG)
     FLASH->SR = FLASH_FLAG;
   }  
 
-#else
-  /* Check the parameters */
-  assert_param(IS_FLASH_CLEAR_FLAG(FLASH_FLAG)) ;
-  
-  /* Clear the flags */
-  FLASH->SR = FLASH_FLAG;
-#endif /* STM32F10X_XL */
+//#else
+//  /* Check the parameters */
+//  assert_param(IS_FLASH_CLEAR_FLAG(FLASH_FLAG)) ;
+//  
+//  /* Clear the flags */
+//  FLASH->SR = FLASH_FLAG;
+//#endif /* STM32F10X_XL */
 }
 
 /**
@@ -1542,7 +1542,7 @@ FLASH_Status FLASH_GetBank1Status(void)
   return flashstatus;
 }
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
 /**
   * @brief  Returns the FLASH Bank2 Status.
   * @note   This function can be used for STM32F10x_XL density devices.
@@ -1579,7 +1579,7 @@ FLASH_Status FLASH_GetBank2Status(void)
   /* Return the Flash Status */
   return flashstatus;
 }
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 /**
   * @brief  Waits for a Flash operation to complete or a TIMEOUT to occur.
   * @note   This function can be used for all STM32F10x devices, 
@@ -1640,7 +1640,7 @@ FLASH_Status FLASH_WaitForLastBank1Operation(uint32_t Timeout)
   return status;
 }
 
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
 /**
   * @brief  Waits for a Flash operation on Bank2 to complete or a TIMEOUT to occur.
   * @note   This function can be used only for STM32F10x_XL density devices.
@@ -1667,7 +1667,7 @@ FLASH_Status FLASH_WaitForLastBank2Operation(uint32_t Timeout)
   /* Return the operation status */
   return status;
 }
-#endif /* STM32F10X_XL */
+//#endif /* STM32F10X_XL */
 
 /**
   * @}

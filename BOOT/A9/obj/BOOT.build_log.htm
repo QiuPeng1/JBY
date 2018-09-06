@@ -21,12 +21,36 @@ Target DLL:      Segger\JL2CM3.dll V2.99.15.0
 Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
-D:\X项目资料\鉴别仪\project\BOOT\A9\CISA9.uvprojx
-Project File Date:  05/22/2018
+D:\ProjectFile\JBY\BOOT\A9\CISA9.uvprojx
+Project File Date:  06/01/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'CISA9'
+compiling delay.C...
+compiling fifo.C...
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\inc\_fifo.h(63): warning:  #144-D: a value of type "volatile u8 *" cannot be used to initialize an entity of type "u8 *const"
+        DATA2, DATA7,DATA8,DATA9,DATA10,DATA11, DATA12 ,DATA13,DATA14,DATA15,
+..\UserSoftwareLib\JBY_10\src\fifo.C: 10 warnings, 0 errors
+compiling flash.c...
 compiling main_70.C...
 ..\UserSoftwareLib\JBY_10\src\main_70.C(155): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
         disp_string(upgradeFileName,0,dispIndex++*
@@ -40,14 +64,85 @@ NE_LINE_H);
 ..\UserSoftwareLib\JBY_10\src\main_70.C(523): warning:  #223-D: function "strlen" declared implicitly
         len = strlen(str);      
 ..\UserSoftwareLib\JBY_10\src\main_70.C: 5 warnings, 0 errors
+compiling motor.c...
+compiling uart.C...
+..\UserSoftwareLib\JBY_10\src\uart.C(110): warning:  #550-D: variable "i" was set but never used
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\uart.C(135): warning:  #550-D: variable "i" was set but never used
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\uart.C(161): warning:  #550-D: variable "i" was set but never used
+        u8 i;
+..\UserSoftwareLib\JBY_10\src\uart.C: 3 warnings, 0 errors
+compiling disp.C...
+..\UserSoftwareLib\JBY_10\src\disp.C(36): warning:  #223-D: function "sprintf" declared implicitly
+        sprintf(TFTStr,"void LCD_Clear(%d)\r\n",cl);
+..\UserSoftwareLib\JBY_10\src\disp.C(37): warning:  #223-D: function "strlen" declared implicitly
+        len = strlen(TFTStr);   
+..\UserSoftwareLib\JBY_10\src\disp.C(38): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+        uart_SendDataToUart1(TFTStr,len);
+..\UserSoftwareLib\JBY_10\src\disp.C(59): warning:  #223-D: function "strlen" declared implicitly
+        len = strlen(str);
+..\UserSoftwareLib\JBY_10\src\disp.C(66): warning:  #223-D: function "memcpy" declared implicitly
+        memcpy(TFTTmpStr+1,str,len);
+..\UserSoftwareLib\JBY_10\src\disp.C(70): warning:  #223-D: function "sprintf" declared implicitly
+        sprintf(TFTStr,"void LCDLS_Str(%d,%d,%d,%d,%d,%s)\r\n",xAxis,yAxis,CurrentBackColor,CurrentPenColor,CurrentFont,(u8 *)TFTTmpStr);
+..\UserSoftwareLib\JBY_10\src\disp.C(73): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+        uart_SendDataToUart1(TFTStr,len);
+..\UserSoftwareLib\JBY_10\src\disp.C(80): warning:  #223-D: function "sprintf" declared implicitly
+        sprintf(TFTStr,"void LCDLS_Num(%d,%d,%d,%d,%d,%d,%d)\r\n",xAxis,yAxis,CurrentBackColor,CurrentPenColor,num,bitLen,CurrentFont);
+..\UserSoftwareLib\JBY_10\src\disp.C(81): warning:  #223-D: function "strlen" declared implicitly
+        len = strlen(TFTStr);   
+..\UserSoftwareLib\JBY_10\src\disp.C(82): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+        uart_SendDataToUart1(TFTStr,len);
+..\UserSoftwareLib\JBY_10\src\disp.C(88): warning:  #223-D: function "sprintf" declared implicitly
+        sprintf(TFTStr,"void LCDLS_Frame(%d,%d,%d,%d,%d,%d,%d)\r\n",x,y,x+w-1,y+h-1,rowNum,colNum,backColor);
+..\UserSoftwareLib\JBY_10\src\disp.C(89): warning:  #223-D: function "strlen" declared implicitly
+        len = strlen(TFTStr);   
+..\UserSoftwareLib\JBY_10\src\disp.C(90): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+        uart_SendDataToUart1(TFTStr,len);       
+..\UserSoftwareLib\JBY_10\src\disp.C(138): warning:  #223-D: function "sprintf" declared implicitly
+        sprintf(TFTStr,"void LCD_Fill(%d,%d,%d,%d,%d)\r\n",x,y,x+w-1,y+h-1,color);
+..\UserSoftwareLib\JBY_10\src\disp.C(139): warning:  #223-D: function "strlen" declared implicitly
+        len = strlen(TFTStr);   
+..\UserSoftwareLib\JBY_10\src\disp.C(140): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+        uart_SendDataToUart1(TFTStr,len);
+..\UserSoftwareLib\JBY_10\src\disp.C: 16 warnings, 0 errors
+compiling user_udisc.c...
+compiling usbh_stdreq.c...
+compiling usbh_ioreq.c...
+compiling usbh_hcs.c...
+compiling usbh_core.c...
+compiling usbh_msc_bot.c...
+compiling usbh_msc_core.c...
+compiling usbh_msc_scsi.c...
+compiling usb_core.c...
+compiling usb_hcd.c...
+compiling usb_hcd_int.c...
+compiling user_bsp.c...
+compiling usbh_usr.c...
+compiling usbh_msc_usr.c...
+compiling fatfs_demo.c...
+compiling diskio_msc&sd.c...
+compiling misc.c...
+compiling stm32f10x_adc.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_pwr.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_spi.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_usart.c...
+compiling system_stm32f10x.c...
 linking...
-Program Size: Code=46748 RO-data=1488 RW-data=428 ZI-data=78228  
+Program Size: Code=47560 RO-data=1488 RW-data=428 ZI-data=78228  
 FromELF: creating hex file...
-After Build - User command #1: fromelf --bin -o "D:\X项目资料\鉴别仪\project\BOOT\A9\obj\BOOT.bin" "D:\X项目资料\鉴别仪\project\BOOT\A9\obj\BOOT.axf"
-".\obj\BOOT.axf" - 0 Error(s), 5 Warning(s).
+After Build - User command #1: fromelf --bin -o "D:\ProjectFile\JBY\BOOT\A9\obj\BOOT.bin" "D:\ProjectFile\JBY\BOOT\A9\obj\BOOT.axf"
+".\obj\BOOT.axf" - 0 Error(s), 34 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  D:\X项目资料\鉴别仪\project\BOOT\A9\RTE
+  D:\ProjectFile\JBY\BOOT\A9\RTE
   C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include
 
 <h2>Collection of Component Files used:</h2>
