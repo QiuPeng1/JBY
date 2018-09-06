@@ -150,47 +150,42 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>colorData,0x0A</ItemText>
+          <ItemText>billValue</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_colorSampleIndex,0x0A</ItemText>
+          <ItemText>colorJudgeValue</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>systemState</ItemText>
+          <ItemText>savedPara,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>enteranceSensorVal,0x0A</ItemText>
+          <ItemText>d,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>csmpNumRecord,0x0A</ItemText>
+          <ItemText>i,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>u8Temp</ItemText>
+          <ItemText>channelStart</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>tdjsValue[1],0x0A</ItemText>
+          <ItemText>channelEnd</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gb_noteBackLeave</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>enteranceSensorVal,0x0A</ItemText>
+          <ItemText>lengthIdleOriginValue</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

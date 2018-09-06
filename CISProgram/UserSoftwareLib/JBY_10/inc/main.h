@@ -95,8 +95,8 @@ bit gb_jinChaoFaSheIsOn = 0;
 
 #define	KEY1_GPIO_PORT GPIOC
 #define	KEY1_GPIO_PIN GPIO_Pin_7
-#define	KEY1_GPIO_MODE GPIO_Mode_IN_FLOATING//GPIO_Mode_IPU
-#define readkey1()  0//(GPIO_ReadInputDataBit(KEY1_GPIO_PORT, KEY1_GPIO_PIN))
+#define	KEY1_GPIO_MODE GPIO_Mode_IPU
+#define readkey1()  (GPIO_ReadInputDataBit(KEY1_GPIO_PORT, KEY1_GPIO_PIN))
 
 #define	KEY2_GPIO_PORT GPIOC
 #define	KEY2_GPIO_PIN GPIO_Pin_8
@@ -425,13 +425,22 @@ u8 mgComputeMpNum = 0;
 
 enum
 {
-	WORKMODE_1 = 0,
+	WORKMODE_1 = 0,   
 	WORKMODE_2,
 	WORKMODE_3,
 	WORKMODE_4,
 	WORKMODE_5,
 };
 u8 g_workMode = WORKMODE_1;
+
+enum
+{
+	WORK_ADD,
+	WORK_NOADD,
+};
+u8 g_needAddValue = WORK_NOADD;
+u8 g_beepOn = 1;//1打开0关闭
+u8 g_funDispChanger = 0;
 	
 #define WHITE         	 0xFFFF
 #define BLACK         	 0x0000	  
@@ -489,7 +498,7 @@ u8 g_workMode = WORKMODE_1;
 #define MP_EXTI_IRQ				EXTI9_5_IRQn
 
 #define ReadMp() (GPIO_ReadInputDataBit(MP_GPIO_PORT, MP_GPIO_PIN))
-#define MAX_RGB_VALUE 180
+#define MAX_RGB_VALUE 140
 u16 mpCnt = 0;
 u16 lengthMpCnt = 0;
 
@@ -600,12 +609,14 @@ u32 g_lengthSampleIndex;
 // u8 gb_needSampleIr = 0;
 u16 g_lengthIrMpNum;
 
+u8 gb_debugErrFlag = 0;
 u8 gb_FristInPS2 = 0;
 u8 gb_FristOutPS2 = 0;
 // u8 mgData[2][MG_DATA_MAX_LEN]; 
 u8 gb_uvNeedStartSampleflag = 0;
 u8 gb_uvNeedStartSampleCnt = 0;
 u8 gb_uvNeedEndSampleCnt = 0;
+u8 gb_needStopMotorCnt = 0;
 u8 gb_lengthIrNeedStartSampleflag = 0;
 u8 gb_lengthIrNeedStartSampleCnt = 0;
 u8 gb_lengthIrNeedEndSampleCnt = 0;
@@ -634,6 +645,7 @@ enum
 	JAM_CSDDJ,
 	JAM_PS2_IR,
 	JAM_ENTERANCE_TO_LENGTH,
+	JAM_LENGTH_TO_ENTERANCE,
 };
 u8 gb_isJammed = JAM_OK;
 u8 gb_dispJamInfo = 0;
@@ -712,18 +724,18 @@ enum
 u16 noteState = 0;
 
 #define MP_FROM_PS1_TO_PS2 500//200//150 //55mm 91mp
-u8 g_maxMpFromPs1ToPs2 = 0;
+u16 g_maxMpFromPs1ToPs2 = 0;
 
 #define MP_FROM_ENTERANCE_TO_Ps1 500//200//150 //55mm 91mp
-u8 g_maxMpFromEnteranceToPs1 = 0;
-#define MP_FROM_PS1_TO_ENTERANCE 40//200//150 //55mm 91mp
+u16 g_maxMpFromEnteranceToPs1 = 0;
+#define MP_FROM_PS1_TO_ENTERANCE 5//200//150 //55mm 91mp
 u8 g_maxMpFromPs1ToEnterance = 0;
 
 #define MP_FROM_PS2_TO_LEAVE 150//120 //50mm 82MP
 u8 g_maxMpFromPs2ToLeave = 0;
 
-#define MP_FROM_COMPUTE_TO_PS1 250 
-u8 g_maxMpFromComputeToPS1 = 0;
+#define MP_FROM_COMPUTE_TO_PS1 300 
+u16 g_maxMpFromComputeToPS1 = 0;
 
 #define MP_FROM_MG_TO_LENGTH 50 //15mm 91mp
 
@@ -798,8 +810,15 @@ u8 checkKeyCnt = CHECK_KEY_TIME;
 u8  currentLcdKey = KEY_noKey;
 u8  lastLcdKey = KEY_noKey;
 u8 keyFlag = 0;
-
-
+u16 g_errFlag = 0;
+enum
+{
+	ERR_VALUE = 0x0001,
+	ERR_IR = 0x0002,
+	ERR_COLOR = 0x0004,
+	ERR_MG = 0x0008,
+	ERR_ALL= 0x0010,
+};
 enum
 {
 	INDEX_CHINESE,
@@ -807,7 +826,7 @@ enum
 };
 #define g_languageIndex INDEX_ENGLISH//savedPara.userWorkPara.d[INDEX_LANGUAGE]
 u8 g_currency = INDEX_USD; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
-
+u8 gb_testbuf[20];
 enum
 {
 	NORMAL_DIAN_CHAO = 0,
@@ -824,10 +843,24 @@ u32 noteNum = 0;
 u32 noteSum = 0;
 u16 noteDenoValue = 0;
 u16 denoNoteNum[10];
-u8 const RMB_NOTE_VALUE[] = {100,100,50,20,10,5,1,0,0,0};
+u8 const RMB_NOTE_VALUE[] = {100,50,20,10,5,1,0,0,0};
 u8 const USD_NOTE_VALUE[] = {100,50,20,10,5,2,1,0,0,0};
 u16 const EUR_NOTE_VALUE[] = {500,200,100,50,20,10,5,0,0,0};
+u16 const RUB_NOTE_VALUE[] = {5000,2000,1000,500,200,100,50,10,0,0};
+u16 const TRY_NOTE_VALUE[] = {200,100,50,20,10,5,0,0,0,0};
 
+
+u32 JbmpAddress[]={BMP_J0,BMP_J1,BMP_J2,BMP_J3,BMP_J4,BMP_J5,BMP_J6,BMP_J7,BMP_J8,BMP_J9,BMP_JB};
+u32 YbmpAddress[]={BMP_Y0,BMP_Y1,BMP_Y2,BMP_Y3,BMP_Y4,BMP_Y5,BMP_Y6,BMP_Y7,BMP_Y8,BMP_Y9,BMP_YB};
+u32 SbmpAddress[]={BMP_S0,BMP_S1,BMP_S2,BMP_S3,BMP_S4,BMP_S5,BMP_S6,BMP_S7,BMP_S8,BMP_S9,BMP_SB};
+u16 SBmpDispXY[]={	BMP_S3C_X,BMP_S3C_Y,
+					BMP_S4C_X,BMP_S4C_Y,
+					BMP_S5C_X,BMP_S5C_Y,
+					BMP_S7C_X,BMP_S7C_Y,
+					BMP_S8C_X,BMP_S8C_Y,
+					BMP_S9C_X,BMP_S9C_Y,
+					BMP_S10C_X,BMP_S10C_Y,
+					BMP_S1C_X,BMP_S1C_Y,};
 void InitGpioInMain(void);
 void MainInit(void);
 void OutputCurrentCoinData(void);
@@ -956,6 +989,7 @@ void DispNoteSum(void);//显示金额
 void DispNoteDenoValue(void);//显示币值
 void DispDetailNoteNum(void);//显示明细
 void DispJamInfo(void);
+void DispFunInfo(void);
 void ClearAllNoteNum(void);
 		
 // void InitIrData(void);

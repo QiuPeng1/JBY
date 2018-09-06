@@ -23,8 +23,8 @@
 //---------------------------------------------------------------------
 //常量定义
 //---------------------------------------------------------------------
-#define FLASH_START_ADDR ((u32)0x0805fe00)
-#define FLASH_PAGE_SIZE  ((u16)0x200)
+#define FLASH_START_ADDR ((u32)0x080FF800)
+#define FLASH_PAGE_SIZE  ((u16)0x800)
 
 #define UPDATA_FLAG_ADDR ((u32)0x0800f800)//APP 0x10000
 

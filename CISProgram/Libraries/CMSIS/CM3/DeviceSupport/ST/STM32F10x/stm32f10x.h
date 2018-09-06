@@ -69,7 +69,7 @@
   /* #define STM32F10X_MD_VL */  /*!< STM32F10X_MD_VL: STM32 Medium density Value Line devices */  
   /* #define STM32F10X_HD */     /*!< STM32F10X_HD: STM32 High density devices */
   /* #define STM32F10X_HD_VL */  /*!< STM32F10X_HD_VL: STM32 High density value line devices */  
-  /* #define STM32F10X_XL */     /*!< STM32F10X_XL: STM32 XL-density devices */
+   #define STM32F10X_XL    			 /*!< STM32F10X_XL: STM32 XL-density devices */
   /* #define STM32F10X_CL */     /*!< STM32F10X_CL: STM32 Connectivity line devices */
 #endif
 /*  Tip: To avoid modifying this file each time you need to switch between these
@@ -909,14 +909,14 @@ typedef struct
   __IO uint32_t RESERVED;
   __IO uint32_t OBR;
   __IO uint32_t WRPR;
-#ifdef STM32F10X_XL
+//#ifdef STM32F10X_XL
   uint32_t RESERVED1[8]; 
   __IO uint32_t KEYR2;
   uint32_t RESERVED2;   
   __IO uint32_t SR2;
   __IO uint32_t CR2;
   __IO uint32_t AR2; 
-#endif /* STM32F10X_XL */  
+//#endif /* STM32F10X_XL */  
 } FLASH_TypeDef;
 
 /** 
