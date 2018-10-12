@@ -171,6 +171,136 @@ void OutputLengthDetailData(void)
 		}
 	}
 }*/
+
+//输出U16 重排数据格式
+// 1 - 22 红外 数据在前
+
+// 1 2 磁性
+// 3 4 UV
+// 5 - 16 颜色 数据在后
+
+void OutputALLDetailData2(void)
+{
+	u16 i,maxLen;
+	u8 j;
+	u8 buffer[50];
+	
+	buffer[0] = 0xc7;
+	buffer[1] = LENGTH_IR_CHANNEL_NUM*2;
+	buffer[LENGTH_IR_CHANNEL_NUM*2+2] = 0x55;
+	
+	memset(buffer+2,0,LENGTH_IR_CHANNEL_NUM*2);
+	
+	//测长输出
+	//第一个字节 测长数据长度
+	for(j = 0;j < LENGTH_IR_CHANNEL_NUM;j ++)
+	{
+		buffer[2+j*2] = HighByte(g_lengthSampleIndex);
+		buffer[2+j*2+1] = LowByte(g_lengthSampleIndex);
+	}
+	uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+	//等待串口发送完毕
+	while(uart1outfifo_count> 0)
+	{
+	}
+	//测长数据
+	memset(buffer+2,0,LENGTH_IR_CHANNEL_NUM*2);
+	for(i = 0;i < g_lengthSampleIndex;i ++)
+	{
+		for(j = 0;j < LENGTH_IR_CHANNEL_NUM;j++)
+		{
+			buffer[2+j*2] = HighByte(lengthData[j][i]);
+			buffer[2+j*2+1] = LowByte(lengthData[j][i]);
+		}
+		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+		//等待串口发送完毕
+		while(uart1outfifo_count> 0)
+		{
+		}
+	}
+	
+	memset(buffer+2,0,LENGTH_IR_CHANNEL_NUM*2);
+	//紧跟着输出磁性、UV、颜色数据
+	maxLen = 0;
+	maxLen = MAX(g_mgSampleIndex,g_colorSampleIndex);
+	maxLen = MAX(maxLen,g_uvSampleIndex);
+	//第一个字节 每个通道的数据长度
+	for(j = 0;j < LENGTH_IR_CHANNEL_NUM;j ++)
+	{
+		if(j < 2)//磁性
+		{
+			buffer[2+j*2] = HighByte(g_mgSampleIndex);
+			buffer[2+j*2+1] = LowByte(g_mgSampleIndex);
+		}
+		else if(j < 2 + 1)//uv
+		{
+			buffer[2+j*2] = HighByte(g_uvSampleIndex);
+			buffer[2+j*2+1] = LowByte(g_uvSampleIndex);			
+		}
+		else if(j < 2 + 1 + 12)//颜色
+		{
+			buffer[2+j*2] = HighByte(g_colorSampleIndex);
+			buffer[2+j*2+1] = LowByte(g_colorSampleIndex);			
+		}
+		else
+		{		
+		}
+	}
+	uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+	
+	//磁性 uv 颜色数据
+	for(i = 0;i < maxLen;i ++)
+	{
+		memset(buffer+2,0,LENGTH_IR_CHANNEL_NUM*2);
+		for(j = 0;j < LENGTH_IR_CHANNEL_NUM;j++)
+		{
+			if(j < 2)//磁性
+			{
+				if(i < g_mgSampleIndex)
+				{
+					buffer[2+j*2] = 0;
+					buffer[2+j*2+1] = mgData[j][i];
+				}
+			}
+			else if(j < 2 + 1)//uv
+			{
+				if(i < g_uvSampleIndex)
+				{
+					buffer[2+j*2] = 0;
+					buffer[2+j*2+1] = uvData[i];
+				}
+			}
+			else if(j < 2 + 1 + 12)//颜色
+			{
+				if(i < g_colorSampleIndex)
+				{
+					buffer[2+j*2] = HighByte(colorData[j-2-1][i]);
+					buffer[2+j*2+1] = LowByte(colorData[j-2-1][i]);	
+				}					
+			}
+		}
+		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+		//等待串口发送完毕
+		while(uart1outfifo_count> 0)
+		{
+		}
+	}
+	//6行全为0xff的分隔符
+	for (i=0; i<6; i++)
+	{
+		for(j = 0;j < LENGTH_IR_CHANNEL_NUM*2;j++)
+		{
+			buffer[2+j] = 0xff;
+		}
+		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+
+		//等待串口发送完毕
+		while(uart1outfifo_count> 0)
+		{
+		}
+	}
+}
+
 //第一二路磁性，第3到23路为红外，第3到14为颜色
 void OutputALLDetailData(void)
 {
@@ -316,10 +446,76 @@ void OutputALLDetailData(void)
 		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+6);
 
 		//等待串口发送完毕
-		while(uart1outfifo_count> 0)
+		while(uart3outfifo_count> 0)
 		{
 		}
 	}
+}
+void OutPutPsHWRecordData(void)
+{
+	u16 i;
+	u8 buffer[7];
+	u16 maxoutLen;
+	memset(buffer, 0, sizeof(buffer));
+	buffer[0] = 0xc6;
+	buffer[1] = 4;
+	buffer[6] = 0x55;
+
+	
+
+	maxoutLen = MAX(time2,mpEndCnt);
+	maxoutLen = MAX(gb_needOutPutLength,maxoutLen);
+
+	for(i = 0; i < maxoutLen; i++)
+	{
+		if (i <= time2)
+		{
+			buffer[2] = msCntRecode[i];
+		}
+		else
+		{
+			buffer[2] = 0;
+		}
+		if (i <= mpEndCnt)
+		{
+			buffer[3] = mpCntRecode[i];
+		}
+		else
+		{
+			buffer[3] = 0;
+		}
+		if (i <= gb_needOutPutLength)
+		{
+			buffer[4] = PS1ValueRecord[i];
+			buffer[5] = PS2ValueRecord[i];
+		}
+		else
+		{
+			buffer[4] = 0;
+			buffer[5] = 0;
+		}
+		uart_SendDataToUart3(buffer,7);
+
+		//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+
+	}
+	for (i = 0; i < 6; ++i)
+	{
+		buffer[2] = 0xFF;
+		buffer[3] = 0xFF;
+		buffer[4] = 0xFF;
+		buffer[5] = 0XFF;
+		uart_SendDataToUart3(buffer,7);
+
+		//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+	}
+
 }
 void OutputSensorView(void)
 {

@@ -22,6 +22,8 @@
 	#endif
 #endif
 
+//#define DRAW_STATE1
+
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------
@@ -130,11 +132,15 @@ enum
 #define IRAD_FVT_DIM		(IRAD_DATA_RESIZE_W*IRAD_DATA_RESIZE_H)
 BILL_EXT_PARA u8 lengthData_Tmp2[IRAD_FVT_DIM+100];
 
+#define COLOR_DATA_NUM		3
 #define COLOR_DATA_RESIZE  72
-BILL_EXT_PARA u8 colorData_tmp[12][COLOR_DATA_RESIZE+16];
-BILL_EXT_PARA short colorFvtTotal[COLOR_DATA_RESIZE*2*4];
 
+#define COLOR_FIV_DIM		3
+BILL_EXT_PARA u16 colorData_tmp[12][COLOR_DATA_RESIZE+8];
 
+BILL_EXT_PARA short colorFvtTotal[COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM];
+
+BILL_EXT_PARA int projH[900];
 BILL_EXT_PARA u8 billIsFake;
 BILL_EXT_PARA u8 billValue;
 BILL_EXT_PARA u8 billFlag;
@@ -149,6 +155,10 @@ BILL_EXT_PARA u8 colorJudgeFlag;
 BILL_EXT_PARA u8 g_IradRes;
 BILL_EXT_PARA u8 noteType;
 BILL_EXT_PARA u8 mgFvtFlag;
+
+
+BILL_EXT_PARA u16 iradImgW;
+BILL_EXT_PARA u16 iradImgH;
 //BILL_EXT_PARA I32 projH[IRAD_DATA_MAX_LEN];
 //BILL_EXT_PARA I32 projH1[IRAD_DATA_MAX_LEN];
 

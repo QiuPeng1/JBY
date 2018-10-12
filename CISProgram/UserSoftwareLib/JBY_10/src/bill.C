@@ -1,9 +1,8 @@
 /*包含私有头文件 */
 #include "_bill.h"
-#include <string.h>
 #include <math.h>
 #include "LW_USD_ValueFvt.h"
-//#include "LW_USD_ColorFvt.h"
+#include "LW_USD_ColorFvt.h"
 #include "LW_EUR_ValueFvt.h"
 #include "LW_EUR_ColorFvt.h"
 
@@ -13,11 +12,14 @@
 #include "LW_TRY_ValueFvt.h"
 #include "LW_TRY_ColorFvt.h"
 //#define DRAW_STATE
-//#define DRAW_STATE1
+//#define DRAW_STATE2
+
 
 #ifdef DRAW_STATE1
-u8 pImg0[500*3*500], pImg1[500*3*500];
-u8 pImg2[500*3*500], pImg3[500*3*500];	
+u8 pImg0[50*3*100];
+u8 pImg1[50*3*100];
+u8 pImg2[50*3*100];
+u8 pImg3[50*3*100];	
 #endif
 /*公开的子程序*/
 //---------------------------------------------------------------------
@@ -26,7 +28,7 @@ u8 pImg2[500*3*500], pImg3[500*3*500];
 
 u8 billRGB_Judge(int noteType)
 {
-	s16 i, j;
+	s16 i, j, m;
 	int r, g, b, t, t0, t1;
 	int min_i;
 
@@ -36,7 +38,7 @@ u8 billRGB_Judge(int noteType)
 	u8 *pNoteClass;
 	u8 Class;
 	int fvtInt;
-
+	m = 3;
 	if (colorDataLen < 50 || colorDataLen > 180)
 	{
 		colorJudgeValue = 0xff;
@@ -44,70 +46,67 @@ u8 billRGB_Judge(int noteType)
 		return 0;
 	}
 
-	memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*2*4);
-	
+	//memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*2*4);
+	memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM);
+
 	for (i = 0; i < 12; i++)
 	{
-		ResizeData(colorData[i]+12, colorDataLen-12, colorData_tmp[i], COLOR_DATA_RESIZE);
-	}
-#ifdef DRAW_STATE1
-	for (i = 0; i < 50; i++)
-	{
-		for (j = 0; j < COLOR_DATA_RESIZE; j++)
-		{
-			pImg0[3*(i*COLOR_DATA_RESIZE+j)+2] = colorData_tmp[0][j];
-			pImg0[3*(i*COLOR_DATA_RESIZE+j)+1] = colorData_tmp[1][j];
-			pImg0[3*(i*COLOR_DATA_RESIZE+j)+0] = colorData_tmp[2][j];
-			
-			pImg1[3*(i*COLOR_DATA_RESIZE+j)+2] = colorData_tmp[3][j];
-			pImg1[3*(i*COLOR_DATA_RESIZE+j)+1] = colorData_tmp[4][j];
-			pImg1[3*(i*COLOR_DATA_RESIZE+j)+0] = colorData_tmp[5][j];
-			
-			pImg2[3*(i*COLOR_DATA_RESIZE+j)+2] = colorData_tmp[6][j];
-			pImg2[3*(i*COLOR_DATA_RESIZE+j)+1] = colorData_tmp[7][j];
-			pImg2[3*(i*COLOR_DATA_RESIZE+j)+0] = colorData_tmp[8][j];
-			
-			pImg3[3*(i*COLOR_DATA_RESIZE+j)+2] = colorData_tmp[9][j];
-			pImg3[3*(i*COLOR_DATA_RESIZE+j)+1] = colorData_tmp[10][j];
-			pImg3[3*(i*COLOR_DATA_RESIZE+j)+0] = colorData_tmp[11][j];
-		}
+		ResizeData(colorData[i]+20, colorDataLen-24, colorData_tmp[i], COLOR_DATA_RESIZE);
 	}
 
-	Draw_TrueColor_Image(pImg0,COLOR_DATA_RESIZE,50,900,120);
-	Draw_TrueColor_Image(pImg1,COLOR_DATA_RESIZE,50,900,180);
-
-	
-	Draw_TrueColor_Image(pImg2,COLOR_DATA_RESIZE,50,900+colorDataLen,120);
-	Draw_TrueColor_Image(pImg3,COLOR_DATA_RESIZE,50,900+colorDataLen,180);
-
-#endif
-
-	for (i = 0; i < 4; i++)
+	for (i = 0; i < COLOR_DATA_NUM; i++)
 	{
 		for (j = 0; j < COLOR_DATA_RESIZE; j++)
 		{
 			r = colorData_tmp[i*3+0][j];
 			g = colorData_tmp[i*3+1][j];
 			b = colorData_tmp[i*3+2][j];
-
-			t = r*500/(g+1);
-			colorFvtTotal[i*COLOR_DATA_RESIZE*2+2*j+0] = t;
-			t = b*500/(g+1);
-			colorFvtTotal[i*COLOR_DATA_RESIZE*2+2*j+1] = t;
+			
+			//t = r*500/(g+1);
+			colorFvtTotal[i*COLOR_DATA_RESIZE*COLOR_FIV_DIM+COLOR_FIV_DIM*j+0] = r/m;
+			//t = b*500/(g+1);
+			colorFvtTotal[i*COLOR_DATA_RESIZE*COLOR_FIV_DIM+COLOR_FIV_DIM*j+1] = g/m;
+			colorFvtTotal[i*COLOR_DATA_RESIZE*COLOR_FIV_DIM+COLOR_FIV_DIM*j+2] = b/m;
 		}
 	}
+#ifdef DRAW_STATE1
+	
+	for (i = 0; i < 50; i++)
+	{
+		for (j = 0; j < COLOR_DATA_RESIZE; j++)
+		{
+			pImg0[3*(i*COLOR_DATA_RESIZE+j)+2] = min(255,colorData_tmp[0][j]/m);
+			pImg0[3*(i*COLOR_DATA_RESIZE+j)+1] = min(255,colorData_tmp[1][j]/m);
+			pImg0[3*(i*COLOR_DATA_RESIZE+j)+0] = min(255,colorData_tmp[2][j]/m);
+			
+			pImg1[3*(i*COLOR_DATA_RESIZE+j)+2] = min(255,colorData_tmp[3][j]/m);
+			pImg1[3*(i*COLOR_DATA_RESIZE+j)+1] = min(255,colorData_tmp[4][j]/m);
+			pImg1[3*(i*COLOR_DATA_RESIZE+j)+0] = min(255,colorData_tmp[5][j]/m);
+			
+			pImg2[3*(i*COLOR_DATA_RESIZE+j)+2] = min(255,colorData_tmp[6][j]/m);
+			pImg2[3*(i*COLOR_DATA_RESIZE+j)+1] = min(255,colorData_tmp[7][j]/m);
+			pImg2[3*(i*COLOR_DATA_RESIZE+j)+0] = min(255,colorData_tmp[8][j]/m);
+			
+			pImg3[3*(i*COLOR_DATA_RESIZE+j)+2] = min(255,colorData_tmp[9][j]/m);
+			pImg3[3*(i*COLOR_DATA_RESIZE+j)+1] = min(255,colorData_tmp[10][j]/m);
+			pImg3[3*(i*COLOR_DATA_RESIZE+j)+0] = min(255,colorData_tmp[11][j]/m);
+
+		}
+	}
+#endif
+//	return;
 	pf1 = colorFvtTotal;
-	pNoteClass = g_EUR_noteClass;
-	pFvt = (short *)EUR_colorFvt_Int;
-	Class = EUR_NOTE_CLASS;
-/*
+	pNoteClass = g_USD_noteClass;
+	pFvt = (short *)USD_colorFvt_Int;
+	Class = USD_NOTE_CLASS;
+
 	if (noteType == INDEX_USD)
 	{
 		pNoteClass = g_USD_noteClass;
 		pFvt = (short *)USD_colorFvt_Int;
 		Class = USD_NOTE_CLASS;
 	}
-	else */if (noteType == INDEX_EUR)
+	else if (noteType == INDEX_EUR)
 	{
 		pNoteClass = g_EUR_noteClass;
 		pFvt = (short *)EUR_colorFvt_Int;
@@ -129,7 +128,7 @@ u8 billRGB_Judge(int noteType)
 	for (i = 0; i < Class; i++)
 	{
 		fvtInt = 0;
-		for (j = 0; j < COLOR_DATA_RESIZE*2*4; j++)
+		for (j = 0; j < COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM; j++)
 		{
 			t0 = (int)pf1[j];
 			t1 = (int)pFvt[j*Class+i];
@@ -148,8 +147,8 @@ u8 billRGB_Judge(int noteType)
 		}
 	}
 
-	colorJudgeValue = min_i/4;
-	colorJudgeFlag = min_i%4;
+	colorJudgeValue = min_i;
+	colorJudgeFlag = 0;//min_i%4;
 
 #ifdef DRAW_STATE
 	for (i = 0; i < 12; i++)
@@ -211,15 +210,19 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 
 u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 {
-	int i, j, k, count, sum;
-	short sw, sh, sy, ey;
+//	int Min, MinPos, Max0, Max1, Max, MaxPos, whitePaperVal;
+	int i, j, k, m, sum, count;//, t, t0, t1, t2, x[10], y[10];
+//	int sum, iradAve, boDong, angle, wirePos, arv0, arv1;
+//	short sxLeft, exLeft, sxRight, exRight, count1;
+	short sx, ex, sw, sh, iradVal, sy, ey;
 
+//	float threK, d;
 	u8 *pImg;
 	double fvt, tt, max_t;
 	short *pFvt;
 	u8 *pNoteClass, *pf1;
 	u8 Class, min_i;
-	int fvtInt;
+	int fvtInt, Max;
 
 	pImg = (u8 *)lengthData;
 	billIradMask = 0;
@@ -231,10 +234,36 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	}
 
 
-#ifdef DRAW_STATE1
+#ifdef DRAW_STATE
 	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
 #endif
 
+	memset(projH, 0, sizeof(int)*IR_DATA_MAX_LEN);
+	
+	for (i = 5; i < 21-5; i++)
+	{
+		for (j = 0; j < lengthDataLen; j++)
+		{
+			projH[j] += pImg[i*IR_DATA_MAX_LEN+j];
+		}
+	}
+
+	for (i = 0; i < lengthDataLen-1; i++)
+	{
+		projH[i] = projH[i+1]-projH[i];
+	}
+	projH[i] = 0;
+	
+	Max = 0;
+	ex = lengthDataLen-8;
+	for (i = lengthDataLen-3; i > lengthDataLen-80; i--)
+	{
+		if (Max < projH[i])
+		{
+			Max = projH[i];
+			ex = i;
+		}
+	}
 	sy = 0;
 	ey = 21;
 	
@@ -271,27 +300,43 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 			break;
 		}
 	}
+
+//	ex = lengthDataLen-8;
+//	for (i = lengthDataLen-8; i > lengthDataLen-)
+//	{
+//	}
 //	ey = 21;
 //	sy = 0;
 	sh = ey-sy;
 	k = 0;
 	for (i = sy; i < ey; i++)
 	{
-		for (j = 8; j < lengthDataLen-8; j+=4)
+		count = 0;
+		for (j = 8; j < lengthDataLen-16; j++)
+		{
+			if (lengthData[i][j+0] == 0)
+			{
+				count++;
+			}
+		}
+		if (count > lengthDataLen/5)
+		{
+		//	sh -= 1;
+		//	continue;
+		}
+		for (j = 8; j < ex; j+=4)
 		{
 			sum = (lengthData[i][j+0]+lengthData[i][j+1]+lengthData[i][j+2]+lengthData[i][j+3])/4;
 			lengthData_Tmp[k++] = sum;
 		}
 	}
 	sw = k/sh;
-	
+	iradImgW = sw;
+	iradImgH = sh;
 	memset(lengthData_Tmp2, 0, IRAD_FVT_DIM);
 	ResizeCharImgGray(lengthData_Tmp,sw,sh, lengthData_Tmp2, IRAD_DATA_RESIZE_W,IRAD_DATA_RESIZE_H);
 	//sh = 20;
-#ifdef DRAW_STATE1
-	Draw_Gray_Image(lengthData_Tmp, sw, sh, 800, 300, 1);
-	Draw_Gray_Image(lengthData_Tmp2, IRAD_DATA_RESIZE_W, IRAD_DATA_RESIZE_H, 800, 320, 1);
-#endif
+
 
 //	return;
 	pf1 = lengthData_Tmp2;
@@ -344,8 +389,8 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		}
 	}
 	g_IradRes = min_i;
-	billValue = g_IradRes/4;
-	billFlag = g_IradRes%4;
+	billValue = g_IradRes;
+	billFlag = 0;//g_IradRes%4;
 
 	return 0;
 }
@@ -389,7 +434,7 @@ u8 billMG_Judge(int noteType)
 			Min1 = mgData[1][i];
 		}
 	}
-#ifdef DRAW_STATE1
+#ifdef DRAW_STATE2
 	Display_Proj_BYTE(mgData[0], mgDataLen, 0, 0, 1, 0);
 
 	Display_Proj_BYTE(mgData[1], mgDataLen, 0, 255, 1, 0);
@@ -405,7 +450,7 @@ u8 billMG_Judge(int noteType)
 			mgFvtFlag = 1;
 		}
 	}
-	else if (noteType == INDEX_USD)
+	else if (noteType == INDEX_USD || noteType == INDEX_RUB)
 	{
 		if (Max0-Min0 < 70 && Max1-Min1 < 70)
 		{
@@ -420,12 +465,11 @@ u8 billMG_Judge(int noteType)
 	//	FilterAverage_1(mgData[1], mgDataLen, mgData_tmp);
 //	FilterGaussian_1D_Int(mgData[1], mgDataLen, 1);
 //	Display_Proj_BYTE(mgData[1], mgDataLen, 0, 255*3, 1, 0);
-	return 0;
 }
 
 
 
-void ResizeData(const u8 *pOldData,I32 len,u8 *pNewData, I32 newLen)
+void ResizeData(const u16 *pOldData,I32 len,u16 *pNewData, I32 newLen)
 {
 	I32 i,tx,xx,dxi;
 	I32 t;
@@ -439,7 +483,7 @@ void ResizeData(const u8 *pOldData,I32 len,u8 *pNewData, I32 newLen)
 		t = ((((I32)pOldData[xx+1]-(I32)pOldData[xx])*dxi)>>10)+(((I32)pOldData[xx]-(I32)pOldData[xx+1])*dxi>>20)+(I32)pOldData[xx];
 		if (t > 255)
 		{
-			t = 255;
+		//	t = 255;
 		}
 		if (t <= 0)
 		{

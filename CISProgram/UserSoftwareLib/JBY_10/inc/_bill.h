@@ -37,6 +37,6 @@
 //文件内部模块私有函数
 //---------------------------------------------------------------------
 
-static void ResizeData(const u8 *pOldData,I32 len,u8 *pNewData, I32 newLen);
+static void ResizeData(const u16 *pOldData,I32 len,u16 *pNewData, I32 newLen);
 static void ResizeCharImgGray(u8 *pOldImg,I32 oldImgW,I32 oldImgH, u8 *pNewImg, I32 newImgW,I32 newImgH);
 #endif

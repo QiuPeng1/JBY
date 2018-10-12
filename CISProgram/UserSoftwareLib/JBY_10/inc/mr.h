@@ -158,7 +158,7 @@ MR_EXT_PARA u16 uvDataLen;
 
 
 #define COLOR_DATA_MAX_LEN 300
-MR_EXT_PARA u8 colorData[12][COLOR_DATA_MAX_LEN]; 
+MR_EXT_PARA u16 colorData[12][COLOR_DATA_MAX_LEN]; 
 MR_EXT_PARA u16 colorDataLen;
 
 MR_EXT_PARA u8 errorCode;

@@ -218,8 +218,8 @@ void motor1_SetSpeed(u8 spd)
 	switch (spd)
 	{
 		case SPEED_800:
-			forwardPwmValue = 255;//savedPara.adjustPara.csddjInitVal[spd][0];
-			backwardPwmValue = 220;//savedPara.adjustPara.csddjInitVal[spd][1];
+			forwardPwmValue = 255;//255;//savedPara.adjustPara.csddjInitVal[spd][0];
+			backwardPwmValue = 255;//220;//savedPara.adjustPara.csddjInitVal[spd][1];
 			break;
 		case SPEED_900:
 		case SPEED_1000:
