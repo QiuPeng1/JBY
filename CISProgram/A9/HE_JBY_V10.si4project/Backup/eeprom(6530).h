@@ -23,7 +23,7 @@
 	#endif
 #endif
 
-#define DATA_FLAG  0x87061155
+#define DATA_FLAG  0x87061460
 
 typedef struct 
 {

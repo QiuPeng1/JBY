@@ -38,7 +38,7 @@ u8 billRGB_Judge(int noteType)
 	u8 *pNoteClass;
 	u8 Class;
 	int fvtInt;
-	m = 3;
+	m = 2;
 	if (colorDataLen < 50 || colorDataLen > 180)
 	{
 		colorJudgeValue = 0xff;

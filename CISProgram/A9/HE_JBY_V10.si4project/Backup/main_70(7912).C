@@ -7,9 +7,9 @@
 
 u8 readKey(void)
 {
-	//if((!readkey0())&&(!readkey1()))
+	if((!readkey0())&&(!readkey1()))
 	{
-	//	return KEY_CUR_FUN;
+		return KEY_CUR_FUN;
 	}
 	if(!readkey0())
 	{
@@ -39,47 +39,10 @@ void DealKeyDown(void)
 			case NORMAL:
 				DealKeyDownOnNormal(key);
 				break;
-			case MENU1:
-				DealKeyDownOnMenu1(key);
-				break;
 		}
 		//disp_num(key,0,0);
 //		LCD_DispNum(0,0,WHITE,BLACK,key,24);
 	}
-}
-
-void DealKeyDownOnMenu1(u8 key)
-{
-	u8 i,k;
-	u8 tmpBuf[10];
-	u16 temp;
-	
-		switch(key)
-		{
-			case KEY_RESTART:
-				if(gb_paraChanged == 1)
-				{
-					gb_paraChanged = 0;
-					eeprom_SaveData();
-				}
-				SetSystemState(NORMAL);
-				ClearAllNoteNum();
-				DispMainMenu();
-			break;
-			case KEY_CUR:	
-				SettingParaInc();
-				DispSettingSelected();	
-				
-			break;
-			case KEY_FUN:
-	 			lastSelectedItemIndex = selectedItemIndex;
-				selectedItemIndex ++;
-				selectedItemIndex %= 5;
-	 			DispSettingSelected();
-			break;
-			case LONG_KEY_FUN:
-				break;
-		}
 }
 
 void DealKeyDownOnNormal(u8 key)
@@ -103,87 +66,83 @@ void DealKeyDownOnNormal(u8 key)
 	{	
 		switch(key)
 		{
-			case KEY_RESTART:
-				SetSystemState(NORMAL);
-				gb_enableSample = 1;
-				noteState = 0;
-				gb_isJammed = 0;
-				ClearAllNoteNum();
-				DispNoteNumValSum();
-
+			case KEY_CUR_FUN:
+					if(g_motor1State == MOTOR_STOP)
+					{
+						motor1_ForwardRun();
+					}
+					else if(g_motor1State == MOTOR_FORWARD_RUN)
+					{
+						motor1_BackwardRun();
+					}
+					else
+					{
+						motor1_Stop();
+					}
 			break;
-			case LONG_KEY_RESTART:			
-
-				SetSystemState(MENU1);
-				DispMenu1();
-				selectedItemIndex = 0;
-				lastSelectedItemIndex = 0;
-
+			case KEY_RESTART:
+					if(g_beepOn==1)
+					{
+						g_beepOn = 0;
+					}
+					else
+					{
+						g_beepOn = 1;
+					}
+					g_funDispChanger = 1;
+			break;
+			case LONG_KEY_RESTART:
+					SetSystemState(NORMAL);
+					gb_enableSample = 1;
+					noteState = 0;
+					gb_isJammed = 0;
+					ClearAllNoteNum();
+					DispNoteNumValSum();
+					//ClearAllNoteNum();
+					//DispMainMenu();			
 				break;
 			case KEY_CUR:
-				if(g_currency == INDEX_USD)
-				{
-					g_currency = INDEX_EUR;
-					disp_DrawPic(0,0,BMP_FLAGEUR);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTEUR);
+					if(gb_noteBackLeave==0)
+					{
+						gb_noteBackLeave = 1;
+					}
+					else
+					{
+						gb_noteBackLeave = 0;
+					}
+				break;
+			case LONG_KEY_CUR:
+					if(g_currency == INDEX_USD)
+					{
+						g_currency = INDEX_EUR;
+						disp_DrawPic(0,0,BMP_FLAGEUR);
+						disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTEUR);
 
-				}
-				else if(g_currency == INDEX_EUR)
-				{
-					g_currency = INDEX_RUB;
-					disp_DrawPic(0,0,BMP_FLAGRUB);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTRUB);
+					}
+					else if(g_currency == INDEX_EUR)
+					{
+						g_currency = INDEX_RUB;
+						disp_DrawPic(0,0,BMP_FLAGRUB);
+						disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTRUB);
 
-				}
-				else if(g_currency == INDEX_RUB)
-				{
-					g_currency = INDEX_TRY;
-					disp_DrawPic(0,0,BMP_FLAGTRY);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTTRY);
-				}
-				else if(g_currency == INDEX_TRY)
-				{
-					g_currency = INDEX_USD;
-					disp_DrawPic(0,0,BMP_FLAGUSD);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTUSD);
-				}					
-				ClearAllNoteNum();
-				DispNoteNumValSum();
+					}
+					else if(g_currency == INDEX_RUB)
+					{
+						g_currency = INDEX_TRY;
+						disp_DrawPic(0,0,BMP_FLAGTRY);
+						disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTTRY);
+					}
+					else if(g_currency == INDEX_TRY)
+					{
+						g_currency = INDEX_USD;
+						disp_DrawPic(0,0,BMP_FLAGUSD);
+						disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTUSD);
+					}					
+					ClearAllNoteNum();
+					DispNoteNumValSum();
 					//DispMainMenu();			
 			break;
 			case KEY_FUN:
-				if(gb_identificationWays == MG_WAY)
-				{
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_FIR);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_FUV);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_FMG);
-					gb_identificationWays = ALL_WAYS;
-				}
-				else if(gb_identificationWays == ALL_WAYS)
-				{
-				
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_FIR);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_FB);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_FB);
-					gb_identificationWays =IR_WAY;
-				}
-				else if(gb_identificationWays == IR_WAY)
-				{
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_FB);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_FUV);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_FB);
-					gb_identificationWays =UV_WAY;
-				}
-				else if(gb_identificationWays == UV_WAY)
-				{
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_FB);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_FB);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_FMG);
-					gb_identificationWays =MG_WAY;
-				}
-		
-			break;
-			case LONG_KEY_FUN:
 				if(g_needAddValue == WORK_ADD)
 				{
 					g_needAddValue = WORK_NOADD;
@@ -193,7 +152,21 @@ void DealKeyDownOnNormal(u8 key)
 					g_needAddValue = WORK_ADD;
 				}
 				g_funDispChanger = 1;
-
+			break;
+			case LONG_KEY_FUN:
+					if(g_needUpGrade == 1)
+					{
+						#ifdef BOOT_APP	
+						g_needUpGrade = 0;
+						flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
+						delay_DelayMs(100);
+						NVIC_SystemReset();	
+						#endif
+					}
+					else
+					{
+						g_needUpGradeCnt++;
+					}
 				break;
 		}
 	}
@@ -380,13 +353,15 @@ int main(void)
 		}
 		
 		DealScanEnteracneSensor();
-		//ScanKeyDown();
+		ScanKeyDown();
 		DispAutoRefreshMenu();
 		
 		DealNotePass();
 		
 		DealPackageFromUart3();
-			
+		
+	//	ScanKeyDown();
+		
 		DealKeyDown();
 
 	}
@@ -500,7 +475,7 @@ void DealPackageFromUart3(void)
 						break;
 					case 0x62://磁性数据 自
 						gb_autoOutputDetailData = 1;
-						savedPara.noteLeaveRoads = 0;
+						gb_noteBackLeave = 0;
 						break;
 					case 'a'://输出数据 //磁性 获取当前纸币
 						//OutputMgIrDetailData();
@@ -599,10 +574,10 @@ void DealPackageFromUart3(void)
 						}
 						break;	
 					case 0xa9:
-						savedPara.noteLeaveRoads = 1;
+						gb_noteBackLeave = 1;
 						break;
 					case 0xaa:
-						savedPara.noteLeaveRoads = 0;
+						gb_noteBackLeave = 0;
 						break;
 					case 0xab:
 						hwfs_On();
@@ -813,6 +788,68 @@ void DealScanEnteracneSensor(void)
 		}
 	}
 	
+/*	
+	{
+	//如果手动模式，就检测有无按下复位键
+	//if (savedPara.userWorkPara.d[INDEX_MANUAL_IS_ON] > 0)
+	if (savedPara.userWorkPara.d[INDEX_MANUAL_IS_ON] > 0)
+	{
+		if ((gb_keyFuWeiDown == 0) && (gb_runInManual == 0))//没按复位键 且不是在运转中 就退出
+		{
+			return;
+		}
+		gb_keyFuWeiDown = 0;
+	}
+
+AUTO_FEED:		
+	if(gb_haveNoteInEntergate == 1)
+	{
+		//if ((g_needStopWork > 0) || (g_needPreStopWork > 0)||g_waittingSnrPkg > 0||gb_isJammed > 0||gb_autoGetImg > 0)	//如果有错误不能启动电机，就不启动
+		if(gb_isJammed > 0)
+		{
+			goto DEAL_NO_NOTE_IN_ENTERGATE;
+		}
+
+		if(gb_needStopCsddj != 1)
+		{
+			if(g_motor1State == MOTOR_STOP)
+			{
+				gb_runInManual = 1;
+				g_turnOffHwfsDelayTimer = 0;
+				hwfs_On();
+				delay_DelayMs(500);
+				motor1_ForwardRun();
+				gb_enableSample = 1;
+				//delay_DelayMs(500);
+				InitNoteNum();
+				DispNoteNumValSum();
+//				gb_zouChaoInfoIsChanged = 1;
+
+				g_haveNoNoteCounter = HAVE_NO_NOTE_MAX_COUNTER_START;
+			}
+		}
+	}
+	else
+	{
+DEAL_NO_NOTE_IN_ENTERGATE:
+			if(g_haveNoNoteCounter == 0)
+			{				
+				if(g_motor1State == MOTOR_RUN)
+				{
+					//CIS停止工作
+					//小板停止工作
+					motor1_Stop();
+					gb_runInManual = 0;
+					g_turnOffHwfsDelayTimer = HWFS_OFF_DELAY;		
+					if(outputDeatalDataCnt > 0)
+					{
+						outputDeatalDataCnt --;
+						OutputMgIrDetailData();
+					}
+				}
+			}			
+		}
+	}*/
 }
 
 u8 GetAdjustedData(u8 value,u8 index)
@@ -1087,24 +1124,10 @@ void DispMainMenuBackground(void)
 //	disp_string(" PCS:",NOTENUM_TITLE_X,NOTENUM_Y);
 //	disp_string("DENO:",DENO_NUM_TITLE_X,DENO_NUM_Y);
 		disp_DrawPic(0,0,BMP_OPENBLACK1);
-		if(gb_identificationWays == ALL_WAYS)
-		{
-			disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_FIR);
-			disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_FUV);
-			disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_FMG);
-		}
-		else if(gb_identificationWays == IR_WAY)
-		{
-			disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_FIR);
-		}
-		else if(gb_identificationWays == UV_WAY)
-		{
-			disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_FUV);
-		}
-		else if(gb_identificationWays == MG_WAY)
-		{
-			disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_FMG);
-		}
+
+		disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_FIR);
+		disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_FUV);
+		disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_FMG);
 		
 		if(g_currency == INDEX_USD)
 		{
@@ -1128,194 +1151,6 @@ void DispMainMenuBackground(void)
 		}	
 		disp_DrawPic(BMP_PCS_X,BMP_PCS_Y,BMP_PCS);
 }
-void DispMenu1(void)
-{
-	disp_clearScreen(BLACK);
-	disp_setPenColor(WHITE);
-	disp_setBackColor(BLACK);
-	disp_setFont(24);
-	disp_string("Setup Menu",100,0);
-
-	disp_setFont(24);
-	disp_string("Beep         :",0,50);
-	disp_string("NoteLeave    :",0,50+30);
-	disp_string("MotorForward :",0,50+30*2);
-	disp_string("MotorBackward:",0,50+30*3);
-	disp_string("Upgrade      :",0,50+30*4);
-	disp_string(VERSION,0,240-24);
-	DispSetting();
-	DispSettingSelected();
-}
-#define SETTING_X 180;
-#define SETTING_H 30
-
-u8 * const ONOFF_STR[] = 
-{
-	"OFF",
-	"ON ",
-};
-u8 * const Direction_STR[] = 
-{
-	"Forward ",
-	"Backward",
-};
-
-void DispSetting(void)
-{
-	u16 x,y;
-	disp_setPenColor(WHITE);
-	disp_setBackColor(BLACK);
-	disp_setFont(24);	
-	
-	x = SETTING_X;
-	y = 50;
-	disp_string(ONOFF_STR[savedPara.beepSwitch],x,y);
-
-	x = SETTING_X;
-	y = 50+SETTING_H;
-	disp_string(Direction_STR[savedPara.noteLeaveRoads],x,y);
-	
-	x = SETTING_X;
-	y = 50+SETTING_H*2;
-	disp_string(ONOFF_STR[gb_motorState1],x,y);
-
-	x = SETTING_X;
-	y = 50+SETTING_H*3;
-	disp_string(ONOFF_STR[gb_motorState2],x,y);
-	
-	x = SETTING_X;
-	y = 50+SETTING_H*4;
-	disp_string("enter",x,y);
-
-}
-
-void DispSettingSelected(void)
-{
-	u16 x,y;
-	disp_setPenColor(BLACK);
-	disp_setBackColor(WHITE);
-	disp_setFont(24);
-
-	switch(selectedItemIndex)
-	{
-		case 0:
-			x = SETTING_X;
-			y = 50;
-			disp_string(ONOFF_STR[savedPara.beepSwitch],x,y);
-			break;
-		case 1:
-			x = SETTING_X;
-			y = 50+SETTING_H;
-			disp_string(Direction_STR[savedPara.noteLeaveRoads],x,y);
-			break;
-		case 2:
-			x = SETTING_X;
-			y = 50+SETTING_H*2;
-			disp_string(ONOFF_STR[gb_motorState1],x,y);
-			break;
-		case 3:
-			x = SETTING_X;
-			y = 50+SETTING_H*3;
-			disp_string(ONOFF_STR[gb_motorState2],x,y);
-			break;
-		case 4:
-			x = SETTING_X;
-			y = 50+SETTING_H*4;
-			disp_string("enter",x,y);
-			break;
-		default:
-			break;						
-	}
-	
-	if(lastSelectedItemIndex == selectedItemIndex)
-	{
-		return;
-	}
-	disp_setPenColor(WHITE);
-	disp_setBackColor(BLACK);	
-	switch(lastSelectedItemIndex)
-	{
-		case 0:
-			x = SETTING_X;
-			y = 50;
-			disp_string(ONOFF_STR[savedPara.beepSwitch],x,y);
-			break;
-		case 1:
-			x = SETTING_X;
-			y = 50+SETTING_H;
-			disp_string(Direction_STR[savedPara.noteLeaveRoads],x,y);
-			break;
-		case 2:
-			x = SETTING_X;
-			y = 50+SETTING_H*2;
-			disp_string(ONOFF_STR[gb_motorState1],x,y);
-			break;
-		case 3:
-			x = SETTING_X;
-			y = 50+SETTING_H*3;
-			disp_string(ONOFF_STR[gb_motorState2],x,y);
-			break;
-		case 4:
-			x = SETTING_X;
-			y = 50+SETTING_H*4;
-			disp_string("enter",x,y);
-			break;
-		default:
-			break;					
-	}
-}
-
-void SettingParaInc(void)
-{
-	switch(selectedItemIndex)
-	{
-		case 0:
- 			savedPara.beepSwitch ++;
- 			savedPara.beepSwitch %= 2;
-			gb_paraChanged = 1;
-		break;
-		case 1:
- 			savedPara.noteLeaveRoads ++;
- 			savedPara.noteLeaveRoads %= 2;
-			gb_paraChanged = 1;
-		break;
-		case 2:
-			if (gb_motorState1 == 0)
-			{
-				gb_motorState1 = 1;
-				motor1_ForwardRun();
-			}
-			else
-			{
-				gb_motorState1 = 0;
-				motor1_Stop();			
-			}
-		break;
-		case 3:
-			if (gb_motorState2 == 0)
-			{
-				gb_motorState2 = 1;
-				motor1_BackwardRun();
-			}
-			else
-			{
-				gb_motorState2 = 0;
-				motor1_Stop();			
-			}
-		break;
-		case 4:
-	#ifdef BOOT_APP
-			flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
-			delay_DelayMs(100);
-			NVIC_SystemReset();
-	#endif
-		break;
-		default:
-			break;						
-	}
-	
-}
-
 
 void DispMainMenu(void)
 {
@@ -1344,7 +1179,7 @@ void DispFunInfo(void)
 		disp_DrawPic(BMP_FADD_X,BMP_FADD_Y,BMP_FADD_OFF);
 	}
 	
-	if(savedPara.beepSwitch == 1)
+	if(g_beepOn == 1)
 	{
 		disp_DrawPic(BMP_VOICE_X,BMP_VOICE_Y,BMP_SPEAK_ON);
 	}
@@ -1983,7 +1818,7 @@ void DealNotePass(void)
 			//计算结束
 			noteState &= (~STATE_COMPUTE);
 			//根据计算结果来决定钱去前面还是回转  
-			if(savedPara.noteLeaveRoads == 0)
+			if(gb_noteBackLeave == 0)
 			{
 				noteState |= STATE_FORWARD_NOTE_LEAVE;
 				motor1_ForwardRun();//向前转
@@ -2410,93 +2245,6 @@ void DispDetailNoteNum(void)//显示明细
 			d = denoNoteNum[i];
 			if(d == 0)
 			{	
-				disp_DrawPic(SBmpDispXY[i*2+2]-24,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[i*2+2]-12,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[i*2+2],SBmpDispXY[i*2+1+2],SbmpAddress[0]);
-			}	
-			else
-			{
-				for(j=0; j<3; j++)
-				{
-					if(d > 0)
-					{
-						result = d%10;
-						disp_DrawPic(SBmpDispXY[i*2+2]-12*j, SBmpDispXY[i*2+1+2], SbmpAddress[result]);
-						d /= 10;
-					}
-					else
-					{
-						disp_DrawPic(SBmpDispXY[i*2+2]-12*j,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-					}
-				}
-			}
-		}
-	}
-	else if((g_currency == INDEX_TRY))
-	{
-		for(i = 0;i < 6;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
-				if (i >= 3)
-				{
-					disp_DrawPic(SBmpDispXY[(i+1)*2+2]-24,SBmpDispXY[(i+1)*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+1)*2+2]-12,SBmpDispXY[(i+1)*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+1)*2+2],SBmpDispXY[(i+1)*2+1+2],SbmpAddress[0]);
-				}
-				else
-				{
-					disp_DrawPic(SBmpDispXY[i*2+2]-24,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+2]-12,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+2],SBmpDispXY[i*2+1+2],SbmpAddress[0]);
-				}
-
-			}	
-			else
-			{
-				if (i >= 3)
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+1)*2+2]-12*j, SBmpDispXY[(i+1)*2+1+2], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[(i+1)*2+2]-12*j,SBmpDispXY[(i+1)*2+1+2],SbmpAddress[10]);
-						}
-					}
-				}
-				else
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[i*2+2]-12*j, SBmpDispXY[i*2+1+2], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[i*2+2]-12*j,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-						}
-					}
-				}
-			}
-		}
-	}
-	else if(g_currency == INDEX_RUB)
-	{
-		for(i = 0;i < 8;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
 				disp_DrawPic(SBmpDispXY[i*2]-24,SBmpDispXY[i*2+1],SbmpAddress[10]);
 				disp_DrawPic(SBmpDispXY[i*2]-12,SBmpDispXY[i*2+1],SbmpAddress[10]);
 				disp_DrawPic(SBmpDispXY[i*2],SBmpDispXY[i*2+1],SbmpAddress[0]);
@@ -2519,12 +2267,86 @@ void DispDetailNoteNum(void)//显示明细
 			}
 		}
 	}
+	else if((g_currency == INDEX_RUB)||(g_currency == INDEX_TRY))
+	{
+		for(i = 0;i < 6;i++)
+		{
+			d = denoNoteNum[i];
+			if(d == 0)
+			{	
+				if (i >= 3)
+				{
+					disp_DrawPic(SBmpDispXY[(i+1)*2]-24,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+1)*2]-12,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+1)*2],SBmpDispXY[(i+1)*2+1],SbmpAddress[0]);
+				}
+				else
+				{
+					disp_DrawPic(SBmpDispXY[i*2]-24,SBmpDispXY[i*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[i*2]-12,SBmpDispXY[i*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[i*2],SBmpDispXY[i*2+1],SbmpAddress[0]);
+				}
+
+			}	
+			else
+			{
+				if (i >= 3)
+				{
+					for(j=0; j<3; j++)
+					{
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j, SBmpDispXY[(i+1)*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+						}
+					}
+				}
+				else
+				{
+					for(j=0; j<3; j++)
+					{
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[i*2]-12*j, SBmpDispXY[i*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[i*2]-12*j,SBmpDispXY[i*2+1],SbmpAddress[10]);
+						}
+					}
+				}
+			}
+		}
+	}
+//		U32ToStr(denoNoteNum[i],dispStr,4);
+//		disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*1+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
+//		if(g_currency == INDEX_USD)
+//		{
+//			denoSum = denoNoteNum[i]*USD_NOTE_VALUE[i];
+//		}
+//		else
+//		{
+//			denoSum = denoNoteNum[i]*EUR_NOTE_VALUE[i];
+//		}
+//		U32ToStr(denoSum,dispStr,5);
+//		disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*2+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
+	//U32ToStr(noteNum,dispStr,4);
+	//disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*1+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
+	//U32ToStr(noteSum,dispStr,5);
+	//disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*2+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
 }
 		
 
 void LongBeep(u8 times)
 {
-	if(savedPara.beepSwitch == 1)
+	if(g_beepOn == 1)
 	{
 		beepTimes = times;	//蜂鸣器该响的次数
 		beepType = LONG_BEEP_LENGTH;
@@ -3108,8 +2930,6 @@ void InitUserWorkPara()
 	savedPara.userWorkPara.d[INDEX_RMB_UV_GRADE] = 1;
 	savedPara.userWorkPara.d[INDEX_RMB_DOUBLE_NOTE_THRES] = 50;
 	savedPara.userWorkPara.d[INDEX_RMB_CHAIN_NOTE_THRES] = 100;
-	savedPara.beepSwitch = 1;
-	savedPara.noteLeaveRoads = 1;
 }
 
 void InitMotorSpeedData(void)
@@ -3305,6 +3125,13 @@ void MainInit(void)
 
 	//main.c及中断的管脚初始化
 	InitGpioInMain();
+	
+// 	tm16xx_Init();
+// 	tm16xx_SetInsturctLed(gb_mgIsOn,gb_uvIsOn,gb_batchIsOn,gb_addIsOn);
+//	tm16xx_DisableDP();
+// 	tm16xx_Led1DispStr("L88");
+//	tm16xx_Led2Disp(VERSION);
+	//adc_init();
 	
 	tim_init();
 	
@@ -3663,7 +3490,7 @@ void tim_init(void)
 	
 	//定时器5ms，通用定时器
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-	//PCLK1 = 36Mhz，TIM2CLK = 36M/180 * 2 = 400K, Period = 2000, TIM2 counter定时器频率 = 200 Hz, 周期为5ms
+	//PCLK1 = 36Mhz，TIM2CLK = 36M/90 * 2 = 400K, Period = 2000, TIM2 counter定时器频率 = 200 Hz, 周期为5ms
 	TIM_TimeBaseStructure.TIM_Prescaler = 180-1;
 	TIM_TimeBaseStructure.TIM_Period = 2000-1;
 	
@@ -4063,6 +3890,19 @@ void SysTick_Handler(void)
 		gb_oneSec = 1;
 		gb_oneSecAutoRefresh = 1;
 		oneSecCnt = 0;
+		gb_SecCnt++;
+		if(gb_SecCnt > 20)
+		{
+			gb_SecCnt = 0;
+			if(g_needUpGradeCnt >= 3)
+			{
+				g_needUpGrade = 1;
+			}
+			else if(g_needUpGradeCnt > 0)
+			{
+				g_needUpGradeCnt--;
+			}
+		}
 	}
 	//电机减速超时处理
 	if(gb_needStopMotorTimeout > 0)
@@ -4970,7 +4810,7 @@ void TIM2_IRQHandler(void)
 				gb_needDealUart1Data = 1;
 			}
 		}
-		ScanKeyDown();
+		
 		//检测进钞接收
 // 		if (gb_jinChaoFaSheIsOn)
 // 		{

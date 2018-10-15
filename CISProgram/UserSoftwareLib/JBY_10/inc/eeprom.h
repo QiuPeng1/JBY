@@ -23,7 +23,7 @@
 	#endif
 #endif
 
-#define DATA_FLAG  0x87061460
+#define DATA_FLAG  0x87061467
 
 typedef struct 
 {
@@ -121,7 +121,9 @@ typedef struct
 	MACHINE_WORK_PARA_T machineWorkPara;
 	USER_WORK_PARA_T userWorkPara;
 	JUDGE_PARA_T judgePara;
-	u8 reserve[64];
+	u8 beepSwitch;
+	u8 noteLeaveRoads;
+	u8 reserve[62];
 	u32 flag;
 }DATANEEDSAVED_T;
 

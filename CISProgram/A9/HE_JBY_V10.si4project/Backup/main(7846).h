@@ -103,6 +103,13 @@ bit gb_jinChaoFaSheIsOn = 0;
 #define	KEY2_GPIO_MODE GPIO_Mode_IPU
 #define readkey2()  (GPIO_ReadInputDataBit(KEY2_GPIO_PORT, KEY2_GPIO_PIN))
 
+//#define	TEST_GPIO_PORT GPIOC
+//#define	TEST_GPIO_PIN GPIO_Pin_6
+//#define	TEST_GPIO_MODE GPIO_Mode_Out_PP
+//u8 gb_testGpioC6On = 0;
+//#define test_Off()  GPIO_SetBits(TEST_GPIO_PORT, TEST_GPIO_PIN); gb_testGpioC6On = 0
+//#define test_On()  GPIO_ResetBits(TEST_GPIO_PORT, TEST_GPIO_PIN); gb_testGpioC6On = 1
+
 enum
 {
 	FS_RED,
@@ -150,6 +157,10 @@ u8 g_colorFsRGB = FS_OFF;
 u8 chanelIndexOf4051 = 0;
 
 u8 g_colorFsStopWork = 0;
+u8 gb_needStopMotorTimeout = 0;
+u8 gb_mpPeriodRecordCnt = 0;
+u8 g_needSaveMpPeriodFlag = 0;
+u8 gb_mpPeriodRecord[100];
 // #define A1_GPIO_PORT           GPIOB
 // #define A1_GPIO_PIN            GPIO_Pin_1
 // #define A1_GPIO_MODE           GPIO_Mode_Out_PP
@@ -332,7 +343,7 @@ enum
 	MIN_HAVEMONEY_PULSENUM_COUNT = 30,//进钞口有纸币的最少脉冲数（在扫描间隔期内）
 	ENTERANCE_HAVENOTE_THRES = 60,
 	ENTERANCE_HAVENOTE_CHAZHI = 20,//50
-	TONGDAO_HAVENOTE_THRES = 220,
+	TONGDAO_HAVENOTE_THRES = 200,
 	SCAN_MOTOR_TIME = 10,
 };
 u8 entergatePulseNumCounter = 0;			//入钞口的计数器，如果有纸币，就会一直增加
@@ -340,9 +351,25 @@ u8 ps1PulseNumCounter = 0;		    	//PS1的计数器，如果有纸币，就会一直增加
 u8 ps2PulseNumCounter = 0;		    	//PS2的计数器，如果有纸币，就会一直增加
 u8 scanEntergateTimer = 0; 
 u8 gb_haveNoteInEntergate = 0;
-u8 PS1Flag = 0;
+u32 PS1Flag = 0;
+u8 motor1StopRecord = 0;
+u8 motor1SataRecord = 0;
+u8 motor1SataRecord2 = 0;
+u8 PS1ValueRecord[1500];
+u8 PS2ValueRecord[1500];
+u16 PS1ValueRecordCnt = 0;
+u16 PS2ValueRecordCnt = 0;
+u8 mpCntRecode[1000];
+u8 msCntRecode[1000];
+u8 gb_motorNeedEndOneNoteCnt = 0;
 u8 PS2Flag = 0;
+u8 PS2FlagCnt = 0;
 u8 gb_haveNoteInPS1 = 0;
+
+u8 PS3Flag = 0;
+u8 PS3FlagCnt = 0;
+u8 gb_haveNoteInPS3 = 0;
+
 
 u8 scanMotorTimer = 0; 
 
@@ -438,7 +465,7 @@ enum
 	WORK_ADD,
 	WORK_NOADD,
 };
-u8 g_needAddValue = WORK_NOADD;
+u8 g_needAddValue = WORK_ADD;
 u8 g_beepOn = 1;//1打开0关闭
 u8 g_funDispChanger = 0;
 	
@@ -498,9 +525,15 @@ u8 g_funDispChanger = 0;
 #define MP_EXTI_IRQ				EXTI9_5_IRQn
 
 #define ReadMp() (GPIO_ReadInputDataBit(MP_GPIO_PORT, MP_GPIO_PIN))
-#define MAX_RGB_VALUE 180
+#define MAX_RGB_VALUE 250
 u16 mpCnt = 0;
 u16 lengthMpCnt = 0;
+u16 mpStartCnt = 0;
+u16 mpEndCnt = 0;
+
+u32 time1;
+u32 time2;
+u32 timeCnt = 0;
 
 u32 sampleStartNum = 0;
 u32 dmaEndNum = 0;
@@ -617,6 +650,7 @@ u8 gb_uvNeedStartSampleflag = 0;
 u8 gb_uvNeedStartSampleCnt = 0;
 u8 gb_uvNeedEndSampleCnt = 0;
 u8 gb_needStopMotorCnt = 0;
+u8 gb_needBackMotorCnt = 0;
 u8 gb_lengthIrNeedStartSampleflag = 0;
 u8 gb_lengthIrNeedStartSampleCnt = 0;
 u8 gb_lengthIrNeedEndSampleCnt = 0;
@@ -692,14 +726,14 @@ enum
 };
 u8 g_machineTestMode = TEST_MODE_OFF;
 
-// u8 gb_cntMotorStopMp = 0;
-// u8 g_motorStopMpNum = 0;
-// #define MOTOR_STOP_ONE_MP_TIME 10
-// u8 g_motorStopTime = 0;
-// u8 gb_needOutputMotorStopInfo = 0;
-
-// u8 csmpNumCnt;
-// u16 csmpNumRecord[100];
+enum
+{
+	IR_WAY,
+	UV_WAY,
+	MG_WAY,
+	ALL_WAYS,
+};
+u8 gb_identificationWays = ALL_WAYS;
 
 #define MAX_SAMPLE_NUM_ONE_MP 20
 u8 maxSampleNumOneMp = 0;
@@ -734,7 +768,7 @@ u8 g_maxMpFromPs1ToEnterance = 0;
 #define MP_FROM_PS2_TO_LEAVE 150//120 //50mm 82MP
 u8 g_maxMpFromPs2ToLeave = 0;
 
-#define MP_FROM_COMPUTE_TO_PS1 300 
+#define MP_FROM_COMPUTE_TO_PS1 500 
 u16 g_maxMpFromComputeToPS1 = 0;
 
 #define MP_FROM_MG_TO_LENGTH 50 //15mm 91mp
@@ -792,12 +826,12 @@ u8 oneMinLaoHuaTime = ONE_MIN_LAOHUA;
 
 enum
 {
-	ENTER_LONG_KEY_TIME = 20,
+	ENTER_LONG_KEY_TIME = 100,
 	SHORT_KEY_TIME = 2,
 	LONG_KEY_INTERVAL_TIME = 0
 };
 u8  shortLcdKeyTimer = 0;
-u8  enterLongLcdKeyTimer;	//进入长按键定时器
+u16  enterLongLcdKeyTimer;	//进入长按键定时器
 u8  longLcdKeyIntervalTimer;//长按键间隔定时器
 u8  shortLcdKey,longLcdKey;
 u8 gb_longLcdKey;
@@ -824,8 +858,16 @@ enum
 	INDEX_CHINESE,
 	INDEX_ENGLISH,
 };
+enum
+{
+	NOTE_IDEL,
+	NOTE_FORWARD,
+	NOTE_BACKWARD,
+};
+u8 gb_noteState = NOTE_IDEL;
+
 #define g_languageIndex INDEX_ENGLISH//savedPara.userWorkPara.d[INDEX_LANGUAGE]
-u8 g_currency = INDEX_USD; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
+u8 g_currency = INDEX_RUB; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
 u8 gb_testbuf[20];
 enum
 {
@@ -839,6 +881,7 @@ enum
 };
 u8 g_subStateOfNormal = NORMAL_DIAN_CHAO;
 
+u16 gb_needOutPutLength;
 u32 noteNum = 0;
 u32 noteSum = 0;
 u16 noteDenoValue = 0;
@@ -910,13 +953,16 @@ u16 Sqrt(u8 x);
 u16 ComputeWidth(u16 m, u8 s);
 void BatchMotorStop(void);
 void JudgeMotorStop(void);
-void DealEnteranceIr2INT(void);
+void DealPS1INT(void);
 void DealPS2INT(void);
+void DealPS3INT(void);
+
 
 void SetSmpleRatioTimer(u8 spd);
 void OutputMgColorDetailData(void);
 void OutputLengthDetailData(void);
 void OutputALLDetailData(void);
+void OutputALLDetailData2(void);
 void DispJudgeGradeMenu(void);
 void DealKeyDownOnJudgeGradeMenu(u8 key);
 void DispUserParaMenu(void);

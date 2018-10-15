@@ -465,8 +465,8 @@ enum
 	WORK_ADD,
 	WORK_NOADD,
 };
-u8 g_needAddValue = WORK_NOADD;
-u8 g_beepOn = 1;//1打开0关闭
+u8 g_needAddValue = WORK_ADD;
+//u8 g_beepOn = 0;//1打开0关闭
 u8 g_funDispChanger = 0;
 	
 #define WHITE         	 0xFFFF
@@ -726,14 +726,14 @@ enum
 };
 u8 g_machineTestMode = TEST_MODE_OFF;
 
-// u8 gb_cntMotorStopMp = 0;
-// u8 g_motorStopMpNum = 0;
-// #define MOTOR_STOP_ONE_MP_TIME 10
-// u8 g_motorStopTime = 0;
-// u8 gb_needOutputMotorStopInfo = 0;
-
-// u8 csmpNumCnt;
-// u16 csmpNumRecord[100];
+enum
+{
+	IR_WAY,
+	UV_WAY,
+	MG_WAY,
+	ALL_WAYS,
+};
+u8 gb_identificationWays = ALL_WAYS;
 
 #define MAX_SAMPLE_NUM_ONE_MP 20
 u8 maxSampleNumOneMp = 0;
@@ -741,6 +741,9 @@ u8 maxSampleNumOneMp = 0;
 u8 selectedItemIndex = 0;
 u8 lastSelectedItemIndex = 0;
 u8 gb_paraChanged = 0;
+
+u8 gb_motorState1 = 0;
+u8 gb_motorState2 = 0;
 
 #define MAX_DISP_STRING_BUF 100
 u8 dispStr[MAX_DISP_STRING_BUF];
@@ -773,11 +776,9 @@ u16 g_maxMpFromComputeToPS1 = 0;
 
 #define MP_FROM_MG_TO_LENGTH 50 //15mm 91mp
 
-u8 gb_noteBackLeave = 1;//0向前转1向后转
+//u8 gb_noteBackLeave = 1;//0向前转1向后转
 
 u8 gb_needStopMotor = 0;
-u8 g_needUpGradeCnt = 0;
-u8 g_needUpGrade = 0;
 // u8 *menuPara[48];
 // u8 menuParaIndex = 0;
 // u8 menuMod[48];
@@ -826,12 +827,12 @@ u8 oneMinLaoHuaTime = ONE_MIN_LAOHUA;
 
 enum
 {
-	ENTER_LONG_KEY_TIME = 20,
+	ENTER_LONG_KEY_TIME = 100,
 	SHORT_KEY_TIME = 2,
 	LONG_KEY_INTERVAL_TIME = 0
 };
 u8  shortLcdKeyTimer = 0;
-u8  enterLongLcdKeyTimer;	//进入长按键定时器
+u16  enterLongLcdKeyTimer;	//进入长按键定时器
 u8  longLcdKeyIntervalTimer;//长按键间隔定时器
 u8  shortLcdKey,longLcdKey;
 u8 gb_longLcdKey;
@@ -867,7 +868,7 @@ enum
 u8 gb_noteState = NOTE_IDEL;
 
 #define g_languageIndex INDEX_ENGLISH//savedPara.userWorkPara.d[INDEX_LANGUAGE]
-u8 g_currency = INDEX_USD; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
+u8 g_currency = INDEX_RUB; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
 u8 gb_testbuf[20];
 enum
 {
@@ -896,14 +897,17 @@ u16 const TRY_NOTE_VALUE[] = {200,100,50,20,10,5,0,0,0,0};
 u32 JbmpAddress[]={BMP_J0,BMP_J1,BMP_J2,BMP_J3,BMP_J4,BMP_J5,BMP_J6,BMP_J7,BMP_J8,BMP_J9,BMP_JB};
 u32 YbmpAddress[]={BMP_Y0,BMP_Y1,BMP_Y2,BMP_Y3,BMP_Y4,BMP_Y5,BMP_Y6,BMP_Y7,BMP_Y8,BMP_Y9,BMP_YB};
 u32 SbmpAddress[]={BMP_S0,BMP_S1,BMP_S2,BMP_S3,BMP_S4,BMP_S5,BMP_S6,BMP_S7,BMP_S8,BMP_S9,BMP_SB};
-u16 SBmpDispXY[]={	BMP_S3C_X,BMP_S3C_Y,
+u16 SBmpDispXY[]={	
+					BMP_S2C_X,BMP_S2C_Y,
+					BMP_S3C_X,BMP_S3C_Y,
 					BMP_S4C_X,BMP_S4C_Y,
 					BMP_S5C_X,BMP_S5C_Y,
 					BMP_S7C_X,BMP_S7C_Y,
 					BMP_S8C_X,BMP_S8C_Y,
 					BMP_S9C_X,BMP_S9C_Y,
 					BMP_S10C_X,BMP_S10C_Y,
-					BMP_S1C_X,BMP_S1C_Y,};
+					BMP_S1C_X,BMP_S1C_Y,
+					};
 void InitGpioInMain(void);
 void MainInit(void);
 void OutputCurrentCoinData(void);
@@ -1036,6 +1040,14 @@ void DispNoteDenoValue(void);//显示币值
 void DispDetailNoteNum(void);//显示明细
 void DispJamInfo(void);
 void DispFunInfo(void);
+void SettingParaInc(void);
+void DispMenu1(void);
+void DispSetting(void);
+void DispSettingSelected(void);
+void DealKeyDownOnMenu1(u8 key);
+
+
+
 void ClearAllNoteNum(void);
 		
 // void InitIrData(void);
