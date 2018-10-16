@@ -11,6 +11,9 @@
 
 #include "LW_TRY_ValueFvt.h"
 #include "LW_TRY_ColorFvt.h"
+
+#include "LW_IQD_ValueFvt.h"
+#include "LW_IQD_ColorFvt.h"
 //#define DRAW_STATE
 //#define DRAW_STATE2
 
@@ -123,6 +126,12 @@ u8 billRGB_Judge(int noteType)
 		pNoteClass = g_TRY_noteClass;
 		pFvt = (short *)TRY_colorFvt_Int;
 		Class = TRY_NOTE_CLASS;
+	}
+	else if (noteType == INDEX_IQD)
+	{
+		pNoteClass = g_IQD_noteClass;
+		pFvt = (short *)IQD_colorFvt_Int;
+		Class = IQD_NOTE_CLASS;
 	}
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
@@ -367,6 +376,12 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		pNoteClass = g_TRY_noteClass;
 		pFvt = (short *)TRY_iradFvt_Int;
 		Class = TRY_NOTE_CLASS;
+	}
+	else if (noteType == INDEX_IQD)
+	{
+		pNoteClass = g_IQD_noteClass;
+		pFvt = (short *)IQD_iradFvt_Int;
+		Class = IQD_NOTE_CLASS;
 	}
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)

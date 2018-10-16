@@ -22,7 +22,7 @@ Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
 D:\ProjectFile\JBY\CISProgram\A9\CISA9.uvprojx
-Project File Date:  10/15/2018
+Project File Date:  10/16/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
@@ -219,19 +219,19 @@ compiling uart.C...
         u8 i;
 ..\UserSoftwareLib\JBY_10\src\uart.C: 3 warnings, 0 errors
 compiling bill.C...
-..\UserSoftwareLib\JBY_10\src\bill.C(50): warning:  #223-D: function "memset" declared implicitly
+..\UserSoftwareLib\JBY_10\src\bill.C(53): warning:  #223-D: function "memset" declared implicitly
         memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM);
-..\UserSoftwareLib\JBY_10\src\bill.C(32): warning:  #177-D: variable "t" was declared but never referenced
+..\UserSoftwareLib\JBY_10\src\bill.C(35): warning:  #177-D: variable "t" was declared but never referenced
         int r, g, b, t, t0, t1;
-..\UserSoftwareLib\JBY_10\src\bill.C(241): warning:  #223-D: function "memset" declared implicitly
+..\UserSoftwareLib\JBY_10\src\bill.C(250): warning:  #223-D: function "memset" declared implicitly
         memset(projH, 0, sizeof(int)*IR_DATA_MAX_LEN);
-..\UserSoftwareLib\JBY_10\src\bill.C(214): warning:  #177-D: variable "m" was declared but never referenced
+..\UserSoftwareLib\JBY_10\src\bill.C(223): warning:  #177-D: variable "m" was declared but never referenced
         int i, j, k, m, sum, count;//, t, t0, t1, t2, x[10], y[10];
-..\UserSoftwareLib\JBY_10\src\bill.C(217): warning:  #177-D: variable "sx" was declared but never referenced
+..\UserSoftwareLib\JBY_10\src\bill.C(226): warning:  #177-D: variable "sx" was declared but never referenced
         short sx, ex, sw, sh, iradVal, sy, ey;
-..\UserSoftwareLib\JBY_10\src\bill.C(217): warning:  #177-D: variable "iradVal" was declared but never referenced
+..\UserSoftwareLib\JBY_10\src\bill.C(226): warning:  #177-D: variable "iradVal" was declared but never referenced
         short sx, ex, sw, sh, iradVal, sy, ey;
-..\UserSoftwareLib\JBY_10\src\bill.C(468): warning:  #940-D: missing return statement at end of non-void function "billMG_Judge"
+..\UserSoftwareLib\JBY_10\src\bill.C(483): warning:  #940-D: missing return statement at end of non-void function "billMG_Judge"
   }
 ..\UserSoftwareLib\JBY_10\src\bill.C: 7 warnings, 0 errors
 compiling disp.C...
@@ -275,7 +275,7 @@ compiling disp.C...
         uart_SendDataToUart1(TFTStr,len);
 ..\UserSoftwareLib\JBY_10\src\disp.C: 19 warnings, 0 errors
 linking...
-Program Size: Code=49812 RO-data=114824 RW-data=680 ZI-data=62544  
+Program Size: Code=49864 RO-data=135468 RW-data=688 ZI-data=62544  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin -o "D:\ProjectFile\JBY\CISProgram\A9\obj\JBY.bin" "D:\ProjectFile\JBY\CISProgram\A9\obj\JBY.axf"
 ".\obj\JBY.axf" - 0 Error(s), 116 Warning(s).

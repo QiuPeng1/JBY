@@ -31,3 +31,5 @@
 .\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_RUB_ColorFvt.h
 .\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_TRY_ValueFvt.h
 .\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_TRY_ColorFvt.h
+.\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_IQD_ValueFvt.h
+.\obj\bill.o: ..\UserSoftwareLib\JBY_10\inc\LW_IQD_ColorFvt.h

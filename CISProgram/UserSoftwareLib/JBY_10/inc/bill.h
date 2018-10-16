@@ -100,7 +100,10 @@ enum
 	INDEX_LKR,	//37斯里兰卡
 	INDEX_IDR,	//38印尼
 	INDEX_ILS,	//39以色列
-	INDEX_AFN, //40阿富汗
+	INDEX_AFN, 	//40阿富汗
+	INDEX_JOD, 	//41约旦
+	INDEX_IQD, 	//42伊拉克
+	INDEX_LBP, 	//43黎巴嫩
 	NOTE_NUM
 };
 #define PROCESS_GBP
@@ -123,7 +126,7 @@ enum
 #define PROCESS_VND
 #define PROCESS_ILS
 #define PROCESS_AFN
-
+#define PROCESS_IQD
 //---------------------------------------------------------------------
 //全局变量，可以被外部程序直接访问
 //---------------------------------------------------------------------
