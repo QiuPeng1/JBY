@@ -1,19 +1,43 @@
 /*包含私有头文件 */
 #include "_bill.h"
 #include <math.h>
-#include "LW_USD_ValueFvt.h"
-#include "LW_USD_ColorFvt.h"
-#include "LW_EUR_ValueFvt.h"
-#include "LW_EUR_ColorFvt.h"
 
-#include "LW_RUB_ValueFvt.h"
-#include "LW_RUB_ColorFvt.h"
-
-#include "LW_TRY_ValueFvt.h"
-#include "LW_TRY_ColorFvt.h"
-
-#include "LW_IQD_ValueFvt.h"
-#include "LW_IQD_ColorFvt.h"
+/***********************************************/
+#ifdef  BILL_INDEX_USD
+	#include "LW_USD_ValueFvt.h"
+	#include "LW_USD_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_EUR
+	#include "LW_EUR_ValueFvt.h"
+	#include "LW_EUR_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_RUB
+	#include "LW_RUB_ValueFvt.h"
+	#include "LW_RUB_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_TRY
+	#include "LW_TRY_ValueFvt.h"
+	#include "LW_TRY_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_IQD
+	#include "LW_IQD_ValueFvt.h"
+	#include "LW_IQD_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_SAR
+	#include "LW_SAR_ValueFvt.h"
+	#include "LW_SAR_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_AED
+	#include "LW_AED_ValueFvt.h"
+	#include "LW_AED_ColorFvt.h"
+#endif
+/***********************************************/
 //#define DRAW_STATE
 //#define DRAW_STATE2
 
@@ -99,40 +123,63 @@ u8 billRGB_Judge(int noteType)
 #endif
 //	return;
 	pf1 = colorFvtTotal;
-	pNoteClass = g_USD_noteClass;
-	pFvt = (short *)USD_colorFvt_Int;
-	Class = USD_NOTE_CLASS;
 
+#ifdef  BILL_INDEX_USD
 	if (noteType == INDEX_USD)
 	{
 		pNoteClass = g_USD_noteClass;
 		pFvt = (short *)USD_colorFvt_Int;
 		Class = USD_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_EUR)
+#endif
+#ifdef  BILL_INDEX_EUR
+	if (noteType == INDEX_EUR)
 	{
 		pNoteClass = g_EUR_noteClass;
 		pFvt = (short *)EUR_colorFvt_Int;
 		Class = EUR_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_RUB)
+#endif
+#ifdef  BILL_INDEX_RUB
+	if (noteType == INDEX_RUB)
 	{
 		pNoteClass = g_RUB_noteClass;
 		pFvt = (short *)RUB_colorFvt_Int;
 		Class = RUB_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_TRY)
+#endif
+#ifdef  BILL_INDEX_TRY
+	if (noteType == INDEX_TRY)
 	{
 		pNoteClass = g_TRY_noteClass;
 		pFvt = (short *)TRY_colorFvt_Int;
 		Class = TRY_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_IQD)
+#endif
+#ifdef  BILL_INDEX_IQD
+	if (noteType == INDEX_IQD)
 	{
 		pNoteClass = g_IQD_noteClass;
 		pFvt = (short *)IQD_colorFvt_Int;
 		Class = IQD_NOTE_CLASS;
 	}
+#endif
+#ifdef  BILL_INDEX_SAR
+	if (noteType == INDEX_SAR)
+	{
+		pNoteClass = g_SAR_noteClass;
+		pFvt = (short *)SAR_colorFvt_Int;
+		Class = SAR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_AED
+	if (noteType == INDEX_AED)
+	{
+		pNoteClass = g_AED_noteClass;
+		pFvt = (short *)AED_colorFvt_Int;
+		Class = AED_NOTE_CLASS;
+	}
+#endif
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
@@ -236,7 +283,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	pImg = (u8 *)lengthData;
 	billIradMask = 0;
 
-	if (lengthDataLen < 100 || billValue == 0x0ff)
+	if (lengthDataLen < 100 || colorJudgeValue == 0x0ff)
 	{
 		billIradMask = 1;
 		return 0;
@@ -349,40 +396,62 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 
 //	return;
 	pf1 = lengthData_Tmp2;
-	pNoteClass = g_USD_noteClass;
-	pFvt = (short *)USD_iradFvt_Int;
-	Class = USD_NOTE_CLASS;
-
+#ifdef  BILL_INDEX_USD
 	if (noteType == INDEX_USD)
 	{
 		pNoteClass = g_USD_noteClass;
 		pFvt = (short *)USD_iradFvt_Int;
 		Class = USD_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_EUR)
+#endif
+#ifdef  BILL_INDEX_EUR
+	if (noteType == INDEX_EUR)
 	{
 		pNoteClass = g_EUR_noteClass;
 		pFvt = (short *)EUR_iradFvt_Int;
 		Class = EUR_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_RUB)
+#endif
+#ifdef  BILL_INDEX_RUB
+	if (noteType == INDEX_RUB)
 	{
 		pNoteClass = g_RUB_noteClass;
 		pFvt = (short *)RUB_iradFvt_Int;
 		Class = RUB_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_TRY)
+#endif
+#ifdef  BILL_INDEX_TRY
+	if (noteType == INDEX_TRY)
 	{
 		pNoteClass = g_TRY_noteClass;
 		pFvt = (short *)TRY_iradFvt_Int;
 		Class = TRY_NOTE_CLASS;
 	}
-	else if (noteType == INDEX_IQD)
+#endif
+#ifdef  BILL_INDEX_IQD
+	if (noteType == INDEX_IQD)
 	{
 		pNoteClass = g_IQD_noteClass;
 		pFvt = (short *)IQD_iradFvt_Int;
 		Class = IQD_NOTE_CLASS;
 	}
+#endif
+#ifdef  BILL_INDEX_SAR
+	if (noteType == INDEX_SAR)
+	{
+		pNoteClass = g_SAR_noteClass;
+		pFvt = (short *)SAR_iradFvt_Int;
+		Class = SAR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_AED
+	if (noteType == INDEX_AED)
+	{
+		pNoteClass = g_AED_noteClass;
+		pFvt = (short *)AED_iradFvt_Int;
+		Class = AED_NOTE_CLASS;
+	}
+#endif
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{

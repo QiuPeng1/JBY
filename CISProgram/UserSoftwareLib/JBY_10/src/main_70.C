@@ -74,7 +74,7 @@ void DealKeyDownOnMenu1(u8 key)
 			case KEY_FUN:
 	 			lastSelectedItemIndex = selectedItemIndex;
 				selectedItemIndex ++;
-				selectedItemIndex %= 5;
+				selectedItemIndex %= 6;
 	 			DispSettingSelected();
 			break;
 			case LONG_KEY_FUN:
@@ -113,11 +113,10 @@ void DealKeyDownOnNormal(u8 key)
 
 			break;
 			case LONG_KEY_RESTART:			
-
-				SetSystemState(MENU1);
-				DispMenu1();
 				selectedItemIndex = 0;
 				lastSelectedItemIndex = 0;
+				SetSystemState(MENU1);
+				DispMenu1();
 
 				break;
 			case KEY_CUR:
@@ -143,10 +142,16 @@ void DealKeyDownOnNormal(u8 key)
 				}
 				else if(g_currency == INDEX_TRY)
 				{
+					g_currency = INDEX_IQD;
+					disp_DrawPic(0,0,BMP_FLAGIQD);
+					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTIQD);
+				}
+				else if(g_currency == INDEX_IQD)
+				{
 					g_currency = INDEX_USD;
 					disp_DrawPic(0,0,BMP_FLAGUSD);
 					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTUSD);
-				}					
+				}			
 				ClearAllNoteNum();
 				DispNoteNumValSum();
 					//DispMainMenu();			
@@ -1126,8 +1131,17 @@ void DispMainMenuBackground(void)
 			disp_DrawPic(0,0,BMP_FLAGTRY);
 			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTTRY);
 		}	
+		else if(g_currency == INDEX_IQD)
+		{
+			disp_DrawPic(0,0,BMP_FLAGIQD);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_LISTIQD);
+		}	
 		disp_DrawPic(BMP_PCS_X,BMP_PCS_Y,BMP_PCS);
 }
+
+#define SETTING_X 180;
+#define SETTING_H 30
+
 void DispMenu1(void)
 {
 	disp_clearScreen(BLACK);
@@ -1137,17 +1151,17 @@ void DispMenu1(void)
 	disp_string("Setup Menu",100,0);
 
 	disp_setFont(24);
-	disp_string("Beep         :",0,50);
-	disp_string("NoteLeave    :",0,50+30);
-	disp_string("MotorForward :",0,50+30*2);
-	disp_string("MotorBackward:",0,50+30*3);
-	disp_string("Upgrade      :",0,50+30*4);
+	disp_string("Beep         :",0,SETTING_H);
+	disp_string("NoteLeave    :",0,SETTING_H+SETTING_H);
+	disp_string("ErrDataOutput:",0,SETTING_H+SETTING_H*2);
+	disp_string("MotorForward :",0,SETTING_H+SETTING_H*3);
+	disp_string("MotorBackward:",0,SETTING_H+SETTING_H*4);
+	disp_string("Upgrade      :",0,SETTING_H+SETTING_H*5);
 	disp_string(VERSION,0,240-24);
 	DispSetting();
 	DispSettingSelected();
 }
-#define SETTING_X 180;
-#define SETTING_H 30
+
 
 u8 * const ONOFF_STR[] = 
 {
@@ -1168,24 +1182,29 @@ void DispSetting(void)
 	disp_setFont(24);	
 	
 	x = SETTING_X;
-	y = 50;
+	y = SETTING_H;
 	disp_string(ONOFF_STR[savedPara.beepSwitch],x,y);
 
 	x = SETTING_X;
-	y = 50+SETTING_H;
+	y = SETTING_H+SETTING_H;
 	disp_string(Direction_STR[savedPara.noteLeaveRoads],x,y);
+
+	x = SETTING_X;
+	y = SETTING_H+SETTING_H*2;
+	disp_string(ONOFF_STR[gb_needOutPutErrData],x,y);
+
 	
 	x = SETTING_X;
-	y = 50+SETTING_H*2;
+	y = SETTING_H+SETTING_H*3;
 	disp_string(ONOFF_STR[gb_motorState1],x,y);
 
 	x = SETTING_X;
-	y = 50+SETTING_H*3;
+	y = SETTING_H+SETTING_H*4;
 	disp_string(ONOFF_STR[gb_motorState2],x,y);
 	
 	x = SETTING_X;
-	y = 50+SETTING_H*4;
-	disp_string("enter",x,y);
+	y = SETTING_H+SETTING_H*5;
+	disp_string("Enter",x,y);
 
 }
 
@@ -1200,28 +1219,33 @@ void DispSettingSelected(void)
 	{
 		case 0:
 			x = SETTING_X;
-			y = 50;
+			y = SETTING_H;
 			disp_string(ONOFF_STR[savedPara.beepSwitch],x,y);
 			break;
 		case 1:
 			x = SETTING_X;
-			y = 50+SETTING_H;
+			y = SETTING_H+SETTING_H;
 			disp_string(Direction_STR[savedPara.noteLeaveRoads],x,y);
 			break;
 		case 2:
 			x = SETTING_X;
-			y = 50+SETTING_H*2;
-			disp_string(ONOFF_STR[gb_motorState1],x,y);
+			y = SETTING_H+SETTING_H*2;
+			disp_string(ONOFF_STR[gb_needOutPutErrData],x,y);
 			break;
 		case 3:
 			x = SETTING_X;
-			y = 50+SETTING_H*3;
-			disp_string(ONOFF_STR[gb_motorState2],x,y);
+			y = SETTING_H+SETTING_H*3;
+			disp_string(ONOFF_STR[gb_motorState1],x,y);
 			break;
 		case 4:
 			x = SETTING_X;
-			y = 50+SETTING_H*4;
-			disp_string("enter",x,y);
+			y = SETTING_H+SETTING_H*4;
+			disp_string(ONOFF_STR[gb_motorState2],x,y);
+			break;
+		case 5:
+			x = SETTING_X;
+			y = SETTING_H+SETTING_H*5;
+			disp_string("Enter",x,y);
 			break;
 		default:
 			break;						
@@ -1235,30 +1259,35 @@ void DispSettingSelected(void)
 	disp_setBackColor(BLACK);	
 	switch(lastSelectedItemIndex)
 	{
-		case 0:
+			case 0:
 			x = SETTING_X;
-			y = 50;
+			y = SETTING_H;
 			disp_string(ONOFF_STR[savedPara.beepSwitch],x,y);
 			break;
 		case 1:
 			x = SETTING_X;
-			y = 50+SETTING_H;
+			y = SETTING_H+SETTING_H;
 			disp_string(Direction_STR[savedPara.noteLeaveRoads],x,y);
 			break;
 		case 2:
 			x = SETTING_X;
-			y = 50+SETTING_H*2;
-			disp_string(ONOFF_STR[gb_motorState1],x,y);
+			y = SETTING_H+SETTING_H*2;
+			disp_string(ONOFF_STR[gb_needOutPutErrData],x,y);
 			break;
 		case 3:
 			x = SETTING_X;
-			y = 50+SETTING_H*3;
-			disp_string(ONOFF_STR[gb_motorState2],x,y);
+			y = SETTING_H+SETTING_H*3;
+			disp_string(ONOFF_STR[gb_motorState1],x,y);
 			break;
 		case 4:
 			x = SETTING_X;
-			y = 50+SETTING_H*4;
-			disp_string("enter",x,y);
+			y = SETTING_H+SETTING_H*4;
+			disp_string(ONOFF_STR[gb_motorState2],x,y);
+			break;
+		case 5:
+			x = SETTING_X;
+			y = SETTING_H+SETTING_H*5;
+			disp_string("Enter",x,y);
 			break;
 		default:
 			break;					
@@ -1280,6 +1309,10 @@ void SettingParaInc(void)
 			gb_paraChanged = 1;
 		break;
 		case 2:
+ 			gb_needOutPutErrData ++;
+ 			gb_needOutPutErrData %= 2;
+		break;
+		case 3:
 			if (gb_motorState1 == 0)
 			{
 				gb_motorState1 = 1;
@@ -1291,7 +1324,7 @@ void SettingParaInc(void)
 				motor1_Stop();			
 			}
 		break;
-		case 3:
+		case 4:
 			if (gb_motorState2 == 0)
 			{
 				gb_motorState2 = 1;
@@ -1303,7 +1336,7 @@ void SettingParaInc(void)
 				motor1_Stop();			
 			}
 		break;
-		case 4:
+		case 5:
 	#ifdef BOOT_APP
 			flash_SaveUpdateFlag(NEED_UPGRADE_FLAG);
 			delay_DelayMs(100);
@@ -1324,11 +1357,6 @@ void DispMainMenu(void)
 	//DispCurrency();
 	DispFunInfo();
 	//LCD_DispString(0,100,WHITE,RED,16,"WELCOME");
-/*	if(gb_batchIsOn > 0)
-	{
-		tm16xx_Led1Disp(g_yuZhiNum);
-		delay_DelayMs(100);
-	}*/
 	DispNoteNumValSum();
 	
 	DispJamInfo();
@@ -1866,6 +1894,43 @@ void DealNoteType(void)
 					break;
 				}
 			}
+			else if(g_currency == INDEX_IQD)
+			{
+				switch(billValue)
+				{
+				case 0:
+					currentNoteType = 0;//50000
+					break;
+				case 2:
+				case 3:
+					currentNoteType = 1;//25000
+					break;
+				case 4:
+				case 5:	
+					currentNoteType = 2; //10000
+					break;
+				case 6:
+				case 7:
+					currentNoteType = 3;//5000
+					break;
+				case 8:
+				case 9:
+					currentNoteType = 4;//1000
+					break;
+				case 10:
+				case 11:
+					currentNoteType = 5;//250
+					break;	
+				case 12:
+				case 13:
+					currentNoteType = 6;//50
+					break;
+				default:
+					currentNoteType = 0xFF;
+					g_errFlag |= ERR_VALUE;
+					break;
+				}				
+			}
 		}
 }
 void DealNotePass(void)
@@ -1978,6 +2043,13 @@ void DealNotePass(void)
 				{
 //					OutputLengthDetailData();
 					OutputALLDetailData2();
+				}
+				else	if(gb_needOutPutErrData == 1)
+				{
+					if(g_errFlag > 0)
+					{
+						OutputALLDetailData2();
+					}
 				}
 			}
 			//计算结束
@@ -2276,6 +2348,10 @@ void IncNoteNum(void)
 	{
 		noteDenoValue = TRY_NOTE_VALUE[currentNoteType];
 	}
+	else if(g_currency == INDEX_IQD)
+	{
+		noteDenoValue = IQD_NOTE_VALUE[currentNoteType];
+	}
 	noteSum += noteDenoValue;
 	denoNoteNum[currentNoteType] ++;
 }
@@ -2403,7 +2479,7 @@ void DispDetailNoteNum(void)//显示明细
 	//disp_setPenColor(BLACK);
 	//disp_setBackColor(MID_BAR_COLOR);
 	j=0;
-	if(g_currency == INDEX_EUR||g_currency == INDEX_USD)
+	if(g_currency == INDEX_EUR||g_currency == INDEX_USD||g_currency == INDEX_IQD)
 	{
 		for(i = 0;i < 7;i++)
 		{

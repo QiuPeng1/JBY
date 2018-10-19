@@ -657,6 +657,7 @@ u8 gb_lengthIrNeedEndSampleCnt = 0;
 u16 g_uvSampleIndex;
 u16 g_mgSampleIndex;
 u8 gb_needSampleMr = 0;
+u8 gb_needOutPutErrData = 0;
 
 #define LAST_MG_DATA_MAX 50
 u8 lastMgData[2][LAST_MG_DATA_MAX];
@@ -892,6 +893,8 @@ u8 const USD_NOTE_VALUE[] = {100,50,20,10,5,2,1,0,0,0};
 u16 const EUR_NOTE_VALUE[] = {500,200,100,50,20,10,5,0,0,0};
 u16 const RUB_NOTE_VALUE[] = {5000,2000,1000,500,200,100,50,10,0,0};
 u16 const TRY_NOTE_VALUE[] = {200,100,50,20,10,5,0,0,0,0};
+u16 const IQD_NOTE_VALUE[] = {50000,25000,10000,5000,1000,250,50,0,0,0};
+
 
 
 u32 JbmpAddress[]={BMP_J0,BMP_J1,BMP_J2,BMP_J3,BMP_J4,BMP_J5,BMP_J6,BMP_J7,BMP_J8,BMP_J9,BMP_JB};

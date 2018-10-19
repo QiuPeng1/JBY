@@ -24,6 +24,16 @@
 
 //#define DRAW_STATE1
 
+#define BILL_INDEX_USD
+#define BILL_INDEX_EUR
+#define BILL_INDEX_TRY
+#define BILL_INDEX_RUB
+#define BILL_INDEX_IQD
+
+#define BILL_INDEX_SAR
+#define BILL_INDEX_AED
+
+
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------
@@ -104,6 +114,8 @@ enum
 	INDEX_JOD, 	//41约旦
 	INDEX_IQD, 	//42伊拉克
 	INDEX_LBP, 	//43黎巴嫩
+	INDEX_SAR, 	//43沙特
+	INDEX_AED, 	//43阿联酋
 	NOTE_NUM
 };
 #define PROCESS_GBP

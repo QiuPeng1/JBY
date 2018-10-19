@@ -2,6 +2,8 @@
 
 版本  日期      修改内容  修改人
 V2.7  20181016  1、创建     Q
+V2.8  20181019  1、增加误报采集
+								2、增加伊拉克
 ****************************************************************************/
 
 /*防止重复引用 */
@@ -40,7 +42,7 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V2.7"
+#define VERSION  "V2.8"
 
 
 typedef enum
