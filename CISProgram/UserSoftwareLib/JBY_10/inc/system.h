@@ -3,7 +3,11 @@
 版本  日期      修改内容  修改人
 V2.7  20181016  1、创建     Q
 V2.8  20181019  1、增加误报采集
-								2、增加伊拉克
+				2、增加伊拉克
+V2.9 20181021   1、增加沙特SAR
+				2、更改图片库地址
+				3、增加阿联酋AED
+				
 ****************************************************************************/
 
 /*防止重复引用 */
@@ -42,7 +46,7 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V2.8"
+#define VERSION  "V2.9"
 
 
 typedef enum
@@ -73,41 +77,6 @@ typedef enum
 	MENU18,
 	STATE_NUM,
 }STATE_T;
-
-//enum
-//{
-//	INDEX_RMB = 0,//0 - currency0
-//	INDEX_USD,//1
-//	INDEX_EUR,//2
-//	INDEX_JPY,//3
-//	INDEX_GBP,//4
-//	INDEX_HKD,//5
-//	INDEX_AUD,//6
-//	INDEX_CAD,//7
-//	INDEX_SGD,//0 - currency1
-//	INDEX_KRW,//1
-//	INDEX_TWD,//2
-//	INDEX_RUB,//3
-//  INDEX_GHC,//4
-//	INDEX_UAH,//5
-//	INDEX_NGN,//6
-//	INDEX_ALL,//7
-//	INDEX_MKD,//0 - currency2
-//	INDEX_MOP,//1
-//	INDEX_CHF,//2
-//	INDEX_SEK,//3
-//	INDEX_KZT,//4
-//	INDEX_TRY,//5
-//	INDEX_INR,//6
-//	INDEX_VND,//7
-//	INDEX_MYR,//0 - currency3
-//	INDEX_BRL,//1
-//	INDEX_TJS,//2
-//	INDEX_CNY,//3
-//	INDEX_BGN,//4
-//	INDEX_MAD,//5
-//	NOTE_NUM
-//};
 
 enum
 {
@@ -149,14 +118,6 @@ enum
 	ERROR_RMB20_MG_ERR,
 	ERROR_RMB10_20_MG_UNKNOWN,
 };
-
-//enum
-//{
-//	INDEX_USD,
-//	INDEX_EUR,
-//	ALL_NOTE_TYPE,
-//};
-
 
 #ifdef VC_PLUS_PLUS
 

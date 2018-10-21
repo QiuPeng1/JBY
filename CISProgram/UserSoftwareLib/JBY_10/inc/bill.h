@@ -32,7 +32,7 @@
 
 #define BILL_INDEX_SAR
 #define BILL_INDEX_AED
-
+#define BILL_INDEX_GBP
 
 #define BILL_VERSION "V1.0.5"
 

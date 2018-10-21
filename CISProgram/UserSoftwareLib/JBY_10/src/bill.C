@@ -38,6 +38,11 @@
 	#include "LW_AED_ColorFvt.h"
 #endif
 /***********************************************/
+#ifdef  BILL_INDEX_GBP
+#include "LW_GBP_ValueFvt.h"
+#include "LW_GBP_ColorFvt.h"
+#endif
+/***********************************************/
 //#define DRAW_STATE
 //#define DRAW_STATE2
 
@@ -178,6 +183,14 @@ u8 billRGB_Judge(int noteType)
 		pNoteClass = g_AED_noteClass;
 		pFvt = (short *)AED_colorFvt_Int;
 		Class = AED_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_GBP
+	if (noteType == INDEX_GBP)
+	{
+		pNoteClass = g_GBP_noteClass;
+		pFvt = (short *)GBP_colorFvt_Int;
+		Class = GBP_NOTE_CLASS;
 	}
 #endif
 	max_t = 0.0;
@@ -450,6 +463,14 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		pNoteClass = g_AED_noteClass;
 		pFvt = (short *)AED_iradFvt_Int;
 		Class = AED_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_GBP
+	if (noteType == INDEX_GBP)
+	{
+		pNoteClass = g_GBP_noteClass;
+		pFvt = (short *)GBP_iradFvt_Int;
+		Class = GBP_NOTE_CLASS;
 	}
 #endif
 	max_t = 0.0;

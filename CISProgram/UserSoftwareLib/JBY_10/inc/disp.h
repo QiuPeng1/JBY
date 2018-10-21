@@ -17,129 +17,396 @@
 #endif
 
 ///*****************************????******************************************/
-/***********************************************************************/
-#define	BMP_ADS		0x00000800
-#define	BMP_F3D		0x00026048
-#define	BMP_FADD		0x00026770
-#define	BMP_FAUTO		0x00026e98
-#define	BMP_FB		0x00027880
-#define	BMP_FBB		0x00027fa8
-#define	BMP_FCIS		0x00028990
-#define	BMP_FCNT		0x000290b8
-#define	BMP_FIR		0x000297e0
-#define	BMP_FMG		0x00029f08
-#define	BMP_FMT		0x0002a630
-#define	BMP_FMULS		0x0002ad58
-#define	BMP_FPRE		0x0002b740
-#define	BMP_FSDC		0x0002bdb8
-#define	BMP_FUV		0x0002c4e0
-#define	BMP_FVALUE		0x0002cc08
-#define	BMP_FVER		0x0002d5f0
-#define	BMP_HA		0x0002dd18
-#define	BMP_HB		0x0002ea60
-#define	BMP_HC		0x0002f7a8
-#define	BMP_HD		0x000304f0
-#define	BMP_HE		0x00031238
-#define	BMP_HF		0x00031f80
-#define	BMP_HG		0x00032cc8
-#define	BMP_HH		0x00033a10
-#define	BMP_HJ		0x00034758
-#define	BMP_HK		0x000354a0
-#define	BMP_HL		0x000361e8
-#define	BMP_HN		0x00036f30
-#define	BMP_HU		0x00037c78
-#define	BMP_HX		0x000389c0
-#define	BMP_HY		0x00039708
-#define	BMP_J0		0x0003a450
-#define	BMP_J1		0x0003bc98
-#define	BMP_J2		0x0003d4e0
-#define	BMP_J3		0x0003ed28
-#define	BMP_J4		0x00040570
-#define	BMP_J5		0x00041db8
-#define	BMP_J6		0x00043600
-#define	BMP_J7		0x00044e48
-#define	BMP_J8		0x00046690
-#define	BMP_J9		0x00047ed8
-#define	BMP_JB		0x00049720
-#define	BMP_OPENBLACK		0x0004af68
-#define	BMP_PCS		0x000707b0
-#define	BMP_S0		0x00070df8
-#define	BMP_S1		0x00070fa8
-#define	BMP_S2		0x00071158
-#define	BMP_S3		0x00071308
-#define	BMP_S4		0x000714b8
-#define	BMP_S5		0x00071668
-#define	BMP_S6		0x00071818
-#define	BMP_S7		0x000719c8
-#define	BMP_S8		0x00071b78
-#define	BMP_S9		0x00071d28
-#define	BMP_SB		0x00071ed8
-#define	BMP_SPEAK_OFF		0x00072088
-#define	BMP_SPEAK_ON		0x000728d0
-#define	BMP_Y0		0x00073118
-#define	BMP_Y1		0x00073e60
-#define	BMP_Y2		0x00074ba8
-#define	BMP_Y3		0x000758f0
-#define	BMP_Y4		0x00076638
-#define	BMP_Y5		0x00077380
-#define	BMP_Y6		0x000780c8
-#define	BMP_Y7		0x00078e10
-#define	BMP_Y8		0x00079b58
-#define	BMP_Y9		0x0007a8a0
-#define	BMP_YB		0x0007b5e8
-#define	BMP_FAKE		0x0007c330
-#define	BMP_FAKECIS1		0x0007f778
-#define	BMP_FAKECIS2		0x00081500
-#define	BMP_FLAGAFN		0x00083288
-#define	BMP_FLAGARS		0x000869d0
-#define	BMP_FLAGBRL		0x0008a118
-#define	BMP_FLAGCNY		0x0008d860
-#define	BMP_FLAGEGP		0x00090fa8
-#define	BMP_FLAGEUR		0x000946f0
-#define	BMP_FLAGGBP		0x00097e38
-#define	BMP_FLAGHKD		0x0009b580
-#define	BMP_FLAGIDR		0x0009ecc8
-#define	BMP_FLAGILS		0x000a2410
-#define	BMP_FLAGINR		0x000a5b58
-#define	BMP_FLAGIQD		0x000a92a0
-#define	BMP_FLAGJOD		0x000ac9e8
-#define	BMP_FLAGKES		0x000b0130
-#define	BMP_FLAGLKR		0x000b3878
-#define	BMP_FLAGMYR		0x000b6fc0
-#define	BMP_FLAGRUB		0x000ba708
-#define	BMP_FLAGTHB		0x000bde50
-#define	BMP_FLAGTRY		0x000c1598
-#define	BMP_FLAGTWD		0x000c4ce0
-#define	BMP_FLAGUSD		0x000c8428
-#define	BMP_FLAGVND		0x000cbb70
-#define	BMP_FLAGZAR		0x000cf2b8
-#define	BMP_LISTAFN		0x000d2a00
-#define	BMP_LISTARS		0x000dd210
-#define	BMP_LISTBRL		0x000e7a20
-#define	BMP_LISTCNY		0x000f2230
-#define	BMP_LISTEGP		0x000fca40
-#define	BMP_LISTEUR		0x00107250
-#define	BMP_LISTGBP		0x00111a60
-#define	BMP_LISTHKD		0x0011c270
-#define	BMP_LISTIDR		0x00126a80
-#define	BMP_LISTILS		0x00131290
-#define	BMP_LISTINR		0x0013baa0
-#define	BMP_LISTIQD		0x001462b0
-#define	BMP_LISTJOD		0x00150ac0
-#define	BMP_LISTKES		0x0015b2d0
-#define	BMP_LISTLKR		0x00165ae0
-#define	BMP_LISTMYR		0x001702f0
-#define	BMP_LISTRUB		0x0017ab00
-#define	BMP_LISTTHB		0x00185310
-#define	BMP_LISTTRY		0x0018fb20
-#define	BMP_LISTTWD		0x0019a330
-#define	BMP_LISTUSD		0x001a4b40
-#define	BMP_LISTVND		0x001af350
-#define	BMP_LISTZAR		0x001b9b60
-#define	BMP_OPENBLACK1		0x001c4370
-#define	BMP_ADSHUAEN		0x001e9bb8
+///***********************************************************************/
+//#define	BMP_ADS		0x00000800
+//#define	BMP_F3D		0x00026048
+//#define	BMP_FADD		0x00026770
+//#define	BMP_FAUTO		0x00026e98
+//#define	BMP_FB		0x00027880
+//#define	BMP_FBB		0x00027fa8
+//#define	BMP_FCIS		0x00028990
+//#define	BMP_FCNT		0x000290b8
+//#define	BMP_FIR		0x000297e0
+//#define	BMP_FMG		0x00029f08
+//#define	BMP_FMT		0x0002a630
+//#define	BMP_FMULS		0x0002ad58
+//#define	BMP_FPRE		0x0002b740
+//#define	BMP_FSDC		0x0002bdb8
+//#define	BMP_FUV		0x0002c4e0
+//#define	BMP_FVALUE		0x0002cc08
+//#define	BMP_FVER		0x0002d5f0
+//#define	BMP_HA		0x0002dd18
+//#define	BMP_HB		0x0002ea60
+//#define	BMP_HC		0x0002f7a8
+//#define	BMP_HD		0x000304f0
+//#define	BMP_HE		0x00031238
+//#define	BMP_HF		0x00031f80
+//#define	BMP_HG		0x00032cc8
+//#define	BMP_HH		0x00033a10
+//#define	BMP_HJ		0x00034758
+//#define	BMP_HK		0x000354a0
+//#define	BMP_HL		0x000361e8
+//#define	BMP_HN		0x00036f30
+//#define	BMP_HU		0x00037c78
+//#define	BMP_HX		0x000389c0
+//#define	BMP_HY		0x00039708
+//#define	BMP_J0		0x0003a450
+//#define	BMP_J1		0x0003bc98
+//#define	BMP_J2		0x0003d4e0
+//#define	BMP_J3		0x0003ed28
+//#define	BMP_J4		0x00040570
+//#define	BMP_J5		0x00041db8
+//#define	BMP_J6		0x00043600
+//#define	BMP_J7		0x00044e48
+//#define	BMP_J8		0x00046690
+//#define	BMP_J9		0x00047ed8
+//#define	BMP_JB		0x00049720
+//#define	BMP_OPENBLACK		0x0004af68
+//#define	BMP_PCS		0x000707b0
+//#define	BMP_S0		0x00070df8
+//#define	BMP_S1		0x00070fa8
+//#define	BMP_S2		0x00071158
+//#define	BMP_S3		0x00071308
+//#define	BMP_S4		0x000714b8
+//#define	BMP_S5		0x00071668
+//#define	BMP_S6		0x00071818
+//#define	BMP_S7		0x000719c8
+//#define	BMP_S8		0x00071b78
+//#define	BMP_S9		0x00071d28
+//#define	BMP_SB		0x00071ed8
+//#define	BMP_SPEAK_OFF		0x00072088
+//#define	BMP_SPEAK_ON		0x000728d0
+//#define	BMP_Y0		0x00073118
+//#define	BMP_Y1		0x00073e60
+//#define	BMP_Y2		0x00074ba8
+//#define	BMP_Y3		0x000758f0
+//#define	BMP_Y4		0x00076638
+//#define	BMP_Y5		0x00077380
+//#define	BMP_Y6		0x000780c8
+//#define	BMP_Y7		0x00078e10
+//#define	BMP_Y8		0x00079b58
+//#define	BMP_Y9		0x0007a8a0
+//#define	BMP_YB		0x0007b5e8
+//#define	BMP_FAKE		0x0007c330
+//#define	BMP_FAKECIS1		0x0007f778
+//#define	BMP_FAKECIS2		0x00081500
+//#define	BMP_FLAGAFN		0x00083288
+//#define	BMP_FLAGARS		0x000869d0
+//#define	BMP_FLAGBRL		0x0008a118
+//#define	BMP_FLAGCNY		0x0008d860
+//#define	BMP_FLAGEGP		0x00090fa8
+//#define	BMP_FLAGEUR		0x000946f0
+//#define	BMP_FLAGGBP		0x00097e38
+//#define	BMP_FLAGHKD		0x0009b580
+//#define	BMP_FLAGIDR		0x0009ecc8
+//#define	BMP_FLAGILS		0x000a2410
+//#define	BMP_FLAGINR		0x000a5b58
+//#define	BMP_FLAGIQD		0x000a92a0
+//#define	BMP_FLAGJOD		0x000ac9e8
+//#define	BMP_FLAGKES		0x000b0130
+//#define	BMP_FLAGLKR		0x000b3878
+//#define	BMP_FLAGMYR		0x000b6fc0
+//#define	BMP_FLAGRUB		0x000ba708
+//#define	BMP_FLAGTHB		0x000bde50
+//#define	BMP_FLAGTRY		0x000c1598
+//#define	BMP_FLAGTWD		0x000c4ce0
+//#define	BMP_FLAGUSD		0x000c8428
+//#define	BMP_FLAGVND		0x000cbb70
+//#define	BMP_FLAGZAR		0x000cf2b8
+//#define	BMP_LISTAFN		0x000d2a00
+//#define	BMP_LISTARS		0x000dd210
+//#define	BMP_LISTBRL		0x000e7a20
+//#define	BMP_LISTCNY		0x000f2230
+//#define	BMP_LISTEGP		0x000fca40
+//#define	BMP_LISTEUR		0x00107250
+//#define	BMP_LISTGBP		0x00111a60
+//#define	BMP_LISTHKD		0x0011c270
+//#define	BMP_LISTIDR		0x00126a80
+//#define	BMP_LISTILS		0x00131290
+//#define	BMP_LISTINR		0x0013baa0
+//#define	BMP_LISTIQD		0x001462b0
+//#define	BMP_LISTJOD		0x00150ac0
+//#define	BMP_LISTKES		0x0015b2d0
+//#define	BMP_LISTLKR		0x00165ae0
+//#define	BMP_LISTMYR		0x001702f0
+//#define	BMP_LISTRUB		0x0017ab00
+//#define	BMP_LISTTHB		0x00185310
+//#define	BMP_LISTTRY		0x0018fb20
+//#define	BMP_LISTTWD		0x0019a330
+//#define	BMP_LISTUSD		0x001a4b40
+//#define	BMP_LISTVND		0x001af350
+//#define	BMP_LISTZAR		0x001b9b60
+//#define	BMP_OPENBLACK1		0x001c4370
+//#define	BMP_ADSHUAEN		0x001e9bb8
 /***************************************************************/
+#define	BMP_ADS	0x00000800
+#define	BMP_AF3D	0x00026048
+#define	BMP_AFADD	0x00026770
+#define	BMP_AFAUTO	0x00026e98
 
+#define	BMP_AFB	0x00027880
+
+#define	BMP_AFBB	0x00027fa8
+
+#define	BMP_AFCIS	0x00028990
+
+#define	BMP_AFCNT	0x000290b8
+
+#define	BMP_AFIR	0x000297e0
+
+#define	BMP_AFMG	0x00029f08
+
+#define	BMP_AFMT	0x0002a630
+
+#define	BMP_AFMULS	0x0002ad58
+
+#define	BMP_AFPRE	0x0002b740
+
+#define	BMP_AFSDC	0x0002bdb8
+
+#define	BMP_AFUV	0x0002c4e0
+
+#define	BMP_AFVALUE	0x0002cc08
+
+#define	BMP_AFVER	0x0002d5f0
+
+#define	BMP_AHA	0x0002dd18
+
+#define	BMP_AHB	0x0002ea60
+
+#define	BMP_AHC	0x0002f7a8
+
+#define	BMP_AHD	0x000304f0
+
+#define	BMP_AHE	0x00031238
+
+#define	BMP_AHF	0x00031f80
+
+#define	BMP_AHG	0x00032cc8
+
+#define	BMP_AHH	0x00033a10
+
+#define	BMP_AHJ	0x00034758
+
+#define	BMP_AHK	0x000354a0
+
+#define	BMP_AHL	0x000361e8
+
+#define	BMP_AHN	0x00036f30
+
+#define	BMP_AHU	0x00037c78
+
+#define	BMP_AHX	0x000389c0
+
+#define	BMP_AHY	0x00039708
+
+#define	BMP_AJ0	0x0003a450
+
+#define	BMP_AJ1	0x0003bc98
+
+#define	BMP_AJ2	0x0003d4e0
+
+#define	BMP_AJ3	0x0003ed28
+
+#define	BMP_AJ4	0x00040570
+
+#define	BMP_AJ5	0x00041db8
+
+#define	BMP_AJ6	0x00043600
+
+#define	BMP_AJ7	0x00044e48
+
+#define	BMP_AJ8	0x00046690
+
+#define	BMP_AJ9	0x00047ed8
+
+#define	BMP_AJB	0x00049720
+
+#define	BMP_AOPENBLACK	0x0004af68
+
+#define	BMP_APCS	0x000707b0
+
+#define	BMP_AS0	0x00070df8
+
+#define	BMP_AS1	0x00070fa8
+
+#define	BMP_AS2	0x00071158
+
+#define	BMP_AS3	0x00071308
+
+#define	BMP_AS4	0x000714b8
+
+#define	BMP_AS5	0x00071668
+
+#define	BMP_AS6	0x00071818
+
+#define	BMP_AS7	0x000719c8
+
+#define	BMP_AS8	0x00071b78
+
+#define	BMP_AS9	0x00071d28
+
+#define	BMP_ASB	0x00071ed8
+
+#define	BMP_ASPEAK_OFF	0x00072088
+
+#define	BMP_ASPEAK_ON	0x000728d0
+
+#define	BMP_AY0	0x00073118
+
+#define	BMP_AY1	0x00073e60
+
+#define	BMP_AY2	0x00074ba8
+
+#define	BMP_AY3	0x000758f0
+
+#define	BMP_AY4	0x00076638
+
+#define	BMP_AY5	0x00077380
+
+#define	BMP_AY6	0x000780c8
+
+#define	BMP_AY7	0x00078e10
+
+#define	BMP_AY8	0x00079b58
+
+#define	BMP_AY9	0x0007a8a0
+
+#define	BMP_AYB	0x0007b5e8
+
+#define	BMP_BFAKE	0x0007c330
+
+#define	BMP_BFAKECIS1	0x0007f778
+
+#define	BMP_BFAKECIS2	0x00081500
+
+#define	BMP_BFLAGAFN	0x00083288
+
+#define	BMP_BFLAGARS	0x000869d0
+
+#define	BMP_BFLAGBRL	0x0008a118
+
+#define	BMP_BFLAGCNY	0x0008d860
+
+#define	BMP_BFLAGEGP	0x00090fa8
+
+#define	BMP_BFLAGEUR	0x000946f0
+
+#define	BMP_BFLAGGBP	0x00097e38
+
+#define	BMP_BFLAGHKD	0x0009b580
+
+#define	BMP_BFLAGIDR	0x0009ecc8
+
+#define	BMP_BFLAGILS	0x000a2410
+
+#define	BMP_BFLAGINR	0x000a5b58
+
+#define	BMP_BFLAGIQD	0x000a92a0
+
+#define	BMP_BFLAGJOD	0x000ac9e8
+
+#define	BMP_BFLAGKES	0x000b0130
+
+#define	BMP_BFLAGLKR	0x000b3878
+
+#define	BMP_BFLAGMYR	0x000b6fc0
+
+#define	BMP_BFLAGRUB	0x000ba708
+
+#define	BMP_BFLAGTHB	0x000bde50
+
+#define	BMP_BFLAGTRY	0x000c1598
+
+#define	BMP_BFLAGTWD	0x000c4ce0
+
+#define	BMP_BFLAGUSD	0x000c8428
+
+#define	BMP_BFLAGVND	0x000cbb70
+
+#define	BMP_BFLAGZAR	0x000cf2b8
+
+#define	BMP_BLISTAFN	0x000d2a00
+
+#define	BMP_BLISTARS	0x000dd210
+
+#define	BMP_BLISTBRL	0x000e7a20
+
+#define	BMP_BLISTCNY	0x000f2230
+
+#define	BMP_BLISTEGP	0x000fca40
+
+#define	BMP_BLISTEUR	0x00107250
+
+#define	BMP_BLISTGBP	0x00111a60
+
+#define	BMP_BLISTHKD	0x0011c270
+
+#define	BMP_BLISTIDR	0x00126a80
+
+#define	BMP_BLISTILS	0x00131290
+
+#define	BMP_BLISTINR	0x0013baa0
+
+#define	BMP_BLISTIQD	0x001462b0
+
+#define	BMP_BLISTJOD	0x00150ac0
+
+#define	BMP_BLISTKES	0x0015b2d0
+
+#define	BMP_BLISTLKR	0x00165ae0
+
+#define	BMP_BLISTMYR	0x001702f0
+
+#define	BMP_BLISTRUB	0x0017ab00
+
+#define	BMP_BLISTTHB	0x00185310
+
+#define	BMP_BLISTTRY	0x0018fb20
+
+#define	BMP_BLISTTWD	0x0019a330
+
+#define	BMP_BLISTUSD	0x001a4b40
+
+#define	BMP_BLISTVND	0x001af350
+
+#define	BMP_BLISTZAR	0x001b9b60
+
+#define	BMP_BOPENBLACK	0x001c4370
+
+#define	BMP_CADSHUAEN	0x001e9bb8
+
+#define	BMP_CAFLAGLBP	0x0020f400
+
+#define	BMP_CALISTLBP	0x00212b48
+
+#define	BMP_CBFLAGAED	0x0021d358
+
+#define	BMP_CBFLAGSAR	0x00220aa0
+
+#define	BMP_CBLISTAED	0x002241e8
+
+#define	BMP_CBLISTSAR	0x0022e9f8
+
+#define	BMP_CCC	0x00239208
+
+#define	BMP_CCCIS	0x00255450
+
+#define	BMP_CCDEN	0x00271698
+
+#define	BMP_CCE	0x0028d8e0
+
+#define	BMP_CCF	0x002a9b28
+
+#define	BMP_CCH	0x002c5d70
+
+#define	BMP_CCMG	0x002e1fb8
+
+#define	BMP_CCRGB	0x002fe200
+
+#define	BMP_CCUV	0x0031a448
+
+/***************************************************************/
 
 //BMP_ADS   		320*240
 #define BMP_ADS_X			0
@@ -179,7 +446,7 @@
 #define	BMP_FADD_X			BMP_FVER_X
 #define	BMP_FADD_Y			BMP_FVER_Y+25	
 
-#define BMP_FADD_OFF		BMP_FB
+#define BMP_FADD_OFF		BMP_AFB
 
 //--------------------------------------
 //BMP_FIR			40*22
