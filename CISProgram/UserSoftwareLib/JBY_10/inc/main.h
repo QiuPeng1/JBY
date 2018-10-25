@@ -1053,7 +1053,8 @@ void DealKeyDownOnMenu1(u8 key);
 
 
 void ClearAllNoteNum(void);
-		
+void ClearPSIrFlag(void);
+void ClearJamFlag(void);
 // void InitIrData(void);
 // void DealIr2Data(u8 d);
 // void DealIr3Data(u8 d);

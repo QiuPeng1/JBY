@@ -296,7 +296,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	pImg = (u8 *)lengthData;
 	billIradMask = 0;
 
-	if (lengthDataLen < 100 || colorJudgeValue == 0x0ff)
+	if (lengthDataLen < 100||lengthDataLen > 500)
 	{
 		billIradMask = 1;
 		return 0;
@@ -506,10 +506,9 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 u8 billMG_Judge(int noteType)
 {
 	int i, Max0, Min0, Max1, Min1;
-	if (mgDataLen < 80)
+	if (mgDataLen < 80 || mgDataLen > 850)
 	{
-		colorJudgeValue = 0xff;
-		colorJudgeFlag = 0xff;
+		mgFvtFlag = 1;
 		return 0;
 	}
 

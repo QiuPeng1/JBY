@@ -340,7 +340,7 @@ int main(void)
 		if(gb_sampleIdleOver == 1)//输出空转采集
 		{
 			gb_sampleIdleOver = 0;
-			mgDataLen = g_mgSampleIndex;
+//			mgDataLen = g_mgSampleIndex;
 //			irDataLenA = g_irSampleIndex;
 //			memcpy(mgDataA,mgData,6*MG_DATA_MAX_LEN);
 //			memcpy(irDataA,irData,8*IR_DATA_MAX_LEN);
@@ -378,11 +378,14 @@ int main(void)
 					motor1_Stop();
 					motor1StopRecord = 1;
 					gb_isJammed = 0;
-					SetSystemState(NORMAL);
 					gb_enableSample = 1;
 					noteState = 0;
+					gb_noteState = NOTE_IDEL;
+					ClearPSIrFlag();
+					ClearJamFlag();
 //					ClearAllNoteNum();
 //					DispMainMenu();
+					SetSystemState(NORMAL);
 					gb_dispJamInfo = 1;
 					LongBeep(1);
 					dubiRecoverCnt = 0;
@@ -2080,6 +2083,7 @@ void DealNotePass(void)
 		greenFs_Off();
 		blueFs_Off();
 		g_colorFsRGB = FS_OFF;
+		mgDataLen = g_mgSampleIndex;
 		if(systemState == NORMAL)
 		{
 			if(gb_inCollabration == COLLABRATION_COLOR)
@@ -2095,12 +2099,13 @@ void DealNotePass(void)
 			else
 			{
 				//计算函数
+				delay_DelayMs(200);
 				billIrad_Judge(IRlengthBuffer,g_currency);//0909改U16注释
 
 				billRGB_Judge(g_currency);//0909改U16注释
 
 				billMG_Judge(g_currency);//0909改U16注释
-				delay_DelayMs(300);
+				delay_DelayMs(100);
 				//billRGB_Judge();
 				//colorJudgeValue //颜色面额
 				//colorJudgeFlag  //颜色方向
@@ -2161,7 +2166,7 @@ void DealNotePass(void)
 						gb_testbuf[1] = billValue;
 						gb_testbuf[2] = billIradMask;
 						gb_testbuf[3] = mgFvtFlag;
-						gb_testbuf[4] = 0;
+						gb_testbuf[4] = colorDataLen;
 						gb_testbuf[5] = 0;
 						gb_testbuf[6] = 0x55;
 						uart_SendDataToUart3(gb_testbuf,7);
@@ -2179,7 +2184,7 @@ void DealNotePass(void)
 //					OutputLengthDetailData();
 					OutputALLDetailData2();
 				}
-				else	if(gb_needOutPutErrData == 1)
+				else if(gb_needOutPutErrData == 1)
 				{
 					if(g_errFlag > 0)
 					{
@@ -3265,6 +3270,8 @@ void DealJamAtOnce(void)
 		U16ToStr(gb_isJammed+ERROR_JAM1-1,dispStr+2,2);
 // 		tm16xx_Led2DispStr(dispStr);
 		SetSystemState(DU_BI);
+		ClearPSIrFlag();
+		ClearJamFlag();
 	}
 	hwfs_On();
 	redFs_Off();
@@ -4628,6 +4635,25 @@ u8 isLengthIrHaveNote(void)
 // 	}
 	return 0;
 }
+void ClearPSIrFlag(void)
+{
+	PS1Flag = 0;
+	gb_haveNoteInPS1 = 0;
+	PS2Flag = 0;
+	gb_haveNoteInPS2 = 0;
+	PS3Flag = 0;
+	gb_haveNoteInPS3 = 0;
+}
+void ClearJamFlag(void)
+{
+	g_maxMpFromPs1ToPs2 = 0;
+	g_maxMpFromEnteranceToPs1 = 0;
+	g_maxMpFromPs1ToEnterance = 0;
+	g_maxMpFromPs2ToLeave = 0;
+	g_maxMpFromComputeToPS1 = 0;
+	gb_needStopMotorTimeout = 0;
+	
+}
 //位置管1，给测长触发 给颜色触发
 void DealPS1INT(void)
 {
@@ -4642,63 +4668,66 @@ void DealPS1INT(void)
 		{
 			PS1Flag ++;
 		}
-		if(gb_haveNoteInPS1 == 0)
+		if(systemState == NORMAL)
 		{
-			if((PS1Flag&0x0000000f) == 0x0000000f)//ir2进币
+			if(gb_haveNoteInPS1 == 0)
 			{
-				gb_haveNoteInPS1 = 1;		
-				if(gb_noteState == NOTE_BACKWARD)
+				if((PS1Flag&0x0000000f) == 0x0000000f)//ir2进币
 				{
-					g_maxMpFromComputeToPS1 = 0;
-					noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
-					noteState |= STATE_BACKWARD_COVER_PS1;
-				}
-				else if(gb_noteState == NOTE_FORWARD)
-				{
-					g_maxMpFromEnteranceToPs1 = 0;
-					g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
-					noteState |= STATE_FORWARD_COVER_PS1;
-					noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
-					//开始采集
-					gb_uvNeedStartSampleCnt = 55;
-					gb_lengthIrNeedStartSampleCnt = 25;
-					gb_colorSampleEnable = 1;
-					g_colorSampleIndex = 0;
-					g_lengthSampleIndex = 0;
-					g_lengthIrMpNum = 0;	
-					lengthMpCnt = 0;
-					g_mgSampleIndex = 0;
-					if(mpCnt < 1000)
+					gb_haveNoteInPS1 = 1;		
+					if(gb_noteState == NOTE_BACKWARD)
 					{
-						mpCntRecode[mpCnt] = 20;
+						g_maxMpFromComputeToPS1 = 0;
+						noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
+						noteState |= STATE_BACKWARD_COVER_PS1;
 					}
-					if(timeCnt < 1000)
+					else if(gb_noteState == NOTE_FORWARD)
 					{
-						msCntRecode[timeCnt] = 20;
+						g_maxMpFromEnteranceToPs1 = 0;
+						g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
+						noteState |= STATE_FORWARD_COVER_PS1;
+						noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
+						//开始采集
+						gb_uvNeedStartSampleCnt = 55;
+						gb_lengthIrNeedStartSampleCnt = 25;
+						gb_colorSampleEnable = 1;
+						g_colorSampleIndex = 0;
+						g_lengthSampleIndex = 0;
+						g_lengthIrMpNum = 0;	
+						lengthMpCnt = 0;
+						g_mgSampleIndex = 0;
+						if(mpCnt < 1000)
+						{
+							mpCntRecode[mpCnt] = 20;
+						}
+						if(timeCnt < 1000)
+						{
+							msCntRecode[timeCnt] = 20;
+						}
 					}
 				}
 			}
-		}
-		else if(gb_haveNoteInPS1 == 1)
-		{
-			if((PS1Flag&0x000fffff) == 0x00000000)//离开ir2
+			else if(gb_haveNoteInPS1 == 1)
 			{
-				gb_haveNoteInPS1 = 0;
-				if(gb_noteState == NOTE_FORWARD)
+				if((PS1Flag&0x000fffff) == 0x00000000)//离开ir2
 				{
-					gb_colorSampleEnd = 2;
-					if(mpCnt < 1000)
+					gb_haveNoteInPS1 = 0;
+					if(gb_noteState == NOTE_FORWARD)
 					{
-						mpCntRecode[mpCnt] = 60;
+						gb_colorSampleEnd = 2;
+						if(mpCnt < 1000)
+						{
+							mpCntRecode[mpCnt] = 60;
+						}
+						if(timeCnt < 1000)
+						{
+							msCntRecode[timeCnt] = 60;
+						}
 					}
-					if(timeCnt < 1000)
+					else if(gb_noteState == NOTE_BACKWARD)
 					{
-						msCntRecode[timeCnt] = 60;
-					}
-				}
-				else if(gb_noteState == NOTE_BACKWARD)
-				{
 
+					}
 				}
 			}
 		}
@@ -4733,65 +4762,68 @@ void DealPS2INT(void)
 			//PS2ValueRecord2[PS2ValueRecordCnt] = PS2FlagCnt;
 			PS2ValueRecord[PS2ValueRecordCnt++] = irValue[13];
 		}
-		if(gb_haveNoteInPS2 == 0)
+		if(systemState == NORMAL)
 		{
-			if((PS2Flag&0x0f) == 0x0f)//ps2进币
+			if(gb_haveNoteInPS2 == 0)
 			{
-				gb_haveNoteInPS2 = 1;		
-				PS2FlagCnt = 0;
-				if(gb_noteState == NOTE_BACKWARD)
+				if((PS2Flag&0x0f) == 0x0f)//ps2进币
 				{
-
-				}
-				else if(gb_noteState == NOTE_FORWARD)
-				{
-					if(mpCnt < 1000)
-					{
-						mpCntRecode[mpCnt] = 100;
-					}
-					if(timeCnt < 1000)
-					{
-						msCntRecode[timeCnt] = 1000;
-					}
-				} 
-			}
-		}
-		else if(gb_haveNoteInPS2 == 1)
-		{
-			if(gb_noteState == NOTE_FORWARD)
-			{
-				if((PS2Flag&0x0f) == 0x00 && gb_haveNoteInPS1 == 0)//离开PS2
-				{
+					gb_haveNoteInPS2 = 1;		
 					PS2FlagCnt = 0;
-					gb_haveNoteInPS2 = 0;
+					if(gb_noteState == NOTE_BACKWARD)
+					{
 
-					gb_uvNeedEndSampleCnt = 40;//50;
-					gb_needBackMotorCnt = 20;
-					gb_lengthIrNeedEndSampleCnt = 2;//30;
-					if(mpCnt < 1000)
-					{
-						mpCntRecode[mpCnt] = 80;
 					}
-					if(timeCnt < 1000)
+					else if(gb_noteState == NOTE_FORWARD)
 					{
-						msCntRecode[timeCnt] = 80;
-					}
+						if(mpCnt < 1000)
+						{
+							mpCntRecode[mpCnt] = 100;
+						}
+						if(timeCnt < 1000)
+						{
+							msCntRecode[timeCnt] = 1000;
+						}
+					} 
 				}
 			}
-			else if(gb_noteState == NOTE_BACKWARD)
+			else if(gb_haveNoteInPS2 == 1)
 			{
-				//gb_motorNeedEndOneNoteCnt = 10;
-				if((PS2Flag&0x0f) == 0x00)
+				if(gb_noteState == NOTE_FORWARD)
 				{
-					PS2FlagCnt = 0;
-					gb_haveNoteInPS2 = 0;
-					//开始刹车
-					motor1_ForwardRun();
-					g_needSaveMpPeriodFlag = 1;
-					gb_mpPeriodRecordCnt = 0;
-					
-					gb_needStopMotorTimeout = 35;
+					if((PS2Flag&0x0f) == 0x00 && gb_haveNoteInPS1 == 0)//离开PS2
+					{
+						PS2FlagCnt = 0;
+						gb_haveNoteInPS2 = 0;
 
+						gb_uvNeedEndSampleCnt = 40;//50;
+						gb_needBackMotorCnt = 20;
+						gb_lengthIrNeedEndSampleCnt = 2;//30;
+						if(mpCnt < 1000)
+						{
+							mpCntRecode[mpCnt] = 80;
+						}
+						if(timeCnt < 1000)
+						{
+							msCntRecode[timeCnt] = 80;
+						}
+					}
+				}
+				else if(gb_noteState == NOTE_BACKWARD)
+				{
+					//gb_motorNeedEndOneNoteCnt = 10;
+					if((PS2Flag&0x0f) == 0x00)
+					{
+						PS2FlagCnt = 0;
+						gb_haveNoteInPS2 = 0;
+						//开始刹车
+						motor1_ForwardRun();
+						g_needSaveMpPeriodFlag = 1;
+						gb_mpPeriodRecordCnt = 0;
+						
+						gb_needStopMotorTimeout = 35;
+
+					}
 				}
 			}
 		}
@@ -4820,51 +4852,54 @@ void DealPS3INT(void)
 			PS3FlagCnt++;
 		}
 
-		if(gb_haveNoteInPS3 == 0)
+		if(systemState == NORMAL)
 		{
-			if((PS3Flag&0x0f) == 0x0f)//ps3进币
+			if(gb_haveNoteInPS3 == 0)
 			{
-				gb_haveNoteInPS3 = 1;		
-				PS3FlagCnt = 0;
-				if(gb_noteState == NOTE_BACKWARD)
+				if((PS3Flag&0x0f) == 0x0f)//ps3进币
 				{
+					gb_haveNoteInPS3 = 1;		
+					PS3FlagCnt = 0;
+					if(gb_noteState == NOTE_BACKWARD)
+					{
 
+					}
+					else if(gb_noteState == NOTE_FORWARD)
+					{
+						g_maxMpFromPs1ToPs2 = 0;
+						if(mpCnt < 1000)
+						{
+							mpCntRecode[mpCnt] = 40;
+						}
+						if(timeCnt < 1000)
+						{
+							msCntRecode[timeCnt] = 40;
+						}
+					} 
 				}
-				else if(gb_noteState == NOTE_FORWARD)
-				{
-					g_maxMpFromPs1ToPs2 = 0;
-					if(mpCnt < 1000)
-					{
-						mpCntRecode[mpCnt] = 40;
-					}
-					if(timeCnt < 1000)
-					{
-						msCntRecode[timeCnt] = 40;
-					}
-				} 
 			}
-		}
-		else if(gb_haveNoteInPS3 == 1)
-		{
-			if((PS3Flag&0x0f) == 0x00)//离开PS2
+			else if(gb_haveNoteInPS3 == 1)
 			{
-				PS3FlagCnt = 0;
-				gb_haveNoteInPS3 = 0;
+				if((PS3Flag&0x0f) == 0x00)//离开PS2
+				{
+					PS3FlagCnt = 0;
+					gb_haveNoteInPS3 = 0;
 
-				if(gb_noteState == NOTE_FORWARD)
-				{
-					if(mpCnt < 1000)
+					if(gb_noteState == NOTE_FORWARD)
 					{
-						mpCntRecode[mpCnt] = 80;
+						if(mpCnt < 1000)
+						{
+							mpCntRecode[mpCnt] = 80;
+						}
+						if(timeCnt < 1000)
+						{
+							msCntRecode[timeCnt] = 80;
+						}
 					}
-					if(timeCnt < 1000)
+					else if(gb_noteState == NOTE_BACKWARD)
 					{
-						msCntRecode[timeCnt] = 80;
+						//gb_motorNeedEndOneNoteCnt = 10;
 					}
-				}
-				else if(gb_noteState == NOTE_BACKWARD)
-				{
-					//gb_motorNeedEndOneNoteCnt = 10;
 				}
 			}
 		}
@@ -4938,35 +4973,26 @@ void DealLengthIrINT(void)
 
 void DealMgSampleINT(void)
 {
-	//if(g_motor1State == MOTOR_FORWARD_RUN)
+	if(gb_uvNeedStartSampleflag == 1)
 	{
-		if(tempMgDataLen < TEMP_MG_DATA_MAX_LEN)
+		if(g_mgSampleIndex < MG_DATA_MAX_LEN)
 		{
-				tempMgData[0][tempMgDataLen] = mrValue[0]; 
-				tempMgData[1][tempMgDataLen] = mrValue[1]; 				
-				tempMgDataLen ++;
-		}
-
-		if(gb_uvNeedStartSampleflag == 1)
-		{
-			if(g_mgSampleIndex < MG_DATA_MAX_LEN)
-			{
-				mgData[0][g_mgSampleIndex] = mrValue[0]; 
-				mgData[1][g_mgSampleIndex] = mrValue[1]; 				
-				g_mgSampleIndex ++;
-			}
-		}
-		else
-		{
-			//保存空闲态数据
-			lastMgData[0][lastMgDataIndex] = mrValue[0]; 
-			lastMgData[1][lastMgDataIndex] = mrValue[1]; 
-
-			lastMgDataIndex ++;	
-			lastMgDataIndex %= LAST_MG_DATA_MAX;
+			mgData[0][g_mgSampleIndex] = mrValue[0]; 
+			mgData[1][g_mgSampleIndex] = mrValue[1]; 				
+			g_mgSampleIndex ++;
 		}
 	}
+	else
+	{
+		//保存空闲态数据
+		lastMgData[0][lastMgDataIndex] = mrValue[0]; 
+		lastMgData[1][lastMgDataIndex] = mrValue[1]; 
+
+		lastMgDataIndex ++;	
+		lastMgDataIndex %= LAST_MG_DATA_MAX;
+	}
 }
+
 
 void DealUVSampleINT(void)
 {
