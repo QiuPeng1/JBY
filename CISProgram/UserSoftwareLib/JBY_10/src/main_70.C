@@ -166,6 +166,12 @@ void DealKeyDownOnNormal(u8 key)
 				}
 				else if(g_currency == INDEX_GBP)
 				{
+					g_currency = INDEX_ARS;
+					disp_DrawPic(0,0,BMP_BFLAGARS);
+					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
+				}
+				else if(g_currency == INDEX_ARS)
+				{
 					g_currency = INDEX_USD;
 					disp_DrawPic(0,0,BMP_BFLAGUSD);
 					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
@@ -1172,6 +1178,11 @@ void DispMainMenuBackground(void)
 			disp_DrawPic(0,0,BMP_BFLAGGBP);
 			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTGBP);
 		}		
+		else if(g_currency == INDEX_ARS)
+		{
+			disp_DrawPic(0,0,BMP_BFLAGARS);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
+		}		
 		disp_DrawPic(BMP_PCS_X,BMP_PCS_Y,BMP_APCS);
 }
 
@@ -2069,6 +2080,52 @@ void DealNoteType(void)
 				break;
 			}				
 		}
+		else if(g_currency == INDEX_ARS)
+		{
+			switch(billValue)
+			{
+			case 0:
+			case 1:
+				currentNoteType = 0;//1000
+				break;
+			case 2:
+			case 3:
+				currentNoteType = 1;//500
+				break;
+			case 4:
+			case 5:
+				currentNoteType = 2; //200
+				break;
+			case 6:
+			case 7:
+				currentNoteType = 3;//100
+				break;
+			case 8:
+			case 9:
+				currentNoteType = 4;//50
+				break;
+			case 10:
+			case 11:
+				currentNoteType = 5;//20
+				break;
+			case 12:
+			case 13:
+				currentNoteType = 6;//10
+				break;
+			case 14:
+			case 15:
+				currentNoteType = 7;//5
+				break;
+			case 16:
+			case 17:
+				currentNoteType = 8;//2
+				break;
+			default:
+				currentNoteType = 0xFF;
+				g_errFlag |= ERR_VALUE;
+				break;
+			}				
+		}
 	}
 }
 void DealNotePass(void)
@@ -2504,6 +2561,10 @@ void IncNoteNum(void)
 	{
 		noteDenoValue = GBP_NOTE_VALUE[currentNoteType];
 	}
+	else if(g_currency == INDEX_ARS)
+	{
+		noteDenoValue = ARS_NOTE_VALUE[currentNoteType];
+	}
 	noteSum += noteDenoValue;
 	denoNoteNum[currentNoteType] ++;
 }
@@ -2641,25 +2702,53 @@ void DispDetailNoteNum(void)//显示明细
 			d = denoNoteNum[i];
 			if(d == 0)
 			{	
-				disp_DrawPic(SBmpDispXY[i*2+2]-24,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[i*2+2]-12,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[i*2+2],SBmpDispXY[i*2+1+2],SbmpAddress[0]);
+				if(i<3)
+				{
+					disp_DrawPic(SBmpDispXY[(i+2)*2]-24,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+2)*2]-12,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+2)*2],SBmpDispXY[(i+2)*2+1],SbmpAddress[0]);
+				}
+				else
+				{
+					disp_DrawPic(SBmpDispXY[(i+3)*2]-24,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+3)*2]-12,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+3)*2],SBmpDispXY[(i+3)*2+1],SbmpAddress[0]);					
+				}
 			}	
 			else
 			{
-				for(j=0; j<3; j++)
+				if(i < 3)
 				{
-					if(d > 0)
+					for(j=0; j<3; j++)
 					{
-						result = d%10;
-						disp_DrawPic(SBmpDispXY[i*2+2]-12*j, SBmpDispXY[i*2+1+2], SbmpAddress[result]);
-						d /= 10;
-					}
-					else
-					{
-						disp_DrawPic(SBmpDispXY[i*2+2]-12*j,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j, SBmpDispXY[(i+2)*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j,SBmpDispXY[(i+2)*2+1], SbmpAddress[10]);
+						}
 					}
 				}
+				else
+				{
+					for(j=0; j<3; j++)
+					{
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j, SBmpDispXY[(i+3)*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
+						}
+					}
+				}	
 			}
 		}
 	}
@@ -2670,35 +2759,35 @@ void DispDetailNoteNum(void)//显示明细
 			d = denoNoteNum[i];
 			if(d == 0)
 			{	
-				if (i >= 3)
+				if (i < 3)
 				{
-					disp_DrawPic(SBmpDispXY[(i+1)*2+2]-24,SBmpDispXY[(i+1)*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+1)*2+2]-12,SBmpDispXY[(i+1)*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+1)*2+2],SBmpDispXY[(i+1)*2+1+2],SbmpAddress[0]);
+					disp_DrawPic(SBmpDispXY[(i+2)*2]-24,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+2)*2]-12,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+2)*2],SBmpDispXY[(i+2)*2+1],SbmpAddress[0]);
 				}
 				else
 				{
-					disp_DrawPic(SBmpDispXY[i*2+2]-24,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+2]-12,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+2],SBmpDispXY[i*2+1+2],SbmpAddress[0]);
+					disp_DrawPic(SBmpDispXY[(i+4)*2]-24,SBmpDispXY[(i+4)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+4)*2]-12,SBmpDispXY[(i+4)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+4)*2],SBmpDispXY[(i+4)*2+1],SbmpAddress[0]);
 				}
 
 			}	
 			else
 			{
-				if (i >= 3)
+				if (i < 3)
 				{
 					for(j=0; j<3; j++)
 					{
 						if(d > 0)
 						{
 							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+1)*2+2]-12*j, SBmpDispXY[(i+1)*2+1+2], SbmpAddress[result]);
+							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j, SBmpDispXY[(i+2)*2+1], SbmpAddress[result]);
 							d /= 10;
 						}
 						else
 						{
-							disp_DrawPic(SBmpDispXY[(i+1)*2+2]-12*j,SBmpDispXY[(i+1)*2+1+2],SbmpAddress[10]);
+							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
 						}
 					}
 				}
@@ -2709,12 +2798,12 @@ void DispDetailNoteNum(void)//显示明细
 						if(d > 0)
 						{
 							result = d%10;
-							disp_DrawPic(SBmpDispXY[i*2+2]-12*j, SBmpDispXY[i*2+1+2], SbmpAddress[result]);
+							disp_DrawPic(SBmpDispXY[(i+4)*2]-12*j, SBmpDispXY[(i+4)*2+1], SbmpAddress[result]);
 							d /= 10;
 						}
 						else
 						{
-							disp_DrawPic(SBmpDispXY[i*2+2]-12*j,SBmpDispXY[i*2+1+2],SbmpAddress[10]);
+							disp_DrawPic(SBmpDispXY[(i+4)*2]-12*j,SBmpDispXY[(i+4)*2+1],SbmpAddress[10]);
 						}
 					}
 				}
@@ -2729,23 +2818,51 @@ void DispDetailNoteNum(void)//显示明细
 			d = denoNoteNum[i];
 			if(d == 0)
 			{	
-				disp_DrawPic(SBmpDispXY[i*2]-24,SBmpDispXY[i*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[i*2]-12,SBmpDispXY[i*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[i*2],SBmpDispXY[i*2+1],SbmpAddress[0]);
+				if(i<4)
+				{
+					disp_DrawPic(SBmpDispXY[(i+1)*2]-24,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+1)*2]-12,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+1)*2],SBmpDispXY[(i+1)*2+1],SbmpAddress[0]);
+				}
+				else
+				{
+					disp_DrawPic(SBmpDispXY[(i+2)*2]-24,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+2)*2]-12,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+2)*2],SBmpDispXY[(i+2)*2+1],SbmpAddress[0]);
+				}
 			}	
 			else
 			{
-				for(j=0; j<3; j++)
+				if(j < 4)
 				{
-					if(d > 0)
+					for(j=0; j<3; j++)
 					{
-						result = d%10;
-						disp_DrawPic(SBmpDispXY[i*2]-12*j, SBmpDispXY[i*2+1], SbmpAddress[result]);
-						d /= 10;
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j, SBmpDispXY[(i+1)*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+						}
 					}
-					else
+				}
+				else
+				{
+					for(j=0; j<3; j++)
 					{
-						disp_DrawPic(SBmpDispXY[i*2]-12*j,SBmpDispXY[i*2+1],SbmpAddress[10]);
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j, SBmpDispXY[(i+2)*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
+						}
 					}
 				}
 			}
@@ -2756,58 +2873,59 @@ void DispDetailNoteNum(void)//显示明细
 		for(i = 0;i < 4;i++)
 		{
 			d = denoNoteNum[i];
-			if(i < 2)
-			{
-				if(d == 0)
-				{	
-					disp_DrawPic(SBmpDispXY[i*2+4]-24,SBmpDispXY[i*2+1+4],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+4]-12,SBmpDispXY[i*2+1+4],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+4],SBmpDispXY[i*2+1+4],SbmpAddress[0]);
-				}	
-				else
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[i*2+4]-12*j, SBmpDispXY[i*2+1+4], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[i*2+4]-12*j,SBmpDispXY[i*2+1+4],SbmpAddress[10]);
-						}
-					}
-				}
-			}
+			if(d == 0)
+			{	
+				disp_DrawPic(SBmpDispXY[(i+6)*2]-24,SBmpDispXY[(i+6)*2+1],SbmpAddress[10]);
+				disp_DrawPic(SBmpDispXY[(i+6)*2]-12,SBmpDispXY[(i+6)*2+1],SbmpAddress[10]);
+				disp_DrawPic(SBmpDispXY[(i+6)*2],SBmpDispXY[(i+6)*2+1],SbmpAddress[0]);
+			}	
 			else
 			{
-				if(d == 0)
-				{	
-					disp_DrawPic(SBmpDispXY[i*2+4+4]-24,SBmpDispXY[i*2+1+4+4],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+4+4]-12,SBmpDispXY[i*2+1+4+4],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[i*2+4+4],SBmpDispXY[i*2+1+4+4],SbmpAddress[0]);
-				}	
-				else
+				for(j=0; j<3; j++)
 				{
-					for(j=0; j<3; j++)
+					if(d > 0)
 					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[i*2+4+4]-12*j, SBmpDispXY[i*2+1+4+4], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[i*2+4+4]-12*j,SBmpDispXY[i*2+1+4+4],SbmpAddress[10]);
-						}
+						result = d%10;
+						disp_DrawPic(SBmpDispXY[(i+6)*2]-12*j, SBmpDispXY[(i+6)*2+1], SbmpAddress[result]);
+						d /= 10;
+					}
+					else
+					{
+						disp_DrawPic(SBmpDispXY[(i+6)*2]-12*j,SBmpDispXY[(i+6)*2+1],SbmpAddress[10]);
 					}
 				}
 			}
 		}
 	}
+	else if(g_currency == INDEX_ARS)//9
+	{
+		for(i = 0;i < 9;i++)
+		{
+			d = denoNoteNum[i];
+			if(d == 0)
+			{	
+				disp_DrawPic(SBmpDispXY[(i+1)*2]-24,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+				disp_DrawPic(SBmpDispXY[(i+1)*2]-12,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+				disp_DrawPic(SBmpDispXY[(i+1)*2],SBmpDispXY[(i+1)*2+1],SbmpAddress[0]);
+			}	
+			else
+			{
+				for(j=0; j<3; j++)
+				{
+					if(d > 0)
+					{
+						result = d%10;
+						disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j, SBmpDispXY[(i+1)*2+1], SbmpAddress[result]);
+						d /= 10;
+					}
+					else
+					{
+						disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
+					}
+				}
+			}
+		}
+	}	
 }
 		
 

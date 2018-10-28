@@ -43,6 +43,11 @@
 #include "LW_GBP_ColorFvt.h"
 #endif
 /***********************************************/
+#ifdef  BILL_INDEX_ARS
+#include "LW_ARS_ValueFvt.h"
+#include "LW_ARS_ColorFvt.h"
+#endif
+/***********************************************/
 //#define DRAW_STATE
 //#define DRAW_STATE2
 
@@ -193,6 +198,14 @@ u8 billRGB_Judge(int noteType)
 		Class = GBP_NOTE_CLASS;
 	}
 #endif
+#ifdef  BILL_INDEX_ARS
+	if (noteType == INDEX_ARS)
+	{
+		pNoteClass = g_ARS_noteClass;
+		pFvt = (short *)ARS_colorFvt_Int;
+		Class = ARS_NOTE_CLASS;
+	}
+#endif
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
@@ -279,13 +292,10 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 
 u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 {
-//	int Min, MinPos, Max0, Max1, Max, MaxPos, whitePaperVal;
-	int i, j, k, m, sum, count;//, t, t0, t1, t2, x[10], y[10];
-//	int sum, iradAve, boDong, angle, wirePos, arv0, arv1;
-//	short sxLeft, exLeft, sxRight, exRight, count1;
+	int i, j, k, m, sum, count, count1;
 	short sx, ex, sw, sh, iradVal, sy, ey;
 
-//	float threK, d;
+
 	u8 *pImg;
 	double fvt, tt, max_t;
 	short *pFvt;
@@ -322,15 +332,47 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		projH[i] = projH[i+1]-projH[i];
 	}
 	projH[i] = 0;
-	
+	sx = 8;
+	Max = 99999999;
+	for (i = 0; i < 80; i++)
+	{
+		if (Max > projH[i])
+		{
+			count = 0;
+			for (j = 0; j < 21; j++)
+			{
+				if (lengthData[j][max(i-2, 0)] > 240)
+				{
+					count ++;
+				}
+			}
+			if (count > 8)
+			{
+				Max = projH[i];
+				sx = i;
+			}
+			
+		}
+	}
 	Max = 0;
 	ex = lengthDataLen-8;
 	for (i = lengthDataLen-3; i > lengthDataLen-80; i--)
 	{
 		if (Max < projH[i])
 		{
-			Max = projH[i];
-			ex = i;
+			count = 0;
+			for (j = 0; j < 21; j++)
+			{
+				if (lengthData[j][min(i+2, lengthDataLen-1)] > 240)
+				{
+					count ++;
+				}
+			}
+			if (count > 8)
+			{
+				Max = projH[i];
+				ex = i;
+			}
 		}
 	}
 	sy = 0;
@@ -339,6 +381,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	for (i = 0; i < 21; i++)
 	{
 		count = 0;
+		count1 = 0;
 		for (j = 8; j < lengthDataLen-8; j++)
 		{
 			if(lengthData[i][j+0] > 240)
@@ -346,7 +389,14 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 				count++;
 			}
 		}
-		if (count < lengthDataLen/3)
+		for (j = 8; j < lengthDataLen-8; j++)
+		{
+			if(lengthData[i+1][j+0] > 240)
+			{
+				count1++;
+			}
+		}
+		if (count < lengthDataLen/3 && count1 < lengthDataLen/3)
 		{
 			sy = i+1;
 			break;
@@ -356,6 +406,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	for (i = 20; i > 0; i--)
 	{
 		count = 0;
+		count1 = 0;
 		for (j = 8; j < lengthDataLen-8; j++)
 		{
 			if(lengthData[i][j+0] > 240)
@@ -363,7 +414,14 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 				count++;
 			}
 		}
-		if (count < lengthDataLen/3)
+		for (j = 8; j < lengthDataLen-8; j++)
+		{
+			if(lengthData[i-1][j+0] > 240)
+			{
+				count1++;
+			}
+		}
+		if (count < lengthDataLen/3 && count1 < lengthDataLen/3)
 		{
 			ey = i-1;
 			break;
@@ -393,11 +451,16 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		//	sh -= 1;
 		//	continue;
 		}
-		for (j = 8; j < ex; j+=4)
+		for (j = sx; j < ex; j+=4)
 		{
 			sum = (lengthData[i][j+0]+lengthData[i][j+1]+lengthData[i][j+2]+lengthData[i][j+3])/4;
 			lengthData_Tmp[k++] = sum;
 		}
+	}
+	if (sh == 0)
+	{
+		billIradMask = 1;
+		return;
 	}
 	sw = k/sh;
 	iradImgW = sw;
@@ -471,6 +534,14 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		pNoteClass = g_GBP_noteClass;
 		pFvt = (short *)GBP_iradFvt_Int;
 		Class = GBP_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_ARS
+	if (noteType == INDEX_ARS)
+	{
+		pNoteClass = g_ARS_noteClass;
+		pFvt = (short *)ARS_iradFvt_Int;
+		Class = ARS_NOTE_CLASS;
 	}
 #endif
 	max_t = 0.0;
@@ -558,7 +629,7 @@ u8 billMG_Judge(int noteType)
 	{
 		if (Max0-Min0 < 70 && Max1-Min1 < 70)
 		{
-			mgFvtFlag = 1;
+		//	mgFvtFlag = 1;
 		}
 	}
 //	FilterGaussian_1D_Int(mgData[0], mgDataLen, 1);

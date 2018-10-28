@@ -13,6 +13,10 @@ v3.2 20181024   1、修改开机第二张误报
 				2、修改开机第一张误报
 				3、修改开盖关盖死机BUG
 V3.3 20181025   1、更新鉴伪
+V3.4 20181025   1、更新阿联酋
+V3.5 20181026   1、增加阿根廷
+				2、更新土耳其，欧元，沙特，阿联酋
+V3.6 20181028   1、卢布假币更新				
 ****************************************************************************/
 
 /*防止重复引用 */
@@ -51,7 +55,7 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V3.3"
+#define VERSION  "V3.6"
 
 
 typedef enum
@@ -194,6 +198,8 @@ enum
 	#define ArrayLen(x) (sizeof(x)/sizeof(x[0]))
 	#define MAX(a, b) (((a) > (b)) ? (a) : (b))
 	#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+	#define max(a, b) (((a) > (b)) ? (a) : (b))
+	#define min(a, b) (((a) < (b)) ? (a) : (b))
 	#define RowNum(x) (sizeof(x)/sizeof(x[0]))
 	#define ColNum(x) (sizeof(x[0]))
 	#define HighByte(x) ((u8)(x>>8))
