@@ -1,7 +1,7 @@
 #include "system.h"
 
-const short GBP_colorFvt_Int[4*(648+1)];
-const short GBP_colorFvt_Int[] = 
+const int GBP_colorFvt_Int[4*(648+1)];
+const int GBP_colorFvt_Int[] = 
 {
     441,     67,   -400,   -126,
     -67,    523,   -525,    220,

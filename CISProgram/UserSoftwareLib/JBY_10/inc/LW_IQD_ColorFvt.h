@@ -1,7 +1,7 @@
 #include "system.h"
 
-const short IQD_colorFvt_Int[8*(648+1)];
-const short IQD_colorFvt_Int[] = 
+const int IQD_colorFvt_Int[8*(648+1)];
+const int IQD_colorFvt_Int[] = 
 {
    1021,   2233,   1190,   6497,   1990,   -783,  -2196,  -7940,
     893,  -2761,   1447,  -3730,   5055,  -8189,    245,   3422,

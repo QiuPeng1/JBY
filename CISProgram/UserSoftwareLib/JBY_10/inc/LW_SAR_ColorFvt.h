@@ -1,7 +1,7 @@
 #include "system.h"
 
-const short SAR_colorFvt_Int[10*(648+1)];
-const short SAR_colorFvt_Int[] = 
+const int SAR_colorFvt_Int[10*(648+1)];
+const int SAR_colorFvt_Int[] = 
 {
   -1025,   -197,    541,    927,  -3250,  -1280,    647,   1032,   2529,   -483,
    -483,   -704,   2280,    940,    330,   2802,   -417,   -422,   -795,    -33,

@@ -1214,6 +1214,7 @@ u8 * const ONOFF_STR[] =
 {
 	"OFF",
 	"ON ",
+	"ALL",
 };
 u8 * const Direction_STR[] = 
 {
@@ -1357,7 +1358,7 @@ void SettingParaInc(void)
 		break;
 		case 2:
  			gb_needOutPutErrData ++;
- 			gb_needOutPutErrData %= 2;
+ 			gb_needOutPutErrData %= 3;
 		break;
 		case 3:
 			if (gb_motorState1 == 0)
@@ -2236,7 +2237,7 @@ void DealNotePass(void)
 				}
 
 				
-				if(gb_autoOutputDetailData == 1)
+				if(gb_autoOutputDetailData == 1||gb_needOutPutErrData == 2)
 				{
 //					OutputLengthDetailData();
 					OutputALLDetailData2();
@@ -2833,7 +2834,7 @@ void DispDetailNoteNum(void)//显示明细
 			}	
 			else
 			{
-				if(j < 4)
+				if(i < 4)
 				{
 					for(j=0; j<3; j++)
 					{
@@ -4587,31 +4588,58 @@ void SysTick_Handler(void)
 		}
 		
 		fiveMsCnt ++;
-		if(fiveMsCnt >= 5)
+		if(g_currency != INDEX_GBP)
 		{
-			fiveMsCnt = 0;
-			//控制段码液晶的进钞传感器发射
-			//if(systemState != SELFCHECK)
+			if(fiveMsCnt >= 5)
 			{
+				fiveMsCnt = 0;
 				ToggleJinChaoFaShe();		
-			}
-			
-			scanEntergateTimer ++;
-			if(scanEntergateTimer >= SCAN_ENTERGATE_TIME)
+
+				scanEntergateTimer ++;
+				if(scanEntergateTimer >= SCAN_ENTERGATE_TIME)
+				{
+					scanEntergateTimer = 0;
+					//进钞编码统计
+	
+					if (entergatePulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
+					{
+						gb_haveNoteInEntergate = 1;
+						//noMoneyOnEntergateCounter = 0;
+					}
+					else
+					{
+						gb_haveNoteInEntergate = 0;
+						//noMoneyOnEntergateCounter = 5;
+					}
+					entergatePulseNumCounter = 0;	
+				}					
+			}	
+		}
+		else
+		{
+			if(fiveMsCnt >= 5)
 			{
-				scanEntergateTimer = 0;
-				//进钞编码统计
-				if (entergatePulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
+				fiveMsCnt = 0;
+				ToggleJinChaoFaShe();		
+
+				scanEntergateTimer ++;
+				if(scanEntergateTimer >= SCAN_ENTERGATE_TIME)
 				{
-					gb_haveNoteInEntergate = 1;
-					//noMoneyOnEntergateCounter = 0;
-				}
-				else
-				{
-					gb_haveNoteInEntergate = 0;
-					//noMoneyOnEntergateCounter = 5;
-				}
-				entergatePulseNumCounter = 0;			
+					scanEntergateTimer = 0;
+					//进钞编码统计
+	
+					if (entergatePulseNumCounter >= (MIN_HAVEMONEY_PULSENUM_COUNT))
+					{
+						gb_haveNoteInEntergate = 1;
+						//noMoneyOnEntergateCounter = 0;
+					}
+					else
+					{
+						gb_haveNoteInEntergate = 0;
+						//noMoneyOnEntergateCounter = 5;
+					}
+					entergatePulseNumCounter = 0;	
+				}					
 			}	
 		}
 	}
@@ -4795,25 +4823,31 @@ void DealPS1INT(void)
 					gb_haveNoteInPS1 = 1;		
 					if(gb_noteState == NOTE_BACKWARD)
 					{
-						g_maxMpFromComputeToPS1 = 0;
-						noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
-						noteState |= STATE_BACKWARD_COVER_PS1;
+						if(g_currency != INDEX_GBP)
+						{
+							g_maxMpFromComputeToPS1 = 0;
+							noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
+							noteState |= STATE_BACKWARD_COVER_PS1;
+						}
 					}
 					else if(gb_noteState == NOTE_FORWARD)
 					{
-						g_maxMpFromEnteranceToPs1 = 0;
-						g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
-						noteState |= STATE_FORWARD_COVER_PS1;
-						noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
-						//开始采集
-						gb_uvNeedStartSampleCnt = 55;
-						gb_lengthIrNeedStartSampleCnt = 25;
-						gb_colorSampleEnable = 1;
-						g_colorSampleIndex = 0;
-						g_lengthSampleIndex = 0;
-						g_lengthIrMpNum = 0;	
-						lengthMpCnt = 0;
-						g_mgSampleIndex = 0;
+						if(g_currency != INDEX_GBP)
+						{
+							g_maxMpFromEnteranceToPs1 = 0;
+							g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
+							noteState |= STATE_FORWARD_COVER_PS1;
+							noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
+							//开始采集
+							gb_uvNeedStartSampleCnt = 55;
+							gb_lengthIrNeedStartSampleCnt = 25;
+							gb_colorSampleEnable = 1;
+							g_colorSampleIndex = 0;
+							g_lengthSampleIndex = 0;
+							g_lengthIrMpNum = 0;	
+							lengthMpCnt = 0;
+							g_mgSampleIndex = 0;
+						}
 						if(mpCnt < 1000)
 						{
 							mpCntRecode[mpCnt] = 20;
@@ -4832,7 +4866,10 @@ void DealPS1INT(void)
 					gb_haveNoteInPS1 = 0;
 					if(gb_noteState == NOTE_FORWARD)
 					{
-						gb_colorSampleEnd = 2;
+						if(g_currency != INDEX_GBP)
+						{
+							gb_colorSampleEnd = 2;
+						}
 						if(mpCnt < 1000)
 						{
 							mpCntRecode[mpCnt] = 60;
@@ -4890,10 +4927,32 @@ void DealPS2INT(void)
 					PS2FlagCnt = 0;
 					if(gb_noteState == NOTE_BACKWARD)
 					{
-
+						if(g_currency == INDEX_GBP)
+						{
+							g_maxMpFromComputeToPS1 = 0;
+							noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
+							noteState |= STATE_BACKWARD_COVER_PS1;
+						}
 					}
 					else if(gb_noteState == NOTE_FORWARD)
 					{
+						if(g_currency == INDEX_GBP)
+						{
+							g_maxMpFromEnteranceToPs1 = 0;
+							g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
+							noteState |= STATE_FORWARD_COVER_PS1;
+							noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
+							//开始采集
+							gb_uvNeedStartSampleCnt = 30;
+							//gb_lengthIrNeedStartSampleCnt = 25;
+							gb_lengthIrNeedStartSampleflag = 1;
+							gb_colorSampleEnable = 1;
+							g_colorSampleIndex = 0;
+							g_lengthSampleIndex = 0;
+							g_lengthIrMpNum = 0;	
+							lengthMpCnt = 0;
+							g_mgSampleIndex = 0;
+						}
 						if(mpCnt < 1000)
 						{
 							mpCntRecode[mpCnt] = 100;
@@ -4913,7 +4972,12 @@ void DealPS2INT(void)
 					{
 						PS2FlagCnt = 0;
 						gb_haveNoteInPS2 = 0;
-
+						if(g_currency == INDEX_GBP)
+						{
+							//gb_colorSampleEnd = 2;
+							gb_colorSampleEnable = 0;
+							colorDataLen = g_colorSampleIndex;
+						}
 						gb_uvNeedEndSampleCnt = 40;//50;
 						gb_needBackMotorCnt = 20;
 						gb_lengthIrNeedEndSampleCnt = 2;//30;

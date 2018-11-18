@@ -1,7 +1,7 @@
 #include "system.h"
 
-const short AED_colorFvt_Int[8*(648+1)];
-const short AED_colorFvt_Int[] = 
+const int AED_colorFvt_Int[8*(648+1)];
+const int AED_colorFvt_Int[] = 
 {
   -2242,  -1868,  -1436,   1777,   1242,  -3842,   1429,   3339,
     177,   -366,    270,   -502,  -1567,   2024,    421,  -4691,

@@ -1,7 +1,7 @@
 #include "system.h"
 
-const short ARS_colorFvt_Int[14*(648+1)];
-const short ARS_colorFvt_Int[] = 
+const int ARS_colorFvt_Int[14*(648+1)];
+const int ARS_colorFvt_Int[] = 
 {
   -4309,   1240,   3726,  -1839,   1750,   2997,   4880,  -1965,    130,  -7315,  10405,   1697,   5839,    993,
   16944,  -3733,  -3887,  -4525,  -5113,  -1629,  -8099,  -2650,  -2420,  -7054,  -4722,  -1446,  -7645,  -4830,

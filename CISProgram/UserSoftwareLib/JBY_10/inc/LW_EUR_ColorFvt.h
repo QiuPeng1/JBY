@@ -1,7 +1,7 @@
 #include "system.h"
 
-const short EUR_colorFvt_Int[8*(648+1)];
-const short EUR_colorFvt_Int[] = 
+const int EUR_colorFvt_Int[8*(648+1)];
+const int EUR_colorFvt_Int[] = 
 {
    1317,   -771,  -1237,     81,   -540,   -522,   1587,   -383,
       0,    -49,   -588,    230,     26,    338,   -475,   -964,

@@ -1,7 +1,7 @@
 #include "system.h"
 
-const short TRY_colorFvt_Int[7*(648+1)];
-const short TRY_colorFvt_Int[] = 
+const int TRY_colorFvt_Int[7*(648+1)];
+const int TRY_colorFvt_Int[] = 
 {
    4368,   -733,   1106,  -1317,  -1148,   4953,  -2139,
    5973,   4016,   2416,   3275,  -5876, -10910,  -9251,

@@ -70,8 +70,8 @@ u8 billRGB_Judge(int noteType)
 	int min_i;
 
 	double fvt, tt, max_t;
-	short *pFvt;
-	short *pf1;
+	int *pFvt;
+	int *pf1;
 	u8 *pNoteClass;
 	u8 Class;
 	int fvtInt;
@@ -84,7 +84,7 @@ u8 billRGB_Judge(int noteType)
 	}
 
 	//memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*2*4);
-	memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM);
+	memset(colorFvtTotal, 0, sizeof(int)*COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM);
 
 	for (i = 0; i < 12; i++)
 	{
@@ -137,32 +137,32 @@ u8 billRGB_Judge(int noteType)
 #ifdef  BILL_INDEX_USD
 	if (noteType == INDEX_USD)
 	{
-		pNoteClass = g_USD_noteClass;
-		pFvt = (short *)USD_colorFvt_Int;
-		Class = USD_NOTE_CLASS;
+		pNoteClass = g_USD_Color_noteClass;
+		pFvt = (int *)USD_colorFvt_Int;
+		Class = USD_COLOR_NOTE_CLASS;
 	}
 #endif
 #ifdef  BILL_INDEX_EUR
 	if (noteType == INDEX_EUR)
 	{
 		pNoteClass = g_EUR_noteClass;
-		pFvt = (short *)EUR_colorFvt_Int;
+		pFvt = (int *)EUR_colorFvt_Int;
 		Class = EUR_NOTE_CLASS;
 	}
 #endif
 #ifdef  BILL_INDEX_RUB
 	if (noteType == INDEX_RUB)
 	{
-		pNoteClass = g_RUB_noteClass;
-		pFvt = (short *)RUB_colorFvt_Int;
-		Class = RUB_NOTE_CLASS;
+		pNoteClass = g_RUB_Color_noteClass;
+		pFvt = (int *)RUB_colorFvt_Int;
+		Class = RUB_COLOR_NOTE_CLASS;
 	}
 #endif
 #ifdef  BILL_INDEX_TRY
 	if (noteType == INDEX_TRY)
 	{
 		pNoteClass = g_TRY_noteClass;
-		pFvt = (short *)TRY_colorFvt_Int;
+		pFvt = (int *)TRY_colorFvt_Int;
 		Class = TRY_NOTE_CLASS;
 	}
 #endif
@@ -170,7 +170,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_IQD)
 	{
 		pNoteClass = g_IQD_noteClass;
-		pFvt = (short *)IQD_colorFvt_Int;
+		pFvt = (int *)IQD_colorFvt_Int;
 		Class = IQD_NOTE_CLASS;
 	}
 #endif
@@ -178,7 +178,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_SAR)
 	{
 		pNoteClass = g_SAR_noteClass;
-		pFvt = (short *)SAR_colorFvt_Int;
+		pFvt = (int *)SAR_colorFvt_Int;
 		Class = SAR_NOTE_CLASS;
 	}
 #endif
@@ -186,7 +186,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_AED)
 	{
 		pNoteClass = g_AED_noteClass;
-		pFvt = (short *)AED_colorFvt_Int;
+		pFvt = (int *)AED_colorFvt_Int;
 		Class = AED_NOTE_CLASS;
 	}
 #endif
@@ -194,7 +194,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_GBP)
 	{
 		pNoteClass = g_GBP_noteClass;
-		pFvt = (short *)GBP_colorFvt_Int;
+		pFvt = (int *)GBP_colorFvt_Int;
 		Class = GBP_NOTE_CLASS;
 	}
 #endif
@@ -202,7 +202,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_ARS)
 	{
 		pNoteClass = g_ARS_noteClass;
-		pFvt = (short *)ARS_colorFvt_Int;
+		pFvt = (int *)ARS_colorFvt_Int;
 		Class = ARS_NOTE_CLASS;
 	}
 #endif
@@ -625,11 +625,21 @@ u8 billMG_Judge(int noteType)
 			mgFvtFlag = 1;
 		}
 	}
-	else if (noteType == INDEX_USD || noteType == INDEX_RUB)
+	else if (noteType == INDEX_USD)
 	{
 		if (Max0-Min0 < 70 && Max1-Min1 < 70)
 		{
 		//	mgFvtFlag = 1;
+		}
+	}
+	else if (noteType == INDEX_RUB)
+	{
+		if (billValue < 10)
+		{
+			if (Max0-Min0 < 70 && Max1-Min1 < 70)
+			{
+				mgFvtFlag = 1;
+			}
 		}
 	}
 //	FilterGaussian_1D_Int(mgData[0], mgDataLen, 1);
