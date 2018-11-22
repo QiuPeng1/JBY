@@ -200,7 +200,7 @@ void OutputALLDetailData2(void)
 	}
 	uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
 	//等待串口发送完毕
-	while(uart1outfifo_count> 0)
+	while(uart3outfifo_count> 0)
 	{
 	}
 	//测长数据
@@ -214,7 +214,7 @@ void OutputALLDetailData2(void)
 		}
 		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
 		//等待串口发送完毕
-		while(uart1outfifo_count> 0)
+		while(uart3outfifo_count> 0)
 		{
 		}
 	}
@@ -247,7 +247,10 @@ void OutputALLDetailData2(void)
 		}
 	}
 	uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
-	
+		//等待串口发送完毕
+	while(uart3outfifo_count> 0)
+	{
+	}
 	//磁性 uv 颜色数据
 	for(i = 0;i < maxLen;i ++)
 	{
@@ -281,7 +284,7 @@ void OutputALLDetailData2(void)
 		}
 		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
 		//等待串口发送完毕
-		while(uart1outfifo_count> 0)
+		while(uart3outfifo_count> 0)
 		{
 		}
 	}
@@ -295,7 +298,7 @@ void OutputALLDetailData2(void)
 		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
 
 		//等待串口发送完毕
-		while(uart1outfifo_count> 0)
+		while(uart3outfifo_count> 0)
 		{
 		}
 	}
@@ -432,7 +435,7 @@ void OutputALLDetailData(void)
 		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM+6);
 
 		//等待串口发送完毕
-		while(uart1outfifo_count> 0)
+		while(uart3outfifo_count> 0)
 		{
 		}		
 	}

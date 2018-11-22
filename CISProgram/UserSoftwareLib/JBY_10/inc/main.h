@@ -7,6 +7,7 @@
 #define _MAIN_H_
 
 /*包含文件 */
+#include <string.h>
 #include "system.h"
 #include "delay.h"
 #include "fifo.h"
@@ -20,6 +21,17 @@
 #include "bill.h"
 #include "disp.h"
 
+#include "usb_conf.h"
+#include "usb_core.h"
+#include "usbh_conf.h"
+#include "usbh_core.h"
+#include "usbh_msc_core.h"
+#include "usbh_msc_usr.h"
+#include "usb_hcd_int.h"
+#include "fatfs_demo.h"
+//-----------------------
+#include "user_udisc.h" 
+//----------------------
 //#include "batchOperation.h"
 //-----------------------------------------------------------------
 //类型定义
@@ -316,14 +328,19 @@ volatile u32 adcResult[5];
 u8 adData[10];
 #define CHANNELS_PER_DMA_GROUP 5
 
+u8 gb_udsikIsOnLine = 0;
+u8 gb_udiskPlugIn = 0;
+u8 gb_udiskStateChanger = 0;
 
+char upgradeFileName[15] = "JBY.bin";
+
+u32 g_timetest[5];
 u8 irValue[REAL_IR_NUM];//测长红外灯
 u8 mrValue[2];//磁头通道
 u8 colorRGB[4][3];//4个颜色通道 RGB值
 u8 UvValue;
 u8 enteranceSensorVal;
 u8 tdjsValue[2];
-u8 enteranceSensorValall[200];
 
 u8 IRlengthBuffer[8192];
 u8 uvCnt;
@@ -361,7 +378,11 @@ u16 PS1ValueRecordCnt = 0;
 u16 PS2ValueRecordCnt = 0;
 u8 mpCntRecode[1000];
 u8 msCntRecode[1000];
+u8 ententernce[500];
+u16 ententernceCnt = 0;
 u8 gb_motorNeedEndOneNoteCnt = 0;
+u8 gb_needScanEteranceSensor = 1;
+u8 fiveMsCnt = 0;
 u8 PS2Flag = 0;
 u8 PS2FlagCnt = 0;
 u8 gb_haveNoteInPS1 = 0;
@@ -748,6 +769,8 @@ u8 gb_motorState2 = 0;
 
 #define MAX_DISP_STRING_BUF 100
 u8 dispStr[MAX_DISP_STRING_BUF];
+u8 gb_incalibrationByKey = 0;
+u8 gb_irCalibrationDisp = 0;
 
 enum
 {
@@ -780,41 +803,7 @@ u16 g_maxMpFromComputeToPS1 = 0;
 //u8 gb_noteBackLeave = 1;//0向前转1向后转
 
 u8 gb_needStopMotor = 0;
-// u8 *menuPara[48];
-// u8 menuParaIndex = 0;
-// u8 menuMod[48];
-// u8 const userWorkParaMod[] = 
-// {
-// 	150,//1
-// 	3,//2
-// 	2,//3
-// 	100,//4
-// 	2,//5
-// 	1,//6
-// 	2,//7
-// 	2,//8
-// 	2,//9
-// 	2,//10
-// 	3,//11
-// 	3,//12
-// 	0xff,//13
-// 	0xff,//14
-// 	2,//15
-// };
 
-// u8 const machineWorkParaMod[] = 
-// {
-// 	0xff,
-// 	0xff,
-// 	0xff,
-// 	0xff,
-// 	0xff,
-// 	30,
-// 	0xff,
-// 	100,
-// 	0xff,
-// 	0xff,
-// };
 
 //老化 5转5秒 停5秒 一个轮回10秒 1分钟6次 1小时360次
 #define LAOHUA_SINGLE_RUN_TIME 3
@@ -869,7 +858,7 @@ enum
 u8 gb_noteState = NOTE_IDEL;
 
 #define g_languageIndex INDEX_ENGLISH//savedPara.userWorkPara.d[INDEX_LANGUAGE]
-u8 g_currency = INDEX_RUB; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
+u8 g_currency = INDEX_TRY;//INDEX_RUB; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
 u8 gb_testbuf[20];
 enum
 {
@@ -998,6 +987,10 @@ void DealKeyDown(void);
 void DealKeyDownOnNormal(u8 key);
 void DealKeyDownOnJudgeStop(u8 key);
 void DealKeyDownOnDubiStop(u8 key);
+void DealKeyDownOnMenu11(u8 key);
+
+void DispIRCalibration(void);
+void DispColorCalibration(void);
 			
 void OutputSensorView(void);
 void OutputNoteSlant(void);
@@ -1053,12 +1046,13 @@ void DispMenu1(void);
 void DispSetting(void);
 void DispSettingSelected(void);
 void DealKeyDownOnMenu1(u8 key);
-
-
+void DealKeyDownOnCalibration(u8 key);
+void DispUdiskInfo(void);
 
 void ClearAllNoteNum(void);
 void ClearPSIrFlag(void);
 void ClearJamFlag(void);
+void initEteranceSensor(void);
 // void InitIrData(void);
 // void DealIr2Data(u8 d);
 // void DealIr3Data(u8 d);
