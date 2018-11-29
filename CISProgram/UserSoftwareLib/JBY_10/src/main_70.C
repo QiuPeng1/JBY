@@ -4993,7 +4993,7 @@ void USART1_IRQHandler(void)
   	gb_needDealUart3Data = 1;
 
  	}
- 	else if (USART_GetFlagStatus(USART3, USART_FLAG_TXE))
+ 	else if (USART_GetFlagStatus(USART3, USART_FLAG_TC))//USART_FLAG_TXE
  	{		
  		if (uart3outfifo_count > 0)
  		{
@@ -5368,11 +5368,11 @@ void DealPS3INT(void)
 					{
 						if(mpCnt < 1000)
 						{
-							mpCntRecode[mpCnt] = 80;
+							mpCntRecode[mpCnt] = 120;
 						}
 						if(timeCnt < 1000)
 						{
-							msCntRecode[timeCnt] = 80;
+							msCntRecode[timeCnt] = 120;
 						}
 					}
 					else if(gb_noteState == NOTE_BACKWARD)

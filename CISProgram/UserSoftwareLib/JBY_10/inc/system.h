@@ -31,6 +31,7 @@ V4.6 20181119   1、修改英镑逻辑
 v4.7 20181119   1、只有土耳其、美元、欧元版本
 v4.8 20181120   1、修改U盘中断优先级
 				2、修改采集BUG
+v4.9 20181128   1、增加假币抓假
 ****************************************************************************/
 
 /*防止重复引用 */
@@ -69,7 +70,7 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V4.8"
+#define VERSION  "V4.9"
 
 
 typedef enum

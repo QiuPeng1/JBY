@@ -1,5 +1,9 @@
 #include "system.h"
 
+#define EUR_COLOR_NOTE_CLASS 8
+
+u8 g_EUR_Color_noteClass[EUR_COLOR_NOTE_CLASS] = { 8,12,10, 0, 2, 4, 6, 7,};
+
 const int EUR_colorFvt_Int[8*(648+1)];
 const int EUR_colorFvt_Int[] = 
 {
