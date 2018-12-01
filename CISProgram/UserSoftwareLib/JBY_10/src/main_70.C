@@ -354,6 +354,7 @@ int main(void)
 	greenFs_Off();
 	blueFs_Off();
 	g_colorFsRGB = FS_OFF;
+	lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
 //	g_colorFsStopWork = 1;
 	while (1)
 	{
@@ -595,8 +596,18 @@ void ScanKeyDown(void)
 			{
 				if ((shortLcdKeyTimer == 0)&&shortLcdKey != 0)
 				{			
-					fifo_DataIn(KB_FIFO,shortLcdKey);	
-					LongBeep(1);					
+					if(gb_lcdBacklightOn == 0)
+					{
+						disp_lcdBLC(60);	
+						gb_lcdBacklightOn = 1;
+						lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;	
+					}
+					else
+					{
+						fifo_DataIn(KB_FIFO,shortLcdKey);	
+						lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;	
+						LongBeep(1);
+					}
 				}
 				enterLongLcdKeyTimer = ENTER_LONG_KEY_TIME;
 				shortLcdKeyTimer = SHORT_KEY_TIME;
@@ -620,9 +631,18 @@ void ScanKeyDown(void)
 						longLcdKeyIntervalTimer = LONG_KEY_INTERVAL_TIME;
 						gb_longLcdKey = 1;
 						longLcdKey = currentLcdKey;	
-
-						fifo_DataIn(KB_FIFO,longLcdKey+LONG_LCD_KEY_ADDVAL);		
-						LongBeep(1);	
+						if(gb_lcdBacklightOn == 0)
+						{
+							disp_lcdBLC(60);	
+							gb_lcdBacklightOn = 1;
+							lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
+						}
+						else
+						{
+							fifo_DataIn(KB_FIFO,longLcdKey+LONG_LCD_KEY_ADDVAL);
+							lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;							
+							LongBeep(1);	
+						}
 					}
 				}
 			}
@@ -966,6 +986,12 @@ void DealScanEnteracneSensor(void)
 			if((noteState == 0)&&(g_motor1State == MOTOR_STOP))//空闲态
 			{
 				//开传感器
+				if(gb_lcdBacklightOn == 0)
+				{
+					disp_lcdBLC(60);	
+					gb_lcdBacklightOn = 1;
+				}
+				lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;		
 				memset(mpCntRecode, 0, sizeof(mpCntRecode));
 				memset(msCntRecode, 0, sizeof(msCntRecode));
 				hwfs_On();
@@ -5068,9 +5094,18 @@ void SysTick_Handler(void)
 	oneSecCnt ++;
 	if(oneSecCnt >= 1000)
 	{
+		oneSecCnt = 0;	
 		gb_oneSec = 1;
 		gb_oneSecAutoRefresh = 1;
-		oneSecCnt = 0;
+		if(lcdBackLightOffCnt > 0)
+		{
+			lcdBackLightOffCnt --;
+			if(lcdBackLightOffCnt == 0)
+			{
+				disp_lcdBLC(0);
+				gb_lcdBacklightOn = 0;
+			}
+		}
 	}
 	//电机减速超时处理
 	if(gb_needStopMotorTimeout > 0)

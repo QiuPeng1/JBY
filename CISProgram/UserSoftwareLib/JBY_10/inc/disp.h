@@ -741,4 +741,5 @@ DISP_EXT void disp_DrawFullCircle(u16 x0,u16 y0,u8 r,u16 Color);
 DISP_EXT void disp_DrawRoundRect(u16 x,u16 y,u16 w,u16 h,u16 frontColor,u16 backColor);
 DISP_EXT void disp_DrawChart(u16 x,u16 y,u16 w,u16 h,u8 rowNum,u8 colNum,u16 backColor);
 DISP_EXT void disp_DrawPic(u16 x,u16 y,u32 bmp_address);
+DISP_EXT void disp_lcdBLC(u8 light);
 #endif

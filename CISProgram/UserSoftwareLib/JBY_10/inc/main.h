@@ -951,6 +951,10 @@ enum
 };
 u8 g_subStateOfNormal = NORMAL_DIAN_CHAO;
 
+u8 gb_lcdBacklightOn = 1;
+#define TURN_OFF_LCD_BACKLIGHT_TIME 60
+u16 lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
+
 u16 gb_needOutPutLength;
 u32 noteNum = 0;
 u32 noteSum = 0;

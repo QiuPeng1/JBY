@@ -195,3 +195,12 @@ void disp_DrawPic(u16 x,u16 y,u32 bmp_address)
 	uart_SendDataToUart1(TFTStr,len);
 	//LCD_DrawPic(x, y, index,hyaline,hyalineColor);
 }
+
+void disp_lcdBLC(u8 light)
+{
+	u16 len;
+	sprintf(TFTStr,"void LCDLS_BLC(%d)\r\n",light);
+	len = strlen(TFTStr);	
+	uart_SendDataToUart1(TFTStr,len);
+	//LCD_DrawPic(x, y, index,hyaline,hyalineColor);
+}
