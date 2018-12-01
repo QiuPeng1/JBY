@@ -1,4 +1,6 @@
 #include "user_udisc.h" 
+
+
 //---------------------------------------------------------------------
 void USB_Config(void)
 {
@@ -38,7 +40,10 @@ void USB_CheckReady(void)
 				gb_udsikIsOnLine = 1;
 				gb_udiskPlugIn = 1;
 				gb_udiskStateChanger = 1;
-
+				if(f_open(&file,"JBYC.txt", FA_OPEN_EXISTING |FA_READ) == FR_OK)
+				{
+					gb_needSetCurrency = 1;
+				}
 			}
 //			if(g_SysType.FlagUDiscOnline==0)
 //			{

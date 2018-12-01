@@ -13,15 +13,15 @@ u8 readKey(void)
 	}
 	if(!readkey0())
 	{
-		return KEY_CUR;
+		return KEY_RESTART;//KEY_CUR;
 	}
 	if(!readkey1())
 	{
-		return KEY_FUN;
+		return KEY_CUR;//KEY_FUN;
 	}
 	if(!readkey2())
 	{
-		return KEY_RESTART;
+		return KEY_FUN;//KEY_RESTART;
 	}
 	return KEY_noKey;
 }
@@ -65,6 +65,8 @@ void DealKeyDownOnMenu1(u8 key)
 				gb_paraChanged = 0;
 				eeprom_SaveData();
 			}
+			noteState = 0;
+			gb_noteState = 0;
 			SetSystemState(NORMAL);
 			ClearAllNoteNum();
 			DispMainMenu();
@@ -82,12 +84,86 @@ void DealKeyDownOnMenu1(u8 key)
 			selectedItemIndex ++;
 			selectedItemIndex %= 8;
 			DispSettingSelected();
+			if(gb_haveErrUdiskInforDisp == 1)
+			{
+				gb_haveErrUdiskInforDisp = 0;
+				disp_setPenColor(BLACK);
+				disp_setBackColor(BLACK);
+				disp_setFont(24);
+				disp_string("NO UDISK",320-96,0);
+			}
 		break;
 		case LONG_KEY_FUN:
 			break;
 	}
 }
-
+void ChangeCurrency(void)
+{
+	u8 i,k;
+	for(i = 0;i < openCurrencyNum;i++)
+	{
+		if(g_currency == openCurrency[i])
+		{
+			k = i;
+			break;
+		}
+	}
+	k ++;
+	k %= openCurrencyNum;
+	g_currency = openCurrency[k];
+	//g_currency %= NOTE_NUM;
+}
+void DispCurrency(void)
+{
+	if(g_currency == INDEX_EUR)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGEUR);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTEUR);
+	}
+	else if(g_currency == INDEX_RUB)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGRUB);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTRUB);
+	}
+	else if(g_currency == INDEX_TRY)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGTRY);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTRY);
+	}
+	else if(g_currency == INDEX_IQD)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGIQD);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTIQD);
+	}
+	else if(g_currency == INDEX_SAR)
+	{
+		disp_DrawPic(0,0,BMP_CBFLAGSAR);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTSAR);
+	}	
+	else if(g_currency == INDEX_AED)
+	{
+		disp_DrawPic(0,0,BMP_CBFLAGAED);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTAED);
+	}
+	else if(g_currency == INDEX_GBP)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGGBP);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTGBP);
+	}
+	else if(g_currency == INDEX_ARS)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGARS);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
+	}
+	else
+	{
+		g_currency = INDEX_USD;
+		disp_DrawPic(0,0,BMP_BFLAGUSD);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
+	}			
+	ClearAllNoteNum();
+	DispNoteNumValSum();
+}
 void DealKeyDownOnNormal(u8 key)
 {
 	if(g_subStateOfNormal == NORMAL_CHA_KAN_CAN_SHU)
@@ -123,117 +199,12 @@ void DealKeyDownOnNormal(u8 key)
 
 				break;
 			case KEY_CUR:
-				/*if(g_currency == INDEX_USD)
-				{
-					g_currency = INDEX_EUR;
-					disp_DrawPic(0,0,BMP_BFLAGEUR);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTEUR);
-
-				}
-				else if(g_currency == INDEX_EUR)
-				{
-					g_currency = INDEX_TRY;
-					disp_DrawPic(0,0,BMP_BFLAGTRY);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTRY);
-				}
-				else if(g_currency == INDEX_TRY)
-				{
-					g_currency = INDEX_USD;
-					disp_DrawPic(0,0,BMP_BFLAGUSD);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
-				}	*/
-				
-				if(g_currency == INDEX_USD)
-				{
-					g_currency = INDEX_EUR;
-					disp_DrawPic(0,0,BMP_BFLAGEUR);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTEUR);
-
-				}
-				else if(g_currency == INDEX_EUR)
-				{
-					g_currency = INDEX_RUB;
-					disp_DrawPic(0,0,BMP_BFLAGRUB);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTRUB);
-
-				}
-				else if(g_currency == INDEX_RUB)
-				{
-					g_currency = INDEX_TRY;
-					disp_DrawPic(0,0,BMP_BFLAGTRY);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTRY);
-				}
-				else if(g_currency == INDEX_TRY)
-				{
-					g_currency = INDEX_IQD;
-					disp_DrawPic(0,0,BMP_BFLAGIQD);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTIQD);
-				}
-				else if(g_currency == INDEX_IQD)
-				{
-					g_currency = INDEX_SAR;
-					disp_DrawPic(0,0,BMP_CBFLAGSAR);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTSAR);
-				}	
-				else if(g_currency == INDEX_SAR)
-				{
-					g_currency = INDEX_AED;
-					disp_DrawPic(0,0,BMP_CBFLAGAED);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTAED);
-				}
-				else if(g_currency == INDEX_AED)
-				{
-					g_currency = INDEX_GBP;
-					disp_DrawPic(0,0,BMP_BFLAGGBP);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTGBP);
-				}
-				else if(g_currency == INDEX_GBP)
-				{
-					g_currency = INDEX_ARS;
-					disp_DrawPic(0,0,BMP_BFLAGARS);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
-				}
-				else if(g_currency == INDEX_ARS)
-				{
-					g_currency = INDEX_USD;
-					disp_DrawPic(0,0,BMP_BFLAGUSD);
-					disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
-				}			
-				ClearAllNoteNum();
-				DispNoteNumValSum();
-					//DispMainMenu();			
+				ChangeCurrency();
+				DispCurrency();	
+				gb_ChangeCurrencyDelay = 500;
 			break;
 			case KEY_FUN:
-				if(gb_identificationWays == MG_WAY)
-				{
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFIR);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFUV);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFMG);
-					gb_identificationWays = ALL_WAYS;
-				}
-				else if(gb_identificationWays == ALL_WAYS)
-				{
-				
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFIR);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFB);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFB);
-					gb_identificationWays =IR_WAY;
-				}
-				else if(gb_identificationWays == IR_WAY)
-				{
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFB);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFUV);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFB);
-					gb_identificationWays =UV_WAY;
-				}
-				else if(gb_identificationWays == UV_WAY)
-				{
-					disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFB);
-					disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFB);
-					disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFMG);
-					gb_identificationWays =MG_WAY;
-				}
-		
+				modifiIdentificationWays();
 			break;
 			case LONG_KEY_FUN:
 				if(g_needAddValue == WORK_ADD)
@@ -251,7 +222,60 @@ void DealKeyDownOnNormal(u8 key)
 	}
 }
 
-
+void modifiIdentificationWays(void)
+{
+	if(savedPara.identificationWays == ALL_WAYS)
+	{
+		savedPara.identificationWays = IR_UV_MG_WAYS;
+	}
+	else if(savedPara.identificationWays == IR_UV_MG_WAYS)
+	{
+		savedPara.identificationWays = IR_MG_WAYS;
+	}
+	else if(savedPara.identificationWays == IR_MG_WAYS)
+	{
+		savedPara.identificationWays = IR_UV_WAYS;
+	}
+	else if(savedPara.identificationWays == IR_UV_WAYS)
+	{
+		savedPara.identificationWays = RGB_UV_MG_WAYS;
+	}
+	else if(savedPara.identificationWays == RGB_UV_MG_WAYS)
+	{
+		savedPara.identificationWays = RGB_MG_WAYS;
+	}
+	else if(savedPara.identificationWays == RGB_MG_WAYS)
+	{
+		savedPara.identificationWays = RGB_UV_WAYS;
+	}	
+	else if(savedPara.identificationWays == RGB_UV_WAYS)
+	{
+		savedPara.identificationWays = RGB_IR_WAYS;
+	}
+	else if(savedPara.identificationWays == RGB_IR_WAYS)
+	{
+		savedPara.identificationWays = RGB_IR_UV_WAYS;
+	}
+	else if(savedPara.identificationWays == RGB_IR_UV_WAYS)
+	{
+		savedPara.identificationWays = RGB_IR_MG_WAYS;
+	}
+	else if(savedPara.identificationWays == RGB_IR_MG_WAYS)
+	{
+		savedPara.identificationWays = IR_WAY;
+	}
+	else if(savedPara.identificationWays == IR_WAY)
+	{
+		savedPara.identificationWays = RGB_WAY;
+	}	
+	else if(savedPara.identificationWays == RGB_WAY)
+	{
+		savedPara.identificationWays = ALL_WAYS;
+	}	
+	DispIdentificationWays();
+	gb_modifiIdentificationWaysDealy = 500;
+	//eeprom_SaveData();
+}
 void DealKeyDownOnCalibration(u8 key)
 {
 	
@@ -280,7 +304,8 @@ u8 motorTest = 0;
 u32 timeTest[8];
 int main(void)
 {
-	
+	u16 i;
+	u8 r,k; 
 	delay_DelayMs(1000);
 	/*端口配置及
 	初始化*/
@@ -308,12 +333,13 @@ int main(void)
 	
 	entergatePulseNumCounter = 0 ;
 	gb_haveNoteInEntergate = 0;
+	gb_enableSampleFlag = 0;//0定时器采集，1码盘采集
 	
 	computeAdjustData();
 	memcpy(lengthIdleOriginValue,savedPara.adjustPara.irIdleStandard,REAL_IR_NUM);
 	
 	//hwfs_On();
-	
+
 	//hwfs_Off();
 	//jckfs_On();
 	SetSystemState(NORMAL);
@@ -390,7 +416,52 @@ int main(void)
 // 				motorTest = 0;
 // 			}
 		}
-		
+		if(gb_needSetCurrency == 1)//根据U盘文件更新面额。
+		{
+			gb_needSetCurrency = 0;
+			r = ReadUdiskFileSize(SetCurrencyFileName,&SetCurrencyFileLen);
+			if(r == 0)//读取文件长度成功
+			{
+				if((SetCurrencyFileLen < 1024)&&(SetCurrencyFileLen > 3))
+				{
+					ReadUdiskFile(SetCurrencyFileName, read_txt_file_buff, 0, SetCurrencyFileLen);
+					gb_udiskCurrencyCnt = (SetCurrencyFileLen-3)/4 + 1;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH1] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH2] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH3] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH4] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH5] = 0;
+
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH6] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH7] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH8] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH9] = 0;
+					savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH10] = 0;
+					for(k=0; k<gb_udiskCurrencyCnt; k++)
+					{
+						CurrencyStr[0] = read_txt_file_buff[k*4];
+						CurrencyStr[1] = read_txt_file_buff[k*4+1];
+						CurrencyStr[2] = read_txt_file_buff[k*4+2];
+						CurrencyStr[3] = '\0';
+						updataCurrencySwitch();
+					}
+					eeprom_SaveData();
+					GetOpenCurrency();
+					DispMainMenu();
+				}
+			}
+		}
+		if(gb_modifiIdentificationWaysFlag == 1)
+		{
+			gb_modifiIdentificationWaysFlag = 0;
+			eeprom_SaveData();
+		}
+		if(gb_ChangeCurrencyFlag == 1)
+		{
+			gb_ChangeCurrencyFlag = 0;
+			savedPara.machineWorkPara.d[DEFAULT_CURRENCY] = g_currency;
+			eeprom_SaveData();
+		}
 		if(gb_sampleIdleOver == 1)//输出空转采集
 		{
 			gb_sampleIdleOver = 0;
@@ -403,7 +474,10 @@ int main(void)
 		if(gb_udiskStateChanger == 1)
 		{
 			gb_udiskStateChanger = 0;
-			DispUdiskInfo();
+			if((systemState == NORMAL)&&(gb_incalibrationByKey == 0))
+			{
+				DispUdiskInfo();
+			}
 		}
 		if(gb_dispJamInfo == 1)
 		{
@@ -461,6 +535,13 @@ int main(void)
 			gb_needStopMotor = 0;
 			motor1_Stop();
 			motor1StopRecord = 2;
+			if((noteState&STATE_FORWARD_NOTE_LEAVE) == STATE_FORWARD_NOTE_LEAVE)
+			{
+	 			noteState &= (~STATE_FORWARD_NOTE_LEAVE);
+				initEteranceSensor();
+				ToggleJinChaoFaShe();
+				ententernceCnt = 0;
+			}
 		}
 		
 		DealScanEnteracneSensor();
@@ -475,7 +556,25 @@ int main(void)
 
 	}
 }
-
+void updataCurrencySwitch(void)
+{
+	u8 res;
+	u8 i;
+	u8 d,k;
+	
+	for(i=0; i<NOTE_NUM; i++)
+	{
+		res = strcmp(CurrencyStr,CURRENCY_INFO_STR[i]);
+		if(res == 0)
+		{
+			k = i/8;
+			d = i%8;
+			savedPara.machineWorkPara.d[k] |= 1<<d;
+			break;
+			
+		}
+	}
+}
 void ScanKeyDown(void)
 {
 	if(gb_needCheckKey == 1)
@@ -711,7 +810,7 @@ void DealPackageFromUart3(void)
 						memset(collabrationNum,0,REAL_IR_NUM);
 						memset(collabrationMax,0,REAL_IR_NUM*2);
 						memset(collabrationMin,0xff,REAL_IR_NUM*2);
-						DispString("开始厚白纸校正,放入80g厚白纸",1);
+						DispString("开始厚白纸校正,放入127g厚白纸",1);
 						break;
 					case 0xac:
 						if(gb_lengthInOriginData == 1)
@@ -886,6 +985,7 @@ void DealScanEnteracneSensor(void)
 				noteState |= STATE_FORWARD_COVER_ENTERANCE;
 				g_maxMpFromEnteranceToPs1 = MP_FROM_ENTERANCE_TO_Ps1;
 				tempMgDataLen = 0;
+				gb_haveNoteInEntergate = 0;
 				gb_needScanEteranceSensor = 0;
 			}
 		}
@@ -1128,7 +1228,42 @@ void DispClassicBar(u16 color,u8 type)
 			break;
 	}
 }
+void DispIdentificationWays(void)
+{
+	if((savedPara.identificationWays&IR_WAY) == IR_WAY)
+	{
+		disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFIR);
+	}
+	else
+	{
+		disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFB);
+	}
+	if((savedPara.identificationWays&UV_WAY) == UV_WAY)
+	{
+		disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFUV);
+	}
+	else
+	{
+		disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFB);
+	}
+	if((savedPara.identificationWays&MG_WAY) == MG_WAY)
+	{
+		disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFMG);
+	}
+	else
+	{
+		disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFB);
+	}
+	if((savedPara.identificationWays&RGB_WAY) == RGB_WAY)
+	{
+		disp_DrawPic(BMP_FCIS_X,BMP_FCIS_Y,BMP_AFCIS);
+	}
+	else
+	{
+		disp_DrawPic(BMP_FCIS_X,BMP_FCIS_Y,BMP_AFB);
+	}
 
+}
 void DispMainMenuBackground(void)
 {
 	//DispClassicBar(TOP_BAR_COLOR,0);
@@ -1170,24 +1305,8 @@ void DispMainMenuBackground(void)
 //	disp_string(" PCS:",NOTENUM_TITLE_X,NOTENUM_Y);
 //	disp_string("DENO:",DENO_NUM_TITLE_X,DENO_NUM_Y);
 		disp_DrawPic(0,0,BMP_BOPENBLACK);
-		if(gb_identificationWays == ALL_WAYS)
-		{
-			disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFIR);
-			disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFUV);
-			disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFMG);
-		}
-		else if(gb_identificationWays == IR_WAY)
-		{
-			disp_DrawPic(BMP_FIR_X,BMP_FIR_Y,BMP_AFIR);
-		}
-		else if(gb_identificationWays == UV_WAY)
-		{
-			disp_DrawPic(BMP_FUV_X,BMP_FUV_Y,BMP_AFUV);
-		}
-		else if(gb_identificationWays == MG_WAY)
-		{
-			disp_DrawPic(BMP_FMG_X,BMP_FMG_Y,BMP_AFMG);
-		}
+
+		DispIdentificationWays();
 		
 		if(g_currency == INDEX_USD)
 		{
@@ -1234,6 +1353,12 @@ void DispMainMenuBackground(void)
 			disp_DrawPic(0,0,BMP_BFLAGARS);
 			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
 		}		
+		else 
+		{
+			disp_DrawPic(0,0,BMP_BFLAGUSD);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
+			g_currency = INDEX_USD;
+		}
 		disp_DrawPic(BMP_PCS_X,BMP_PCS_Y,BMP_APCS);
 }
 #define IR_X 45
@@ -1269,7 +1394,7 @@ void DispIRCalibration(void)
 		}
 		else if(gb_irCalibrationDisp == 1)
 		{
-			disp_string("157G Ir Calibration",0,30);
+			disp_string("127G Ir Calibration",0,30);
 			disp_string("Ir Value:",0,60);
 			for(i=0; i<7; i++)
 			{
@@ -1289,7 +1414,7 @@ void DispIRCalibration(void)
 		}
 		else if(gb_irCalibrationDisp == 2)
 		{
-			disp_string("157G Ir Calibration End",0,30);
+			disp_string("127G Ir Calibration End",0,30);
 			disp_string("Ir Value:",0,60);
 			for(i=0; i<7; i++)
 			{
@@ -1384,7 +1509,7 @@ void DispMenu1(void)
 	disp_string("CoCalibration:",0,SETTING_Y+SETTING_H*5);
 	disp_string("IRCalibration:",0,SETTING_Y+SETTING_H*6);
 	disp_string("Upgrade      :",0,SETTING_Y+SETTING_H*7);
-	disp_string(VERSION,320-48,240-24);
+	disp_string(VERSION,320-72,240-24);
 	DispSetting();
 	DispSettingSelected();
 }
@@ -1628,7 +1753,7 @@ void SettingParaInc(void)
 			memset(collabrationNum,0,REAL_IR_NUM);
 			memset(collabrationMax,0,REAL_IR_NUM*2);
 			memset(collabrationMin,0xff,REAL_IR_NUM*2);
-			DispString("开始厚白纸校正,放入157g厚白纸",1);
+			DispString("开始厚白纸校正,放入127g厚白纸",1);
 			gb_incalibrationByKey = 1;
 			DispIRCalibration();
 			gb_irCalibrationDisp = 1;
@@ -1641,6 +1766,7 @@ void SettingParaInc(void)
 				disp_setBackColor(BLACK);
 				disp_setFont(24);
 				disp_string("NO UDISK",320-96,0);
+				gb_haveErrUdiskInforDisp = 1;
 			}
 			else
 			{
@@ -1657,6 +1783,7 @@ void SettingParaInc(void)
 					disp_setBackColor(BLACK);
 					disp_setFont(24);
 					disp_string("NO FILE ",320-96,0);
+					gb_haveErrUdiskInforDisp = 1;
 				}
 			}
 
@@ -2007,7 +2134,7 @@ void lengthCollabrationProcess(void)
 			memset(collabrationNum,0,REAL_IR_NUM);
 			memset(collabrationMax,0,REAL_IR_NUM*2);
 			memset(collabrationMin,0xff,REAL_IR_NUM*2);
-			DispString("开始薄白纸校正,放入40g薄白纸",1);
+			DispString("开始薄白纸校正,放入80g薄白纸",1);
 			gb_irCalibrationDisp++;			
 		}
 		else if(gb_inCollabration == COLLABRATION_40G_BZ)
@@ -2053,30 +2180,53 @@ void lengthCollabrationProcess(void)
 void DealNoteType(void)
 {
 	g_errFlag = 0;
+	
 	if(billValue != colorJudgeValue)
 	{
-		if(g_currency == INDEX_USD)
+		if(((savedPara.identificationWays&IR_WAY) == IR_WAY)&&((savedPara.identificationWays&RGB_WAY) == RGB_WAY))
 		{
-			g_errFlag = 0;
-		}
-		else
-		{
-			g_errFlag |= ERR_COLOR;
+			if(g_currency == INDEX_USD)
+			{
+				g_errFlag = 0;
+			}
+			else
+			{
+				g_errFlag |= ERR_COLOR;
+			}
 		}
 	}
 	else if(billIradMask == 1)
 	{
-		g_errFlag |= ERR_IR;
+		if((savedPara.identificationWays&IR_WAY) == IR_WAY)
+		{
+			g_errFlag |= ERR_IR;
+		}
 	}
 	else if(mgFvtFlag == 1)
 	{
-		g_errFlag |= ERR_MG;
+		if((savedPara.identificationWays&MG_WAY) == MG_WAY)
+		{
+			g_errFlag |= ERR_MG;
+		}
 	}
+	
 	if(g_errFlag == 0)
 	{
+		if((savedPara.identificationWays&IR_WAY) == IR_WAY)
+		{
+			gb_billValue = billValue;
+		}
+		else if((savedPara.identificationWays&RGB_WAY) == RGB_WAY)
+		{
+			gb_billValue = colorJudgeValue;
+		}
+		else
+		{
+			gb_billValue = billValue;
+		}
 		if(g_currency == INDEX_USD)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 				case 0:
 				case 1:
@@ -2117,7 +2267,7 @@ void DealNoteType(void)
 			}
 		else if(g_currency == INDEX_EUR)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 			case 1:
@@ -2155,7 +2305,7 @@ void DealNoteType(void)
 		}
 		else if(g_currency == INDEX_RUB)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 			case 1:
@@ -2207,7 +2357,7 @@ void DealNoteType(void)
 		}
 		else if(g_currency == INDEX_TRY)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 				currentNoteType = 0;//200
@@ -2235,7 +2385,7 @@ void DealNoteType(void)
 		}
 		else if(g_currency == INDEX_IQD)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 				currentNoteType = 0;//50000
@@ -2272,7 +2422,7 @@ void DealNoteType(void)
 		}
 		else if(g_currency == INDEX_SAR)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 			case 1:
@@ -2310,7 +2460,7 @@ void DealNoteType(void)
 		}
 		else if(g_currency == INDEX_AED)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 			case 1:
@@ -2352,7 +2502,7 @@ void DealNoteType(void)
 		}
 		else if(g_currency == INDEX_GBP)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 				currentNoteType = 0;//50
@@ -2374,7 +2524,7 @@ void DealNoteType(void)
 		}
 		else if(g_currency == INDEX_ARS)
 		{
-			switch(billValue)
+			switch(gb_billValue)
 			{
 			case 0:
 			case 1:
@@ -3367,15 +3517,15 @@ void SystemSelfcheck(void)
  	g_lengthSampleIndex = 0;
  	//needSampleIdleNum = 500;
  	delay_DelayMs(1000);
-	motor1_BackwardRun();
-	delay_DelayMs(1000);
-		motor1_Stop();
+	//motor1_BackwardRun();
+	//delay_DelayMs(1000);
+	motor1_Stop();
 // 	hwfs_Off();
-// 	if(gb_isJammed == JAM_CSDDJ)
-// 	{
-// 		dispSelfcheckError(ERROR_MOTOR_OR_MP);//码盘 电机
-// 		gb_isJammed = 0;
-// 	}
+ 	if(gb_isJammed == JAM_CSDDJ)
+ 	{
+ 		//dispSelfcheckError(ERROR_MOTOR_OR_MP);//码盘 电机
+ 		gb_isJammed = 0;
+ 	}
 // 	else if(gb_isJammed == JAM_PS2_IR)
 // 	{
 // 		dispSelfcheckError(ERROR_IR_JAM);//红外长时间覆盖
@@ -3674,6 +3824,7 @@ void initEteranceSensor(void)
 	fiveMsCnt = 0;
 	scanEntergateTimer = 0;
 	gb_needScanEteranceSensor = 1;
+	//gb_haveNoteInEntergate = 0;
 }
 void DealJamAtOnce(void)
 {
@@ -3749,50 +3900,19 @@ void InitAdjustPara()
 */
 void InitMachineWorkPara(void)
 {
-	savedPara.machineWorkPara.d[INDEX_JAM_TYPE] = CSDDJ_JAM_CHECK|IR_COVER_TIME_JAM_CHECK;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH1] = 0x06;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH2] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH3] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH4] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH5] = 0;
 	
-	savedPara.machineWorkPara.d[INDEX_RMB_WIDTHTHRES1] = 70;//68 100元
-	savedPara.machineWorkPara.d[INDEX_RMB_WIDTHTHRES2] = 65;//63 50 20 10  
-	savedPara.machineWorkPara.d[INDEX_RMB_WIDTHTHRES3] = 60;//58
-	savedPara.machineWorkPara.d[INDEX_RMB_WIDTHTHRES4] = 55;
-
-	savedPara.machineWorkPara.d[INDEX_RMB_AQX_CODE_NUM_THRES] = 10;
-	savedPara.machineWorkPara.d[INDEX_RMB_AQX_WAVE_THRES] = 150;
-	savedPara.machineWorkPara.d[INDEX_RMB_AQX_WAVE_COMBINE_THRES] = 10;
-	savedPara.machineWorkPara.d[INDEX_RMB_IR_NOTE_COVER_THRES] = 150;
-	
-	savedPara.machineWorkPara.d[INDEX_RMB_ENTERANCE_COVER_THRES] = 100;
-
-	savedPara.machineWorkPara.d[INDEX_RMB100_05_AQX_THRES_MIN] = 55;
-	savedPara.machineWorkPara.d[INDEX_RMB100_05_AQX_THRES_MAX] = 65;
-	savedPara.machineWorkPara.d[INDEX_RMB100_05_AQX_SCALE_MIN] = 90;
-	savedPara.machineWorkPara.d[INDEX_RMB100_05_AQX_SCALE_MAX] = 115;
-	savedPara.machineWorkPara.d[INDEX_RMB50_AQX_THRES_MIN] = 60;
-	savedPara.machineWorkPara.d[INDEX_RMB50_AQX_THRES_MAX] = 70;
-	savedPara.machineWorkPara.d[INDEX_RMB50_AQX_SCALE_MIN] = 60;
-	savedPara.machineWorkPara.d[INDEX_RMB50_AQX_SCALE_MAX] = 80;
-	savedPara.machineWorkPara.d[INDEX_RMB20_10_AQX_THRES_MIN] = 12;
-	savedPara.machineWorkPara.d[INDEX_RMB20_10_AQX_THRES_MAX] = 23;
-	savedPara.machineWorkPara.d[INDEX_RMB20_AQX_SCALE1_MIN] = 29;
-	savedPara.machineWorkPara.d[INDEX_RMB20_AQX_SCALE1_MAX] = 46;
-	savedPara.machineWorkPara.d[INDEX_RMB20_AQX_SCALE2_MIN] = 22;
-	savedPara.machineWorkPara.d[INDEX_RMB20_AQX_SCALE2_MAX] = 36;
-	savedPara.machineWorkPara.d[INDEX_RMB10_AQX_SCALE1_MIN] = 39;
-	savedPara.machineWorkPara.d[INDEX_RMB10_AQX_SCALE1_MAX] = 52;
-	savedPara.machineWorkPara.d[INDEX_RMB10_AQX_SCALE2_MIN] = 43;
-	savedPara.machineWorkPara.d[INDEX_RMB10_AQX_SCALE2_MAX] = 60;
-	
-	savedPara.machineWorkPara.d[INDEX_SELCHECK_MT_THRES] = 145;
-	savedPara.machineWorkPara.d[INDEX_SELCHECK_MR_THRES] = 130;
-	
-	 savedPara.machineWorkPara.d[INDEX_RMB_UV_THRES] = 120;
-//	savedPara.machineWorkPara.d[INDEX_FEED_MOTOR_AUTO_CONTROL_CHAINNOTE] = 0;
-	
-// 	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH1] = 0xE0;
-// 	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH2] = 0;
-// 	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH3] = 0;
-// 	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH4] = 0;
-// 	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH5] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH6] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH7] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH8] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH9] = 0;
+	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH10] = 0;
+	savedPara.machineWorkPara.d[DEFAULT_CURRENCY] = INDEX_USD;
+	savedPara.identificationWays = ALL_WAYS;
 }
 
 void InitUserWorkPara()
@@ -3957,6 +4077,191 @@ u16 Sqrt(u8 x)
 // 	}
 // }
 
+void GetOpenCurrency(void)
+{
+	u8 d,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,i;
+	u8 offset;
+	u8 c;
+	
+	d1 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH1];
+	d2 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH2];
+	d3 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH3];
+	d4 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH4];
+	d5 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH5];
+	d6 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH6];
+	d7 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH7];
+	d8 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH8];
+	d9 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH9];
+	d10 = savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH10];
+	
+	openCurrencyNum = 0;
+	for(i = 0;i < 8;i++)
+	{
+		d = 1<<i;
+		if((d1&d) > 0)
+		{
+			openCurrency[openCurrencyNum] = i;
+			openCurrencyNum++;
+		}
+	}
+	for(i = 0;i < 8;i++)
+	{
+		d = 1<<i;
+		if((d2&d) > 0)
+		{
+			openCurrency[openCurrencyNum] = i+8;
+			openCurrencyNum++;
+		}
+	}
+	for(i = 0;i < 8;i++)
+	{
+		d = 1<<i;
+		if((d3&d) > 0)
+		{
+			if(i+16 < NOTE_NUM)
+			{
+			openCurrency[openCurrencyNum] = i+16;
+			openCurrencyNum++;
+			}
+		}
+	}
+	
+	for(i = 0;i < 8;i++)
+	{
+		d = 1<<(7-i);
+		if((d4&d) > 0)
+		{
+			if(i+24 < NOTE_NUM)
+			{
+				openCurrency[openCurrencyNum] = i+24;
+				openCurrencyNum++;
+			}
+		}
+	}
+	
+	for(i = 0;i < 8;i++)
+	{
+		{
+			d = 1<<(i);
+			if((d5&d) > 0)
+			{
+				if(i+32 < NOTE_NUM)
+				{
+				openCurrency[openCurrencyNum] = i+32;
+				openCurrencyNum++;
+				}
+			}
+		}
+	}
+	
+	offset = 40;
+	c = d6;
+	for(i = 0;i < 8;i++)
+	{
+		//if(i+32 < NOTE_NUM)
+		{
+			d = 1<<(i);
+			if((c&d) > 0)
+			{
+				if(i+offset < NOTE_NUM)
+				{
+					openCurrency[openCurrencyNum] = i+offset;
+					openCurrencyNum++;
+				}
+			}
+		}
+	}
+	
+	offset = 48;
+	c = d7;
+	for(i = 0;i < 8;i++)
+	{
+		//if(i+32 < NOTE_NUM)
+		{
+			d = 1<<(i);
+			if((c&d) > 0)
+			{
+				if(i+offset < NOTE_NUM)
+				{
+					openCurrency[openCurrencyNum] = i+offset;
+					openCurrencyNum++;
+				}
+			}
+		}
+	}
+	
+	offset = 56;
+	c = d8;
+	for(i = 0;i < 8;i++)
+	{
+		//if(i+32 < NOTE_NUM)
+		{
+			d = 1<<(i);
+			if((c&d) > 0)
+			{
+				if(i+offset < NOTE_NUM)
+				{
+					openCurrency[openCurrencyNum] = i+offset;
+					openCurrencyNum++;
+				}
+			}
+		}
+	}
+	
+	offset = 64;
+	c = d9;
+	for(i = 0;i < 8;i++)
+	{
+		//if(i+32 < NOTE_NUM)
+		{
+			d = 1<<(i);
+			if((c&d) > 0)
+			{
+				if(i+offset < NOTE_NUM)
+				{
+					openCurrency[openCurrencyNum] = i+offset;
+					openCurrencyNum++;
+				}
+			}
+		}
+	}
+	
+	offset = 72;
+	c = d10;
+	for(i = 0;i < 8;i++)
+	{
+		//if(i+32 < NOTE_NUM)
+		{
+			d = 1<<(i);
+			if((c&d) > 0)
+			{
+				if(i+offset < NOTE_NUM)
+				{
+					openCurrency[openCurrencyNum] = i+offset;
+					openCurrencyNum++;
+				}
+			}
+		}
+	}
+
+	if(openCurrencyNum == 0)
+	{
+		openCurrency[0] = INDEX_USD;
+		openCurrencyNum = 1;
+	}
+	
+	for(i = 0;i < openCurrencyNum;i++)
+	{
+		if(g_currency == openCurrency[i])
+		{
+			break;
+		}
+	}
+	if(i == openCurrencyNum)
+	{
+		g_currency = openCurrency[0];
+	}
+}
 
 void MainInit(void)
 {
@@ -4006,7 +4311,9 @@ void MainInit(void)
 		savedPara.flag = DATA_FLAG;
 		eeprom_SaveData();
 	}
-
+	//更新面额
+	GetOpenCurrency();
+	g_currency = savedPara.machineWorkPara.d[DEFAULT_CURRENCY];
 	//main.c及中断的管脚初始化
 	InitGpioInMain();
 	
@@ -4797,6 +5104,7 @@ void SysTick_Handler(void)
 					//if(gb_haveNoteInEntergate == 1)
 					{
 						noteState |= STATE_BACKWARD_COVER_ENTERANCE;
+						gb_haveNoteInEntergate = 1;
 						initEteranceSensor();
 						ententernceCnt = 0;
 						
@@ -4815,6 +5123,22 @@ void SysTick_Handler(void)
 			gb_needCheckKey = 1;
 			//gb_needCheckTpClick = 1;
 			checkKeyCnt = CHECK_KEY_TIME;
+		}
+	}
+	if(gb_modifiIdentificationWaysDealy > 0)
+	{
+		gb_modifiIdentificationWaysDealy --;
+		if(gb_modifiIdentificationWaysDealy == 0)
+		{
+			gb_modifiIdentificationWaysFlag = 1;
+		}
+	}
+	if(gb_ChangeCurrencyDelay > 0)
+	{
+		gb_ChangeCurrencyDelay -- ;
+		if(gb_ChangeCurrencyDelay == 0)
+		{
+			gb_ChangeCurrencyFlag = 1;
 		}
 	}
 	//关闭红外延时（没有使用）
@@ -4901,11 +5225,19 @@ void SysTick_Handler(void)
 	
 					if (entergatePulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
 					{
+						if(gb_haveNoteInEntergate == 0)
+						{
+							
+						}
 						gb_haveNoteInEntergate = 1;
 						//noMoneyOnEntergateCounter = 0;
 					}
 					else
 					{
+						if(gb_haveNoteInEntergate == 1)
+						{
+							
+						}						
 						gb_haveNoteInEntergate = 0;
 						//noMoneyOnEntergateCounter = 5;
 					}
@@ -5016,7 +5348,7 @@ void TIM4_IRQHandler(void)
   {
 		TIM_ClearFlag(TIM4, TIM_IT_Update);	
 		
-		if((gb_enableSample == 1)||(needSampleIdleNum > 0))
+		if(((gb_enableSample == 1)||(needSampleIdleNum > 0))&&(gb_enableSampleFlag == 0))
 		{
 			if(needSampleIdleNum > 0)
 			{
@@ -5571,7 +5903,7 @@ void DMA1_Channel1_IRQHandler(void)
 
 		/*
 	ADC1
-	UV		  PA0	ADC0						adData[0]
+	UV		PA0	ADC0			  adData[0]
 	RGB	    PA4	ADC4	4051 4选1 adData[2]
 	MGR	    PC0	ADC10	          adData[4]
 	IR8-14	PC2	ADC12	4051 7选1 adData[6]
@@ -5579,11 +5911,11 @@ void DMA1_Channel1_IRQHandler(void)
 	
 
 	ADC2 
-	TDJS2 	PA1	ADC1 	不选			  adData[1]
-	TDJS1 	PA2	ADC2	不选			  adData[3]
+	TDJS2 	PA1	ADC1 	不选			adData[1]
+	TDJS1 	PA2	ADC2	不选			adData[3]
 	IR1-7 	PC1	ADC11	4051七选1		adData[5]
-	IR15-21	PC3	ADC13	4051七选1	  adData[7]
-	HOPPER	PC5	ADC15	不选			  adData[9]
+	IR15-21	PC3	ADC13	4051七选1	 	adData[7]
+	HOPPER	PC5	ADC15	不选			adData[9]
 	*/
 	
 // 	//enteranceSensorVal = adData[8];
@@ -5687,7 +6019,6 @@ void DMA1_Channel1_IRQHandler(void)
 		set4051Chanel(chanelIndexOf4051);
 		if(chanelIndexOf4051 == 7)//切换一轮 所有数据更新后再处理
 		{
-// 			DealEnteranceIr1INT();
 		  	DealPS1INT();
 		  	DealPS2INT();
 		  	DealPS3INT();
@@ -5695,8 +6026,6 @@ void DMA1_Channel1_IRQHandler(void)
 			DealMgSampleINT();
 			DealColorSampleINT();
 			DealUVSampleINT();
-// 			DealColorIrINT();
-// 			DealOtherIrINT();
 		}
 
 		if(chanelIndexOf4051 < 7)//切换完4052后开始下次采集
@@ -5911,6 +6240,7 @@ void DealInMp(void)
 //码盘中断'
 u8 mpValue;
 u16 mpPeriodCnt;
+u8 validMp = 0;
 void EXTI9_5_IRQHandler(void)
 {
 //	if(EXTI_GetITStatus(CSMP_EXTI_LINE) != RESET)//码盘
@@ -5918,228 +6248,235 @@ void EXTI9_5_IRQHandler(void)
 	{
 		//EXTI_ClearITPendingBit(CSMP_EXTI_LINE);
 		EXTI_ClearFlag(MP_EXTI_LINE);
-		TIM_Cmd(TIM5, DISABLE);
-		mpPeriodCnt = TIM5->CNT;
-		if(g_needSaveMpPeriodFlag == 1)
+		validMp++;
+		if(validMp == 2)
 		{
-			if(gb_mpPeriodRecordCnt < 100)
+			validMp = 0;
+			if(((gb_enableSample == 1)||(needSampleIdleNum > 0))&&(gb_enableSampleFlag == 1))
 			{
-				gb_mpPeriodRecord[gb_mpPeriodRecordCnt++] = mpPeriodCnt;
-			}
-			if (mpPeriodCnt > 160)
-			{
-				motor1_Stop();//停转
-				gb_needStopMotorTimeout = 0;
-				g_needSaveMpPeriodFlag = 0;
-				//test_Off();
-				if (gb_noteState == NOTE_FORWARD)
+				if(needSampleIdleNum > 0)
 				{
-					gb_noteState = NOTE_IDEL;
-					mpEndCnt = mpCnt;
-					time2 = timeCnt;
-					motor1StopRecord = 7;
-					gb_oneNotePass = 1;	
-					noteState |= STATE_COMPUTE;	
-					noteState &= (~STATE_FORWARD_COVER_PS1);
-					gb_needOutPutLength = MAX(PS1ValueRecordCnt,PS2ValueRecordCnt);
+					needSampleIdleNum--;
+					if(needSampleIdleNum == 0)
+					{
+						motor1_Stop();
+						gb_colorSampleEnable = 0;
+						gb_lengthIrNeedStartSampleflag = 0;
+						lengthDataLen = g_lengthSampleIndex;
+						gb_uvNeedStartSampleflag = 0;
+					}
 				}
-				else if (gb_noteState == NOTE_BACKWARD)
+				//开启一次采集
+	//			timeCnt++;
+				ADOneTime2();
+				sampleStartNum ++;		
+			}
+			TIM_Cmd(TIM5, DISABLE);
+			mpPeriodCnt = TIM5->CNT;
+			if(g_needSaveMpPeriodFlag == 1)
+			{
+				if(gb_mpPeriodRecordCnt < 100)
 				{
-					gb_noteState = NOTE_IDEL;
-					mpEndCnt = mpCnt;
-					time2 = timeCnt;
-					motor1StopRecord = 8;
-					noteState &= (~STATE_BACKWARD_COVER_PS1);		
-					//if(gb_haveNoteInEntergate == 1)
+					gb_mpPeriodRecord[gb_mpPeriodRecordCnt++] = mpPeriodCnt;
+				}
+				if (mpPeriodCnt > 160)
+				{
+					motor1_Stop();//停转
+					gb_needStopMotorTimeout = 0;
+					g_needSaveMpPeriodFlag = 0;
+					//test_Off();
+					if (gb_noteState == NOTE_FORWARD)
+					{
+						gb_noteState = NOTE_IDEL;
+						mpEndCnt = mpCnt;
+						time2 = timeCnt;
+						motor1StopRecord = 7;
+						gb_oneNotePass = 1;	
+						noteState |= STATE_COMPUTE;	
+						noteState &= (~STATE_FORWARD_COVER_PS1);
+						gb_needOutPutLength = MAX(PS1ValueRecordCnt,PS2ValueRecordCnt);
+					}
+					else if (gb_noteState == NOTE_BACKWARD)
+					{
+						gb_noteState = NOTE_IDEL;
+						mpEndCnt = mpCnt;
+						time2 = timeCnt;
+						motor1StopRecord = 8;
+						noteState &= (~STATE_BACKWARD_COVER_PS1);		
+						//if(gb_haveNoteInEntergate == 1)
+						{
+							noteState |= STATE_BACKWARD_COVER_ENTERANCE;
+							gb_haveNoteInEntergate = 1;
+							initEteranceSensor();
+							ententernceCnt = 0;
+						}
+
+					}
+				}
+			}
+			TIM_SetCounter(TIM5, 0);
+			TIM_Cmd(TIM5, ENABLE);
+			mpCnt ++;
+			mpValue = ReadMp();
+			csmpNumInCurrentCycle ++;
+			
+			maxSampleNumOneMp = MAX_SAMPLE_NUM_ONE_MP;
+			if(gb_cntMgComputeTime == 1)
+			{			
+				mgComputeMpNum ++;
+			}
+			
+			if((gb_lengthIrNeedStartSampleflag == 1)&&(g_motor1State == MOTOR_FORWARD_RUN))
+			{
+				lengthMpCnt ++;
+			}
+
+			//颜色采集结束
+			if(gb_colorSampleEnd > 0)
+			{
+				gb_colorSampleEnd--;
+				if(gb_colorSampleEnd == 0)
+				{
+					gb_colorSampleEnable = 0;
+					colorDataLen = g_colorSampleIndex;
+				}
+			}
+			//通道中是否有钱计数
+			if(g_haveNoNoteCounter > 0)
+			{
+				g_haveNoNoteCounter --;
+			}
+			//长度有钱计数
+			if((gb_lengthHaveNote == 1)&&(g_motor1State == MOTOR_FORWARD_RUN))
+			{
+				g_lengthIrMpNum ++;
+			}
+			if(gb_uvNeedStartSampleCnt > 0)
+			{
+				gb_uvNeedStartSampleCnt--;
+				if(gb_uvNeedStartSampleCnt == 0)
+				{
+					g_uvSampleIndex = 0;
+					gb_uvNeedStartSampleflag = 1;
+				}
+			}
+			if(gb_needBackMotorCnt > 0)
+			{
+				gb_needBackMotorCnt--;
+				if(gb_needBackMotorCnt == 0)
+				{
+				//	test_On();
+					motor1_BackwardRun();
+					g_needSaveMpPeriodFlag = 1;
+					gb_mpPeriodRecordCnt = 0;
+					
+					gb_needStopMotorTimeout = 35;
+					
+				}
+			}
+			if(gb_uvNeedEndSampleCnt > 0)
+			{
+				gb_uvNeedEndSampleCnt--;
+				if(gb_uvNeedEndSampleCnt == 0)
+				{
+					mgDataLen = g_mgSampleIndex;
+					gb_uvNeedStartSampleflag = 0;
+				}
+			}
+
+			if(gb_lengthIrNeedStartSampleCnt > 0)
+			{
+				gb_lengthIrNeedStartSampleCnt--;
+				if(gb_lengthIrNeedStartSampleCnt == 0)
+				{
+					g_lengthSampleIndex = 0;
+					gb_lengthIrNeedStartSampleflag = 1;
+				}
+			}
+			if(gb_lengthIrNeedEndSampleCnt > 0)
+			{
+				gb_lengthIrNeedEndSampleCnt--;
+				if(gb_lengthIrNeedEndSampleCnt == 0)
+				{
+					lengthDataLen = g_lengthSampleIndex;
+					gb_lengthIrNeedStartSampleflag = 0;
+				}
+			}
+			
+			if(g_maxMpFromPs1ToPs2 > 0)
+			{
+				g_maxMpFromPs1ToPs2 --;
+				if(g_maxMpFromPs1ToPs2 == 0)
+				{
+					noteState &= (~STATE_FORWARD_COVER_PS1);
+					//gb_needStopMotor = 1;
+					//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
+					gb_isJammed = JAM_ENTERANCE_TO_LENGTH;	
+					DealJamAtOnce();
+				}
+			}
+			if(g_maxMpFromEnteranceToPs1 > 0)
+			{
+				g_maxMpFromEnteranceToPs1 --;
+				if(g_maxMpFromEnteranceToPs1 == 0)
+				{
+					noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
+					//gb_needStopMotor = 1;
+					//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
+					gb_isJammed = JAM_ENTERANCE_TO_LENGTH;	
+					DealJamAtOnce();
+				}
+			}
+			//-----------------------------------------------------------------------
+			if(g_maxMpFromPs1ToEnterance > 0)
+			{
+				g_maxMpFromPs1ToEnterance --;
+				if(g_maxMpFromPs1ToEnterance == 0)
+				{
+					if(gb_haveNoteInEntergate == 1)
 					{
 						noteState |= STATE_BACKWARD_COVER_ENTERANCE;
 						initEteranceSensor();
-						ententernceCnt = 0;
 					}
+					gb_needStopMotor = 1;
+					//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
+				}
+			}	
+			if(g_maxMpFromPs2ToLeave > 0)
+			{
+				g_maxMpFromPs2ToLeave --;
+				if(g_maxMpFromPs2ToLeave == 0)
+				{
 
+					gb_needStopMotor = 1;			
 				}
 			}
-		}
-		TIM_SetCounter(TIM5, 0);
-		TIM_Cmd(TIM5, ENABLE);
-		mpCnt ++;
-		mpValue = ReadMp();
-		csmpNumInCurrentCycle ++;
-		
-		maxSampleNumOneMp = MAX_SAMPLE_NUM_ONE_MP;
-		if(gb_cntMgComputeTime == 1)
-		{			
-			mgComputeMpNum ++;
-		}
-		
-		if((gb_lengthIrNeedStartSampleflag == 1)&&(g_motor1State == MOTOR_FORWARD_RUN))
-		{
-			lengthMpCnt ++;
-// 			if(g_lengthSampleIndex < IR_DATA_MAX_LEN)
-// 			{
-// 				lengthData[21][g_lengthSampleIndex] = 0xff;
-// 			}
-		}
-// 		if(gb_needSampleMr == 1)
-// 		{
-// 			mgData[5][g_mgSampleIndex] = 0xff;
-// 		}
-		//颜色采集开始
-//		if(gb_colorSampleStart > 0)
-//		{
-//			gb_colorSampleStart--;
-//			if(gb_colorSampleStart == 0)
+			if(g_maxMpFromComputeToPS1 > 0)
+			{
+				g_maxMpFromComputeToPS1 --;
+				if(g_maxMpFromComputeToPS1 == 0)
+				{
+					noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
+					//gb_needStopMotor = 1;	
+					gb_isJammed = JAM_LENGTH_TO_ENTERANCE;	
+					DealJamAtOnce();		
+				}
+			}		
+			
+		//	DealInMp();
+			
+//			if((savedPara.machineWorkPara.d[INDEX_JAM_TYPE]&IR_COVER_TIME_JAM_CHECK) > 0)
 //			{
-//				gb_colorSampleEnable = 1;
-//				g_colorSampleIndex = 0;
+//				if(gb_isJammed == 0)
+//				{			
+//					if(irHaveNoteContinuslyCnt > IR_COVER_JAM_NUM)
+//					{
+//						gb_isJammed = JAM_PS2_IR;	
+//						DealJamAtOnce();
+//						irHaveNoteContinuslyCnt = 0;						
+//					}
+//				}
 //			}
-//		}
-		//颜色采集结束
-		if(gb_colorSampleEnd > 0)
-		{
-			gb_colorSampleEnd--;
-			if(gb_colorSampleEnd == 0)
-			{
-				gb_colorSampleEnable = 0;
-				colorDataLen = g_colorSampleIndex;
-			}
-		}
-		//通道中是否有钱计数
-		if(g_haveNoNoteCounter > 0)
-		{
-			g_haveNoNoteCounter --;
-		}
-		//长度有钱计数
-		if((gb_lengthHaveNote == 1)&&(g_motor1State == MOTOR_FORWARD_RUN))
-		{
-			g_lengthIrMpNum ++;
-		}
-		if(gb_uvNeedStartSampleCnt > 0)
-		{
-			gb_uvNeedStartSampleCnt--;
-			if(gb_uvNeedStartSampleCnt == 0)
-			{
-				g_uvSampleIndex = 0;
-				gb_uvNeedStartSampleflag = 1;
-			}
-		}
-		if(gb_needBackMotorCnt > 0)
-		{
-			gb_needBackMotorCnt--;
-			if(gb_needBackMotorCnt == 0)
-			{
-			//	test_On();
-				motor1_BackwardRun();
-				g_needSaveMpPeriodFlag = 1;
-				gb_mpPeriodRecordCnt = 0;
-				
-				gb_needStopMotorTimeout = 35;
-				
-			}
-		}
-		if(gb_uvNeedEndSampleCnt > 0)
-		{
-			gb_uvNeedEndSampleCnt--;
-			if(gb_uvNeedEndSampleCnt == 0)
-			{
-				mgDataLen = g_mgSampleIndex;
-				gb_uvNeedStartSampleflag = 0;
-			}
-		}
-
-		if(gb_lengthIrNeedStartSampleCnt > 0)
-		{
-			gb_lengthIrNeedStartSampleCnt--;
-			if(gb_lengthIrNeedStartSampleCnt == 0)
-			{
-				g_lengthSampleIndex = 0;
-				gb_lengthIrNeedStartSampleflag = 1;
-			}
-		}
-		if(gb_lengthIrNeedEndSampleCnt > 0)
-		{
-			gb_lengthIrNeedEndSampleCnt--;
-			if(gb_lengthIrNeedEndSampleCnt == 0)
-			{
-				lengthDataLen = g_lengthSampleIndex;
-				gb_lengthIrNeedStartSampleflag = 0;
-			}
-		}
-		
-		if(g_maxMpFromPs1ToPs2 > 0)
-		{
-			g_maxMpFromPs1ToPs2 --;
-			if(g_maxMpFromPs1ToPs2 == 0)
-			{
-				noteState &= (~STATE_FORWARD_COVER_PS1);
-				//gb_needStopMotor = 1;
-				//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
-				gb_isJammed = JAM_ENTERANCE_TO_LENGTH;	
-				DealJamAtOnce();
-			}
-		}
-		if(g_maxMpFromEnteranceToPs1 > 0)
-		{
-			g_maxMpFromEnteranceToPs1 --;
-			if(g_maxMpFromEnteranceToPs1 == 0)
-			{
-				noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
-				//gb_needStopMotor = 1;
-				//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
-				gb_isJammed = JAM_ENTERANCE_TO_LENGTH;	
-				DealJamAtOnce();
-			}
-		}
-		//-----------------------------------------------------------------------
-		if(g_maxMpFromPs1ToEnterance > 0)
-		{
-			g_maxMpFromPs1ToEnterance --;
-			if(g_maxMpFromPs1ToEnterance == 0)
-			{
-				if(gb_haveNoteInEntergate == 1)
-				{
-					noteState |= STATE_BACKWARD_COVER_ENTERANCE;
-					initEteranceSensor();
-				}
-				gb_needStopMotor = 1;
-				//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
-			}
-		}	
-		if(g_maxMpFromPs2ToLeave > 0)
-		{
-			g_maxMpFromPs2ToLeave --;
-			if(g_maxMpFromPs2ToLeave == 0)
-			{
-				noteState &= (~STATE_FORWARD_NOTE_LEAVE);
-				initEteranceSensor();
-				gb_needStopMotor = 1;			
-			}
-		}
-		if(g_maxMpFromComputeToPS1 > 0)
-		{
-			g_maxMpFromComputeToPS1 --;
-			if(g_maxMpFromComputeToPS1 == 0)
-			{
-				noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
-				//gb_needStopMotor = 1;	
-				gb_isJammed = JAM_LENGTH_TO_ENTERANCE;	
-				DealJamAtOnce();		
-			}
-		}		
-		
-	//	DealInMp();
-		
-		if((savedPara.machineWorkPara.d[INDEX_JAM_TYPE]&IR_COVER_TIME_JAM_CHECK) > 0)
-		{
-			if(gb_isJammed == 0)
-			{			
-				if(irHaveNoteContinuslyCnt > IR_COVER_JAM_NUM)
-				{
-					gb_isJammed = JAM_PS2_IR;	
-					DealJamAtOnce();
-					irHaveNoteContinuslyCnt = 0;						
-				}
-			}
 		}
 	}
 }

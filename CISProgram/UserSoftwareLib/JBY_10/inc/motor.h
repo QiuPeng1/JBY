@@ -83,7 +83,7 @@ MOTOR_EXT_PARA u16 g_motorSpeedCountVal;
 MOTOR_EXT_PARA u16 g_codePanCountForCsMp;
 MOTOR_EXT_PARA	u8	forwardPwmValue;
 MOTOR_EXT_PARA	u8	backwardPwmValue;
-
+MOTOR_EXT_PARA	u8	gb_enableSampleFlag;
 // #define MOTOR_OVER_LOAD_CHECK_DELAY 30
 // MOTOR_EXT_PARA u8 motor1OverLoadCheckDelay;
 // MOTOR_EXT_PARA u8 motor2OverLoadCheckDelay;

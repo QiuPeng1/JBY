@@ -153,6 +153,7 @@ void motor1_Stop(void)
 {
 	if(g_motor1State != MOTOR_STOP)
 	{
+		gb_enableSampleFlag = 0;
 		g_motor1State = MOTOR_STOP;	
 		MOTOR1_FORWARD_PWM = 0;
 		MOTOR1_BACKWARD_PWM = 0;
@@ -163,6 +164,7 @@ void motor1_ForwardRun(void)
 {
 	//if(g_motor1State == MOTOR_STOP)
 	{
+		gb_enableSampleFlag = 1;
 		g_motor1State = MOTOR_FORWARD_RUN;
 		MOTOR1_BACKWARD_PWM = 0;
 		MOTOR1_FORWARD_PWM = forwardPwmValue;//forwardPwmValue;
@@ -173,6 +175,7 @@ void motor1_BackwardRun(void)
 {
 	//if(g_motor1State == MOTOR_STOP)
 	{
+		gb_enableSampleFlag = 1;
 		g_motor1State = MOTOR_BACKWARD_RUN;
 		MOTOR1_BACKWARD_PWM = backwardPwmValue;
 		MOTOR1_FORWARD_PWM = 0;

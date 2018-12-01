@@ -16,6 +16,7 @@
 extern u8 gb_udsikIsOnLine;
 extern u8 gb_udiskPlugIn;
 extern u8 gb_udiskStateChanger;
+extern u8 gb_needSetCurrency;
 //---------------------------------------
 //----------------------------------------------
 void USB_Config(void);

@@ -331,8 +331,14 @@ u8 adData[10];
 u8 gb_udsikIsOnLine = 0;
 u8 gb_udiskPlugIn = 0;
 u8 gb_udiskStateChanger = 0;
+u8 gb_needSetCurrency = 0;
+u32 SetCurrencyFileLen;
+uint8_t read_txt_file_buff[2048]; 
+u8 gb_udiskCurrencyCnt;
 
 char upgradeFileName[15] = "JBY.bin";
+
+char SetCurrencyFileName[15] = "JBYC.txt";
 
 u32 g_timetest[5];
 u8 irValue[REAL_IR_NUM];//测长红外灯
@@ -552,6 +558,9 @@ u16 lengthMpCnt = 0;
 u16 mpStartCnt = 0;
 u16 mpEndCnt = 0;
 
+u8 openCurrency[NOTE_NUM];
+u8 openCurrencyNum = 0;
+
 u32 time1;
 u32 time2;
 u32 timeCnt = 0;
@@ -564,6 +573,7 @@ u16 needSampleIdleNum = 0;
 u8 gb_sampleIdleOver = 0;		
 
 u8 gb_enableSample = 0;
+//u8 gb_enableSampleFlag = 0; 
 
 // enum
 // {
@@ -750,13 +760,26 @@ u8 g_machineTestMode = TEST_MODE_OFF;
 
 enum
 {
-	IR_WAY,
-	UV_WAY,
-	MG_WAY,
-	ALL_WAYS,
+	IR_WAY = 0x01,
+	UV_WAY = 0x02,
+	MG_WAY = 0x04,
+	RGB_WAY = 0x08,
+	ALL_WAYS = 0x0F,
+	IR_UV_MG_WAYS = 0x07,
+	IR_UV_WAYS = 0x03,
+	IR_MG_WAYS = 0x05,
+	RGB_UV_MG_WAYS = 0x0E,
+	RGB_UV_WAYS = 0x0A,
+	RGB_MG_WAYS = 0x0C,
+	RGB_IR_WAYS = 0x09,
+	RGB_IR_UV_WAYS = 0x0B,
+	RGB_IR_MG_WAYS = 0x0D,
+	
 };
-u8 gb_identificationWays = ALL_WAYS;
-
+//u8 gb_identificationWays = ALL_WAYS;
+u8 gb_billValue;
+u16 gb_modifiIdentificationWaysDealy = 0;
+u8 gb_modifiIdentificationWaysFlag = 0;
 #define MAX_SAMPLE_NUM_ONE_MP 20
 u8 maxSampleNumOneMp = 0;
 
@@ -836,6 +859,7 @@ u8  currentLcdKey = KEY_noKey;
 u8  lastLcdKey = KEY_noKey;
 u8 keyFlag = 0;
 u16 g_errFlag = 0;
+u8 gb_haveErrUdiskInforDisp = 0;
 enum
 {
 	ERR_VALUE = 0x0001,
@@ -856,9 +880,64 @@ enum
 	NOTE_BACKWARD,
 };
 u8 gb_noteState = NOTE_IDEL;
+u8 CurrencyStr[4];
+u8 * const CURRENCY_INFO_STR[] = 
+{
+	"RMB",
+	"USD",
+	"EUR",
+	"JPY",
+	"GBP",
+	"HKD",	//港币
+	"AUD",
+	"CAD",
 
+	"SGD",	//8新加坡
+	"KRW",	//9韩国
+	"TWD",	//10台湾
+	"RUB",	//11卢布
+	"GHC",	//12加纳塞第
+	"UAH",	//13乌克兰
+	"NGN",	//14尼日利亚
+	"ALL",	//15阿尔巴尼亚
+
+	"MKD",	//16马其顿第纳尔
+	"MOP",  //17中国澳门
+	"CHF",	//18瑞士法郎
+	"SEK",	//19瑞典克郎
+	"KZT",  //20哈萨克斯坦
+	"TRY",  //21土耳其
+	"INR",	//22印度
+	"VND",	//23越南,
+
+	"MYR",	//24马来西亚
+	"BRL",	//25巴西
+	"TJS",	//26
+	"CNY",	//27
+	"BGN",  //28保加利亚
+	"MAD",  //29摩洛哥
+	"LYD", //30利比亚
+	"LAK",	//31
+	"ZAR",	//32南非
+	"KES",	//33
+	"ARS",	//34阿根廷
+	"THB",	//35泰铢
+	"EGP",	//36埃及镑
+	"LKR",	//37斯里兰卡
+	"IDR",	//38印尼
+	"ILS",	//39以色列
+	"AFN", 	//40阿富汗
+	"JOD", 	//41约旦
+	"IQD", 	//42伊拉克
+	"LBP", 	//43黎巴嫩
+	"SAR", 	//43沙特
+	"AED", 	//43阿联酋
+};
+	
 #define g_languageIndex INDEX_ENGLISH//savedPara.userWorkPara.d[INDEX_LANGUAGE]
-u8 g_currency = INDEX_TRY;//INDEX_RUB; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
+u8 g_currency;//INDEX_RUB; //savedPara.userWorkPara.d[INDEX_MONEY_TYPE]
+u16 gb_ChangeCurrencyDelay = 0;
+u8 gb_ChangeCurrencyFlag = 0;
 u8 gb_testbuf[20];
 enum
 {
@@ -1053,6 +1132,12 @@ void ClearAllNoteNum(void);
 void ClearPSIrFlag(void);
 void ClearJamFlag(void);
 void initEteranceSensor(void);
+void modifiIdentificationWays(void);
+void DispIdentificationWays(void);
+void updataCurrencySwitch(void);
+void GetOpenCurrency(void);
+void ChangeCurrency(void);
+void DispCurrency(void);
 // void InitIrData(void);
 // void DealIr2Data(u8 d);
 // void DealIr3Data(u8 d);
