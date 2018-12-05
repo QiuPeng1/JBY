@@ -53,6 +53,9 @@ void DealKeyDown(void)
 			case MENU1:
 				DealKeyDownOnMenu1(key);
 				break;
+			case ENG_MODE:
+				//DealKeyDownOnEngMode(key);
+				break;
 		}
 		//disp_num(key,0,0);
 //		LCD_DispNum(0,0,WHITE,BLACK,key,24);
@@ -1738,31 +1741,7 @@ void SettingParaInc(void)
  			gb_needOutPutErrData ++;
  			gb_needOutPutErrData %= 3;
 		break;
-		case 3:
-			if (gb_motorState1 == 0)
-			{
-				gb_motorState1 = 1;
-				motor1_ForwardRun();
-			}
-			else
-			{
-				gb_motorState1 = 0;
-				motor1_Stop();			
-			}
-		break;
-		case 4:
-			if (gb_motorState2 == 0)
-			{
-				gb_motorState2 = 1;
-				motor1_BackwardRun();
-			}
-			else
-			{
-				gb_motorState2 = 0;
-				motor1_Stop();			
-			}
-		break;
-		case 5://进入颜色校正界面
+		case 3://进入颜色校正界面
 			g_colorFsStopWork = 0;
 			SetSystemState(NORMAL);
 			gb_enableSample = 1;
@@ -1773,7 +1752,7 @@ void SettingParaInc(void)
 			gb_incalibrationByKey = 1;
 			DispColorCalibration();
 		break;
-		case 6://进入红外校正界面
+		case 4://进入红外校正界面
 			hwfs_On();
 			SetSystemState(NORMAL);
 			gb_enableSample = 1;
@@ -1801,7 +1780,13 @@ void SettingParaInc(void)
 			DispIRCalibration();
 			gb_irCalibrationDisp = 1;
 		break;
-		case 7:
+		case 5://工程师模式
+			selectedItemIndex = 0;
+			lastSelectedItemIndex = 0;
+			SetSystemState(ENG_MODE);
+			DispEngMode();
+		break;
+		case 6:
 	#ifdef BOOT_APP
 			if(gb_udsikIsOnLine == 0)
 			{
