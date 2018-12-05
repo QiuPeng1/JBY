@@ -34,6 +34,10 @@ void DealKeyDown(void)
 	if(fifo_GetCount(KB_FIFO) > 0)
 	{
 		key = fifo_DataOut(KB_FIFO);
+		if(g_motor1State != MOTOR_STOP)
+		{
+			return;
+		}
 		switch(systemState)
 		{
 			case NORMAL:
@@ -369,53 +373,7 @@ int main(void)
 		
 		if(gb_oneSec == 1)
 		{
-
 			gb_oneSec = 0;
-// 			if(gb_haveNoteInEntergate > 0)
-// 			{
-// 				LongBeep(1);
-// 			}
-// 			if(gb_ledIsOn == 1)
-// 			{
-// 				LED_OFF();
-// 				
-// 			}
-// 			else
-// 			{
-// 				LED_ON();			
-// 			}		
-// 				if(g_colorFsRGB == FS_BLUE)
-// 				{
-// 					redFs_On();
-// 					greenFs_Off();
-// 					blueFs_Off();
-// 				}
-// 				else if(g_colorFsRGB == FS_RED)
-// 				{
-// 					redFs_Off();
-// 					greenFs_On();
-// 					blueFs_Off();
-// 				}
-// 				else
-// 				{
-// 					redFs_Off();
-// 					greenFs_Off();
-// 					blueFs_On();
-// 				}
-// 			motorTest ++;
-// 			if(motorTest == 5)
-// 			{
-// 				motor1_ForwardRun();
-// 			}
-// 			else if(motorTest == 10)
-// 			{
-// 				motor1_BackwardRun();
-// 			}
-// 			else if(motorTest == 15)
-// 			{
-// 				motor1_Stop();
-// 				motorTest = 0;
-// 			}
 		}
 		if(gb_needSetCurrency == 1)//根据U盘文件更新面额。
 		{
@@ -513,6 +471,10 @@ int main(void)
 					gb_isJammed = 0;
 					gb_enableSample = 1;
 					noteState = 0;
+#ifdef DEBUG_MODE
+					testflag[0] = 1;
+					testflag2[0] = noteState;
+#endif
 					gb_noteState = NOTE_IDEL;
 					ClearPSIrFlag();
 					ClearJamFlag();
@@ -539,6 +501,10 @@ int main(void)
 			if((noteState&STATE_FORWARD_NOTE_LEAVE) == STATE_FORWARD_NOTE_LEAVE)
 			{
 	 			noteState &= (~STATE_FORWARD_NOTE_LEAVE);
+#ifdef DEBUG_MODE
+				testflag[1] = 1;
+				testflag2[1] = noteState;
+#endif
 				initEteranceSensor();
 				ToggleJinChaoFaShe();
 				ententernceCnt = 0;
@@ -958,11 +924,46 @@ void DealPackageFromUart3(void)
 								gb_debugErrFlag = 1;
 								DispString("调试串口打开",1);
 							}			
-						break;								
-							
-	// 					case 0x67:
-	// 						OutputIrDetailData();
-	// 						break;
+						break;													
+	 					case 0xf0:
+							i = 0;
+#ifdef DEBUG_MODE
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = testflag[i-1];i++;
+							uart3toPCdebug[i] = 0x55;i++;
+							uart_SendDataToUart3(uart3toPCdebug,i);
+							i = 0;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = testflag2[i-1];i++;
+							uart3toPCdebug[i] = 0x55;i++;
+							uart_SendDataToUart3(uart3toPCdebug,i);
+#endif
+							break;
 	// 					case 0x68:
 	// 						gb_autoOutputDetailData2 = 1;
 	// 						break;
@@ -979,11 +980,12 @@ void DealPackageFromUart3(void)
 
 void DealScanEnteracneSensor(void)
 {
+	u16 i;
 	if(systemState == NORMAL)
 	{
 		if(gb_haveNoteInEntergate == 1)
 		{
-			if((noteState == 0)&&(g_motor1State == MOTOR_STOP))//空闲态
+			if((noteState == 0)&&(g_motor1State == MOTOR_STOP))//&&(gb_notebackInEnteranceFlag == 0))//空闲态
 			{
 				//开传感器
 				if(gb_lcdBacklightOn == 0)
@@ -991,9 +993,15 @@ void DealScanEnteracneSensor(void)
 					disp_lcdBLC(60);	
 					gb_lcdBacklightOn = 1;
 				}
+
 				lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;		
 				memset(mpCntRecode, 0, sizeof(mpCntRecode));
 				memset(msCntRecode, 0, sizeof(msCntRecode));
+#ifdef DEBUG_MODE
+				memset(testflag,0,sizeof(testflag));
+				memset(testflag2,0,sizeof(testflag2));
+				testflag2Cnt = 0;
+#endif
 				hwfs_On();
 				redFs_On();
 				greenFs_Off();
@@ -1009,10 +1017,15 @@ void DealScanEnteracneSensor(void)
 				PS2ValueRecordCnt = 0;
 				PS1ValueRecordCnt = 0;
 				noteState |= STATE_FORWARD_COVER_ENTERANCE;
+#ifdef DEBUG_MODE
+				testflag[2] = 1;
+				testflag2[2] = testflag2Cnt++;
+#endif
 				g_maxMpFromEnteranceToPs1 = MP_FROM_ENTERANCE_TO_Ps1;
 				tempMgDataLen = 0;
 				gb_haveNoteInEntergate = 0;
 				gb_needScanEteranceSensor = 0;
+				
 			}
 		}
 		else
@@ -1020,7 +1033,11 @@ void DealScanEnteracneSensor(void)
 			if((noteState&STATE_BACKWARD_COVER_ENTERANCE) > 0)
 			{
 				noteState &= (~STATE_BACKWARD_COVER_ENTERANCE);
-				ententernceCnt = 0;
+//				gb_notebackInEnteranceFlag = 0;
+#ifdef DEBUG_MODE
+				testflag[3] = 1;
+				testflag2[3] = testflag2Cnt++;
+#endif
 			}
 		}
 	}
@@ -2623,7 +2640,7 @@ void DealNotePass(void)
 			else
 			{
 				//计算函数
-				delay_DelayMs(200);
+				delay_DelayMs(100);
 				g_timetest[0] = timeCnt;
 				billIrad_Judge(IRlengthBuffer,g_currency);//0909改U16注释
 				g_timetest[1] = timeCnt;
@@ -2720,6 +2737,10 @@ void DealNotePass(void)
 			}
 			//计算结束
 			noteState &= (~STATE_COMPUTE);
+#ifdef DEBUG_MODE			
+			testflag[4] = 1;
+			testflag2[4] = testflag2Cnt++;
+#endif			
 			//根据计算结果来决定钱去前面还是回转  
 			if(savedPara.noteLeaveRoads == 0)
 			{
@@ -3850,7 +3871,6 @@ void initEteranceSensor(void)
 	fiveMsCnt = 0;
 	scanEntergateTimer = 0;
 	gb_needScanEteranceSensor = 1;
-	//gb_haveNoteInEntergate = 0;
 }
 void DealJamAtOnce(void)
 {
@@ -3899,31 +3919,7 @@ void InitAdjustPara()
 	memset(savedPara.adjustPara.irIdleStandard,0xff,REAL_IR_NUM);
 }
 
-/*
-	rmb50AqxCodeThres[0] = 50;//50块安全线的阈值
-	rmb50AqxCodeThres[1] = 60;
-	rmb20_10AqxCodeThres[0] = 10;//10、20块安全线的阈值
-	rmb20_10AqxCodeThres[1] = 25;
 
-	rmb50ScaleThres[0] = 64;
-	rmb50ScaleThres[1] = 74;
-
-	rmb20ScaleThres[0][0] = 29;
-	rmb20ScaleThres[0][1] = 41;
-	rmb20ScaleThres[1][0] = 25;
-	rmb20ScaleThres[1][1] = 35;
-
-	rmb10ScaleThres[0][0] = 42;
-	rmb10ScaleThres[0][1] = 50;
-	rmb10ScaleThres[1][0] = 45;
-	rmb10ScaleThres[1][1] = 57;
-
-	rmb100AqxCodeThres[0] = 48;
-	rmb100AqxCodeThres[1] = 58;
-
-	rmb100ScaleThres[0] = 90;
-	rmb100ScaleThres[1] = 115;
-*/
 void InitMachineWorkPara(void)
 {
 	savedPara.machineWorkPara.d[INDEX_OPEN_CURRENCY_SWITCH1] = 0x06;
@@ -4357,8 +4353,8 @@ void MainInit(void)
 	EXTI_Init(&EXTI_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = MP_EXTI_IRQ;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure); 
 	
@@ -5127,6 +5123,10 @@ void SysTick_Handler(void)
 					gb_oneNotePass = 1;	
 					noteState |= STATE_COMPUTE;	
 					noteState &= (~STATE_FORWARD_COVER_PS1);
+#ifdef DEBUG_MODE	
+					testflag[7] = 1;
+					testflag2[7] = testflag2Cnt++;
+#endif
 					gb_needOutPutLength = MAX(PS1ValueRecordCnt,PS2ValueRecordCnt);
 				}
 				else if (gb_noteState == NOTE_BACKWARD)
@@ -5135,16 +5135,16 @@ void SysTick_Handler(void)
 					mpEndCnt = mpCnt;
 					time2 = timeCnt;
 					motor1StopRecord = 9;
-					noteState &= (~STATE_BACKWARD_COVER_PS1);		
-					//if(gb_haveNoteInEntergate == 1)
-					{
-						noteState |= STATE_BACKWARD_COVER_ENTERANCE;
-						gb_haveNoteInEntergate = 1;
-						initEteranceSensor();
-						ententernceCnt = 0;
-						
-					}
-
+					//gb_notebackInEnteranceFlag = 1;
+					//gb_haveNoteInEntergate = 1;
+					noteState |= STATE_BACKWARD_COVER_ENTERANCE;
+					noteState &= (~STATE_BACKWARD_COVER_PS1);	
+#ifdef DEBUG_MODE	
+					testflag[8] = 1;
+					testflag2[8] = testflag2Cnt++;
+#endif					
+					initEteranceSensor();
+					ententernceCnt = 0;
 				}
 			}		
 		}
@@ -5176,32 +5176,6 @@ void SysTick_Handler(void)
 			gb_ChangeCurrencyFlag = 1;
 		}
 	}
-	//关闭红外延时（没有使用）
-//	if(g_turnOffHwfsDelayTimer > 0)
-//	{
-//		g_turnOffHwfsDelayTimer --;
-//		if(g_turnOffHwfsDelayTimer == 0)
-//		{
-//			gb_needTurnOffLed = 1;
-//		}
-//	}
-//	if(gb_motorNeedEndOneNoteCnt>0)
-//	{
-//		gb_motorNeedEndOneNoteCnt--;
-//		if(gb_motorNeedEndOneNoteCnt == 0)
-//		{
-//				g_maxMpFromComputeToPS1 = 0;
-//				noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
-////					noteState |= STATE_BACKWARD_COVER_PS1;
-////				noteState &= (~STATE_BACKWARD_COVER_PS1);		
-//				if(gb_haveNoteInEntergate == 1)
-//				{
-//					noteState |= STATE_BACKWARD_COVER_ENTERANCE;
-//				}
-//				motor1_Stop();
-//				motor1StopRecord = 5;
-//		}
-//	}
 
 	if((gb_enableSample == 1)&&(systemState != SENSOR_VIEW)&&(gb_needScanEteranceSensor == 1))
 	{
@@ -5260,21 +5234,12 @@ void SysTick_Handler(void)
 	
 					if (entergatePulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
 					{
-						if(gb_haveNoteInEntergate == 0)
-						{
-							
-						}
 						gb_haveNoteInEntergate = 1;
-						//noMoneyOnEntergateCounter = 0;
 					}
 					else
 					{
-						if(gb_haveNoteInEntergate == 1)
-						{
-							
-						}						
+					
 						gb_haveNoteInEntergate = 0;
-						//noMoneyOnEntergateCounter = 5;
 					}
 					entergatePulseNumCounter = 0;	
 				}					
@@ -5357,10 +5322,10 @@ void USART1_IRQHandler(void)
  		/* Read one byte from the receive data register */
  		uart3infifo_DataIn(USART_ReceiveData(USART3));	//自动清除RXNE标志
  // 		uart3DelayTimer = UART1_DATA_DELAY;
-  	gb_needDealUart3Data = 1;
+		gb_needDealUart3Data = 1;
 
  	}
- 	else if (USART_GetFlagStatus(USART3, USART_FLAG_TC))//USART_FLAG_TXE
+ 	else if (USART_GetFlagStatus(USART3, USART_FLAG_TXE))//USART_FLAG_TXE
  	{		
  		if (uart3outfifo_count > 0)
  		{
@@ -5490,8 +5455,13 @@ void DealPS1INT(void)
 						if(g_currency != INDEX_GBP)
 						{
 							g_maxMpFromComputeToPS1 = 0;
-							noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
+							gb_haveNoteInEntergate = 1;
 							noteState |= STATE_BACKWARD_COVER_PS1;
+							noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
+#ifdef DEBUG_MODE	
+							testflag[9] = 1;
+							testflag2[9] = testflag2Cnt++;
+#endif							
 						}
 					}
 					else if(gb_noteState == NOTE_FORWARD)
@@ -5502,6 +5472,10 @@ void DealPS1INT(void)
 							g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
 							noteState |= STATE_FORWARD_COVER_PS1;
 							noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
+#ifdef DEBUG_MODE	
+							testflag[10] = 1;
+							testflag2[10] = testflag2Cnt++;
+#endif
 							//开始采集
 							gb_uvNeedStartSampleCnt = 55;
 							gb_lengthIrNeedStartSampleCnt = 25;
@@ -5593,19 +5567,29 @@ void DealPS2INT(void)
 					{
 						if(g_currency == INDEX_GBP)
 						{
+							gb_haveNoteInEntergate = 1;
 							g_maxMpFromComputeToPS1 = 0;
-							noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
 							noteState |= STATE_BACKWARD_COVER_PS1;
+							noteState &= (~STATE_BACKWARD_NOTE_LEAVE);
+#ifdef DEBUG_MODE	
+							testflag[11] = 1;
+							testflag2[11] = testflag2Cnt++;
+#endif							
 						}
 					}
 					else if(gb_noteState == NOTE_FORWARD)
 					{
+						g_maxMpFromEnteranceToPs1 = 0;
 						if(g_currency == INDEX_GBP)
 						{
 							g_maxMpFromEnteranceToPs1 = 0;
 							g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
 							noteState |= STATE_FORWARD_COVER_PS1;
 							noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
+#ifdef DEBUG_MODE		
+							testflag[12] = 1;
+							testflag2[12] = testflag2Cnt++;	
+#endif
 							//开始采集
 							gb_uvNeedStartSampleCnt = 30;
 							//gb_lengthIrNeedStartSampleCnt = 25;
@@ -5642,7 +5626,7 @@ void DealPS2INT(void)
 							gb_colorSampleEnable = 0;
 							colorDataLen = g_colorSampleIndex;
 						}
-						gb_uvNeedEndSampleCnt = 40;//50;
+						gb_uvNeedEndSampleCnt = 30;//40;//50;
 						gb_needBackMotorCnt = 20;
 						gb_lengthIrNeedEndSampleCnt = 2;//30;
 						if(mpCnt < 1000)
@@ -5667,7 +5651,7 @@ void DealPS2INT(void)
 						g_needSaveMpPeriodFlag = 1;
 						gb_mpPeriodRecordCnt = 0;
 						
-						gb_needStopMotorTimeout = 35;
+						gb_needStopMotorTimeout = 50;//35;
 
 					}
 				}
@@ -6123,57 +6107,13 @@ void TIM2_IRQHandler(void)
 			}
 		}
 		ScanKeyDown();
-		//检测进钞接收
-// 		if (gb_jinChaoFaSheIsOn)
-// 		{
-// 			if(enteranceSensorVal > savedPara.machineWorkPara.d[INDEX_RMB_ENTERANCE_COVER_THRES])
-// 			{
-// 				entergatePulseNumCounter ++;
-// 			}
-// 			else
-// 			{
-// 				if (entergatePulseNumCounter > 0)
-// 				{
-// 					entergatePulseNumCounter --;
-// 				}
-// 			}
-// 		}
-// 		else
-// 		{
-// 			if(enteranceSensorVal <= savedPara.machineWorkPara.d[INDEX_RMB_ENTERANCE_COVER_THRES])
-// 			{
-// 				entergatePulseNumCounter ++;
-// 			}
-// 			else
-// 			{
-// 				if (entergatePulseNumCounter > 0)
-// 				{
-// 					entergatePulseNumCounter --;
-// 				}
-// 			}
-// 		}
-		
-		//控制段码液晶的进钞传感器发射
-// 		if((systemState != SENSOR_VIEW)&&(systemState != SELFCHECK))
-// 		{
-// 			ToggleJinChaoFaShe();		
-// 		}
 		
  		scanMotorTimer ++;
  		if(scanMotorTimer >= SCAN_MOTOR_TIME)
  		{
  			scanMotorTimer = 0;
 			
-			//进钞编码统计
-// 			if (entergatePulseNumCounter >= MIN_HAVEMONEY_PULSENUM_COUNT)
-// 			{
-// 				gb_haveNoteInEntergate = 1;
-// 			}
-// 			else
-// 			{
-// 				gb_haveNoteInEntergate = 0;
-// 			}
-// 			entergatePulseNumCounter = 0;		
+	
 			
 			//大电机调速
 			if ((g_motor1State == MOTOR_FORWARD_RUN)||(g_motor1State == MOTOR_BACKWARD_RUN))
@@ -6329,6 +6269,10 @@ void EXTI9_5_IRQHandler(void)
 						gb_oneNotePass = 1;	
 						noteState |= STATE_COMPUTE;	
 						noteState &= (~STATE_FORWARD_COVER_PS1);
+#ifdef DEBUG_MODE
+						testflag[13] = 1;
+						testflag2[13] = testflag2Cnt++;
+#endif						
 						gb_needOutPutLength = MAX(PS1ValueRecordCnt,PS2ValueRecordCnt);
 					}
 					else if (gb_noteState == NOTE_BACKWARD)
@@ -6337,15 +6281,16 @@ void EXTI9_5_IRQHandler(void)
 						mpEndCnt = mpCnt;
 						time2 = timeCnt;
 						motor1StopRecord = 8;
-						noteState &= (~STATE_BACKWARD_COVER_PS1);		
-						//if(gb_haveNoteInEntergate == 1)
-						{
-							noteState |= STATE_BACKWARD_COVER_ENTERANCE;
-							gb_haveNoteInEntergate = 1;
-							initEteranceSensor();
-							ententernceCnt = 0;
-						}
-
+//						gb_notebackInEnteranceFlag = 1;
+//						gb_haveNoteInEntergate = 1;
+						noteState |= STATE_BACKWARD_COVER_ENTERANCE;
+						noteState &= (~STATE_BACKWARD_COVER_PS1);
+#ifdef DEBUG_MODE
+						testflag[14] = 1;
+						testflag2[14] = testflag2Cnt++;
+#endif						
+						initEteranceSensor();
+						ententernceCnt = 0;
 					}
 				}
 			}
@@ -6404,9 +6349,7 @@ void EXTI9_5_IRQHandler(void)
 					motor1_BackwardRun();
 					g_needSaveMpPeriodFlag = 1;
 					gb_mpPeriodRecordCnt = 0;
-					
 					gb_needStopMotorTimeout = 35;
-					
 				}
 			}
 			if(gb_uvNeedEndSampleCnt > 0)
@@ -6463,27 +6406,26 @@ void EXTI9_5_IRQHandler(void)
 				}
 			}
 			//-----------------------------------------------------------------------
-			if(g_maxMpFromPs1ToEnterance > 0)
-			{
-				g_maxMpFromPs1ToEnterance --;
-				if(g_maxMpFromPs1ToEnterance == 0)
-				{
-					if(gb_haveNoteInEntergate == 1)
-					{
-						noteState |= STATE_BACKWARD_COVER_ENTERANCE;
-						initEteranceSensor();
-					}
-					gb_needStopMotor = 1;
-					//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
-				}
-			}	
+//			if(g_maxMpFromPs1ToEnterance > 0)
+//			{
+//				g_maxMpFromPs1ToEnterance --;
+//				if(g_maxMpFromPs1ToEnterance == 0)
+//				{
+//					if(gb_haveNoteInEntergate == 1)
+//					{
+//						noteState |= STATE_BACKWARD_COVER_ENTERANCE;
+//						initEteranceSensor();
+//					}
+//					gb_needStopMotor = 1;
+//					//开盖或堵币 切到堵币状态 堵币状态下扫描全部红外无遮挡 就恢复normal
+//				}
+//			}	
 			if(g_maxMpFromPs2ToLeave > 0)
 			{
 				g_maxMpFromPs2ToLeave --;
 				if(g_maxMpFromPs2ToLeave == 0)
 				{
-
-					gb_needStopMotor = 1;			
+					gb_needStopMotor = 1;					
 				}
 			}
 			if(g_maxMpFromComputeToPS1 > 0)

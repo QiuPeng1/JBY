@@ -362,8 +362,8 @@ u16 lastFsOnVal = 0xff;
 enum
 {
 //	ENTERANCE_HAVENOTE_THRES = 100,
-	SCAN_ENTERGATE_TIME = 10,			//扫描进钞口的时间间隔
-	MIN_HAVEMONEY_PULSENUM_COUNT = 30,//进钞口有纸币的最少脉冲数（在扫描间隔期内）
+	SCAN_ENTERGATE_TIME = 8,//10,			//扫描进钞口的时间间隔
+	MIN_HAVEMONEY_PULSENUM_COUNT = 20,//30,//进钞口有纸币的最少脉冲数（在扫描间隔期内）
 	ENTERANCE_HAVENOTE_THRES = 60,
 	ENTERANCE_HAVENOTE_CHAZHI = 20,//50
 	TONGDAO_HAVENOTE_THRES = 200,
@@ -955,6 +955,13 @@ u8 gb_lcdBacklightOn = 1;
 #define TURN_OFF_LCD_BACKLIGHT_TIME 60
 u16 lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
 
+//u8 gb_notebackInEnteranceFlag = 0;
+#ifdef DEBUG_MODE
+u8 testflag[40];
+u8 testflag2[40];
+u8 testflag2Cnt;
+#endif
+u8 uart3toPCdebug[40];
 u16 gb_needOutPutLength;
 u32 noteNum = 0;
 u32 noteSum = 0;

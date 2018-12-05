@@ -41,6 +41,12 @@ v1.0.0 20181201 1、修改版本号为3位显示
 v1.0.1 20181201 1、增加鉴伪切换功能。500ms保存
 				2、增加U盘配置面额
 				3、一分钟息屏，点钞时亮屏
+v1.0.2 20181202 1、修改连续进钞逻辑BUG		
+v1.0.3 20181203 1、修改连续进钞逻辑BUG		
+				2、减少采集单次数据
+V1.C.J 20181204 1、采集中文版
+V1.0.4 20181205 1、更新新算法
+
 ****************************************************************************/
 
 /*防止重复引用 */
@@ -75,11 +81,12 @@ enum
 
 #define REAL_IR_NUM 21
 #define BOOT_APP
+//#define DEBUG_MODE
 #define LENGTH_HAVENOTE_VALUE_THRES 10
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V1.0.1"
+#define VERSION  "V1.0.4"
 
 
 typedef enum

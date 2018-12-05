@@ -66,7 +66,7 @@ u8 pImg3[50*3*100];
 u8 billRGB_Judge(int noteType)
 {
 	s16 i, j, m;
-	int r, g, b, t, t0, t1;
+	int r, g, b, t0, t1;
 	int min_i;
 
 	double fvt, tt, max_t;
@@ -292,8 +292,8 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 
 u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 {
-	int i, j, k, m, sum, count, count1;
-	short sx, ex, sw, sh, iradVal, sy, ey;
+	int i, j, k, sum, count, count1;
+	short sx, ex, sw, sh, sy, ey;
 
 
 	u8 *pImg;
@@ -314,7 +314,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 
 
 #ifdef DRAW_STATE
-	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
+	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 100, 20, 1);
 #endif
 
 	memset(projH, 0, sizeof(int)*IR_DATA_MAX_LEN);
@@ -460,7 +460,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	if (sh == 0)
 	{
 		billIradMask = 1;
-		return;
+		return 0;
 	}
 	sw = k/sh;
 	iradImgW = sw;
@@ -642,14 +642,7 @@ u8 billMG_Judge(int noteType)
 			}
 		}
 	}
-//	FilterGaussian_1D_Int(mgData[0], mgDataLen, 1);
-	//	FilterAverage_1(mgData[0], mgDataLen, mgData_tmp);
-//	Display_Proj_BYTE(mgData[0], mgDataLen, 0, 255*2, 1, 0);
-	
-	
-	//	FilterAverage_1(mgData[1], mgDataLen, mgData_tmp);
-//	FilterGaussian_1D_Int(mgData[1], mgDataLen, 1);
-//	Display_Proj_BYTE(mgData[1], mgDataLen, 0, 255*3, 1, 0);
+	return 0;
 }
 
 

@@ -198,7 +198,18 @@ void OutputALLDetailData2(void)
 		buffer[2+j*2] = HighByte(g_lengthSampleIndex);
 		buffer[2+j*2+1] = LowByte(g_lengthSampleIndex);
 	}
-	uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+	//uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+	uart_SendDataToUart3(buffer,18);
+		//等待串口发送完毕
+	while(uart3outfifo_count> 0)
+	{
+	}
+	uart_SendDataToUart3(buffer+18,18);
+		//等待串口发送完毕
+	while(uart3outfifo_count> 0)
+	{
+	}
+	uart_SendDataToUart3(buffer+(18*2),LENGTH_IR_CHANNEL_NUM*2+3-(18*2));
 	//等待串口发送完毕
 	while(uart3outfifo_count> 0)
 	{
@@ -212,7 +223,18 @@ void OutputALLDetailData2(void)
 			buffer[2+j*2] = HighByte(lengthData[j][i]);
 			buffer[2+j*2+1] = LowByte(lengthData[j][i]);
 		}
-		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+		//uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+		uart_SendDataToUart3(buffer,18);
+			//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+		uart_SendDataToUart3(buffer+18,18);
+			//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+		uart_SendDataToUart3(buffer+(18*2),LENGTH_IR_CHANNEL_NUM*2+3-(18*2));
 		//等待串口发送完毕
 		while(uart3outfifo_count> 0)
 		{
@@ -246,8 +268,19 @@ void OutputALLDetailData2(void)
 		{		
 		}
 	}
-	uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+	//uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+	uart_SendDataToUart3(buffer,18);
 		//等待串口发送完毕
+	while(uart3outfifo_count> 0)
+	{
+	}
+	uart_SendDataToUart3(buffer+18,18);
+		//等待串口发送完毕
+	while(uart3outfifo_count> 0)
+	{
+	}
+	uart_SendDataToUart3(buffer+(18*2),LENGTH_IR_CHANNEL_NUM*2+3-(18*2));
+	//等待串口发送完毕
 	while(uart3outfifo_count> 0)
 	{
 	}
@@ -282,7 +315,18 @@ void OutputALLDetailData2(void)
 				}					
 			}
 		}
-		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+		//uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+		uart_SendDataToUart3(buffer,18);
+			//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+		uart_SendDataToUart3(buffer+18,18);
+			//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+		uart_SendDataToUart3(buffer+(18*2),LENGTH_IR_CHANNEL_NUM*2+3-(18*2));
 		//等待串口发送完毕
 		while(uart3outfifo_count> 0)
 		{
@@ -295,8 +339,18 @@ void OutputALLDetailData2(void)
 		{
 			buffer[2+j] = 0xff;
 		}
-		uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
-
+		//uart_SendDataToUart3(buffer,LENGTH_IR_CHANNEL_NUM*2+3);
+		uart_SendDataToUart3(buffer,18);
+			//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+		uart_SendDataToUart3(buffer+18,18);
+			//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+		uart_SendDataToUart3(buffer+(18*2),LENGTH_IR_CHANNEL_NUM*2+3-(18*2));
 		//等待串口发送完毕
 		while(uart3outfifo_count> 0)
 		{
@@ -487,7 +541,7 @@ void OutPutPsHWRecordData(void)
 		{
 			buffer[3] = 0;
 		}
-		if (i <= gb_needOutPutLength)
+		if (i <= 500)//gb_needOutPutLength)
 		{
 			buffer[4] = PS1ValueRecord[i];
 			buffer[5] = PS2ValueRecord[i];
