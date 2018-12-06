@@ -54,14 +54,42 @@ void DealKeyDown(void)
 				DealKeyDownOnMenu1(key);
 				break;
 			case ENG_MODE:
-				//DealKeyDownOnEngMode(key);
+				DealKeyDownOnEngMode(key);
 				break;
 		}
 		//disp_num(key,0,0);
 //		LCD_DispNum(0,0,WHITE,BLACK,key,24);
 	}
 }
-
+void DealKeyDownOnEngMode(u8 key)
+{
+	switch(key)
+	{
+		case KEY_RESTART:
+			//关传感器
+			redFs_Off();
+			greenFs_Off();
+			blueFs_Off();
+			g_colorFsRGB = FS_OFF;
+			noteState = 0;
+			gb_noteState = 0;
+			SetSystemState(NORMAL);
+			ClearAllNoteNum();
+			DispMainMenu();
+		break;
+		case KEY_CUR:	
+			//ENGParaInc();
+		break;
+		case KEY_FUN:
+			lastSelectedItemIndex = selectedItemIndex;
+			selectedItemIndex ++;
+			selectedItemIndex %= 8;
+			//DispSettingSelected();
+		break;
+		case LONG_KEY_FUN:
+			break;
+	}
+}
 void DealKeyDownOnMenu1(u8 key)
 {
 	switch(key)
@@ -1537,6 +1565,16 @@ void DispColorCalibration(void)
 		}
 	}	
 }
+
+void DispEngMode(void)
+{
+	disp_clearScreen(BLACK);
+	disp_setPenColor(WHITE);
+	disp_setBackColor(BLACK);
+	disp_setFont(16);
+	
+
+}
 #define SETTING_X 180
 #define SETTING_Y 0
 #define SETTING_H 30
@@ -1550,11 +1588,10 @@ void DispMenu1(void)
 	disp_string("Beep         :",0,SETTING_Y);
 	disp_string("NoteLeave    :",0,SETTING_Y+SETTING_H);
 	disp_string("ErrDataOutput:",0,SETTING_Y+SETTING_H*2);
-	disp_string("MotorForward :",0,SETTING_Y+SETTING_H*3);
-	disp_string("MotorBackward:",0,SETTING_Y+SETTING_H*4);
-	disp_string("CoCalibration:",0,SETTING_Y+SETTING_H*5);
-	disp_string("IRCalibration:",0,SETTING_Y+SETTING_H*6);
-	disp_string("Upgrade      :",0,SETTING_Y+SETTING_H*7);
+	disp_string("CoCalibration:",0,SETTING_Y+SETTING_H*3);
+	disp_string("IRCalibration:",0,SETTING_Y+SETTING_H*4);
+	disp_string("ENGMODE      :",0,SETTING_Y+SETTING_H*5);
+	disp_string("Upgrade      :",0,SETTING_Y+SETTING_H*6);
 	disp_string(VERSION,320-72,240-24);
 	DispSetting();
 	DispSettingSelected();
@@ -1591,15 +1628,14 @@ void DispSetting(void)
 	x = SETTING_X;
 	y = SETTING_Y+SETTING_H*2;
 	disp_string(ONOFF_STR[gb_needOutPutErrData],x,y);
-
 	
 	x = SETTING_X;
 	y = SETTING_Y+SETTING_H*3;
-	disp_string(ONOFF_STR[gb_motorState1],x,y);
-
+	disp_string("Enter",x,y);
+	
 	x = SETTING_X;
 	y = SETTING_Y+SETTING_H*4;
-	disp_string(ONOFF_STR[gb_motorState2],x,y);
+	disp_string("Enter",x,y);
 	
 	x = SETTING_X;
 	y = SETTING_Y+SETTING_H*5;
@@ -1607,10 +1643,6 @@ void DispSetting(void)
 	
 	x = SETTING_X;
 	y = SETTING_Y+SETTING_H*6;
-	disp_string("Enter",x,y);
-	
-	x = SETTING_X;
-	y = SETTING_Y+SETTING_H*7;
 	disp_string("Enter",x,y);
 
 }
@@ -1642,12 +1674,12 @@ void DispSettingSelected(void)
 		case 3:
 			x = SETTING_X;
 			y = SETTING_Y+SETTING_H*3;
-			disp_string(ONOFF_STR[gb_motorState1],x,y);
+			disp_string("Enter",x,y);
 			break;
 		case 4:
 			x = SETTING_X;
 			y = SETTING_Y+SETTING_H*4;
-			disp_string(ONOFF_STR[gb_motorState2],x,y);
+			disp_string("Enter",x,y);
 			break;
 		case 5:
 			x = SETTING_X;
@@ -1657,11 +1689,6 @@ void DispSettingSelected(void)
 		case 6:
 			x = SETTING_X;
 			y = SETTING_Y+SETTING_H*6;
-			disp_string("Enter",x,y);
-			break;
-		case 7:
-			x = SETTING_X;
-			y = SETTING_Y+SETTING_H*7;
 			disp_string("Enter",x,y);
 			break;
 		default:
@@ -1694,12 +1721,12 @@ void DispSettingSelected(void)
 		case 3:
 			x = SETTING_X;
 			y = SETTING_Y+SETTING_H*3;
-			disp_string(ONOFF_STR[gb_motorState1],x,y);
+			disp_string("Enter",x,y);
 			break;
 		case 4:
 			x = SETTING_X;
 			y = SETTING_Y+SETTING_H*4;
-			disp_string(ONOFF_STR[gb_motorState2],x,y);
+			disp_string("Enter",x,y);
 			break;
 		case 5:
 			x = SETTING_X;
@@ -1709,11 +1736,6 @@ void DispSettingSelected(void)
 		case 6:
 			x = SETTING_X;
 			y = SETTING_Y+SETTING_H*6;
-			disp_string("Enter",x,y);
-			break;
-		case 7:
-			x = SETTING_X;
-			y = SETTING_Y+SETTING_H*7;
 			disp_string("Enter",x,y);
 			break;
 		default:
@@ -5162,7 +5184,7 @@ void SysTick_Handler(void)
 		}
 	}
 
-	if((gb_enableSample == 1)&&(systemState != SENSOR_VIEW)&&(gb_needScanEteranceSensor == 1))
+	if((gb_enableSample == 1)&&(systemState == NORMAL)&&(gb_needScanEteranceSensor == 1))
 	{
 		//检测进钞接收
 		//开灯无钞为低值 开灯有钞为高值 关灯为低值

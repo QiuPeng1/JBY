@@ -1149,6 +1149,8 @@ void updataCurrencySwitch(void);
 void GetOpenCurrency(void);
 void ChangeCurrency(void);
 void DispCurrency(void);
+void DispEngMode(void);
+void DealKeyDownOnEngMode(u8 key);
 // void InitIrData(void);
 // void DealIr2Data(u8 d);
 // void DealIr3Data(u8 d);
