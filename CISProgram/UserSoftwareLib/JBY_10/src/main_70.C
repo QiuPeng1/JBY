@@ -34,7 +34,7 @@ void DealKeyDown(void)
 	if(fifo_GetCount(KB_FIFO) > 0)
 	{
 		key = fifo_DataOut(KB_FIFO);
-		if(g_motor1State != MOTOR_STOP)
+		if((g_motor1State != MOTOR_STOP)&&(systemState != ENG_MODE))
 		{
 			return;
 		}
@@ -71,6 +71,13 @@ void DealKeyDownOnEngMode(u8 key)
 			greenFs_Off();
 			blueFs_Off();
 			g_colorFsRGB = FS_OFF;
+			//开启红外灯
+			//开始采样停止电机转动
+			hwfs_On();
+			jckfs_On();
+			motor1_Stop();
+			gb_enableSample = 1;
+			
 			noteState = 0;
 			gb_noteState = 0;
 			SetSystemState(NORMAL);
@@ -78,13 +85,14 @@ void DealKeyDownOnEngMode(u8 key)
 			DispMainMenu();
 		break;
 		case KEY_CUR:	
-			//ENGParaInc();
+			EngModeParaInc();
+			DispEngModeSettingSelected();
 		break;
 		case KEY_FUN:
 			lastSelectedItemIndex = selectedItemIndex;
 			selectedItemIndex ++;
-			selectedItemIndex %= 8;
-			//DispSettingSelected();
+			selectedItemIndex %= 7;
+			DispEngModeSettingSelected();
 		break;
 		case LONG_KEY_FUN:
 			break;
@@ -108,7 +116,7 @@ void DealKeyDownOnMenu1(u8 key)
 		break;
 		case KEY_CUR:	
 			SettingParaInc();
-			if(gb_incalibrationByKey == 0)
+			if((gb_incalibrationByKey == 0)&&(systemState == MENU1))
 			{
 				DispSettingSelected();	
 			}
@@ -117,7 +125,7 @@ void DealKeyDownOnMenu1(u8 key)
 		case KEY_FUN:
 			lastSelectedItemIndex = selectedItemIndex;
 			selectedItemIndex ++;
-			selectedItemIndex %= 8;
+			selectedItemIndex %= 7;
 			DispSettingSelected();
 			if(gb_haveErrUdiskInforDisp == 1)
 			{
@@ -1566,6 +1574,29 @@ void DispColorCalibration(void)
 	}	
 }
 
+u8 * const ONOFF_STR[] = 
+{
+	"OFF",
+	"ON ",
+	"ALL",
+};
+u8 * const Direction_STR[] = 
+{
+	"Forward ",
+	"Backward",
+	"OFF     ",
+};
+u8 * const Color_STR[] = 
+{
+	"R  ",
+	"G  ",
+	"B  ",
+	"OFF",
+};
+#define ENGMODE_X 180
+#define ENGMODE_Y 0
+#define ENGMODE_W 8
+#define ENGMODE_H 20
 void DispEngMode(void)
 {
 	disp_clearScreen(BLACK);
@@ -1573,8 +1604,222 @@ void DispEngMode(void)
 	disp_setBackColor(BLACK);
 	disp_setFont(16);
 	
-
+	disp_string("EN",0,0);
+	disp_string("PS1",ENGMODE_W*12,0);
+	disp_string("PS2",ENGMODE_W*25,0);
+	disp_string("RGB",0,ENGMODE_H);
+	disp_string("IR",0,ENGMODE_H*4);
+	disp_string("MG",0,ENGMODE_H*9);
+	disp_string("UV",ENGMODE_W*13,ENGMODE_H*9);
+	disp_string("MOTOR",0,ENGMODE_H*10);
+	SampleOneRow();
+	DispEngModeValue();
+	DispEngModeSetting();
+	DispEngModeSettingSelected();
 }
+void DispEngModeValue(void)
+{
+	u8 i;
+	disp_setPenColor(WHITE);
+	disp_setBackColor(BLACK);
+	disp_setFont(16);
+
+	U8ToStr(enteranceSensorVal,dispStr);
+	disp_string(dispStr,ENGMODE_W*7,0);
+
+	U8ToStr(tdjsValue[0],dispStr);
+	disp_string(dispStr,ENGMODE_W*20,0);
+
+	U8ToStr(tdjsValue[1],dispStr);
+	disp_string(dispStr,ENGMODE_W*33,0);
+
+	//RGB
+	U8ToStr(colorRGB[0][0],dispStr);
+	disp_string(dispStr,ENGMODE_W*8,ENGMODE_H);
+	
+	U8ToStr(colorRGB[0][1],dispStr);
+	disp_string(dispStr,ENGMODE_W*12,ENGMODE_H);
+	
+	U8ToStr(colorRGB[0][2],dispStr);
+	disp_string(dispStr,ENGMODE_W*16,ENGMODE_H);
+	
+	U8ToStr(colorRGB[1][0],dispStr);
+	disp_string(dispStr,ENGMODE_W*20,ENGMODE_H);
+	
+	U8ToStr(colorRGB[1][1],dispStr);
+	disp_string(dispStr,ENGMODE_W*24,ENGMODE_H);
+	
+	U8ToStr(colorRGB[1][2],dispStr);
+	disp_string(dispStr,ENGMODE_W*28,ENGMODE_H);
+	
+	U8ToStr(colorRGB[2][0],dispStr);
+	disp_string(dispStr,ENGMODE_W*8,ENGMODE_H*2);
+	
+	U8ToStr(colorRGB[2][1],dispStr);
+	disp_string(dispStr,ENGMODE_W*12,ENGMODE_H*2);
+	
+	U8ToStr(colorRGB[2][2],dispStr);
+	disp_string(dispStr,ENGMODE_W*16,ENGMODE_H*2);
+	
+	U8ToStr(colorRGB[3][0],dispStr);
+	disp_string(dispStr,ENGMODE_W*20,ENGMODE_H*2);
+	
+	U8ToStr(colorRGB[3][1],dispStr);
+	disp_string(dispStr,ENGMODE_W*24,ENGMODE_H*2);
+	
+	U8ToStr(colorRGB[3][2],dispStr);
+	disp_string(dispStr,ENGMODE_W*28,ENGMODE_H*2);
+	//IR
+	for(i=0;i<7;i++)
+	{
+		U8ToStr(irValue[i],dispStr);
+		disp_string(dispStr,ENGMODE_W*(8+4*i),ENGMODE_H*4);
+		
+		U8ToStr(irValue[i+7],dispStr);
+		disp_string(dispStr,ENGMODE_W*(8+4*i),ENGMODE_H*5);
+		
+		U8ToStr(irValue[i+14],dispStr);
+		disp_string(dispStr,ENGMODE_W*(8+4*i),ENGMODE_H*6);
+	}
+	U8ToStr(mrValue[0],dispStr);
+	disp_string(dispStr,ENGMODE_W*3,ENGMODE_H*9);
+	U8ToStr(mrValue[1],dispStr);
+	disp_string(dispStr,ENGMODE_W*7,ENGMODE_H*9);
+	U8ToStr(UvValue,dispStr);
+	disp_string(dispStr,ENGMODE_W*20,ENGMODE_H*9);
+}
+void DispEngModeSetting(void)
+{
+	u16 x,y;
+	disp_setPenColor(WHITE);
+	disp_setBackColor(BLACK);
+	disp_setFont(16);	
+	
+	x = ENGMODE_W*3;
+	y = 0;
+	disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+
+	x = ENGMODE_W*16;
+	y = 0;
+	disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+
+	x = ENGMODE_W*29;
+	y = 0;
+	disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+	
+	x = ENGMODE_W*4;
+	y = ENGMODE_H;
+	disp_string(Color_STR[g_colorFsRGB],x,y);
+
+	x = ENGMODE_W*4;
+	y = ENGMODE_H*4;
+	disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+
+	x = ENGMODE_W*16;
+	y = ENGMODE_H*9;
+	disp_string(ONOFF_STR[gb_uvVccIsOn],x,y);
+	
+	x = ENGMODE_W*6;
+	y = ENGMODE_H*10;
+	disp_string(Direction_STR[g_motorRunState],x,y);
+}
+
+void DispEngModeSettingSelected(void)
+{
+	u16 x,y;
+	disp_setPenColor(BLACK);
+	disp_setBackColor(WHITE);
+	disp_setFont(16);
+
+	switch(selectedItemIndex)
+	{
+		case 0:
+			x = ENGMODE_W*3;
+			y = 0;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 1:
+			x = ENGMODE_W*16;
+			y = 0;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 2:
+			x = ENGMODE_W*29;
+			y = 0;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 3:
+			x = ENGMODE_W*4;
+			y = ENGMODE_H;
+			disp_string(Color_STR[g_colorFsRGB],x,y);
+			break;
+		case 4:
+			x = ENGMODE_W*4;
+			y = ENGMODE_H*4;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 5:
+			x = ENGMODE_W*16;
+			y = ENGMODE_H*9;
+			disp_string(ONOFF_STR[gb_uvVccIsOn],x,y);
+			break;
+		case 6:
+			x = ENGMODE_W*6;
+			y = ENGMODE_H*10;
+			disp_string(Direction_STR[g_motorRunState],x,y);
+			break;
+		default:
+			break;						
+	}
+	
+	if(lastSelectedItemIndex == selectedItemIndex)
+	{
+		return;
+	}
+	disp_setPenColor(WHITE);
+	disp_setBackColor(BLACK);	
+	switch(lastSelectedItemIndex)
+	{
+		case 0:
+			x = ENGMODE_W*3;
+			y = 0;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 1:
+			x = ENGMODE_W*16;
+			y = 0;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 2:
+			x = ENGMODE_W*29;
+			y = 0;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 3:
+			x = ENGMODE_W*4;
+			y = ENGMODE_H;
+			disp_string(Color_STR[g_colorFsRGB],x,y);
+			break;
+		case 4:
+			x = ENGMODE_W*4;
+			y = ENGMODE_H*4;
+			disp_string(ONOFF_STR[gb_hwVccIsOn],x,y);
+			break;
+		case 5:
+			x = ENGMODE_W*16;
+			y = ENGMODE_H*9;
+			disp_string(ONOFF_STR[gb_uvVccIsOn],x,y);
+			break;
+		case 6:
+			x = ENGMODE_W*6;
+			y = ENGMODE_H*10;
+			disp_string(Direction_STR[g_motorRunState],x,y);
+			break;
+		default:
+			break;								
+	}
+}
+
 #define SETTING_X 180
 #define SETTING_Y 0
 #define SETTING_H 30
@@ -1590,25 +1835,12 @@ void DispMenu1(void)
 	disp_string("ErrDataOutput:",0,SETTING_Y+SETTING_H*2);
 	disp_string("CoCalibration:",0,SETTING_Y+SETTING_H*3);
 	disp_string("IRCalibration:",0,SETTING_Y+SETTING_H*4);
-	disp_string("ENGMODE      :",0,SETTING_Y+SETTING_H*5);
+	disp_string("EngMode      :",0,SETTING_Y+SETTING_H*5);
 	disp_string("Upgrade      :",0,SETTING_Y+SETTING_H*6);
 	disp_string(VERSION,320-72,240-24);
 	DispSetting();
 	DispSettingSelected();
 }
-
-
-u8 * const ONOFF_STR[] = 
-{
-	"OFF",
-	"ON ",
-	"ALL",
-};
-u8 * const Direction_STR[] = 
-{
-	"Forward ",
-	"Backward",
-};
 
 void DispSetting(void)
 {
@@ -1743,6 +1975,87 @@ void DispSettingSelected(void)
 	}
 }
 
+void EngModeParaInc(void)
+{
+	u8 i,r;
+	switch(selectedItemIndex)
+	{
+		case 0:
+		case 1:
+		case 2:
+		case 4:		
+			if(gb_hwVccIsOn == 1)
+			{
+				hwfs_Off();
+			}
+			else
+			{
+				hwfs_On();
+			}
+		break;
+		case 3:
+			if(g_colorFsRGB == FS_BLUE)
+			{
+				redFs_On();
+				greenFs_Off();
+				blueFs_Off();
+				//g_colorFsRGB = FS_RED;
+			}
+			else if(g_colorFsRGB == FS_RED)
+			{
+				redFs_Off();
+				greenFs_On();
+				blueFs_Off();
+				//g_colorFsRGB = FS_GREEN;
+			}
+			else if(g_colorFsRGB == FS_GREEN)
+			{
+				redFs_Off();
+				greenFs_Off();
+				blueFs_Off();
+				g_colorFsRGB = FS_OFF;
+				//g_colorFsRGB = FS_BLUE;
+			}	
+			else
+			{
+				redFs_Off();
+				greenFs_Off();
+				blueFs_On();					
+			}
+		break;
+		case 5://UV
+			if(gb_uvVccIsOn == 1)
+			{
+				uvfs_Off();
+			}
+			else
+			{
+				uvfs_On();
+			}
+		break;
+		case 6://MOTOR
+			if(g_motorRunState == 0)
+			{
+				motor1_BackwardRun();
+				g_motorRunState = 1;
+			}
+			else if(g_motorRunState == 2)
+			{
+				motor1_ForwardRun();
+				g_motorRunState = 0;
+			}
+			else
+			{
+				motor1_Stop();
+				g_motorRunState = 2;
+			}
+		break;
+		default:
+			break;						
+	}
+	
+}
+
 void SettingParaInc(void)
 {
 	u8 i,r;
@@ -1805,6 +2118,10 @@ void SettingParaInc(void)
 		case 5://工程师模式
 			selectedItemIndex = 0;
 			lastSelectedItemIndex = 0;
+			//停止自动采集
+			motor1_Stop();
+			gb_enableSample = 0;
+			g_motorRunState = 2;
 			SetSystemState(ENG_MODE);
 			DispEngMode();
 		break;
@@ -1967,6 +2284,10 @@ void DispAutoRefreshMenu(void)//1秒钟显示一些需要自动刷新的界面
 				SampleOneRow();
 				DispSensorViewMenu();
 				break;
+			case ENG_MODE:
+				SampleOneRow();
+				DispEngModeValue();
+			break;
 			case LAO_HUA:
 /*				if(gb_inLaoHua == 1)
 				{
@@ -6119,11 +6440,8 @@ void TIM2_IRQHandler(void)
  		if(scanMotorTimer >= SCAN_MOTOR_TIME)
  		{
  			scanMotorTimer = 0;
-			
-	
-			
 			//大电机调速
-			if ((g_motor1State == MOTOR_FORWARD_RUN)||(g_motor1State == MOTOR_BACKWARD_RUN))
+			if (((g_motor1State == MOTOR_FORWARD_RUN)||(g_motor1State == MOTOR_BACKWARD_RUN))&&(systemState == NORMAL))
 			{
 				if(csmpNumCnt < 100)
 				{

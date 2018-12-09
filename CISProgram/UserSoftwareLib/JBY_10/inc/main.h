@@ -62,7 +62,7 @@
 #define HW_FS_GPIO_MODE              GPIO_Mode_Out_PP
 bit gb_hwVccIsOn;
 #define hwfs_On() 			GPIO_SetBits(HW_FS_GPIO_PORT, HW_FS_GPIO_PIN);gb_hwVccIsOn=1
-#define hwfs_Off() 		GPIO_ResetBits(HW_FS_GPIO_PORT, HW_FS_GPIO_PIN);gb_hwVccIsOn=0
+#define hwfs_Off() 			GPIO_ResetBits(HW_FS_GPIO_PORT, HW_FS_GPIO_PIN);gb_hwVccIsOn=0
 
 #define UV_FS_GPIO_PORT              GPIOB
 #define UV_FS_GPIO_PIN               GPIO_Pin_4
@@ -167,6 +167,7 @@ u8 g_colorFsRGB = FS_OFF;
 #define C_LOW() GPIO_ResetBits(C_GPIO_PORT, C_GPIO_PIN)
 
 u8 chanelIndexOf4051 = 0;
+u8 g_motorRunState = 0;
 
 u8 g_colorFsStopWork = 0;
 u8 gb_needStopMotorTimeout = 0;
@@ -1151,6 +1152,10 @@ void ChangeCurrency(void);
 void DispCurrency(void);
 void DispEngMode(void);
 void DealKeyDownOnEngMode(u8 key);
+void DispEngModeSettingSelected(void);
+void DispEngModeSetting(void);
+void DispEngModeValue(void);
+void EngModeParaInc(void);
 // void InitIrData(void);
 // void DealIr2Data(u8 d);
 // void DealIr3Data(u8 d);

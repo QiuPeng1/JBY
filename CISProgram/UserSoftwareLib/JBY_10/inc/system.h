@@ -86,7 +86,7 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21Â·²â³¤ 1Â·ÂëÅÌ
 
-#define VERSION  "V1.0.4"
+#define VERSION  "V1.0.7"
 
 
 typedef enum
