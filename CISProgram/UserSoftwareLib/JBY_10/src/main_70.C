@@ -407,7 +407,15 @@ int main(void)
 		#endif
 		if(g_motor1State == MOTOR_STOP)
 		{
-			USB_CheckReady();//
+			gb_usbState = readUsbFault();
+			if(gb_usbState == 1)
+			{
+				USB_CheckReady();//
+			}
+			else
+			{
+				Usben_Off();
+			}
 		}
 		
 		if(gb_oneSec == 1)
@@ -1042,6 +1050,7 @@ void DealScanEnteracneSensor(void)
 				testflag2Cnt = 0;
 #endif
 				hwfs_On();
+				uvfs_On();
 				redFs_On();
 				greenFs_Off();
 				blueFs_Off();
@@ -2948,6 +2957,7 @@ void DealNotePass(void)
 		gb_oneNotePass = 0;
 		//关传感器
 		hwfs_On();
+		uvfs_Off();
 		redFs_Off();
 		greenFs_Off();
 		blueFs_Off();
@@ -4218,6 +4228,7 @@ void DealJamAtOnce(void)
 	greenFs_Off();
 	blueFs_Off();
 	g_colorFsRGB = FS_OFF;
+	uvfs_Off();
 	motor1_Stop();
 	motor1StopRecord = 4;
 	if(gb_isJammed != JAM_ENTERANCE_TO_LENGTH)
@@ -5074,6 +5085,16 @@ void InitGpioInMain(void)
 //	GPIO_InitStructure.GPIO_Mode  = TEST_GPIO_MODE; 
 //	GPIO_Init(TEST_GPIO_PORT, &GPIO_InitStructure);
 //	test_Off();
+
+	//USB
+	GPIO_InitStructure.GPIO_Pin = USB_EN_GPIO_PIN;
+	GPIO_InitStructure.GPIO_Mode  = USB_EN_GPIO_MODE; 
+	GPIO_Init(USB_EN_GPIO_PORT, &GPIO_InitStructure);
+	Usben_On();
+	
+	GPIO_InitStructure.GPIO_Pin = USB_FAULT_GPIO_PIN;
+	GPIO_InitStructure.GPIO_Mode  = USB_FAULT_GPIO_MODE; 
+	GPIO_Init(USB_FAULT_GPIO_PORT, &GPIO_InitStructure);	
 	
 	//红外发射控制
 	GPIO_InitStructure.GPIO_Pin = HW_FS_GPIO_PIN;
@@ -5421,13 +5442,16 @@ void SysTick_Handler(void)
 		oneSecCnt = 0;	
 		gb_oneSec = 1;
 		gb_oneSecAutoRefresh = 1;
-		if(lcdBackLightOffCnt > 0)
+		if(systemState != ENG_MODE)
 		{
-			lcdBackLightOffCnt --;
-			if(lcdBackLightOffCnt == 0)
+			if(lcdBackLightOffCnt > 0)
 			{
-				disp_lcdBLC(0);
-				gb_lcdBacklightOn = 0;
+				lcdBackLightOffCnt --;
+				if(lcdBackLightOffCnt == 0)
+				{
+					disp_lcdBLC(0);
+					gb_lcdBacklightOn = 0;
+				}
 			}
 		}
 	}

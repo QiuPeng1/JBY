@@ -115,6 +115,19 @@ bit gb_jinChaoFaSheIsOn = 0;
 #define	KEY2_GPIO_MODE GPIO_Mode_IPU
 #define readkey2()  (GPIO_ReadInputDataBit(KEY2_GPIO_PORT, KEY2_GPIO_PIN))
 
+
+#define USB_EN_GPIO_PORT              GPIOC
+#define USB_EN_GPIO_PIN               GPIO_Pin_10
+#define USB_EN_GPIO_MODE              GPIO_Mode_Out_PP
+#define Usben_Off() GPIO_SetBits(USB_EN_GPIO_PORT, USB_EN_GPIO_PIN)
+#define Usben_On() GPIO_ResetBits(USB_EN_GPIO_PORT, USB_EN_GPIO_PIN)
+
+#define USB_FAULT_GPIO_PORT              GPIOB
+#define USB_FAULT_GPIO_PIN               GPIO_Pin_15
+#define USB_FAULT_GPIO_MODE              GPIO_Mode_IN_FLOATING
+#define readUsbFault()  (GPIO_ReadInputDataBit(USB_FAULT_GPIO_PORT, USB_FAULT_GPIO_PIN))
+
+u8 gb_usbState;
 //#define	TEST_GPIO_PORT GPIOC
 //#define	TEST_GPIO_PIN GPIO_Pin_6
 //#define	TEST_GPIO_MODE GPIO_Mode_Out_PP
@@ -493,7 +506,7 @@ enum
 	WORK_ADD,
 	WORK_NOADD,
 };
-u8 g_needAddValue = WORK_ADD;
+u8 g_needAddValue = WORK_NOADD;
 //u8 g_beepOn = 0;//1´ò¿ª0¹Ø±Õ
 u8 g_funDispChanger = 0;
 	

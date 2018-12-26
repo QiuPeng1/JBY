@@ -34,6 +34,7 @@
 #define BILL_INDEX_AED
 #define BILL_INDEX_GBP
 #define BILL_INDEX_ARS
+#define BILL_INDEX_IQD
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------

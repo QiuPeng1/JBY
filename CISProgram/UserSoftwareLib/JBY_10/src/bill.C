@@ -48,6 +48,7 @@
 #include "LW_ARS_ColorFvt.h"
 #endif
 /***********************************************/
+
 //#define DRAW_STATE
 //#define DRAW_STATE2
 
@@ -169,9 +170,9 @@ u8 billRGB_Judge(int noteType)
 #ifdef  BILL_INDEX_IQD
 	if (noteType == INDEX_IQD)
 	{
-		pNoteClass = g_IQD_noteClass;
+		pNoteClass = g_IQD_Color_noteClass;
 		pFvt = (int *)IQD_colorFvt_Int;
-		Class = IQD_NOTE_CLASS;
+		Class = IQD_COLOR_NOTE_CLASS;
 	}
 #endif
 #ifdef  BILL_INDEX_SAR
@@ -206,6 +207,7 @@ u8 billRGB_Judge(int noteType)
 		Class = ARS_NOTE_CLASS;
 	}
 #endif
+
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
@@ -544,6 +546,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		Class = ARS_NOTE_CLASS;
 	}
 #endif
+
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
