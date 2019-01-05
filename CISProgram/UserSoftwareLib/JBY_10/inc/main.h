@@ -881,6 +881,7 @@ enum
 	ERR_COLOR = 0x0004,
 	ERR_MG = 0x0008,
 	ERR_ALL= 0x0010,
+	ERR_UV = 0x0020,
 };
 enum
 {

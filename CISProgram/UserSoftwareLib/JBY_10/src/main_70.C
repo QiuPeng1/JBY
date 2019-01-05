@@ -2589,6 +2589,10 @@ void DealNoteType(void)
 			g_errFlag |= ERR_MG;
 		}
 	}
+	else if(billUVFvt == 1)
+	{
+		g_errFlag |= ERR_UV;
+	}
 	
 	if(g_errFlag == 0)
 	{
@@ -2986,6 +2990,10 @@ void DealNotePass(void)
 				g_timetest[2] = timeCnt;
 				billMG_Judge(g_currency);//0909¸ÄU16×¢ÊÍ
 				g_timetest[3] = timeCnt;
+				if(g_currency == INDEX_RUB)
+				{
+					billUV_Judge(g_currency);
+				}
 				delay_DelayMs(100);
 				//billRGB_Judge();
 				//colorJudgeValue //ÑÕÉ«Ãæ¶î
@@ -3037,6 +3045,10 @@ void DealNotePass(void)
 					{
 						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY3);
 					}			
+					else if(g_errFlag == ERR_UV)
+					{
+						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY5);
+					}
 					else
 					{
 						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY4);

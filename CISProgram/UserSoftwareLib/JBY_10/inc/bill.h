@@ -156,7 +156,7 @@ BILL_EXT_PARA u16 colorData_tmp[12][COLOR_DATA_RESIZE+8];
 
 BILL_EXT_PARA int colorFvtTotal[COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM];
 
-BILL_EXT_PARA int projH[900];
+BILL_EXT_PARA int projH[450];
 BILL_EXT_PARA u8 billIsFake;
 BILL_EXT_PARA u8 billValue;
 BILL_EXT_PARA u8 billFlag;
@@ -176,7 +176,7 @@ BILL_EXT_PARA u8 mgFvtFlag;
 BILL_EXT_PARA u16 iradImgW;
 BILL_EXT_PARA u16 iradImgH;
 //BILL_EXT_PARA I32 projH[IRAD_DATA_MAX_LEN];
-//BILL_EXT_PARA I32 projH1[IRAD_DATA_MAX_LEN];
+BILL_EXT_PARA I32 projH1[450];
 
 /*公开的过程/函数*/
 //---------------------------------------------------------------------
@@ -190,12 +190,10 @@ extern "C"
 
 BILL_EXT_FUNC u8 billRGB_Judge(int noteType);
 
-BILL_EXT_FUNC u8 billUV_Judge
-(
-	void		//参数含义
-);
+
 BILL_EXT_FUNC u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType);
 BILL_EXT_FUNC u8 billMG_Judge(int noteType);
+BILL_EXT_FUNC u8 billUV_Judge(int noteType);
 #ifdef __cplusplus
 }
 #endif

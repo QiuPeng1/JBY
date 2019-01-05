@@ -648,7 +648,102 @@ u8 billMG_Judge(int noteType)
 	return 0;
 }
 
+u8 billUV_Judge(int noteType)
+{
+	int i, Max0, Min0, Max1, Min1, pos0, pos1, t, count;
+	if (uvDataLen < 80)// || uvDataLen > 450)
+	{
+		billUVFvt = 1;
+		return 0;
+	}
 
+
+	if ( uvDataLen > 450)
+	{
+		uvDataLen = 450;
+		//return 0;
+	}
+
+	for(i = 0; i < uvDataLen; i++)
+	{
+		projH1[i] = uvData[i];
+	}
+
+	FilterAverage_2(projH1,uvDataLen);
+
+	for (i = 0; i < uvDataLen; i++)
+	{
+		projH[i] = projH1[i+1]-projH1[i];
+	}
+	
+
+	Max0 = 0;
+	Min0 = 255*10;
+	
+	Max1 = 0;
+	Min1 = 255*10;
+	pos0 = pos1 = 1;
+	for (i = 16; i < uvDataLen/3; i++)
+	{
+		if (Max0 < projH[i])
+		{
+			Max0 = projH[i];
+			pos0 = i;
+		}
+
+	
+	}
+
+	for (i = uvDataLen*2/3; i < uvDataLen -16; i++)
+	{
+		if (Max1 < projH[i])
+		{
+			Max1 = projH[i];
+			pos1 = i;
+		}
+		
+	}
+
+	count = 1;
+	t = 0;
+	for (i = pos0; i < pos1; i++)
+	{
+		t += projH1[i];
+		count++;
+	}
+	t /= count;
+
+	billUVFvt = 0;
+//	if (noteType = INDEX_RUB)
+	{
+		if (t > 25)
+		{
+			billUVFvt = 1;
+		}
+	}
+#ifdef DRAW_STATE2
+	Display_Proj(projH1,uvDataLen,400, 0, 0, 0);
+	Display_Proj(projH,uvDataLen,400, 100, 0, 0);
+	Display_Proj_BYTE(uvData, uvDataLen, 0, 0, 1, 0);
+	Draw_Line(pos0, 0, pos0, 255);
+	Draw_Line(pos1, 0, pos1, 255);
+//	Display_Proj_BYTE(mgData[1], mgDataLen, 0, 255, 1, 0);
+	Display_Int(t, 10, 10);
+	Display_Int(Max1-Min1, 10, 256);
+#endif
+	return 0;
+
+}
+
+void FilterAverage_2(I32 *data,I32 l)
+{
+	register I32 i;
+	
+	for (i = 2; i < l-2; i++)
+	{
+		data[i] = (data[i-2]+data[i-1]+data[i]+data[i+1]+data[i+2])/5;
+	}
+}
 
 void ResizeData(const u16 *pOldData,I32 len,u16 *pNewData, I32 newLen)
 {

@@ -39,4 +39,5 @@
 
 static void ResizeData(const u16 *pOldData,I32 len,u16 *pNewData, I32 newLen);
 static void ResizeCharImgGray(u8 *pOldImg,I32 oldImgW,I32 oldImgH, u8 *pNewImg, I32 newImgW,I32 newImgH);
+static void FilterAverage_2(I32 *data,I32 l);
 #endif
