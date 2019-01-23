@@ -104,7 +104,9 @@ typedef struct
 	u8 beepSwitch;
 	u8 noteLeaveRoads;
 	u8 identificationWays;
-	u8 reserve[62];
+	u8 uvGrade;
+	u8 uvWhiteValue;
+	u8 reserve[60];
 	u32 flag;
 }DATANEEDSAVED_T;
 

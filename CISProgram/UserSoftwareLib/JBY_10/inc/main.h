@@ -411,6 +411,20 @@ u8 PS3Flag = 0;
 u8 PS3FlagCnt = 0;
 u8 gb_haveNoteInPS3 = 0;
 
+enum
+{
+	ERROR_ENIR = 0x01,
+	ERROR_PSIR = 0x02,
+	ERROR_MP = 0x04,
+	ERROR_RGB1 = 0x08,
+	ERROR_RGB2 = 0x10,
+	ERROR_RGB3 = 0x20,
+	ERROR_RGB4 = 0x40,
+	ERROR_IR = 0x80,
+};
+u8 gb_selfcheckErrorState = 0;
+u16 gb_selfcheckErrorStateOverTime = 0;
+u8 gb_selfcheckErrorStateClearFlag = 0;
 
 u8 scanMotorTimer = 0; 
 
@@ -567,6 +581,7 @@ u8 g_funDispChanger = 0;
 
 #define ReadMp() (GPIO_ReadInputDataBit(MP_GPIO_PORT, MP_GPIO_PIN))
 #define MAX_RGB_VALUE 250
+#define MAX_UV_VALUE 200
 u16 mpCnt = 0;
 u16 lengthMpCnt = 0;
 u16 mpStartCnt = 0;
@@ -779,12 +794,6 @@ enum
 	MG_WAY = 0x04,
 	RGB_WAY = 0x08,
 	ALL_WAYS = 0x0F,
-	IR_UV_MG_WAYS = 0x07,
-	IR_UV_WAYS = 0x03,
-	IR_MG_WAYS = 0x05,
-	RGB_UV_MG_WAYS = 0x0E,
-	RGB_UV_WAYS = 0x0A,
-	RGB_MG_WAYS = 0x0C,
 	RGB_IR_WAYS = 0x09,
 	RGB_IR_UV_WAYS = 0x0B,
 	RGB_IR_MG_WAYS = 0x0D,
@@ -883,6 +892,8 @@ enum
 	ERR_ALL= 0x0010,
 	ERR_UV = 0x0020,
 };
+u16 gb_errflagOverTime = 0;
+u8 gb_errflagClearDisp = 0;
 enum
 {
 	INDEX_CHINESE,
@@ -969,7 +980,7 @@ u8 g_subStateOfNormal = NORMAL_DIAN_CHAO;
 u8 gb_lcdBacklightOn = 1;
 #define TURN_OFF_LCD_BACKLIGHT_TIME 60
 u16 lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
-
+u8 gb_uvTher[]={20,25,30,35,40,45,50,55,60,65,70};
 //u8 gb_notebackInEnteranceFlag = 0;
 #ifdef DEBUG_MODE
 u8 testflag[40];
@@ -1095,6 +1106,7 @@ void DealKeyDownOnDubiStop(u8 key);
 void DealKeyDownOnMenu11(u8 key);
 
 void DispIRCalibration(void);
+void DispUVCalibration(void);
 void DispColorCalibration(void);
 			
 void OutputSensorView(void);

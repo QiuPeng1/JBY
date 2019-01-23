@@ -406,6 +406,13 @@
 
 #define	BMP_CCUV	0x0031a448
 
+#define	BMP_CDAD		0x00336690
+#define	BMP_CFRGB		0x0035bed8
+#define	BMP_CGCIS		0x0035c600
+#define	BMP_CGDEN		0x00364d48
+#define	BMP_CGMG		0x0036d490
+#define	BMP_CGRGB		0x00375bd8
+#define	BMP_CGUV		0x0037e320
 /***************************************************************/
 
 //BMP_ADS   		320*240

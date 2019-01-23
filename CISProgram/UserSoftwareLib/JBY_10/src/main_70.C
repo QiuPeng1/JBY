@@ -56,6 +56,12 @@ void DealKeyDown(void)
 			case ENG_MODE:
 				DealKeyDownOnEngMode(key);
 				break;
+			case SELFCHECK:
+				if(key == KEY_RESTART)
+				{
+					gb_selfcheckErrorStateClearFlag = 1;
+				}
+				break;
 		}
 		//disp_num(key,0,0);
 //		LCD_DispNum(0,0,WHITE,BLACK,key,24);
@@ -81,6 +87,7 @@ void DealKeyDownOnEngMode(u8 key)
 			noteState = 0;
 			gb_noteState = 0;
 			SetSystemState(NORMAL);
+			eeprom_SaveData();
 			ClearAllNoteNum();
 			DispMainMenu();
 		break;
@@ -91,7 +98,7 @@ void DealKeyDownOnEngMode(u8 key)
 		case KEY_FUN:
 			lastSelectedItemIndex = selectedItemIndex;
 			selectedItemIndex ++;
-			selectedItemIndex %= 7;
+			selectedItemIndex %= 8;
 			DispEngModeSettingSelected();
 		break;
 		case LONG_KEY_FUN:
@@ -125,7 +132,7 @@ void DealKeyDownOnMenu1(u8 key)
 		case KEY_FUN:
 			lastSelectedItemIndex = selectedItemIndex;
 			selectedItemIndex ++;
-			selectedItemIndex %= 7;
+			selectedItemIndex %= 8;
 			DispSettingSelected();
 			if(gb_haveErrUdiskInforDisp == 1)
 			{
@@ -269,30 +276,6 @@ void modifiIdentificationWays(void)
 {
 	if(savedPara.identificationWays == ALL_WAYS)
 	{
-		savedPara.identificationWays = IR_UV_MG_WAYS;
-	}
-	else if(savedPara.identificationWays == IR_UV_MG_WAYS)
-	{
-		savedPara.identificationWays = IR_MG_WAYS;
-	}
-	else if(savedPara.identificationWays == IR_MG_WAYS)
-	{
-		savedPara.identificationWays = IR_UV_WAYS;
-	}
-	else if(savedPara.identificationWays == IR_UV_WAYS)
-	{
-		savedPara.identificationWays = RGB_UV_MG_WAYS;
-	}
-	else if(savedPara.identificationWays == RGB_UV_MG_WAYS)
-	{
-		savedPara.identificationWays = RGB_MG_WAYS;
-	}
-	else if(savedPara.identificationWays == RGB_MG_WAYS)
-	{
-		savedPara.identificationWays = RGB_UV_WAYS;
-	}	
-	else if(savedPara.identificationWays == RGB_UV_WAYS)
-	{
 		savedPara.identificationWays = RGB_IR_WAYS;
 	}
 	else if(savedPara.identificationWays == RGB_IR_WAYS)
@@ -304,14 +287,6 @@ void modifiIdentificationWays(void)
 		savedPara.identificationWays = RGB_IR_MG_WAYS;
 	}
 	else if(savedPara.identificationWays == RGB_IR_MG_WAYS)
-	{
-		savedPara.identificationWays = IR_WAY;
-	}
-	else if(savedPara.identificationWays == IR_WAY)
-	{
-		savedPara.identificationWays = RGB_WAY;
-	}	
-	else if(savedPara.identificationWays == RGB_WAY)
 	{
 		savedPara.identificationWays = ALL_WAYS;
 	}	
@@ -372,32 +347,37 @@ int main(void)
 	delay_DelayMs(500);
 	
 	UpdateDataFromSavedData();
+	SetSystemState(SELFCHECK);
 	SystemSelfcheck();
-	
-	entergatePulseNumCounter = 0 ;
-	gb_haveNoteInEntergate = 0;
-	gb_enableSampleFlag = 0;//0定时器采集，1码盘采集
-	
-	computeAdjustData();
-	memcpy(lengthIdleOriginValue,savedPara.adjustPara.irIdleStandard,REAL_IR_NUM);
-	
-	//hwfs_On();
-
-	//hwfs_Off();
-	//jckfs_On();
-	SetSystemState(NORMAL);
-	gb_enableSample = 1;
-	g_subStateOfNormal = NORMAL_DIAN_CHAO; 
-	ClearAllNoteNum();
-	DispMainMenu();
-	LongBeep(1);
-	//gb_enableSample = 1;
-	//
-	redFs_Off();
-	greenFs_Off();
-	blueFs_Off();
-	g_colorFsRGB = FS_OFF;
-	lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
+	if(gb_selfcheckErrorState > 0)
+	{
+		dispSelfcheckError(gb_selfcheckErrorState);
+		gb_selfcheckErrorStateOverTime = 5000;
+	}
+	else
+	{
+	SYS_NORMAL:
+		entergatePulseNumCounter = 0 ;
+		gb_haveNoteInEntergate = 0;
+		gb_enableSampleFlag = 0;//0定时器采集，1码盘采集
+		
+		computeAdjustData();
+		memcpy(lengthIdleOriginValue,savedPara.adjustPara.irIdleStandard,REAL_IR_NUM);
+		
+		SetSystemState(NORMAL);
+		gb_enableSample = 1;
+		g_subStateOfNormal = NORMAL_DIAN_CHAO; 
+		ClearAllNoteNum();
+		DispMainMenu();
+		LongBeep(1);
+		//gb_enableSample = 1;
+		//
+		redFs_Off();
+		greenFs_Off();
+		blueFs_Off();
+		g_colorFsRGB = FS_OFF;
+		lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
+	}
 //	g_colorFsStopWork = 1;
 	while (1)
 	{
@@ -405,6 +385,11 @@ int main(void)
 		#ifdef USE_IWDG
 		IWDG_ReloadCounter();
 		#endif
+		if(gb_selfcheckErrorStateClearFlag == 1)
+		{
+			gb_selfcheckErrorStateClearFlag = 0;
+			goto SYS_NORMAL;
+		}
 		if(g_motor1State == MOTOR_STOP)
 		{
 			gb_usbState = readUsbFault();
@@ -417,7 +402,7 @@ int main(void)
 				Usben_Off();
 			}
 		}
-		
+
 		if(gb_oneSec == 1)
 		{
 			gb_oneSec = 0;
@@ -557,7 +542,13 @@ int main(void)
 				ententernceCnt = 0;
 			}
 		}
-		
+		if(gb_errflagClearDisp == 1)
+		{
+			gb_errflagClearDisp = 0;
+			noteDenoValue = 0;
+			DispNoteSum();
+			//DispMainMenu();
+		}
 		DealScanEnteracneSensor();
 		//ScanKeyDown();
 		DispAutoRefreshMenu();
@@ -1040,7 +1031,13 @@ void DealScanEnteracneSensor(void)
 					disp_lcdBLC(60);	
 					gb_lcdBacklightOn = 1;
 				}
-
+				if(gb_errflagOverTime > 0)
+				{
+					gb_errflagOverTime = 0;
+					noteDenoValue = 0;
+					DispNoteSum();
+					//DispMainMenu();
+				}
 				lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;		
 				memset(mpCntRecode, 0, sizeof(mpCntRecode));
 				memset(msCntRecode, 0, sizeof(msCntRecode));
@@ -1347,12 +1344,13 @@ void DispIdentificationWays(void)
 	}
 	if((savedPara.identificationWays&RGB_WAY) == RGB_WAY)
 	{
-		disp_DrawPic(BMP_FCIS_X,BMP_FCIS_Y,BMP_AFCIS);
+		disp_DrawPic(BMP_FCIS_X,BMP_FUV_Y,BMP_CFRGB);
 	}
 	else
 	{
-		disp_DrawPic(BMP_FCIS_X,BMP_FCIS_Y,BMP_AFB);
+		disp_DrawPic(BMP_FCIS_X,BMP_FUV_Y,BMP_AFB);
 	}
+	disp_DrawPic(BMP_FCIS_X,BMP_FCIS_Y,BMP_AFCIS);
 
 }
 void DispMainMenuBackground(void)
@@ -1583,6 +1581,33 @@ void DispColorCalibration(void)
 	}	
 }
 
+#define UV_X 50
+void DispUVCalibration(void)
+{
+	u8 i; 
+	if(gb_incalibrationByKey == 1)
+	{	
+		disp_clearScreen(BLACK);
+		disp_setPenColor(WHITE);
+		disp_setBackColor(BLACK);
+		disp_setFont(24);
+
+		if(gb_inCollabration == COLLABRATION_UV)//开始校正
+		{
+
+			disp_string("Start UV Calibration",0,30);
+		}
+		else
+		{
+			disp_string("Finish UV Calibration",0,30);
+
+			U8ToStr(savedPara.uvWhiteValue,dispStr);
+			disp_string(dispStr,10+UV_X,60);
+			
+		}
+	}	
+}
+
 u8 * const ONOFF_STR[] = 
 {
 	"OFF",
@@ -1594,6 +1619,19 @@ u8 * const Direction_STR[] =
 	"Forward ",
 	"Backward",
 	"OFF     ",
+};
+u8 * const UVgrade_STR[] = 
+{
+	"UV0",
+	"UV1",
+	"UV2",
+	"UV3",
+	"UV4",
+	"UV5",
+	"UV6",
+	"UV7",
+	"UV8",
+	"UV9",	
 };
 u8 * const Color_STR[] = 
 {
@@ -1696,6 +1734,10 @@ void DispEngModeValue(void)
 	disp_string(dispStr,ENGMODE_W*7,ENGMODE_H*9);
 	U8ToStr(UvValue,dispStr);
 	disp_string(dispStr,ENGMODE_W*20,ENGMODE_H*9);
+	
+	//disp_string(UVgrade_STR[savedPara.uvGrade],ENGMODE_W*23,ENGMODE_H*9);
+	U8ToStr(gb_uvTher[savedPara.uvGrade],dispStr);
+	disp_string(dispStr,ENGMODE_W*27,ENGMODE_H*9);
 }
 void DispEngModeSetting(void)
 {
@@ -1727,6 +1769,10 @@ void DispEngModeSetting(void)
 	x = ENGMODE_W*16;
 	y = ENGMODE_H*9;
 	disp_string(ONOFF_STR[gb_uvVccIsOn],x,y);
+	
+	x = ENGMODE_W*24;
+	y = ENGMODE_H*9;
+	disp_string(UVgrade_STR[savedPara.uvGrade],x,y);
 	
 	x = ENGMODE_W*6;
 	y = ENGMODE_H*10;
@@ -1773,6 +1819,11 @@ void DispEngModeSettingSelected(void)
 			disp_string(ONOFF_STR[gb_uvVccIsOn],x,y);
 			break;
 		case 6:
+			x = ENGMODE_W*24;
+			y = ENGMODE_H*9;
+			disp_string(UVgrade_STR[savedPara.uvGrade],x,y);
+		break;
+		case 7:
 			x = ENGMODE_W*6;
 			y = ENGMODE_H*10;
 			disp_string(Direction_STR[g_motorRunState],x,y);
@@ -1820,6 +1871,11 @@ void DispEngModeSettingSelected(void)
 			disp_string(ONOFF_STR[gb_uvVccIsOn],x,y);
 			break;
 		case 6:
+			x = ENGMODE_W*24;
+			y = ENGMODE_H*9;
+			disp_string(UVgrade_STR[savedPara.uvGrade],x,y);
+		break;
+		case 7:
 			x = ENGMODE_W*6;
 			y = ENGMODE_H*10;
 			disp_string(Direction_STR[g_motorRunState],x,y);
@@ -1844,8 +1900,9 @@ void DispMenu1(void)
 	disp_string("ErrDataOutput:",0,SETTING_Y+SETTING_H*2);
 	disp_string("CoCalibration:",0,SETTING_Y+SETTING_H*3);
 	disp_string("IRCalibration:",0,SETTING_Y+SETTING_H*4);
-	disp_string("EngMode      :",0,SETTING_Y+SETTING_H*5);
-	disp_string("Upgrade      :",0,SETTING_Y+SETTING_H*6);
+	disp_string("UVCalibration:",0,SETTING_Y+SETTING_H*5);
+	disp_string("EngMode      :",0,SETTING_Y+SETTING_H*6);
+	disp_string("Upgrade      :",0,SETTING_Y+SETTING_H*7);
 	disp_string(VERSION,320-72,240-24);
 	DispSetting();
 	DispSettingSelected();
@@ -1886,6 +1943,9 @@ void DispSetting(void)
 	y = SETTING_Y+SETTING_H*6;
 	disp_string("Enter",x,y);
 
+	x = SETTING_X;
+	y = SETTING_Y+SETTING_H*7;
+	disp_string("Enter",x,y);
 }
 
 void DispSettingSelected(void)
@@ -1930,6 +1990,11 @@ void DispSettingSelected(void)
 		case 6:
 			x = SETTING_X;
 			y = SETTING_Y+SETTING_H*6;
+			disp_string("Enter",x,y);
+			break;
+		case 7:
+			x = SETTING_X;
+			y = SETTING_Y+SETTING_H*7;
 			disp_string("Enter",x,y);
 			break;
 		default:
@@ -1979,6 +2044,11 @@ void DispSettingSelected(void)
 			y = SETTING_Y+SETTING_H*6;
 			disp_string("Enter",x,y);
 			break;
+		case 7:
+			x = SETTING_X;
+			y = SETTING_Y+SETTING_H*7;
+			disp_string("Enter",x,y);
+			break;
 		default:
 			break;						
 	}
@@ -1996,10 +2066,12 @@ void EngModeParaInc(void)
 			if(gb_hwVccIsOn == 1)
 			{
 				hwfs_Off();
+				jckfs_Off();
 			}
 			else
 			{
 				hwfs_On();
+				jckfs_On();
 			}
 		break;
 		case 3:
@@ -2042,7 +2114,11 @@ void EngModeParaInc(void)
 				uvfs_On();
 			}
 		break;
-		case 6://MOTOR
+		case 6:
+			savedPara.uvGrade++;
+			savedPara.uvGrade %= 10;
+		break;
+		case 7://MOTOR
 			if(g_motorRunState == 0)
 			{
 				motor1_BackwardRun();
@@ -2124,7 +2200,16 @@ void SettingParaInc(void)
 			DispIRCalibration();
 			gb_irCalibrationDisp = 1;
 		break;
-		case 5://工程师模式
+		case 5:
+			SetSystemState(NORMAL);
+			gb_enableSample = 1;
+			delay_DelayMs(100);
+			gb_inCollabration = COLLABRATION_UV;
+			DispString("开始UV校正,放入白纸",1);
+			gb_incalibrationByKey = 1;
+			DispUVCalibration();
+		break;
+		case 6://工程师模式
 			selectedItemIndex = 0;
 			lastSelectedItemIndex = 0;
 			//停止自动采集
@@ -2134,7 +2219,7 @@ void SettingParaInc(void)
 			SetSystemState(ENG_MODE);
 			DispEngMode();
 		break;
-		case 6:
+		case 7:
 	#ifdef BOOT_APP
 			if(gb_udsikIsOnLine == 0)
 			{
@@ -2413,6 +2498,37 @@ void color_whiteStandard(void)
 	DispColorCalibration();
 	eeprom_SaveData();	
 }
+void uv_whiteStandard(void)
+{
+	u16 i, n;
+	u32 uvDataSum;
+	uvDataLen = g_uvSampleIndex;
+
+	uvDataSum = 0;
+	
+	n=0;
+	for(i=40; i<uvDataLen-40; i++)
+	{
+		n++;
+		uvDataSum += uvData[i];
+	}
+	if(n > 0)
+	{
+		savedPara.uvWhiteValue = uvDataSum/n;
+	}
+	else
+	{
+		savedPara.uvWhiteValue = 180;
+	}
+	dispStr[0] = ' ';
+	U8ToStr(savedPara.uvWhiteValue,dispStr+1);
+	DispString(dispStr,0);
+	
+	gb_inCollabration = COLLABRATION_OFF;
+	DispString("校正完成",1);
+	DispUVCalibration();
+	eeprom_SaveData();	
+}
 void lengthCollabrationProcess(void)
 {
 	u8 i;
@@ -2591,7 +2707,10 @@ void DealNoteType(void)
 	}
 	else if(billUVFvt == 1)
 	{
-		g_errFlag |= ERR_UV;
+		if((savedPara.identificationWays&UV_WAY) == UV_WAY)
+		{	
+			g_errFlag |= ERR_UV;
+		}
 	}
 	
 	if(g_errFlag == 0)
@@ -2602,7 +2721,14 @@ void DealNoteType(void)
 		}
 		else if((savedPara.identificationWays&RGB_WAY) == RGB_WAY)
 		{
-			gb_billValue = colorJudgeValue;
+			if(g_currency == INDEX_USD)
+			{
+				gb_billValue = billValue;
+			}
+			else
+			{
+				gb_billValue = colorJudgeValue;
+			}
 		}
 		else
 		{
@@ -2973,6 +3099,10 @@ void DealNotePass(void)
 			{
 				color_whiteStandard();
 			}
+			else if(gb_inCollabration == COLLABRATION_UV)
+			{
+				uv_whiteStandard();
+			}
 			else if(gb_inCollabration > 1)
 			{
 				//测长校正计算函数
@@ -2982,6 +3112,7 @@ void DealNotePass(void)
 			else
 			{
 				//计算函数
+				billUVFvt = 0;
 				delay_DelayMs(100);
 				g_timetest[0] = timeCnt;
 				billIrad_Judge(IRlengthBuffer,g_currency);//0909改U16注释
@@ -2990,26 +3121,10 @@ void DealNotePass(void)
 				g_timetest[2] = timeCnt;
 				billMG_Judge(g_currency);//0909改U16注释
 				g_timetest[3] = timeCnt;
-				if(g_currency == INDEX_RUB)
-				{
-					billUV_Judge(g_currency);
-				}
+
+				billUV_Judge(g_currency,gb_uvTher[savedPara.uvGrade]);
 				delay_DelayMs(100);
-				//billRGB_Judge();
-				//colorJudgeValue //颜色面额
-				//colorJudgeFlag  //颜色方向
-				//billValue       //红外面额
-				//billFlag		  //红外方向
-				//disp_setFont(FONT_16);
-				//disp_setPenColor(BLACK);  	
-				//disp_setBackColor(WHITE);				
-				
-				//U32ToStr(billValue,dispStr,3);
-				//disp_string(dispStr,220,BOTTOM_BAR_Y-18);	
-				//U32ToStr(billFlag,dispStr,3);
-				//disp_string(dispStr,250,BOTTOM_BAR_Y-18);					
-				
-				//currentNoteType = 0;//转换到美元的面额 范围 0 - 6
+
 				DealNoteType();
 				//真币
 				if(g_errFlag == 0)
@@ -3023,36 +3138,29 @@ void DealNotePass(void)
 					//假币
 					LongBeep(3);
 
-					disp_DrawPic(BMP_YA_X, BMP_YA_Y, BMP_AYB);
+					/*disp_DrawPic(BMP_YA_X, BMP_YA_Y, BMP_AYB);
 					disp_DrawPic(BMP_YB_X, BMP_YB_Y, BMP_AYB);	
 					disp_DrawPic(BMP_YC_X, BMP_YC_Y, BMP_AYB);
 					disp_DrawPic(BMP_YD_X, BMP_YD_Y, BMP_AHE);
 					disp_DrawPic(BMP_YE_X, BMP_YE_Y, BMP_AHG);
-					disp_DrawPic(BMP_YF_X, BMP_YF_Y, BMP_AY1);
-					if(g_errFlag == ERR_VALUE)
+					disp_DrawPic(BMP_YF_X, BMP_YF_Y, BMP_AY1);*/
+					if((g_errFlag == ERR_VALUE)||(g_errFlag == ERR_IR)||(g_errFlag == ERR_COLOR))
 					{
-						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY0);
-					}
-					else if(g_errFlag == ERR_IR)
-					{
-						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY1);
-					}
-					else if(g_errFlag == ERR_COLOR)
-					{
-						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY2);
+						disp_DrawPic(80, 240-72, BMP_CGCIS);
 					}
 					else if(g_errFlag == ERR_MG)
 					{
-						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY3);
+						disp_DrawPic(80, 240-72, BMP_CGMG);
 					}			
 					else if(g_errFlag == ERR_UV)
 					{
-						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY5);
+						disp_DrawPic(80, 240-72, BMP_CGUV);
 					}
 					else
 					{
-						disp_DrawPic(BMP_YG_X, BMP_YG_Y, BMP_AY4);
+						disp_DrawPic(80, 240-72, BMP_CGDEN);
 					}					
+					gb_errflagOverTime = 5000;
 					if(gb_debugErrFlag == 1)
 					{
 						gb_testbuf[0] = colorJudgeValue;
@@ -3828,86 +3936,177 @@ void adjustMotorSpeed(void)
 
 void dispSelfcheckError(u8 code)
 {
+	u8 i;
+	disp_setFont(FONT_24);
+	disp_setBackColor(BLACK);
+	disp_setPenColor(RED);
+	disp_clearScreen(BLACK);
+//	U8ToStr(code,dispStr);
+//	disp_string(dispStr,200,0);
+	
 	dispStr[0] = ' ';
 	dispStr[1] = 'E';
-	U16ToTimeStr(code,dispStr+2,2);
-// 	tm16xx_Led2DispStr(dispStr);
-//	fifo_Clear(KB_FIFO);
-// 	while(1)
-// 	{
-// 		ScanKeyDown();
-// 		if(fifo_GetCount(KB_FIFO) > 0)
-// 		{
-// 			key = fifo_DataOut(KB_FIFO);	
-// 			if(key == KEY_START2||key == KEY_START)
-// 			{
-// 				fifo_Clear(KB_FIFO);
-// 				break;
-// 			}
-// 		}
-// 		delay_DelayMs(15);
-// 		gb_needCheckKey = 1;
-// 	}
+	dispStr[2] = '0';
+	i=0;
+	if((code&ERROR_ENIR) == ERROR_ENIR)
+	{
+		dispStr[3] = '1';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0);
+		i++;
+	}
+	if((code&ERROR_PSIR) == ERROR_PSIR)
+	{
+		dispStr[3] = '2';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0+i*24);
+		i++;		
+	}
+	if((code&ERROR_MP) == ERROR_MP)
+	{
+		dispStr[3] = '3';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0+i*24);
+		i++;		
+	}	
+	if((code&ERROR_RGB1) == ERROR_RGB1)
+	{
+		dispStr[3] = '4';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0+i*24);
+		i++;		
+	}	
+	if((code&ERROR_RGB2) == ERROR_RGB2)
+	{
+		dispStr[3] = '5';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0+i*24);
+		i++;		
+	}
+	if((code&ERROR_RGB3) == ERROR_RGB3)
+	{
+		dispStr[3] = '6';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0+i*24);
+		i++;		
+	}
+	if((code&ERROR_RGB4) == ERROR_RGB4)
+	{
+		dispStr[3] = '7';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0+i*24);
+		i++;		
+	}
+	if((code&ERROR_IR) == ERROR_IR)
+	{
+		dispStr[3] = '8';
+		dispStr[4] = '\0';
+		disp_string(dispStr,0,0+i*24);
+		i++;		
+	}
 }
 void SystemSelfcheck(void)
 {
-// 	u16 k;
-// 	u16 i;
-// 	//自检 
-// 	SetSystemState(SELFCHECK);
-// 	//进钞
-// //	jckfs_On();
-// 	delay_DelayMs(10);
-// 	SampleOneRow();
-// 	if(enteranceSensorVal > savedPara.machineWorkPara.d[INDEX_RMB_ENTERANCE_COVER_THRES])
-// 	{
-// 		dispSelfcheckError(ERROR_FEED_SENSOR);
-// 	}
-// //	jckfs_Off();
-// 	
-// 	//红外关 值为低
-// 	hwfs_Off();
-// 	SampleOneRow();
-// 	if(irValue[0] >= irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR1_OFF);
-// 	}
-// 	if(irValue[1] >= irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR2_OFF);
-// 	}
-// 	if(irValue[2] >= irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR3_OFF);
-// 	}
-// 	if(irValue[3] >= irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR4_OFF);
-// 	}
-// 	//红外开 
-// 	hwfs_On();
-// 	SampleOneRow();
-// 	if(irValue[0] < irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR1_ON);
-// 	}
-// 	if(irValue[1] < irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR2_ON);
-// 	}
-// 	if(irValue[2] < irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR3_ON);
-// 	}
-// 	if(irValue[3] < irHaveNoteThres)
-// 	{
-// 		dispSelfcheckError(ERROR_IR4_ON);
-// 	}	
-// 	
-// 	//转电机 	
-// 	//磁性空转采集
-
+	u32 mpcnt1,mpcnt2;
+	u8 i,j;
+	
+	gb_enableSample = 0;
+	gb_selfcheckErrorState = 0;
+	
+	jckfs_On();
+	hwfs_On();
+ 	delay_DelayMs(100);
+ 	SampleOneRow();
+	if(enteranceSensorVal > 50)
+	{
+		gb_selfcheckErrorState |= ERROR_ENIR;
+	}
+	if(tdjsValue[0]<200||tdjsValue[1]<200)
+	{
+		gb_selfcheckErrorState |= ERROR_PSIR;
+	}
+	for(i=0;i<20;i++)
+	{
+		if(irValue[i]<200)
+		{
+			gb_selfcheckErrorState |= ERROR_IR;
+		}
+	}
+	redFs_On();
+	greenFs_Off();
+	blueFs_Off();
+	delay_DelayMs(100);
+ 	SampleOneRow();
+	for(i=0;i<4;i++)
+	{
+		if(colorRGB[i][0]<200)
+		{
+			gb_selfcheckErrorState |= (ERROR_RGB1<<i);
+		}
+	}
+	redFs_Off();
+	greenFs_On();
+	blueFs_Off();
+	delay_DelayMs(100);
+ 	SampleOneRow();
+	for(i=0;i<4;i++)
+	{
+		if(colorRGB[i][1]<200)
+		{
+			gb_selfcheckErrorState |= (ERROR_RGB1<<i);
+		}
+	}
+	redFs_Off();
+	greenFs_Off();
+	blueFs_On();
+	delay_DelayMs(100);
+ 	SampleOneRow();
+	for(i=0;i<4;i++)
+	{
+		if(colorRGB[i][2]<200)
+		{
+			gb_selfcheckErrorState |= (ERROR_RGB1<<i);
+		}
+	}
+	jckfs_Off();
+	hwfs_Off();
+	redFs_Off();
+	greenFs_Off();
+	blueFs_Off();
+	g_colorFsRGB = FS_RED;
+	for(i=0;i<4;i++)
+	{
+		for(j=0;j<3;j++)
+		{
+			colorRGB[i][j] = 0;
+		}
+	}
+	delay_DelayMs(100);
+ 	SampleOneRow();
+	if(enteranceSensorVal < 200)
+	{
+		gb_selfcheckErrorState |= ERROR_ENIR;
+	}
+	if(tdjsValue[0]>50||tdjsValue[1]>50)
+	{
+		gb_selfcheckErrorState |= ERROR_PSIR;
+	}
+	for(i=0;i<20;i++)
+	{
+		if(irValue[i]>50)
+		{
+			gb_selfcheckErrorState |= ERROR_IR;
+		}
+	}
+	for(i=0;i<4;i++)
+	{
+		if(colorRGB[i][0]>50)
+		{
+			gb_selfcheckErrorState |= (ERROR_RGB1<<i);
+		}
+	}
  	hwfs_On();
+	mpCnt = 0;
  	motor1_ForwardRun();
  	delay_DelayMs(100);
  	g_mgSampleIndex = 0;
@@ -3917,54 +4116,17 @@ void SystemSelfcheck(void)
 	//motor1_BackwardRun();
 	//delay_DelayMs(1000);
 	motor1_Stop();
+	mpcnt1 = mpCnt;
+	if(mpcnt1<20)
+	{
+		gb_selfcheckErrorState |= ERROR_MP;
+	}
 // 	hwfs_Off();
  	if(gb_isJammed == JAM_CSDDJ)
  	{
  		//dispSelfcheckError(ERROR_MOTOR_OR_MP);//码盘 电机
  		gb_isJammed = 0;
  	}
-// 	else if(gb_isJammed == JAM_PS2_IR)
-// 	{
-// 		dispSelfcheckError(ERROR_IR_JAM);//红外长时间覆盖
-// 		gb_isJammed = 0;
-// 	}
-// 	//磁性波形检查
-// 	k = 0;
-// 	for(i = 0;i < g_mgSampleIndex;i++)
-// 	{
-// 		if(mgData[0][i] > savedPara.machineWorkPara.d[INDEX_SELCHECK_MT_THRES])
-// 		{
-// 			k ++;
-// 		}
-// 	}
-// 	if(k > 5)
-// 	{
-// 		dispSelfcheckError(ERROR_MT);
-// 	}
-// 	k = 0;
-// 	for(i = 0;i < g_mgSampleIndex;i++)
-// 	{
-// 		if(mgData[1][i] > savedPara.machineWorkPara.d[INDEX_SELCHECK_MR_THRES])
-// 		{
-// 			k ++;
-// 		}
-// 	}
-// 	if(k > 5)
-// 	{
-// 		dispSelfcheckError(ERROR_LEFT_MR);
-// 	}
-// 	k = 0;
-// 	for(i = 0;i < g_mgSampleIndex;i++)
-// 	{
-// 		if(mgData[2][i] > savedPara.machineWorkPara.d[INDEX_SELCHECK_MR_THRES])
-// 		{
-// 			k ++;
-// 		}
-// 	}
-// 	if(k > 5)
-// 	{
-// 		dispSelfcheckError(ERROR_RIGHT_MR);
-// 	}
 }
 
 // void InitIrData(void)
@@ -4268,6 +4430,8 @@ void InitAdjustPara()
 	memset(savedPara.adjustPara.irBz40gStandard,0,REAL_IR_NUM*2);
 	memset(savedPara.adjustPara.irBz80gStandard,0,REAL_IR_NUM*2);
 	memset(savedPara.adjustPara.irIdleStandard,0xff,REAL_IR_NUM);
+	savedPara.uvGrade = 5;
+	savedPara.uvWhiteValue = 180;
 }
 
 
@@ -4682,6 +4846,11 @@ void MainInit(void)
 			InitUserWorkPara();
 		}
 		savedPara.flag = DATA_FLAG;
+		eeprom_SaveData();
+	}
+	if(savedPara.uvGrade >= 10)
+	{
+		savedPara.uvGrade = 5;
 		eeprom_SaveData();
 	}
 	//更新面额
@@ -5447,6 +5616,22 @@ void SysTick_Handler(void)
 //	{
 //		test_On();
 //	}
+	if(gb_errflagOverTime > 0)
+	{
+		gb_errflagOverTime--;
+		if(gb_errflagOverTime == 0)
+		{
+			gb_errflagClearDisp = 1;
+		}
+	}
+	if(gb_selfcheckErrorStateOverTime > 0)
+	{
+		gb_selfcheckErrorStateOverTime--;
+		if(gb_selfcheckErrorStateOverTime==0)
+		{
+			gb_selfcheckErrorStateClearFlag = 1;
+		}
+	}
 	msecCnt++;
 	oneSecCnt ++;
 	if(oneSecCnt >= 1000)
@@ -6196,7 +6381,14 @@ void DealUVSampleINT(void)
 		{
 			if(g_uvSampleIndex < UV_DATA_MAX_LEN)
 			{
-				uvData[g_uvSampleIndex] = UvValue;  				
+				if(gb_inCollabration == COLLABRATION_UV)
+				{
+					uvData[g_uvSampleIndex] = UvValue;
+				}
+				else
+				{
+					uvData[g_uvSampleIndex] = MIN(UvValue*MAX_UV_VALUE/savedPara.uvWhiteValue,255);  
+				}					
 				g_uvSampleIndex ++;
 			}
 		}
@@ -6718,6 +6910,7 @@ void EXTI9_5_IRQHandler(void)
 				gb_uvNeedEndSampleCnt--;
 				if(gb_uvNeedEndSampleCnt == 0)
 				{
+					uvDataLen = g_uvSampleIndex;
 					mgDataLen = g_mgSampleIndex;
 					gb_uvNeedStartSampleflag = 0;
 				}

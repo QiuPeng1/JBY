@@ -193,7 +193,7 @@ BILL_EXT_FUNC u8 billRGB_Judge(int noteType);
 
 BILL_EXT_FUNC u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType);
 BILL_EXT_FUNC u8 billMG_Judge(int noteType);
-BILL_EXT_FUNC u8 billUV_Judge(int noteType);
+BILL_EXT_FUNC u8 billUV_Judge(int noteType, int uvThre);
 #ifdef __cplusplus
 }
 #endif

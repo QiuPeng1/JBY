@@ -648,12 +648,12 @@ u8 billMG_Judge(int noteType)
 	return 0;
 }
 
-u8 billUV_Judge(int noteType)
+u8 billUV_Judge(int noteType, int uvThre)
 {
 	int i, Max0, Min0, Max1, Min1, pos0, pos1, t, count;
 	if (uvDataLen < 80)// || uvDataLen > 450)
 	{
-		billUVFvt = 1;
+		mgFvtFlag = 1;
 		return 0;
 	}
 
@@ -714,9 +714,9 @@ u8 billUV_Judge(int noteType)
 	t /= count;
 
 	billUVFvt = 0;
-//	if (noteType = INDEX_RUB)
+	if (noteType == INDEX_RUB)
 	{
-		if (t > 25)
+		if (t > uvThre)
 		{
 			billUVFvt = 1;
 		}
