@@ -35,6 +35,9 @@
 #define BILL_INDEX_GBP
 #define BILL_INDEX_ARS
 #define BILL_INDEX_IQD
+#define BILL_INDEX_THB
+#define BILL_INDEX_TWD
+#define BILL_INDEX_CNY
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------
@@ -154,7 +157,7 @@ BILL_EXT_PARA u8 lengthData_Tmp2[IRAD_FVT_DIM+100];
 #define COLOR_FIV_DIM		3
 BILL_EXT_PARA u16 colorData_tmp[12][COLOR_DATA_RESIZE+8];
 
-BILL_EXT_PARA int colorFvtTotal[COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM];
+BILL_EXT_PARA short colorFvtTotal[COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM];
 
 BILL_EXT_PARA int projH[450];
 BILL_EXT_PARA u8 billIsFake;

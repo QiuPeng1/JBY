@@ -205,6 +205,21 @@ void DispCurrency(void)
 		disp_DrawPic(0,0,BMP_BFLAGARS);
 		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
 	}
+	else if(g_currency == INDEX_THB)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGTHB);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTHB);
+	}	
+	else if(g_currency == INDEX_TWD)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGTWD);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTWD);
+	}
+	else if(g_currency == INDEX_CNY)
+	{
+		disp_DrawPic(0,0,BMP_BFLAGCNY);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTCNY);
+	}
 	else
 	{
 		g_currency = INDEX_USD;
@@ -1441,7 +1456,22 @@ void DispMainMenuBackground(void)
 		{
 			disp_DrawPic(0,0,BMP_BFLAGARS);
 			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
+		}	
+		else if(g_currency == INDEX_THB)
+		{
+			disp_DrawPic(0,0,BMP_BFLAGTHB);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTHB);
+		}	
+		else if(g_currency == INDEX_TWD)
+		{
+			disp_DrawPic(0,0,BMP_BFLAGTWD);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTWD);
 		}		
+		else if(g_currency == INDEX_CNY)
+		{
+			disp_DrawPic(0,0,BMP_BFLAGCNY);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTCNY);
+		}	
 		else 
 		{
 			disp_DrawPic(0,0,BMP_BFLAGUSD);
@@ -3078,6 +3108,111 @@ void DealNoteType(void)
 				break;
 			}				
 		}
+		else if(g_currency == INDEX_THB)
+		{
+			switch(gb_billValue)
+			{
+			case 0:
+			case 1:
+			case 10:
+				currentNoteType = 0;//1000
+				break;
+			case 2:
+			case 3:
+			case 11:
+				currentNoteType = 1;//500
+				break;
+			case 4:
+			case 5:
+			case 12:
+				currentNoteType = 2; //100
+				break;
+			case 6:
+			case 7:
+			case 13:
+				currentNoteType = 3;//50
+				break;
+			case 8:
+			case 9:
+			case 14:
+				currentNoteType = 4;//20
+				break;
+			default:
+				currentNoteType = 0xFF;
+				g_errFlag |= ERR_VALUE;
+				break;
+			}				
+		}
+		else if(g_currency == INDEX_TWD)
+		{
+			switch(gb_billValue)
+			{
+			case 0:
+			case 1:
+				currentNoteType = 0;//2000
+				break;
+			case 2:
+			case 3:
+				currentNoteType = 1;//1000
+				break;
+			case 4:
+			case 5:
+				currentNoteType = 2; //500
+				break;
+			case 6:
+			case 7:
+				currentNoteType = 3;//200
+				break;
+			case 8:
+			case 9:
+				currentNoteType = 4;//100
+				break;
+			default:
+				currentNoteType = 0xFF;
+				g_errFlag |= ERR_VALUE;
+				break;
+			}				
+		}
+		else if(g_currency == INDEX_CNY)
+		{
+			switch(gb_billValue)
+			{
+			case 0:
+			case 1:
+			case 2:
+				currentNoteType = 0;//100
+				break;
+			case 3:
+			case 4:
+			case 5:
+				currentNoteType = 1;//50
+				break;
+			case 6:
+			case 7:
+			case 8:
+				currentNoteType = 2; //20
+				break;
+			case 9:
+			case 10:
+			case 11:
+				currentNoteType = 3;//10
+				break;
+			case 12:
+			case 13:
+			case 14:
+				currentNoteType = 4;//5
+				break;
+			case 15:
+			case 16:
+			case 17:
+				currentNoteType = 5;//1
+				break;
+			default:
+				currentNoteType = 0xFF;
+				g_errFlag |= ERR_VALUE;
+				break;
+			}				
+		}
 	}
 }
 void DealNotePass(void)
@@ -3513,6 +3648,18 @@ void IncNoteNum(void)
 	{
 		noteDenoValue = ARS_NOTE_VALUE[currentNoteType];
 	}
+	else if(g_currency == INDEX_THB)
+	{
+		noteDenoValue = THB_NOTE_VALUE[currentNoteType];
+	}
+	else if(g_currency == INDEX_TWD)
+	{
+		noteDenoValue = TWD_NOTE_VALUE[currentNoteType];
+	}
+	else if(g_currency == INDEX_CNY)
+	{
+		noteDenoValue = CNY_NOTE_VALUE[currentNoteType];
+	}
 	noteSum += noteDenoValue;
 	denoNoteNum[currentNoteType] ++;
 }
@@ -3641,7 +3788,6 @@ void DispDetailNoteNum(void)//显示明细
 	j=0;
 	if(g_currency == INDEX_EUR
 		||g_currency == INDEX_USD
-		||g_currency == INDEX_IQD
 		||g_currency == INDEX_SAR)//7
 	{
 		for(i = 0;i < 7;i++)
@@ -3699,7 +3845,8 @@ void DispDetailNoteNum(void)//显示明细
 			}
 		}
 	}
-	else if((g_currency == INDEX_TRY))//6
+	else if((g_currency == INDEX_TRY)
+			||(g_currency == INDEX_CNY))//6
 	{
 		for(i = 0;i < 6;i++)
 		{
@@ -3873,6 +4020,92 @@ void DispDetailNoteNum(void)//显示明细
 			}
 		}
 	}	
+	else if((g_currency == INDEX_THB)||(g_currency == INDEX_TWD))//5
+	{
+		for(i = 0;i < 5;i++)
+		{
+			d = denoNoteNum[i];
+			if(d == 0)
+			{	
+				disp_DrawPic(SBmpDispXY[(i+5)*2]-24,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+				disp_DrawPic(SBmpDispXY[(i+5)*2]-12,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+				disp_DrawPic(SBmpDispXY[(i+5)*2],SBmpDispXY[(i+5)*2+1],SbmpAddress[0]);
+			}	
+			else
+			{
+				for(j=0; j<3; j++)
+				{
+					if(d > 0)
+					{
+						result = d%10;
+						disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j, SBmpDispXY[(i+5)*2+1], SbmpAddress[result]);
+						d /= 10;
+					}
+					else
+					{
+						disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+					}
+				}
+			}
+		}
+	}
+	else if(g_currency == INDEX_IQD)//5（2和3）
+	{
+		for(i = 0;i < 5;i++)
+		{
+			d = denoNoteNum[i];
+			if(d == 0)
+			{	
+				if(i<2)
+				{
+					disp_DrawPic(SBmpDispXY[(i+3)*2]-24,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+3)*2]-12,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+3)*2],SBmpDispXY[(i+3)*2+1],SbmpAddress[0]);
+				}
+				else
+				{
+					disp_DrawPic(SBmpDispXY[(i+5)*2]-24,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+5)*2]-12,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+5)*2],SBmpDispXY[(i+5)*2+1],SbmpAddress[0]);
+				}
+			}	
+			else
+			{
+				if(i < 2)
+				{
+					for(j=0; j<3; j++)
+					{
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j, SBmpDispXY[(i+3)*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
+						}
+					}
+				}
+				else
+				{
+					for(j=0; j<3; j++)
+					{
+						if(d > 0)
+						{
+							result = d%10;
+							disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j, SBmpDispXY[(i+5)*2+1], SbmpAddress[result]);
+							d /= 10;
+						}
+						else
+						{
+							disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 		
 
@@ -4665,7 +4898,7 @@ void GetOpenCurrency(void)
 	
 	for(i = 0;i < 8;i++)
 	{
-		d = 1<<(7-i);
+		d = 1<<(i);
 		if((d4&d) > 0)
 		{
 			if(i+24 < NOTE_NUM)
@@ -5726,7 +5959,7 @@ void SysTick_Handler(void)
 		}
 	}
 
-	if((gb_enableSample == 1)&&(systemState == NORMAL)&&(gb_needScanEteranceSensor == 1))
+	if((gb_enableSample == 1)&&((systemState == NORMAL)||(systemState == DU_BI))&&(gb_needScanEteranceSensor == 1))
 	{
 		//检测进钞接收
 		//开灯无钞为低值 开灯有钞为高值 关灯为低值

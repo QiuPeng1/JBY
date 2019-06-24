@@ -31,7 +31,7 @@
 #define UART3_RXD_GPIO_PORT              GPIOB
 #define UART3_RXD_GPIO_CLK               RCC_APB2Periph_GPIOB
 #define UART3_RXD_GPIO_PIN               GPIO_Pin_11
-#define UART3_RXD_GPIO_MODE              GPIO_Mode_IN_FLOATING
+#define UART3_RXD_GPIO_MODE              GPIO_Mode_IPU
 //---------------------------------------------------------------------
 //类型定义
 //---------------------------------------------------------------------

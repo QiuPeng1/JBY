@@ -48,7 +48,21 @@
 #include "LW_ARS_ColorFvt.h"
 #endif
 /***********************************************/
-
+#ifdef  BILL_INDEX_THB
+#include "LW_THB_ValueFvt.h"
+#include "LW_THB_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_TWD
+#include "LW_TWD_ValueFvt.h"
+#include "LW_TWD_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_CNY
+#include "LW_CNY_ValueFvt.h"
+#include "LW_CNY_ColorFvt.h"
+#endif
+/***********************************************/
 //#define DRAW_STATE
 //#define DRAW_STATE2
 
@@ -71,8 +85,8 @@ u8 billRGB_Judge(int noteType)
 	int min_i;
 
 	double fvt, tt, max_t;
-	int *pFvt;
-	int *pf1;
+	short *pFvt;
+	short *pf1;
 	u8 *pNoteClass;
 	u8 Class;
 	int fvtInt;
@@ -85,7 +99,7 @@ u8 billRGB_Judge(int noteType)
 	}
 
 	//memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*2*4);
-	memset(colorFvtTotal, 0, sizeof(int)*COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM);
+	memset(colorFvtTotal, 0, sizeof(short)*COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM);
 
 	for (i = 0; i < 12; i++)
 	{
@@ -139,7 +153,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_USD)
 	{
 		pNoteClass = g_USD_Color_noteClass;
-		pFvt = (int *)USD_colorFvt_Int;
+		pFvt = (short *)USD_colorFvt_Int;
 		Class = USD_COLOR_NOTE_CLASS;
 	}
 #endif
@@ -147,7 +161,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_EUR)
 	{
 		pNoteClass = g_EUR_Color_noteClass;
-		pFvt = (int *)EUR_colorFvt_Int;
+		pFvt = (short *)EUR_colorFvt_Int;
 		Class = EUR_COLOR_NOTE_CLASS;
 	}
 #endif
@@ -155,7 +169,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_RUB)
 	{
 		pNoteClass = g_RUB_Color_noteClass;
-		pFvt = (int *)RUB_colorFvt_Int;
+		pFvt = (short *)RUB_colorFvt_Int;
 		Class = RUB_COLOR_NOTE_CLASS;
 	}
 #endif
@@ -163,7 +177,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_TRY)
 	{
 		pNoteClass = g_TRY_Color_noteClass;
-		pFvt = (int *)TRY_colorFvt_Int;
+		pFvt = (short *)TRY_colorFvt_Int;
 		Class = TRY_COLOR_NOTE_CLASS;
 	}
 #endif
@@ -171,7 +185,7 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_IQD)
 	{
 		pNoteClass = g_IQD_Color_noteClass;
-		pFvt = (int *)IQD_colorFvt_Int;
+		pFvt = (short *)IQD_colorFvt_Int;
 		Class = IQD_COLOR_NOTE_CLASS;
 	}
 #endif
@@ -179,47 +193,71 @@ u8 billRGB_Judge(int noteType)
 	if (noteType == INDEX_SAR)
 	{
 		pNoteClass = g_SAR_noteClass;
-		pFvt = (int *)SAR_colorFvt_Int;
+		pFvt = (short *)SAR_colorFvt_Int;
 		Class = SAR_NOTE_CLASS;
 	}
 #endif
 #ifdef  BILL_INDEX_AED
 	if (noteType == INDEX_AED)
 	{
-		pNoteClass = g_AED_noteClass;
-		pFvt = (int *)AED_colorFvt_Int;
-		Class = AED_NOTE_CLASS;
+		pNoteClass = g_AED_Color_noteClass;
+		pFvt = (short *)AED_colorFvt_Int;
+		Class = AED_COLOR_NOTE_CLASS;
 	}
 #endif
 #ifdef  BILL_INDEX_GBP
 	if (noteType == INDEX_GBP)
 	{
 		pNoteClass = g_GBP_Color_noteClass;
-		pFvt = (int *)GBP_colorFvt_Int;
+		pFvt = (short *)GBP_colorFvt_Int;
 		Class = GBP_COLOR_NOTE_CLASS;
 	}
 #endif
 #ifdef  BILL_INDEX_ARS
 	if (noteType == INDEX_ARS)
 	{
-		pNoteClass = g_ARS_noteClass;
-		pFvt = (int *)ARS_colorFvt_Int;
-		Class = ARS_NOTE_CLASS;
+		pNoteClass = g_ARS_Color_noteClass;
+		pFvt = (short *)ARS_colorFvt_Int;
+		Class = ARS_COLOR_NOTE_CLASS;
 	}
 #endif
-
+#ifdef  BILL_INDEX_THB
+	if (noteType == INDEX_THB)
+	{
+		pNoteClass = g_THB_Color_noteClass;
+		pFvt = (short *)THB_colorFvt_Int;
+		Class = THB_COLOR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_TWD
+	if (noteType == INDEX_TWD)
+	{
+		pNoteClass = g_TWD_Color_noteClass;
+		pFvt = (short *)TWD_colorFvt_Int;
+		Class = TWD_COLOR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_CNY
+	if (noteType == INDEX_CNY)
+	{
+		pNoteClass = g_CNY_Color_noteClass;
+		pFvt = (short *)CNY_colorFvt_Int;
+		Class = CNY_COLOR_NOTE_CLASS;
+	}
+#endif
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
 		fvtInt = 0;
 		for (j = 0; j < COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM; j++)
 		{
-			t0 = (int)pf1[j];
-			t1 = (int)pFvt[j*Class+i];
-			fvtInt += t0*t1;
+			//t0 = (int)pf1[j];
+			//t1 = (int)pFvt[j*Class+i];
+			//fvtInt += t0*t1;
+			fvtInt += (pf1[j]*pFvt[j*Class+i]);
 		}
-		fvt = ((double)(fvtInt))/100000;
-		fvt += ((double)(pFvt[j*Class+i]*200))/100000;
+		fvt = ((double)(fvtInt))/50000;
+		fvt += ((double)(pFvt[j*Class+i]*200))/50000;
 		
 		tt = exp(-fvt);	
 		fvt = 1/(1+tt);
@@ -470,7 +508,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	memset(lengthData_Tmp2, 0, IRAD_FVT_DIM);
 	ResizeCharImgGray(lengthData_Tmp,sw,sh, lengthData_Tmp2, IRAD_DATA_RESIZE_W,IRAD_DATA_RESIZE_H);
 	//sh = 20;
-
+	
 
 //	return;
 	pf1 = lengthData_Tmp2;
@@ -546,7 +584,30 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		Class = ARS_NOTE_CLASS;
 	}
 #endif
-
+#ifdef  BILL_INDEX_THB
+	if (noteType == INDEX_THB)
+	{
+		pNoteClass = g_THB_noteClass;
+		pFvt = (short *)THB_iradFvt_Int;
+		Class = THB_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_TWD
+	if (noteType == INDEX_TWD)
+	{
+		pNoteClass = g_TWD_noteClass;
+		pFvt = (short *)TWD_iradFvt_Int;
+		Class = TWD_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_CNY
+	if (noteType == INDEX_CNY)
+	{
+		pNoteClass = g_CNY_noteClass;
+		pFvt = (short *)CNY_iradFvt_Int;
+		Class = CNY_NOTE_CLASS;
+	}
+#endif
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
@@ -555,8 +616,8 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		{
 			fvtInt += (pf1[j]*pFvt[j*Class+i]);
 		}
-		fvt = ((double)(fvtInt))/100000;
-		fvt += ((double)(pFvt[j*Class+i]*200))/100000;
+		fvt = ((double)(fvtInt))/50000;
+		fvt += ((double)(pFvt[j*Class+i]*200))/50000;
 
 		tt = exp(-fvt);	
 		fvt = 1/(1+tt);
