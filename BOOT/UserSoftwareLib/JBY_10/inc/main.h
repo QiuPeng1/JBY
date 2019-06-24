@@ -173,7 +173,11 @@ u8 g_colorFsStopWork = 0;
 // #define PC3_GPIO_MODE           GPIO_Mode_Out_PP
 // #define PC3_High() GPIO_SetBits(PC3_GPIO_PORT, PC3_GPIO_PIN)
 // #define PC3_Low() GPIO_ResetBits(PC3_GPIO_PORT, PC3_GPIO_PIN)
-
+#define USB_EN_GPIO_PORT              GPIOC
+#define USB_EN_GPIO_PIN               GPIO_Pin_10
+#define USB_EN_GPIO_MODE              GPIO_Mode_Out_PP
+#define UsbEn_Off() GPIO_ResetBits(USB_EN_GPIO_PORT, USB_EN_GPIO_PIN)
+#define UsbEn_On() GPIO_SetBits(USB_EN_GPIO_PORT, USB_EN_GPIO_PIN);
 /*
 Œª÷√4	PS4	PC9
 Œª÷√3	PS3	PC10
@@ -368,6 +372,8 @@ u8 readBuffer[BUF_LEN];
 
 #define READ_LEN_ONE_TIME BUF_LEN
 #define FLASH_ONE_SECTOR 2048
+#define FLASH2_ONE_SECTOR 4096
+#define USER_FLASH_BANK1_END_ADDRESS   ((uint32_t)0x807FFFF)
 
 u8 flashBuffer[FLASH_ONE_SECTOR];
 

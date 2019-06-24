@@ -86,10 +86,29 @@ int main(void)
 	u8 r;
 	u32 fileLen;
 	u32 n,k;
+	u32 appdate[4];
 	
 	delay_DelayMs(10);
 	//读升级标志
 	upgradeFlag = flash_ReadUpdateFlag();
+	if(upgradeFlag==0xffffffff)//第一次使用
+	{
+		appdate[0] = flash_ReadAPPdate(APP_DATA_ADDR);
+		appdate[1] = flash_ReadAPPdate(APP_DATA_ADDR+4);
+		appdate[2] = flash_ReadAPPdate(APP_DATA_ADDR+8);
+		appdate[3] = flash_ReadAPPdate(APP_DATA_ADDR+12);
+
+		if(appdate[0]==0xffffffff&&appdate[1]==0xffffffff&&appdate[2]==0xffffffff&&appdate[3]==0xffffffff)
+		{
+			
+		}
+		else
+		{
+			goto RUN_APP;
+			flash_SaveUpdateFlag(0);
+		}
+	}
+	//upgradeFlag = flash_ReadUpdateFlag();
 	if(NEED_UPGRADE_FLAG == upgradeFlag)
 	{
 		needUpGrade = 1;
@@ -127,6 +146,7 @@ int main(void)
 	
 	if(needUpGrade == 0)//不需要升级 跳转
 	{
+		RUN_APP:
 		RunProgramme(APP_ADDR);
 	}
 	
@@ -151,7 +171,7 @@ int main(void)
 	disp_setPenColor(RED);
 	disp_setBackColor(WHITE);
 	disp_setFont(24);
-	disp_string("BootloaderV10",0,dispIndex++*ONE_LINE_H);
+	disp_string("BootloaderV12",0,dispIndex++*ONE_LINE_H);
 	disp_string(upgradeFileName,0,dispIndex++*ONE_LINE_H);
 	
 	readBuffer[0] = 0;
@@ -212,7 +232,7 @@ int main(void)
 					else
 					{
 						currentReadLen = (upgradeFileSize-k);
-						memset(readBuffer,0xff,((currentReadLen/2048)+1)*2048);//最后一个不满2K的后面补0xff
+						memset(readBuffer,0xff,((currentReadLen/FLASH2_ONE_SECTOR)+1)*FLASH2_ONE_SECTOR);//最后一个不满2K的后面补0xff
 					}
 					r = ReadUdiskFile(upgradeFileName,readBuffer,readLen,currentReadLen);
 					if(r == 0)
@@ -222,8 +242,16 @@ int main(void)
 						//写入flash
 						for(n = 0;n < currentReadLen;)
 						{
-							flash_WriteData(APP_ADDR+readLen+n,(u32 *)(readBuffer+n),FLASH_ONE_SECTOR);
-							n += FLASH_ONE_SECTOR;		
+							if((APP_ADDR+readLen+n)<USER_FLASH_BANK1_END_ADDRESS)
+							{
+								flash_WriteData(APP_ADDR+readLen+n,(u32 *)(readBuffer+n),FLASH_ONE_SECTOR);
+								n += FLASH_ONE_SECTOR;	
+							}
+							else
+							{
+								flash_WriteData(APP_ADDR+readLen+n,(u32 *)(readBuffer+n),FLASH2_ONE_SECTOR);
+								n += FLASH2_ONE_SECTOR;	
+							}
 							//delay_DelayMs(10);
 							U32ToStr(n,dispStr,6);
 							disp_string(dispStr,12*13+12*7,dispIndex*ONE_LINE_H);
@@ -252,7 +280,7 @@ int main(void)
 						else
 						{
 							currentReadLen = (upgradeFileSize-k);
-							memset(readBuffer,0xff,((currentReadLen/2048)+1)*2048);//最后一个不满2K的后面补0xff
+							memset(readBuffer,0xff,((currentReadLen/FLASH2_ONE_SECTOR)+1)*FLASH2_ONE_SECTOR);//最后一个不满2K的后面补0xff
 						}
 						r = ReadUdiskFile(upgradeFileName,readBuffer,readLen,currentReadLen);
 						if(r == 0)//读取文件成功
@@ -262,26 +290,53 @@ int main(void)
 							//写入flash
 							for(n = 0;n < currentReadLen;)
 							{
-								flash_ReadData(APP_ADDR+readLen+n,(u32 *)(flashBuffer),FLASH_ONE_SECTOR);
-								//校验
-								for(i = 0;i < FLASH_ONE_SECTOR;i++)
+								if((APP_ADDR+readLen+n)<USER_FLASH_BANK1_END_ADDRESS)
 								{
-									if(*(flashBuffer+i) != *(readBuffer+n+i))
+									flash_ReadData(APP_ADDR+readLen+n,(u32 *)(flashBuffer),FLASH_ONE_SECTOR);
+									//校验
+									for(i = 0;i < FLASH_ONE_SECTOR;i++)
 									{
-										break;
+										if(*(flashBuffer+i) != *(readBuffer+n+i))
+										{
+											break;
+										}
 									}
-								}
-								if(i == FLASH_ONE_SECTOR)
-								{
-									n += FLASH_ONE_SECTOR;		
-									delay_DelayMs(10);
-									U32ToStr(n,dispStr,6);
-									disp_string(dispStr,12*14+12*7,dispIndex*ONE_LINE_H);
+									if(i == FLASH_ONE_SECTOR)
+									{
+										n += FLASH_ONE_SECTOR;		
+										delay_DelayMs(10);
+										U32ToStr(n,dispStr,6);
+										disp_string(dispStr,12*14+12*7,dispIndex*ONE_LINE_H);
+									}
+									else
+									{
+										disp_string("ERROR1",12*14+12*7,dispIndex*ONE_LINE_H);
+										goto UPGRADE_ERROR;							
+									}
 								}
 								else
 								{
-									disp_string("ERROR1",12*14+12*7,dispIndex*ONE_LINE_H);
-									goto UPGRADE_ERROR;							
+									flash_ReadData(APP_ADDR+readLen+n,(u32 *)(flashBuffer),FLASH2_ONE_SECTOR);
+									//校验
+									for(i = 0;i < FLASH2_ONE_SECTOR;i++)
+									{
+										if(*(flashBuffer+i) != *(readBuffer+n+i))
+										{
+											break;
+										}
+									}
+									if(i == FLASH2_ONE_SECTOR)
+									{
+										n += FLASH2_ONE_SECTOR;		
+										delay_DelayMs(10);
+										U32ToStr(n,dispStr,6);
+										disp_string(dispStr,12*14+12*7,dispIndex*ONE_LINE_H);
+									}
+									else
+									{
+										disp_string("ERROR3",12*14+12*7,dispIndex*ONE_LINE_H);
+										goto UPGRADE_ERROR;							
+									}
 								}
 							}
 						}
@@ -1035,7 +1090,10 @@ void InitGpioInMain(void)
 // 	GPIO_InitStructure.GPIO_Mode = LED_GPIO_MODE; 
 // 	GPIO_Init(LED_GPIO_PORT, &GPIO_InitStructure);
 // 	LED_ON();
-	
+ 	GPIO_InitStructure.GPIO_Pin = USB_EN_GPIO_PIN;
+ 	GPIO_InitStructure.GPIO_Mode = USB_EN_GPIO_MODE; 
+ 	GPIO_Init(USB_EN_GPIO_PORT, &GPIO_InitStructure);
+ 	UsbEn_Off();
 	//红外发射控制
 	GPIO_InitStructure.GPIO_Pin = HW_FS_GPIO_PIN;
 	GPIO_InitStructure.GPIO_Mode  = HW_FS_GPIO_MODE; 

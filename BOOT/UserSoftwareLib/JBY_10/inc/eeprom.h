@@ -24,7 +24,8 @@
 #endif
 
 #define DATA_FLAG  0x87061153
-
+#define APP_DATA_ADDR ((u32)0x08010000)
+		
 typedef struct 
 {
 	u32 csmpNumIn50ms[4]; //传输大电机在50ms内的目标码盘数
@@ -152,6 +153,7 @@ EEPROM_EXT_FUNC void eeprom_ReadData(void);
 * 输出参数：
 * 返回值  ：
 ****************************************************************************/
+u32 flash_ReadAPPdate(u32 appdateAddr);
 EEPROM_EXT_FUNC void eeprom_SaveData(void);
 EEPROM_EXT_FUNC u32 flash_ReadUpdateFlag(void);
 EEPROM_EXT_FUNC void flash_SaveUpdateFlag(u32 flag);

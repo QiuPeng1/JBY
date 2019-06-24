@@ -1,938 +1,0 @@
-Dependencies for Project 'CISA9', Target 'CISA9': (DO NOT MODIFY !)
-F (..\UserSoftwareLib\JBY_10\src\delay.C)(0x5AFBB080)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\delay.o --omf_browse .\obj\delay.crf --depend .\obj\delay.d)
-I (..\UserSoftwareLib\JBY_10\inc\_delay.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\UserSoftwareLib\JBY_10\inc\delay.h)(0x5AFBB080)
-F (..\UserSoftwareLib\JBY_10\src\fifo.C)(0x5AFBB080)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\fifo.o --omf_browse .\obj\fifo.crf --depend .\obj\fifo.d)
-I (..\UserSoftwareLib\JBY_10\inc\_fifo.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\UserSoftwareLib\JBY_10\inc\fifo.h)(0x5AFBB080)
-F (..\UserSoftwareLib\JBY_10\src\flash.c)(0x5B054616)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\flash.o --omf_browse .\obj\flash.crf --depend .\obj\flash.d)
-I (..\UserSoftwareLib\JBY_10\inc\_flash.h)(0x5B055AEC)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\UserSoftwareLib\JBY_10\inc\eeprom.h)(0x5B054616)
-F (..\UserSoftwareLib\JBY_10\src\main_70.C)(0x5B900D28)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\main_70.o --omf_browse .\obj\main_70.crf --depend .\obj\main_70.d)
-I (..\UserSoftwareLib\JBY_10\inc\main.h)(0x5B0571BC)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\UserSoftwareLib\JBY_10\inc\delay.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\fifo.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\uart.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\eeprom.h)(0x5B054616)
-I (..\UserSoftwareLib\JBY_10\inc\motor.h)(0x5B040FF0)
-I (..\UserSoftwareLib\JBY_10\inc\disp.h)(0x5AFBB080)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-I (..\USBH\USB_USE\inc\usbh_msc_usr.h)(0x5972481E)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54C245B8)
-I (..\USBH\USB_USE\inc\usbh_usr.h)(0x5AFC3166)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd_int.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\fatfs_demo.h)(0x597246E2)
-I (..\FATFS\FatFs11\ff.h)(0x5596A3EA)
-I (..\FATFS\FatFs11\integer.h)(0x54D8A8D8)
-I (..\FATFS\FatFs11\ffconf.h)(0x5597F12A)
-I (..\UserSoftwareLib\JBY_10\inc\user_udisc.h)(0x5B0549EE)
-F (..\UserSoftwareLib\JBY_10\src\motor.c)(0x5B0410A0)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\motor.o --omf_browse .\obj\motor.crf --depend .\obj\motor.d)
-I (..\UserSoftwareLib\JBY_10\inc\_motor.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\UserSoftwareLib\JBY_10\inc\motor.h)(0x5B040FF0)
-I (..\UserSoftwareLib\JBY_10\inc\eeprom.h)(0x5B054616)
-I (..\UserSoftwareLib\JBY_10\inc\delay.h)(0x5AFBB080)
-F (..\UserSoftwareLib\JBY_10\src\uart.C)(0x5AFBB080)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\uart_1.o --omf_browse .\obj\uart_1.crf --depend .\obj\uart_1.d)
-I (..\UserSoftwareLib\JBY_10\inc\_uart.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\UserSoftwareLib\JBY_10\inc\uart.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\fifo.h)(0x5AFBB080)
-F (..\UserSoftwareLib\JBY_10\src\disp.C)(0x5AFBB080)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\disp.o --omf_browse .\obj\disp.crf --depend .\obj\disp.d)
-I (..\UserSoftwareLib\JBY_10\inc\_disp.h)(0x5AFBB080)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\UserSoftwareLib\JBY_10\inc\disp.h)(0x5AFBB080)
-F (..\UserSoftwareLib\JBY_10\src\user_udisc.c)(0x5B05751A)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\UserSoftwareLib\JBY_10\inc -I..\UserSoftwareLib\JBY_10\src -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\user_udisc.o --omf_browse .\obj\user_udisc.crf --depend .\obj\user_udisc.d)
-I (..\UserSoftwareLib\JBY_10\inc\user_udisc.h)(0x5B0549EE)
-I (..\UserSoftwareLib\JBY_10\inc\system.h)(0x5AFBB260)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserSoftwareLib\JBY_10\src\stm32f10x_conf.h)(0x5AFBB080)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_iwdg.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x54C245B8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-I (..\USBH\USB_USE\inc\usbh_msc_usr.h)(0x5972481E)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54C245B8)
-I (..\USBH\USB_USE\inc\usbh_usr.h)(0x5AFC3166)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd_int.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\fatfs_demo.h)(0x597246E2)
-I (..\FATFS\FatFs11\ff.h)(0x5596A3EA)
-I (..\FATFS\FatFs11\integer.h)(0x54D8A8D8)
-I (..\FATFS\FatFs11\ffconf.h)(0x5597F12A)
-F (..\USBH\USB_HOST_Driver\scr\usbh_stdreq.c)(0x58C9C584)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_stdreq.o --omf_browse .\obj\usbh_stdreq.crf --depend .\obj\usbh_stdreq.d)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-F (..\USBH\USB_HOST_Driver\scr\usbh_ioreq.c)(0x4F6B3AC8)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_ioreq.o --omf_browse .\obj\usbh_ioreq.crf --depend .\obj\usbh_ioreq.d)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-F (..\USBH\USB_HOST_Driver\scr\usbh_hcs.c)(0x4F6B3AC8)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_hcs.o --omf_browse .\obj\usbh_hcs.crf --depend .\obj\usbh_hcs.d)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-F (..\USBH\USB_HOST_Driver\scr\usbh_core.c)(0x58CB5368)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_core.o --omf_browse .\obj\usbh_core.crf --depend .\obj\usbh_core.d)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd_int.h)(0x4F6AD858)
-F (..\USBH\USB_MSC\src\usbh_msc_bot.c)(0x58C9C732)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_msc_bot.o --omf_browse .\obj\usbh_msc_bot.crf --depend .\obj\usbh_msc_bot.d)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd_int.h)(0x4F6AD858)
-F (..\USBH\USB_MSC\src\usbh_msc_core.c)(0x58C9BF96)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_msc_core.o --omf_browse .\obj\usbh_msc_core.crf --depend .\obj\usbh_msc_core.d)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-F (..\USBH\USB_MSC\src\usbh_msc_scsi.c)(0x58C9C600)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_msc_scsi.o --omf_browse .\obj\usbh_msc_scsi.crf --depend .\obj\usbh_msc_scsi.d)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-F (..\USBH\USB_OTG_Driver\scr\usb_core.c)(0x58CA1EC8)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usb_core.o --omf_browse .\obj\usb_core.crf --depend .\obj\usb_core.d)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-F (..\USBH\USB_OTG_Driver\scr\usb_hcd.c)(0x4F6AD858)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usb_hcd.o --omf_browse .\obj\usb_hcd.crf --depend .\obj\usb_hcd.d)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-F (..\USBH\USB_OTG_Driver\scr\usb_hcd_int.c)(0x58C2F6EA)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usb_hcd_int.o --omf_browse .\obj\usb_hcd_int.crf --depend .\obj\usb_hcd_int.d)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd_int.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-F (..\USBH\USB_USE\scr\user_bsp.c)(0x59809CAE)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\user_bsp.o --omf_browse .\obj\user_bsp.crf --depend .\obj\user_bsp.d)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-F (..\USBH\USB_USE\scr\usbh_usr.c)(0x59C255EC)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_usr.o --omf_browse .\obj\usbh_usr.crf --depend .\obj\usbh_usr.d)
-I (..\USBH\USB_USE\inc\usbh_usr.h)(0x5AFC3166)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54C245B8)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-F (..\USBH\USB_USE\scr\usbh_msc_usr.c)(0x5972481E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\usbh_msc_usr.o --omf_browse .\obj\usbh_msc_usr.crf --depend .\obj\usbh_msc_usr.d)
-I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54C245B8)
-I (..\USBH\USB_USE\inc\usbh_msc_usr.h)(0x5972481E)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54C245B8)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-I (..\USBH\USB_USE\inc\usbh_usr.h)(0x5AFC3166)
-I (..\FATFS\FatFs11\ff.h)(0x5596A3EA)
-I (..\FATFS\FatFs11\integer.h)(0x54D8A8D8)
-I (..\FATFS\FatFs11\ffconf.h)(0x5597F12A)
-F (..\USBH\USB_USE\scr\fatfs_demo.c)(0x59BF671A)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\fatfs_demo.o --omf_browse .\obj\fatfs_demo.crf --depend .\obj\fatfs_demo.d)
-I (..\USBH\USB_USE\inc\fatfs_demo.h)(0x597246E2)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\FATFS\FatFs11\ff.h)(0x5596A3EA)
-I (..\FATFS\FatFs11\integer.h)(0x54D8A8D8)
-I (..\FATFS\FatFs11\ffconf.h)(0x5597F12A)
-I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x54C245B8)
-I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x54C245B8)
-I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x54C245B8)
-I (..\USBH\USB_USE\inc\usbh_usr.h)(0x5AFC3166)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-F (..\FATFS\FatFs11\ff.c)(0x58C9D0B4)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\ff.o --omf_browse .\obj\ff.crf --depend .\obj\ff.d)
-I (..\FATFS\FatFs11\ff.h)(0x5596A3EA)
-I (..\FATFS\FatFs11\integer.h)(0x54D8A8D8)
-I (..\FATFS\FatFs11\ffconf.h)(0x5597F12A)
-I (..\FATFS\FatFs11\diskio.h)(0x54D8A8D8)
-I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x54C245B8)
-F (..\FATFS\FatFs11\diskio_msc&sd.c)(0x559A257C)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\diskio_msc&sd.o --omf_browse .\obj\diskio_msc&sd.crf --depend .\obj\diskio_msc&sd.d)
-I (..\FATFS\FatFs11\diskio.h)(0x54D8A8D8)
-I (..\FATFS\FatFs11\integer.h)(0x54D8A8D8)
-I (..\USBH\USB_USE\inc\usb_conf.h)(0x5AFC3082)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\USBH\USB_MSC\inc\usbh_msc_core.h)(0x4F6B3AC6)
-I (..\USBH\USB_HOST_Driver\inc\usbh_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_hcd.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_regs.h)(0x4F6AD858)
-I (..\USBH\USB_OTG_Driver\inc\usb_core.h)(0x58CA1EC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_defines.h)(0x4F6AD858)
-I (..\USBH\USB_HOST_Driver\inc\usbh_def.h)(0x4F6B3AC8)
-I (..\USBH\USB_USE\inc\usbh_conf.h)(0x4F6AD876)
-I (..\USBH\USB_HOST_Driver\inc\usbh_stdreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_OTG_Driver\inc\usb_bsp.h)(0x59809CAE)
-I (..\USBH\USB_HOST_Driver\inc\usbh_ioreq.h)(0x4F6B3AC8)
-I (..\USBH\USB_HOST_Driver\inc\usbh_hcs.h)(0x4F6B3AC8)
-I (..\USBH\USB_MSC\inc\usbh_msc_scsi.h)(0x4F6B3AC6)
-I (..\USBH\USB_MSC\inc\usbh_msc_bot.h)(0x4F6B3AC6)
-F (..\FATFS\FatFs11\option\cc932.c)(0x59724556)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\cc932.o --omf_browse .\obj\cc932.crf --depend .\obj\cc932.d)
-I (..\FATFS\FatFs11\option\../ff.h)(0x5596A3EA)
-I (..\FATFS\FatFs11\option\../integer.h)(0x54D8A8D8)
-I (..\FATFS\FatFs11\option\../ffconf.h)(0x5597F12A)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\misc.o --omf_browse .\obj\misc.crf --depend .\obj\misc.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_adc.o --omf_browse .\obj\stm32f10x_adc.crf --depend .\obj\stm32f10x_adc.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_dma.o --omf_browse .\obj\stm32f10x_dma.crf --depend .\obj\stm32f10x_dma.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_exti.o --omf_browse .\obj\stm32f10x_exti.crf --depend .\obj\stm32f10x_exti.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.c)(0x5B8FE904)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_flash.o --omf_browse .\obj\stm32f10x_flash.crf --depend .\obj\stm32f10x_flash.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c)(0x59BFBF5E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_gpio.o --omf_browse .\obj\stm32f10x_gpio.crf --depend .\obj\stm32f10x_gpio.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_pwr.o --omf_browse .\obj\stm32f10x_pwr.crf --depend .\obj\stm32f10x_pwr.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_rcc.o --omf_browse .\obj\stm32f10x_rcc.crf --depend .\obj\stm32f10x_rcc.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_spi.o --omf_browse .\obj\stm32f10x_spi.crf --depend .\obj\stm32f10x_spi.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c)(0x4D842D6E)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_tim.o --omf_browse .\obj\stm32f10x_tim.crf --depend .\obj\stm32f10x_tim.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c)(0x59BE0BC2)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\stm32f10x_usart.o --omf_browse .\obj\stm32f10x_usart.crf --depend .\obj\stm32f10x_usart.d)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\UserHardwareLib\inc\user_sysconfig.h)(0x5AEB27E6)()
-F (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.c)(0x4D842D68)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\core_cm3.o --omf_browse .\obj\core_cm3.crf --depend .\obj\core_cm3.d)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-F (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.c)(0x597202A0)(-c --cpu Cortex-M3 -g -W -O0 --apcs=interwork -I.\User\inc -I..\UserHardwareLib\inc -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\UserSoftwareLib\inc\CIS -I..\FATFS\FatFs11 -I..\USBH\USB_HOST_Driver\inc -I..\USBH\USB_MSC\inc -I..\USBH\USB_USE\inc -I..\USBH\USB_OTG_Driver\inc -I..\UserSoftwareLib\currency\USD -I..\UserSoftwareLib\currency\INDIA -I..\UserSoftwareLib\currency\KENYA -I..\UserSoftwareLib\currency\CNY -I..\UserSoftwareLib\currency\CURRENCY -I..\UserSoftwareLib\A9B(0832) -I..\UserSoftwareLib\CIS -I..\UserSoftwareLib\Common -I..\UserSoftwareLib\LCD0832K03 -I..\UserSoftwareLib\LCD418 -I..\UserSoftwareLib\JBY_10\inc-I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="514" -DGD32F10X_CL -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER-o .\obj\system_stm32f10x.o --omf_browse .\obj\system_stm32f10x.crf --depend .\obj\system_stm32f10x.d)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x5B900E84)
-I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4D842D68)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x54C245B8)
-I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h)(0x549BB7BE)
-I (..\UserHardwareLib\inc\stm32f10x_conf.h)(0x59BE55E0)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_exti.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_flash.h)(0x5B8FE802)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_pwr.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rcc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_rtc.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4D842D6C)
-I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4D842D6C)
-F (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm\startup_stm32f10x_cl.s)(0x5B05755C)(--cpu Cortex-M3 -g --apcs=interwork -I D:\ProjectFile\JBY\BOOT\A9\RTE-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\GD32F10x\Include-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\GD32F1xx_DFP\1.1.0\Device\Include--pd "__UVISION_VERSION SETA 514" --pd "GD32F10X_CL SETA 1"--list .\list\startup_stm32f10x_cl.lst --xref -o .\obj\startup_stm32f10x_cl.o --depend .\obj\startup_stm32f10x_cl.d)
