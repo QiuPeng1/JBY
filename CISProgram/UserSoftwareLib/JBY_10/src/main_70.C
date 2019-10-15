@@ -1494,6 +1494,9 @@ void DispIRCalibration(void)
 		if(gb_irCalibrationDisp == 0)
 		{
 			disp_string("Start Ir Calibration",0,30);
+			disp_setPenColor(RED);
+			disp_string("Please Use 127G",0,190);
+			disp_setPenColor(WHITE);
 			disp_string("Ir Value:",0,60);
 			for(i=0; i<7; i++)
 			{
@@ -1534,20 +1537,23 @@ void DispIRCalibration(void)
 		else if(gb_irCalibrationDisp == 2)
 		{
 			disp_string("127G Ir Calibration End",0,30);
+			disp_setPenColor(RED);
+			disp_string("Please Use 80G",0,190);
+			disp_setPenColor(WHITE);
 			disp_string("Ir Value:",0,60);
 			for(i=0; i<7; i++)
 			{
-				U8ToStr(savedPara.adjustPara.irBz80gStandard[20-i],dispStr);
+				U16ToStr(savedPara.adjustPara.irBz80gStandard[20-i],dispStr,3);
 				disp_string(dispStr,2+IR_X*i,90);
 			}
 			for(i=0; i<7; i++)
 			{
-				U8ToStr(savedPara.adjustPara.irBz80gStandard[13-i],dispStr);
+				U16ToStr(savedPara.adjustPara.irBz80gStandard[13-i],dispStr,3);
 				disp_string(dispStr,2+IR_X*i,120);
 			}
 			for(i=0; i<7; i++)
 			{
-				U8ToStr(savedPara.adjustPara.irBz80gStandard[6-i],dispStr);
+				U16ToStr(savedPara.adjustPara.irBz80gStandard[6-i],dispStr,3);
 				disp_string(dispStr,2+IR_X*i,150);
 			}
 		}
@@ -1573,7 +1579,25 @@ void DispIRCalibration(void)
 		}
 		else if(gb_irCalibrationDisp == 4)
 		{
+			disp_setPenColor(RED);
 			disp_string("Finish Ir Calibration",0,30);
+			disp_setPenColor(WHITE);
+			disp_string("Ir Value:",0,60);
+			for(i=0; i<7; i++)
+			{
+				U16ToStr(savedPara.adjustPara.irBz40gStandard[20-i],dispStr,3);
+				disp_string(dispStr,2+IR_X*i,90);
+			}
+			for(i=0; i<7; i++)
+			{
+				U16ToStr(savedPara.adjustPara.irBz40gStandard[13-i],dispStr,3);
+				disp_string(dispStr,2+IR_X*i,120);
+			}
+			for(i=0; i<7; i++)
+			{
+				U16ToStr(savedPara.adjustPara.irBz40gStandard[6-i],dispStr,3);
+				disp_string(dispStr,2+IR_X*i,150);
+			}
 		}
 	}
 }
@@ -1590,7 +1614,9 @@ void DispColorCalibration(void)
 
 		if(gb_inCollabration == COLLABRATION_COLOR)//开始校正
 		{
-
+			disp_setPenColor(RED);
+			disp_string("Please USE A4",0,5);
+			disp_setPenColor(WHITE);
 			disp_string("Start Color Calibration",0,30);
 		}
 		else
@@ -1624,7 +1650,9 @@ void DispUVCalibration(void)
 
 		if(gb_inCollabration == COLLABRATION_UV)//开始校正
 		{
-
+			disp_setPenColor(RED);
+			disp_string("Please USE A4",0,5);
+			disp_setPenColor(WHITE);
 			disp_string("Start UV Calibration",0,30);
 		}
 		else
@@ -1648,20 +1676,41 @@ u8 * const Direction_STR[] =
 {
 	"Forward ",
 	"Backward",
+	"MODE3   ",
 	"OFF     ",
 };
 u8 * const UVgrade_STR[] = 
 {
-	"UV0",
-	"UV1",
-	"UV2",
-	"UV3",
-	"UV4",
-	"UV5",
-	"UV6",
-	"UV7",
-	"UV8",
-	"UV9",	
+	"UV0 ",
+	"UV1 ",
+	"UV2 ",
+	"UV3 ",
+	"UV4 ",
+	"UV5 ",
+	"UV6 ",
+	"UV7 ",
+	"UV8 ",
+	"UV9 ",	
+	"UV10",
+	"UV11",
+	"UV12",
+	"UV13",
+	"UV14",
+	"UV15",
+	"UV16",
+	"UV17",
+	"UV18",
+	"UV19",
+	"UV20",
+	"UV21",
+	"UV22",
+	"UV23",
+	"UV24",
+	"UV25",
+	"UV26",
+	"UV27",
+	"UV28",
+	"UV29",
 };
 u8 * const Color_STR[] = 
 {
@@ -1767,7 +1816,7 @@ void DispEngModeValue(void)
 	
 	//disp_string(UVgrade_STR[savedPara.uvGrade],ENGMODE_W*23,ENGMODE_H*9);
 	U8ToStr(gb_uvTher[savedPara.uvGrade],dispStr);
-	disp_string(dispStr,ENGMODE_W*27,ENGMODE_H*9);
+	disp_string(dispStr,ENGMODE_W*28,ENGMODE_H*9);
 }
 void DispEngModeSetting(void)
 {
@@ -2146,7 +2195,8 @@ void EngModeParaInc(void)
 		break;
 		case 6:
 			savedPara.uvGrade++;
-			savedPara.uvGrade %= 10;
+			savedPara.uvGrade %= 30;//NUMBER_OF_ARRAY(gb_uvTher);
+			
 		break;
 		case 7://MOTOR
 			if(g_motorRunState == 0)
@@ -2184,7 +2234,7 @@ void SettingParaInc(void)
 		break;
 		case 1:
  			savedPara.noteLeaveRoads ++;
- 			savedPara.noteLeaveRoads %= 2;
+ 			savedPara.noteLeaveRoads %= 3;
 			gb_paraChanged = 1;
 		break;
 		case 2:
@@ -2721,28 +2771,28 @@ void DealNoteType(void)
 			}
 		}
 	}
-	else if(billIradMask == 1)
+	
+	if(billIradMask == 1)
 	{
 		if((savedPara.identificationWays&IR_WAY) == IR_WAY)
 		{
 			g_errFlag |= ERR_IR;
 		}
 	}
-	else if(mgFvtFlag == 1)
+	if(mgFvtFlag == 1)
 	{
 		if((savedPara.identificationWays&MG_WAY) == MG_WAY)
 		{
 			g_errFlag |= ERR_MG;
 		}
 	}
-	else if(billUVFvt == 1)
+	if(billUVFvt == 1)
 	{
 		if((savedPara.identificationWays&UV_WAY) == UV_WAY)
 		{	
 			g_errFlag |= ERR_UV;
 		}
 	}
-	
 	if(g_errFlag == 0)
 	{
 		if((savedPara.identificationWays&IR_WAY) == IR_WAY)
@@ -3247,8 +3297,10 @@ void DealNotePass(void)
 			else
 			{
 				//计算函数
-				billUVFvt = 0;
+				//billUVFvt = 0;
 				delay_DelayMs(100);
+				//billUV_Judge(g_currency,gb_uvTher[savedPara.uvGrade]);
+				
 				g_timetest[0] = timeCnt;
 				billIrad_Judge(IRlengthBuffer,g_currency);//0909改U16注释
 				g_timetest[1] = timeCnt;
@@ -3303,7 +3355,7 @@ void DealNotePass(void)
 						gb_testbuf[2] = billIradMask;
 						gb_testbuf[3] = mgFvtFlag;
 						gb_testbuf[4] = colorDataLen;
-						gb_testbuf[5] = 0;
+						gb_testbuf[5] = billUVFvt;
 						gb_testbuf[6] = 0x55;
 						uart_SendDataToUart3(gb_testbuf,7);
 						
@@ -3343,7 +3395,7 @@ void DealNotePass(void)
 				g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
 				gb_noteState = NOTE_IDEL;
 			}
-			else
+			else if(savedPara.noteLeaveRoads == 1)
 			{
 				noteState |= STATE_BACKWARD_NOTE_LEAVE;
 				gb_haveNoteInPS3 = 0;
@@ -3353,6 +3405,28 @@ void DealNotePass(void)
 				gb_noteState = NOTE_BACKWARD;
 
 				g_maxMpFromComputeToPS1 = MP_FROM_COMPUTE_TO_PS1;			
+			}
+			else
+			{
+				if(g_errFlag > 0)//假币向后走，真币向前走
+				{
+					noteState |= STATE_BACKWARD_NOTE_LEAVE;
+					gb_haveNoteInPS3 = 0;
+					PS3FlagCnt = 0;
+					motor1SataRecord = 1;
+					motor1_BackwardRun();//向后转
+					gb_noteState = NOTE_BACKWARD;
+
+					g_maxMpFromComputeToPS1 = MP_FROM_COMPUTE_TO_PS1;			
+				}
+				else
+				{
+					noteState |= STATE_FORWARD_NOTE_LEAVE;
+					motor1_ForwardRun();//向前转
+					motor1SataRecord2 = 2; 
+					g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
+					gb_noteState = NOTE_IDEL;
+				}
 			}
 		}
 	}
@@ -3612,6 +3686,10 @@ void JudgeMotorStop(void)
 void IncNoteNum(void)
 {
 	noteNum ++;
+	if(noteNum > 999)
+	{
+		noteNum = 0;
+	}		
 	if(g_currency == INDEX_USD)
 	{
 		noteDenoValue = USD_NOTE_VALUE[currentNoteType];
@@ -3661,7 +3739,15 @@ void IncNoteNum(void)
 		noteDenoValue = CNY_NOTE_VALUE[currentNoteType];
 	}
 	noteSum += noteDenoValue;
+	if(noteSum > 9999999)
+	{
+		noteSum = 0;
+	}
 	denoNoteNum[currentNoteType] ++;
+	if(denoNoteNum[currentNoteType] > 999)
+	{
+		denoNoteNum[currentNoteType] = 0;
+	}
 }
 
 void ClearAllNoteNum(void)
@@ -5081,7 +5167,7 @@ void MainInit(void)
 		savedPara.flag = DATA_FLAG;
 		eeprom_SaveData();
 	}
-	if(savedPara.uvGrade >= 10)
+	if(savedPara.uvGrade > 30)
 	{
 		savedPara.uvGrade = 5;
 		eeprom_SaveData();

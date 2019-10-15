@@ -251,9 +251,6 @@ u8 billRGB_Judge(int noteType)
 		fvtInt = 0;
 		for (j = 0; j < COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM; j++)
 		{
-			//t0 = (int)pf1[j];
-			//t1 = (int)pFvt[j*Class+i];
-			//fvtInt += t0*t1;
 			fvtInt += (pf1[j]*pFvt[j*Class+i]);
 		}
 		fvt = ((double)(fvtInt))/50000;
@@ -269,6 +266,10 @@ u8 billRGB_Judge(int noteType)
 		}
 	}
 
+	if (max_t < 0.005)
+	{
+	//	min_i = 50;
+	}
 	colorJudgeValue = min_i;
 	colorJudgeFlag = 0;//min_i%4;
 
@@ -640,7 +641,8 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 
 u8 billMG_Judge(int noteType)
 {
-	int i, Max0, Min0, Max1, Min1;
+	int i, Max0, Min0, Max1, Min1,sum;
+	mgFvtFlag = 0;
 	if (mgDataLen < 80 || mgDataLen > 850)
 	{
 		mgFvtFlag = 1;
@@ -653,7 +655,8 @@ u8 billMG_Judge(int noteType)
 	Max1 = 0;
 	Min1 = 255*10;
 
-	for (i = 4; i < mgDataLen -4; i++)
+	sum = 0;
+	for (i = 16; i < mgDataLen -16; i++)
 	{
 		if (Max0 < mgData[0][i])
 		{
@@ -672,28 +675,44 @@ u8 billMG_Judge(int noteType)
 		{
 			Min1 = mgData[1][i];
 		}
+		if (mgData[0][i] > 220 || mgData[1][i] > 220)
+		{
+			sum ++;
+		}
 	}
 #ifdef DRAW_STATE2
 	Display_Proj_BYTE(mgData[0], mgDataLen, 0, 0, 1, 0);
 
 	Display_Proj_BYTE(mgData[1], mgDataLen, 0, 255, 1, 0);
 	Display_Int(Max0-Min0, 10, 10);
+	Display_Int(sum, 40, 10);
 	Display_Int(Max1-Min1, 10, 256);
 #endif	
 
-	mgFvtFlag = 0;
-	if (noteType == INDEX_EUR || noteType == INDEX_TRY)
+	
+	if (noteType == INDEX_EUR)
 	{
 		if (Max0-Min0 < 120 && Max1-Min1 < 120)
 		{
 			mgFvtFlag = 1;
 		}
 	}
+	else if (noteType == INDEX_TRY)
+	{
+		if (Max0-Min0 < 200 && Max1-Min1 < 200)
+		{
+			mgFvtFlag = 1;
+		}
+		if (sum < 1)
+		{
+			mgFvtFlag = 1;
+		}
+	}
 	else if (noteType == INDEX_USD)
 	{
-		if (Max0-Min0 < 70 && Max1-Min1 < 70)
+		if (Max0-Min0 < 130 && Max1-Min1 < 130)
 		{
-		//	mgFvtFlag = 1;
+			mgFvtFlag = 1;
 		}
 	}
 	else if (noteType == INDEX_RUB)
@@ -712,9 +731,10 @@ u8 billMG_Judge(int noteType)
 u8 billUV_Judge(int noteType, int uvThre)
 {
 	int i, Max0, Min0, Max1, Min1, pos0, pos1, t, count;
+	billUVFvt = 0;
 	if (uvDataLen < 80)// || uvDataLen > 450)
 	{
-		mgFvtFlag = 1;
+		//billUVFvt = 1;
 		return 0;
 	}
 
@@ -782,18 +802,39 @@ u8 billUV_Judge(int noteType, int uvThre)
 			billUVFvt = 1;
 		}
 	}
+	else
+	{
+		if (t > uvThre)
+		{
+			billUVFvt = 1;
+		}
+	}
+	/*
+	else if (noteType == INDEX_TRY)
+	{
+		if (t > 100)
+		{
+			billUVFvt = 1;
+		}
+	}
+	else if(noteType == INDEX_USD)
+	{
+		if (t > 100)
+		{
+			billUVFvt = 1;
+		}
+	}*/
+	
 #ifdef DRAW_STATE2
 	Display_Proj(projH1,uvDataLen,400, 0, 0, 0);
 	Display_Proj(projH,uvDataLen,400, 100, 0, 0);
 	Display_Proj_BYTE(uvData, uvDataLen, 0, 0, 1, 0);
 	Draw_Line(pos0, 0, pos0, 255);
 	Draw_Line(pos1, 0, pos1, 255);
-//	Display_Proj_BYTE(mgData[1], mgDataLen, 0, 255, 1, 0);
 	Display_Int(t, 10, 10);
 	Display_Int(Max1-Min1, 10, 256);
 #endif
 	return 0;
-
 }
 
 void FilterAverage_2(I32 *data,I32 l)

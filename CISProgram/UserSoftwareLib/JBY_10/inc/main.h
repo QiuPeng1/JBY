@@ -126,7 +126,7 @@ bit gb_jinChaoFaSheIsOn = 0;
 #define USB_FAULT_GPIO_PIN               GPIO_Pin_15
 #define USB_FAULT_GPIO_MODE              GPIO_Mode_IN_FLOATING
 #define readUsbFault()  (GPIO_ReadInputDataBit(USB_FAULT_GPIO_PORT, USB_FAULT_GPIO_PIN))
-
+#define NUMBER_OF_ARRAY(a)    		(sizeof(a)/sizeof(a[0]))
 u8 gb_usbState;
 //#define	TEST_GPIO_PORT GPIOC
 //#define	TEST_GPIO_PIN GPIO_Pin_6
@@ -982,7 +982,8 @@ u8 g_subStateOfNormal = NORMAL_DIAN_CHAO;
 u8 gb_lcdBacklightOn = 1;
 #define TURN_OFF_LCD_BACKLIGHT_TIME 60
 u16 lcdBackLightOffCnt = TURN_OFF_LCD_BACKLIGHT_TIME;
-u8 gb_uvTher[]={20,25,30,35,40,45,50,55,60,65,70};
+//u8 gb_uvTher[]={20,25,30,35,40,45,50,55,60,65,70};
+u8 gb_uvTher[]={40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,85,90,95,100,105,110,115,120,125};//,103,106,109,112,115,118,121};
 //u8 gb_notebackInEnteranceFlag = 0;
 #ifdef DEBUG_MODE
 u8 testflag[40];
