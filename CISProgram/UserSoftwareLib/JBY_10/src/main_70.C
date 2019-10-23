@@ -2765,9 +2765,95 @@ void DealNoteType(void)
 			{
 				g_errFlag = 0;
 			}
+			else if(g_currency == INDEX_CNY)
+			{
+				switch(billValue)
+				{
+				case 0:
+				case 1:
+				case 2:
+					if(colorJudgeValue == 0)
+					{
+						g_errFlag = 0;
+					}
+					else
+					{
+						g_errFlag = 1;
+					}
+					break;
+				case 3:
+				case 4:
+				case 5:
+					if(colorJudgeValue == 3)
+					{
+						g_errFlag = 0;
+					}
+					else
+					{
+						g_errFlag = 1;
+					}
+					break;
+					break;
+				case 6:
+				case 7:
+				case 8:
+					if(colorJudgeValue == 6)
+					{
+						g_errFlag = 0;
+					}
+					else
+					{
+						g_errFlag = 1;
+					}
+					break;
+					break;
+				case 9:
+				case 10:
+				case 11:
+					if(colorJudgeValue == 9)
+					{
+						g_errFlag = 0;
+					}
+					else
+					{
+						g_errFlag = 1;
+					}
+					break;
+					break;
+				case 12:
+				case 13:
+				case 14:
+					if(colorJudgeValue == 12)
+					{
+						g_errFlag = 0;
+					}
+					else
+					{
+						g_errFlag = 1;
+					}
+					break;
+					break;
+				case 15:
+				case 16:
+				case 17:
+					if(colorJudgeValue == 15)
+					{
+						g_errFlag = 0;
+					}
+					else
+					{
+						g_errFlag = 1;
+					}
+					break;
+					break;
+				default:
+					g_errFlag = 1;
+					break;
+				}			
+			}
 			else
 			{
-				g_errFlag |= ERR_COLOR;
+				g_errFlag = 1;
 			}
 		}
 	}

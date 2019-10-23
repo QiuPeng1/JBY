@@ -375,7 +375,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	projH[i] = 0;
 	sx = 8;
 	Max = 99999999;
-	for (i = 0; i < 80; i++)
+	for (i = 0; i < 120; i++)
 	{
 		if (Max > projH[i])
 		{
@@ -808,6 +808,10 @@ u8 billUV_Judge(int noteType, int uvThre)
 		{
 			billUVFvt = 1;
 		}
+	}
+	if (noteType == INDEX_CNY)
+	{
+		billUVFvt = 0;
 	}
 	/*
 	else if (noteType == INDEX_TRY)
