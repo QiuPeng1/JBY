@@ -144,11 +144,11 @@ int main(void)
 		}	
 	}
 	
-	if(needUpGrade == 0)//不需要升级 跳转
-	{
+//	if(needUpGrade == 0)//不需要升级 跳转
+//	{
 		RUN_APP:
-		RunProgramme(APP_ADDR);
-	}
+//		RunProgramme(APP_ADDR);
+//	}
 	
 	//需要升级
 	/*端口配置及
