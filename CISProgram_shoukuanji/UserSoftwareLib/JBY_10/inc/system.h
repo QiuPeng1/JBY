@@ -99,6 +99,8 @@ V1.5.4 20190903 1、更新欧元
 V1.6.0 20190916 1、增加串口协议
 V6.0.1 20191014 1、串口切换协议使能鉴别仪
 V6.0.2 20191023 1、优化人民币算法
+V6.0.3 20191205 1、优化人民币算法
+                2、禁用100
 **************************************************************************/
 
 /*防止重复引用 */
@@ -139,9 +141,9 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V6.0.2"
+#define VERSION  "V6.0.3"
 #define USER1_VERSION "SKJ_HW_V100"
-#define USER2_VERSION "SKJ_SW_V102"
+#define USER2_VERSION "SKJ_SW_V103"
 
 typedef enum
 {

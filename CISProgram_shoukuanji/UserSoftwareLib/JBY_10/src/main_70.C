@@ -3867,12 +3867,12 @@ void DealNoteType(void)
 			gb_CurrentHaveBill = 1;
 			switch(gb_billValue)
 			{
-			case 0:
-			case 1:
-			case 2:
-				currentNoteType = 0;//100
-				gb_CurrentValue = 7;
-				break;
+//			case 0:
+//			case 1:
+//			case 2:
+//				currentNoteType = 0;//100
+//				gb_CurrentValue = 7;
+//				break;
 			case 3:
 			case 4:
 			case 5:
