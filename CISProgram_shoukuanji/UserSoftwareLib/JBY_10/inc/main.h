@@ -362,6 +362,9 @@ u8 UvValue;
 u8 enteranceSensorVal;
 u8 tdjsValue[2];
 
+u8 gb_machineNeedInitFlag = 0;
+u8 gb_clearTDfLag = 0;
+
 u8 IRlengthBuffer[8192];
 u8 uvCnt;
 
@@ -867,6 +870,9 @@ enum
 	BILL_SOFTWARERROR = 11,
 };
 u8 gb_billState = BILL_READY;
+u16 gb_disableBillOverTime = 0;
+u8 gb_disableBillFlag = 0;
+
 u8 gb_CurrentValue = 0;
 u8 gb_CurrentHaveBill = 0;
 /**********************************´®¿Ú***********************************/
@@ -1280,6 +1286,9 @@ void UserCopyPac(UART_CMD UserPac);
 void DealBKPackage(void);
 void sendInfoToHost(u8 cmd);
 void DispTransef(void);
+void DealKeyDownOnDuBi(u8 key);
+void ClearBillTD(void);
+
 // void InitIrData(void);
 // void DealIr2Data(u8 d);
 // void DealIr3Data(u8 d);

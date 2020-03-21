@@ -40,6 +40,9 @@ void DealKeyDown(void)
 		}
 		switch(systemState)
 		{
+			case DU_BI:
+					DealKeyDownOnDuBi(key);
+			break;
 			case NORMAL:
 				if(gb_incalibrationByKey == 0)
 				{
@@ -272,7 +275,7 @@ void DealKeyDownOnNormal(u8 key)
 			case LONG_KEY_CUR:
 				if(gb_uart1Mode == TRANSFER_MODE)
 				{
-					gb_billEnable = 1;
+					savedPara.billEnable = 1;
 					gb_uart1Mode = DISP_MODE;
 					uart1_Init();
 					delay_DelayMs(100);
@@ -280,7 +283,7 @@ void DealKeyDownOnNormal(u8 key)
 				}
 				else
 				{
-					gb_billEnable = 0;
+					savedPara.billEnable = 0;
 					gb_uart1Mode = TRANSFER_MODE;
 					DispTransef();
 					uart1_Init();
@@ -304,7 +307,61 @@ void DealKeyDownOnNormal(u8 key)
 		}
 	}
 }
-
+void dealJAM(u8 Cnt)
+{ 
+	u8 i;
+	gb_enableSample = 0;
+	hwfs_On();
+	delay_DelayMs(10);
+	SampleOneRow();
+	if((tdjsValue[0] > TONGDAO_HAVENOTE_THRES)
+		&&(tdjsValue[1] > TONGDAO_HAVENOTE_THRES))
+		  //&&gb_lengthCovered == 0)
+		{
+			goto STOP_DEALJAM;
+		}
+	for(i=0; i<Cnt; i++)
+	{	
+		motor1_BackwardRun();
+		delay_DelayMs(4000);
+		motor1_Stop();
+		delay_DelayMs(300);
+		SampleOneRow();
+		if((tdjsValue[0] > TONGDAO_HAVENOTE_THRES)
+			&&(tdjsValue[1] > TONGDAO_HAVENOTE_THRES))
+		  //&&gb_lengthCovered == 0)
+		{
+			goto STOP_DEALJAM;
+		}
+		motor1_ForwardRun();
+		delay_DelayMs(2000);		
+		motor1_Stop();
+		delay_DelayMs(300);
+		SampleOneRow();
+		if((tdjsValue[0] > TONGDAO_HAVENOTE_THRES)
+			&&(tdjsValue[1] > TONGDAO_HAVENOTE_THRES))
+		  //&&gb_lengthCovered == 0)
+		{
+			goto STOP_DEALJAM;
+		}
+	}
+	STOP_DEALJAM:
+	gb_enableSample = 1;
+	hwfs_On();
+	
+}
+void DealKeyDownOnDuBi(u8 key)
+{
+	switch(key)
+	{
+		case KEY_RESTART:
+			dealJAM(2);
+		break;
+		case LONG_KEY_RESTART:	
+			dealJAM(2);
+		break;
+	}
+}
 void modifiIdentificationWays(void)
 {
 	if(savedPara.identificationWays == ALL_WAYS)
@@ -398,6 +455,7 @@ int main(void)
 		memcpy(lengthIdleOriginValue,savedPara.adjustPara.irIdleStandard,REAL_IR_NUM);
 		
 		SetSystemState(NORMAL);
+		gb_billState = BILL_READY;
 		gb_enableSample = 1;
 		g_subStateOfNormal = NORMAL_DIAN_CHAO; 
 		ClearAllNoteNum();
@@ -519,7 +577,29 @@ int main(void)
 			//gb_enableSample = 0;
 			hwfs_Off();
 		}
-		
+		if(gb_machineNeedInitFlag == 1)//初始化命令
+		{
+			gb_machineNeedInitFlag = 0;
+			SetSystemState(SELFCHECK);
+			SystemSelfcheck();
+			gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
+			gb_cmdExecutionErrCode = 0;
+			sendInfoToHost(CMD_HANDSHAKE);
+			if(gb_selfcheckErrorState > 0)
+			{
+				dispSelfcheckError(gb_selfcheckErrorState);
+				gb_selfcheckErrorStateOverTime = 5000;
+			}
+			else
+			{
+				goto SYS_NORMAL;
+			}
+		}
+		if (gb_clearTDfLag == 1)
+		{
+			gb_clearTDfLag = 0;
+			ClearBillTD();
+		}
 		if(systemState == DU_BI)//堵币恢复
 		{
 			if((gb_haveNoteInEntergate == 0)&&(gb_lengthCovered == 0))
@@ -547,6 +627,7 @@ int main(void)
 //					ClearAllNoteNum();
 //					DispMainMenu();
 					SetSystemState(NORMAL);
+					gb_billState = BILL_READY;
 					gb_dispJamInfo = 1;
 					LongBeep(1);
 					dubiRecoverCnt = 0;
@@ -566,7 +647,12 @@ int main(void)
 			motor1StopRecord = 2;
 			if((noteState&STATE_FORWARD_NOTE_LEAVE) == STATE_FORWARD_NOTE_LEAVE)
 			{
-				gb_billState = BILL_CREDIT;
+				if(gb_billState != BILL_READY)
+				{
+					gb_billState = BILL_CREDIT;//禁止收币
+					gb_disableBillOverTime = 2000;
+					gb_disableBillFlag = 1;
+				}
 	 			noteState &= (~STATE_FORWARD_NOTE_LEAVE);
 #ifdef DEBUG_MODE
 				testflag[1] = 1;
@@ -596,6 +682,32 @@ int main(void)
 		DealKeyDown();
 
 	}
+}
+void ClearBillTD(void)
+{
+	//恢复normal
+	hwfs_On();
+	motor1_BackwardRun();
+	delay_DelayMs(2000);
+	motor1_Stop();
+	motor1StopRecord = 1;
+	gb_isJammed = 0;
+	gb_enableSample = 1;
+	noteState = 0;
+	gb_noteState = NOTE_IDEL;
+	gb_billState = BILL_READY;
+	ClearPSIrFlag();
+	ClearJamFlag();
+	SetSystemState(NORMAL);
+	gb_dispJamInfo = 1;
+	LongBeep(1);
+	dubiRecoverCnt = 0;
+
+	//回复指令								
+	gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
+	gb_cmdExecutionErrCode = 0;
+	//??????
+	sendInfoToHost(CMD_HANDSHAKE);
 }
 void updataCurrencySwitch(void)
 {
@@ -871,11 +983,28 @@ void sendInfoToHost(u8 cmd)
 #ifdef UART_DEBUG
 			uart_SendDataToUart3(inforToHost,len);
 #endif
-			if(cmd == CMD_READ_STATUS && gb_CurrentHaveBill == 1)
+			if(cmd == CMD_READ_STATUS)
 			{
-				gb_CurrentHaveBill = 0;
-				gb_CurrentValue = 0;
-				gb_billState = BILL_READY;
+				if(gb_CurrentHaveBill == 1)
+				{
+					gb_CurrentHaveBill = 0;
+					gb_CurrentValue = 0;
+					gb_billState = BILL_READY;
+					gb_disableBillOverTime = 0;
+					gb_disableBillFlag = 0;
+				}
+				else
+				{
+					if(gb_billState == BILL_REJECT || gb_billState == BILL_FRAUD)
+					{
+						gb_billState = BILL_READY;
+						gb_CurrentHaveBill = 0;
+						gb_CurrentValue = 0;
+						gb_billState = BILL_READY;
+						gb_disableBillOverTime = 0;
+						gb_disableBillFlag = 0;
+					}
+				}
 			}
 		}
 	}
@@ -977,46 +1106,48 @@ void DealBKPackage(void)
 							case CMD_INIT:			 
 								gb_lastCmd = CMD_INIT;
 								//??????
-								//gb_machineNeddInitFlag = 1;
-							  gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
-							  gb_cmdExecutionErrCode = 0;
-							 sendInfoToHost(CMD_HANDSHAKE);
+								gb_machineNeedInitFlag = 1;
+							    //gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
+							    //gb_cmdExecutionErrCode = 0;
+							    //sendInfoToHost(CMD_HANDSHAKE);
 							break;
 							case CMD_BILL_ENABLE:
 								gb_lastCmd = CMD_BILL_ENABLE;
-							  gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
-							  gb_cmdExecutionErrCode = 0;
-								gb_billEnable = 1;
-							 sendInfoToHost(CMD_HANDSHAKE);
+							    gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
+							    gb_cmdExecutionErrCode = 0;
+								savedPara.billEnable = 1;
+								eeprom_SaveData();
+							    sendInfoToHost(CMD_HANDSHAKE);
 							break;
 							case CMD_BILL_DISABLE:
 								gb_lastCmd = CMD_BILL_DISABLE;
-							  gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
-							  gb_cmdExecutionErrCode = 0;
-								gb_billEnable = 0;
-							 sendInfoToHost(CMD_HANDSHAKE);
+							    gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
+							    gb_cmdExecutionErrCode = 0;
+								savedPara.billEnable = 0;
+							    eeprom_SaveData();
+							    sendInfoToHost(CMD_HANDSHAKE);
 							break;
 							case CMD_READ_STATUS:
 								gb_lastCmd = CMD_READ_STATUS;
 								gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
 								gb_cmdExecutionErrCode = 0;
 								//??????
-							  sendInfoToHost(CMD_HANDSHAKE);
+							    sendInfoToHost(CMD_HANDSHAKE);
 							break;
 							case CMD_READ_VERSION:
 								gb_lastCmd = CMD_READ_VERSION;
 								gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
 								gb_cmdExecutionErrCode = 0;
 								//??????
-							  sendInfoToHost(CMD_HANDSHAKE);
-							break;
-							
+							    sendInfoToHost(CMD_HANDSHAKE);
+							break;						
 							case CMD_CLEAR_TD:
 								gb_lastCmd = CMD_CLEAR_TD;
-								gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
-								gb_cmdExecutionErrCode = 0;
+								gb_clearTDfLag = 1;
+								//gb_cmdExecutionResult = CMD_EXECUTION_SUCESS;
+								//gb_cmdExecutionErrCode = 0;
 								//??????
-							  sendInfoToHost(CMD_HANDSHAKE);
+							  //sendInfoToHost(CMD_HANDSHAKE);
 							break;
 							default:
 								break;
@@ -1249,17 +1380,17 @@ void uartPacProcess(u8 data)
 				gb_uartPacDealOverTime = 0;
 				gb_uartPacDealStep = UART_IDEL;
 				uart1Pacinfifo_DataIn(gb_packageFromUart1);
-#ifdef UART_DEBUG
-				uart_SendDataToUart3("789", 3);
-#endif
+//#ifdef UART_DEBUG
+//				uart_SendDataToUart3("789", 3);
+//#endif
 			}
 			else
 			{
 				gb_uartPacDealOverTime = uartPacDealMaxTime;
 			}
-			#ifdef UART_DEBUG
-		uart_SendDataToUart3("A",1);
-#endif
+//			#ifdef UART_DEBUG
+//		uart_SendDataToUart3("A",1);
+//#endif
 		break;
 		default:
 		
@@ -1605,7 +1736,9 @@ void DealScanEnteracneSensor(void)
 	u16 i;
 	if(systemState == NORMAL)
 	{
-		if(gb_haveNoteInEntergate == 1&& gb_billEnable == 1)
+		if(gb_haveNoteInEntergate == 1
+			&& savedPara.billEnable == 1
+			&& gb_disableBillFlag ==0)
 		{
 			if((noteState == 0)&&(g_motor1State == MOTOR_STOP))//&&(gb_notebackInEnteranceFlag == 0))//空闲态
 			{
@@ -3867,17 +4000,19 @@ void DealNoteType(void)
 			gb_CurrentHaveBill = 1;
 			switch(gb_billValue)
 			{
-//			case 0:
-//			case 1:
-//			case 2:
-//				currentNoteType = 0;//100
-//				gb_CurrentValue = 7;
-//				break;
+			case 0:
+			case 1:
+			case 2:
+				currentNoteType = 0;//100
+				gb_CurrentValue = 7;
+				gb_CurrentHaveBill = 0;
+				break;
 			case 3:
 			case 4:
 			case 5:
 				currentNoteType = 1;//50
 				gb_CurrentValue = 6;
+				gb_CurrentHaveBill = 0;
 				break;
 			case 6:
 			case 7:
@@ -4069,12 +4204,25 @@ void DealNotePass(void)
 				}
 				else
 				{
-					noteState |= STATE_FORWARD_NOTE_LEAVE;
-					motor1_ForwardRun();//向前转
-					motor1SataRecord2 = 2; 
-					g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
-					gb_noteState = NOTE_IDEL;
-					gb_billState = BILL_READY;
+					if((gb_CurrentValue == 7)||(gb_CurrentValue == 6))//100元退钞
+					{
+						gb_billState = BILL_REJECT;
+						noteState |= STATE_BACKWARD_NOTE_LEAVE;
+						gb_haveNoteInPS3 = 0;
+						PS3FlagCnt = 0;
+						motor1SataRecord = 1;
+						motor1_BackwardRun();//向后转
+						gb_noteState = NOTE_BACKWARD;					
+					}
+					else
+					{
+						noteState |= STATE_FORWARD_NOTE_LEAVE;
+						motor1_ForwardRun();//向前转
+						motor1SataRecord2 = 2; 
+						g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
+						gb_noteState = NOTE_IDEL;
+						gb_billState = BILL_STACKED;
+					}
 				}
 			//}
 		}
@@ -5081,8 +5229,8 @@ void SystemSelfcheck(void)
  	g_lengthSampleIndex = 0;
  	//needSampleIdleNum = 500;
  	delay_DelayMs(1000);
-	//motor1_BackwardRun();
-	//delay_DelayMs(1000);
+	motor1_BackwardRun();
+	delay_DelayMs(1000);
 	motor1_Stop();
 	mpcnt1 = mpCnt;
 	if(mpcnt1<20)
@@ -5362,6 +5510,7 @@ void DealJamAtOnce(void)
 // 		tm16xx_Led2DispStr(dispStr);
 		initEteranceSensor();
 		SetSystemState(DU_BI);
+		gb_billState = BILL_JAMMED;
 		ClearPSIrFlag();
 		ClearJamFlag();
 	}
@@ -5378,6 +5527,7 @@ void DealJamAtOnce(void)
 		LongBeep(3);
 		gb_dispJamInfo = 1;
 	}
+	dealJAM(2);
 	//gb_needRecordIr = 0;
 	//irSampleDelayNum = 20;
 }
@@ -5441,6 +5591,7 @@ void InitUserWorkPara()
 	savedPara.userWorkPara.d[INDEX_RMB_CHAIN_NOTE_THRES] = 100;
 	savedPara.beepSwitch = 1;
 	savedPara.noteLeaveRoads = 2;
+	savedPara.billEnable = 0;
 }
 
 void InitMotorSpeedData(void)
@@ -6642,7 +6793,7 @@ void SysTick_Handler(void)
 				if (gb_noteState == NOTE_FORWARD)
 				{
 					gb_noteState = NOTE_IDEL;
-					gb_billState = BILL_READY;
+//					gb_billState = BILL_READY;
 					mpEndCnt = mpCnt;
 					time2 = timeCnt;
 					motor1StopRecord = 6;
@@ -6658,7 +6809,7 @@ void SysTick_Handler(void)
 				else if (gb_noteState == NOTE_BACKWARD)
 				{
 					gb_noteState = NOTE_IDEL;
-					gb_billState = BILL_READY;
+//					gb_billState = BILL_READY;
 					mpEndCnt = mpCnt;
 					time2 = timeCnt;
 					motor1StopRecord = 9;
@@ -6808,6 +6959,14 @@ void SysTick_Handler(void)
 			gb_uartPacErrInfo = UART_PAC_ERR_OVERTIME + gb_uartPacDealStep;
 			gb_uartPacDealStep = UART_IDEL;
 			
+		}
+	}
+	if(gb_disableBillOverTime > 0)
+	{
+		gb_disableBillOverTime--;
+		if(gb_disableBillOverTime == 0)
+		{
+			gb_disableBillFlag = 0;
 		}
 	}
 }
@@ -7502,12 +7661,12 @@ void DMA1_Channel1_IRQHandler(void)
 		switch(chanelIndexOf4051)
 		{
 			case 0:
-				irValue[0] = adData[5];
+				//irValue[0] = adData[5];
 				irValue[7] = adData[6];
 				irValue[14] = adData[7];
 				break;
 			case 1:
-				irValue[1] = adData[5];
+				irValue[0] = irValue[1] = adData[5];
 				irValue[8] = adData[6];
 				irValue[15] = adData[7];
 				break;
@@ -7565,7 +7724,7 @@ void DMA1_Channel1_IRQHandler(void)
 			case 5:
 				irValue[5] = adData[5];
 				irValue[12] = adData[6];
-				irValue[19] = adData[7];
+				irValue[20] = irValue[19] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[3][0] = adData[2];
@@ -7582,7 +7741,7 @@ void DMA1_Channel1_IRQHandler(void)
 			case 6:
 				irValue[6] = adData[5];
 				irValue[13] = adData[6];
-				irValue[20] = adData[7];
+				//irValue[20] = adData[7];
 				break;
 		}
 		chanelIndexOf4051 ++;
@@ -7812,7 +7971,7 @@ void EXTI9_5_IRQHandler(void)
 					if (gb_noteState == NOTE_FORWARD)
 					{
 						gb_noteState = NOTE_IDEL;
-						gb_billState = BILL_READY;
+//						gb_billState = BILL_READY;
 						mpEndCnt = mpCnt;
 						time2 = timeCnt;
 						motor1StopRecord = 7;
@@ -7828,7 +7987,7 @@ void EXTI9_5_IRQHandler(void)
 					else if (gb_noteState == NOTE_BACKWARD)
 					{
 						gb_noteState = NOTE_IDEL;
-						gb_billState = BILL_READY;
+//						gb_billState = BILL_READY;
 						mpEndCnt = mpCnt;
 						time2 = timeCnt;
 						motor1StopRecord = 8;

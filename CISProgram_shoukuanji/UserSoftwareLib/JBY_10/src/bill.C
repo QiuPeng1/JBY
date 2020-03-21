@@ -273,7 +273,7 @@ u8 billRGB_Judge(int noteType)
 	colorJudgeValue = min_i;
 	colorJudgeFlag = 0;//min_i%4;
 
-#ifdef DRAW_STATE
+#ifdef DRAW_STATE2
 	for (i = 0; i < 12; i++)
 	{
 		Display_Proj1(colorData_tmp[i],COLOR_DATA_RESIZE,600,0+i*60,0,0);
@@ -334,15 +334,15 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 {
 	int i, j, k, sum, count, count1;
-	short sx, ex, sw, sh, sy, ey;
-
-
+	short sx, ex, sw, sh, sy, ey, t, wirePos;
+	int Min, MinPos, Max0, Max1, Max, MaxPos, whitePaperVal,iradAve;
+	static POS_INFOR posMin[21];
 	u8 *pImg;
 	double fvt, tt, max_t;
 	short *pFvt;
 	u8 *pNoteClass, *pf1;
 	u8 Class, min_i;
-	int fvtInt, Max;
+	int fvtInt;
 
 	pImg = (u8 *)lengthData;
 	billIradMask = 0;
@@ -355,7 +355,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 
 
 #ifdef DRAW_STATE
-	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 100, 20, 1);
+	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
 #endif
 
 	memset(projH, 0, sizeof(int)*IR_DATA_MAX_LEN);
@@ -632,7 +632,164 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	g_IradRes = min_i;
 	billValue = g_IradRes;
 	billFlag = 0;//g_IradRes%4;
+	if (max_t < 0.005)
+	{
+		g_IradRes = 0xff;
+		billValue = 0xff;
+		billFlag = 0;//g_IradRes%4;
+	}
 
+
+	if (noteType == INDEX_CNY)
+	{
+		memset(projH, 0, sizeof(int)*IR_DATA_MAX_LEN);
+		for (i = sy; i < ey; i++)
+		{
+			for (j = 0; j < lengthDataLen; j++)
+			{
+				projH[j] += pImg[i*IR_DATA_MAX_LEN+j];
+			}
+		}
+#ifdef DRAW_STATE
+		Display_Proj(projH, lengthDataLen, 1200, 14+200, 0, 0);
+#endif
+		Min = 99999;
+		MinPos = lengthDataLen/2;
+		for (i = 72; i < lengthDataLen-72; i++)
+		{
+			if (Min > projH[i])
+			{
+				Min = projH[i];
+				MinPos = i;
+			}
+		}
+		
+		t = MinPos;
+		wirePos = t;
+		for (i = 0; i < lengthDataLen-1; i++)
+		{
+			projH1[i] = projH[i+1]-projH[i];
+		}
+		projH1[i] = 0;
+#ifdef DRAW_STATE
+		Display_Proj(projH1, lengthDataLen, 1200, 100+14+200, 0, 0);
+#endif
+		Min = 99999;
+		Max = 0;
+		
+		for (i = t-15; i < t+15; i++)
+		{
+			if (Min > projH1[i])
+			{
+				Min = projH1[i];
+				MinPos = i;
+			}
+			
+			if (Max < projH1[i])
+			{
+				Max = projH1[i];
+				MaxPos = i;
+			}
+		}
+#ifdef DRAW_STATE
+		Draw_Line(MinPos+1200, 0+200, MinPos+1200, 200+200);
+		Draw_Line(MaxPos+1200, 0+200, MaxPos+1200, 200+200);
+		Display_Int(Max-Min, 0+1200-40, 0+200);
+		Display_Int(abs(MaxPos-MinPos), 0+1200-40, 20+200);
+#endif
+		
+		if ((Max-Min) < 150 || abs(MaxPos-MinPos) > 12)
+		{
+			billIradMask = 1;
+		}
+#ifdef DRAW_STATE
+		for (i = 0; i < 21; i++)
+		{
+			Display_Proj1(lengthData[i],lengthDataLen,0,0+i*60,0,0);
+		}
+		Display_Int(lengthDataLen, 0, 60);
+#endif
+		if (wirePos < 20)
+		{
+			wirePos = 20;
+		}
+		if (wirePos+20 > lengthDataLen)
+		{
+			wirePos = lengthDataLen-20;
+		}
+		count1 = 0;
+		for (i = sy, k = 0; i < ey; i++, k++)
+		{
+			sum = 0;
+			count = 0;
+			Min = 255;
+			count1 ++;
+			for (j = wirePos-20; j < wirePos+20; j++)
+				//for (j = 60; j < dataIradLen-60; j++)
+			{
+				sum += lengthData[i][j];
+				count++;
+				if (Min > lengthData[i][j])
+				{
+					Min = lengthData[i][j];
+					MinPos = j;
+				}
+			}
+			posMin[k].index = i;
+			posMin[k].pos = MinPos;
+			posMin[k].val = Min;
+			sum /= count;
+			posMin[k].ave = sum;
+			iradAve += sum;
+			
+#ifdef DRAW_STATE
+			
+			Display_Int(sum, 0, i*60);
+			Display_Int(Min, 0, i*60+20);
+			Draw_Line(MinPos, i*60, MinPos, (i+1)*60);
+			Draw_BlueLine(MinPos-5, i*60, MinPos-5, (i+1)*60);
+			Draw_BlueLine(MinPos+5, i*60, MinPos+5, (i+1)*60);
+#endif
+		}
+
+		t = 0;
+		sum = 0;
+		for (i = 0; i < count1; i++)
+		{
+			if (abs(posMin[i].pos-posMin[count1/2].pos) < 16)
+			{
+				t++;
+				//posMin[i].mask = 1;
+			}
+			sum += (posMin[i].pos-posMin[count1/2].pos);
+		}
+		if (count1 > 0)
+		{
+			iradAve = sum/count1;
+			sum = 0;
+			for (i = 0; i < count1; i++)
+			{
+	
+				sum += (posMin[i].pos-posMin[count1/2].pos-iradAve)*(posMin[i].pos-posMin[count1/2].pos-iradAve);
+			}
+			sum = sqrt(sum)*1000/count1;
+		}
+		else
+		{
+			billIradMask = 1;
+		}
+
+		if (t < 12 || sum > 1600)
+		{
+			billIradMask = 1;
+		}
+#ifdef DRAW_STATE
+		
+		Display_Int(t, 200, 0);
+		Display_Int(sum, 200, 20);
+
+#endif
+	}
 	return 0;
 }
 

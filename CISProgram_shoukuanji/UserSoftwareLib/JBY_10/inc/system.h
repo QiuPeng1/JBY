@@ -101,6 +101,20 @@ V6.0.1 20191014 1、串口切换协议使能鉴别仪
 V6.0.2 20191023 1、优化人民币算法
 V6.0.3 20191205 1、优化人民币算法
                 2、禁用100
+V6.0.5 20200112 1、优化人民币算法			
+V6.0.6 20200113 1、增加堵币处理逻辑
+V6.0.7 20200114 1、收币开关记忆
+                2、堵币后自动处理
+V6.0.8 20200114 1、优化堵币
+                2、开机自检优化
+V6.0.9 20200114 1、通道没有纸币后立即停止
+V6.1.0 20200315 1、协议整理增加故障信息
+V6.1.1 20200320 1、禁止连续进钞需要把数据读走
+V6.1.2 20200321 1、优化连续进钞逻辑
+V6.1.3 20200322 1、去除边上一个灯
+                3、测试调试串口默认打开
+
+
 **************************************************************************/
 
 /*防止重复引用 */
@@ -136,14 +150,14 @@ enum
 #define REAL_IR_NUM 21
 #define BOOT_APP
 //#define DEBUG_MODE
-//#define UART_DEBUG
+#define UART_DEBUG
 #define LENGTH_HAVENOTE_VALUE_THRES 10
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V6.0.3"
+#define VERSION  "V6.1.3"
 #define USER1_VERSION "SKJ_HW_V100"
-#define USER2_VERSION "SKJ_SW_V103"
+#define USER2_VERSION "SKJ_SW_V113"
 
 typedef enum
 {

@@ -106,7 +106,8 @@ typedef struct
 	u8 identificationWays;
 	u8 uvGrade;
 	u8 uvWhiteValue;
-	u8 reserve[60];
+	u8 billEnable;
+	u8 reserve[59];
 	u32 flag;
 }DATANEEDSAVED_T;
 
