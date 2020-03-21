@@ -406,13 +406,67 @@
 
 #define	BMP_CCUV	0x0031a448
 
-#define	BMP_CDAD		0x00336690
-#define	BMP_CFRGB		0x0035bed8
-#define	BMP_CGCIS		0x0035c600
-#define	BMP_CGDEN		0x00364d48
-#define	BMP_CGMG		0x0036d490
-#define	BMP_CGRGB		0x00375bd8
-#define	BMP_CGUV		0x0037e320
+#define	BMP_CFRGB	0x00336690
+
+#define	BMP_CGCIS	0x00336db8
+
+#define	BMP_CGDEN	0x0033f500
+
+#define	BMP_CGMG	0x00347c48
+
+#define	BMP_CGRGB	0x00350390
+
+#define	BMP_CGUV	0x00358ad8
+
+#define	BMP_FALISTKHR	0x00361220
+
+#define	BMP_FBLISTKHR	0x00364968
+
+#define	BMP_FC0	0x0036f178
+
+#define	BMP_FC1	0x0036fbd0
+
+#define	BMP_FC2	0x00370628
+
+#define	BMP_FC3	0x00371080
+
+#define	BMP_FC4	0x00371ad8
+
+#define	BMP_FC5	0x00372530
+
+#define	BMP_FC6	0x00372f88
+
+#define	BMP_FC7	0x003739e0
+
+#define	BMP_FC8	0x00374438
+
+#define	BMP_FC9	0x00374e90
+
+#define	BMP_FCB	0x003758e8
+
+#define	BMP_GAGHS	0x00376340
+
+#define	BMP_GBGHS	0x00379a88
+
+#define	BMP_GHUZS	0x00384298
+
+#define	BMP_GIUZS	0x003879e0
+
+#define	BMP_GJKZT	0x003921f0
+
+#define	BMP_GKKZT	0x00395938
+
+#define	BMP_GLBYR	0x003a0148
+
+#define	BMP_GMBYR	0x003a3890
+
+//#define	BMP_CDAD		0x00336690
+//#define	BMP_CFRGB		0x0035bed8
+//#define	BMP_CGCIS		0x0035c600
+//#define	BMP_CGDEN		0x00364d48
+//#define	BMP_CGMG		0x0036d490
+//#define	BMP_CGRGB		0x00375bd8
+//#define	BMP_CGUV		0x0037e320
 /***************************************************************/
 
 //BMP_ADS   		320*240

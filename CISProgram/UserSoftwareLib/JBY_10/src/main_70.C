@@ -220,6 +220,21 @@ void DispCurrency(void)
 		disp_DrawPic(0,0,BMP_BFLAGCNY);
 		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTCNY);
 	}
+	else if(g_currency == INDEX_BYR)
+	{
+		disp_DrawPic(0,0,BMP_GLBYR);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GMBYR);
+	}
+	else if(g_currency == INDEX_KZT)
+	{
+		disp_DrawPic(0,0,BMP_GJKZT);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GKKZT);
+	}
+		else if(g_currency == INDEX_UZS)
+	{
+		disp_DrawPic(0,0,BMP_GHUZS);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GIUZS);
+	}
 	else
 	{
 		g_currency = INDEX_USD;
@@ -1472,6 +1487,21 @@ void DispMainMenuBackground(void)
 			disp_DrawPic(0,0,BMP_BFLAGCNY);
 			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTCNY);
 		}	
+		else if(g_currency == INDEX_BYR)
+		{
+			disp_DrawPic(0,0,BMP_GLBYR);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GMBYR);
+		}
+		else if(g_currency == INDEX_KZT)
+		{
+			disp_DrawPic(0,0,BMP_GJKZT);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GKKZT);
+		}
+			else if(g_currency == INDEX_UZS)
+		{
+			disp_DrawPic(0,0,BMP_GHUZS);
+			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GIUZS);
+		}
 		else 
 		{
 			disp_DrawPic(0,0,BMP_BFLAGUSD);
@@ -3349,6 +3379,116 @@ void DealNoteType(void)
 				break;
 			}				
 		}
+		else if(g_currency == INDEX_BYR)
+		{
+			switch(gb_billValue)
+			{
+			case 0:
+			case 1:
+				currentNoteType = 0;//100
+				break;
+			case 2:
+			case 3:
+				currentNoteType = 1;//50
+				break;
+			case 4:
+			case 5:
+				currentNoteType = 2; //20
+				break;
+			case 6:
+			case 7:
+				currentNoteType = 3;//10
+				break;
+			case 8:
+			case 9:
+				currentNoteType = 4;//5
+				break;
+			default:
+				currentNoteType = 0xFF;
+				g_errFlag |= ERR_VALUE;
+				break;
+			}				
+		}
+		else if(g_currency == INDEX_UZS)
+		{
+			switch(gb_billValue)
+			{
+			case 0:
+			case 1:
+				currentNoteType = 0;//100000
+				break;
+			case 2:
+			case 3:
+				currentNoteType = 1;//50000
+				break;
+			case 4:
+			case 5:
+				currentNoteType = 2; //10000
+				break;
+			case 6:
+			case 7:
+				currentNoteType = 3;//5000
+				break;
+			case 8:
+			case 9:
+				currentNoteType = 4;//1000
+				break;
+			case 10:
+			case 11:
+				currentNoteType = 5;//500
+				break;
+			case 12:
+			case 13:
+				currentNoteType = 6;//200
+				break;
+			case 14:
+			case 15:
+				currentNoteType = 7;//100
+				break;
+			default:
+				currentNoteType = 0xFF;
+				g_errFlag |= ERR_VALUE;
+				break;
+			}				
+		}
+		else if(g_currency == INDEX_KZT)
+		{
+			switch(gb_billValue)
+			{
+			case 0:
+			case 1:
+				currentNoteType = 0;//10000
+				break;
+			case 2:
+			case 3:
+				currentNoteType = 1;//5000
+				break;
+			case 4:
+			case 5:
+				currentNoteType = 2; //2000
+				break;
+			case 6:
+			case 7:
+				currentNoteType = 3;//1000
+				break;
+			case 8:
+			case 9:
+				currentNoteType = 4;//500
+				break;
+			case 10:
+			case 11:
+				currentNoteType = 5;//200
+				break;
+			case 12:
+			case 13:
+				currentNoteType = 6;//100
+				break;
+			default:
+				currentNoteType = 0xFF;
+				g_errFlag |= ERR_VALUE;
+				break;
+			}				
+		}
 	}
 }
 void DealNotePass(void)
@@ -3776,54 +3916,60 @@ void IncNoteNum(void)
 	{
 		noteNum = 0;
 	}		
-	if(g_currency == INDEX_USD)
+	switch(g_currency)
 	{
-		noteDenoValue = USD_NOTE_VALUE[currentNoteType];
+		case INDEX_USD:
+			noteDenoValue = USD_NOTE_VALUE[currentNoteType];
+			break;
+		case INDEX_EUR:
+			noteDenoValue = EUR_NOTE_VALUE[currentNoteType];
+			break;
+		case INDEX_RUB:
+			noteDenoValue = RUB_NOTE_VALUE[currentNoteType];
+			break;		
+		case INDEX_TRY:
+			noteDenoValue = TRY_NOTE_VALUE[currentNoteType];
+			break;	
+		case INDEX_IQD:
+			noteDenoValue = IQD_NOTE_VALUE[currentNoteType];
+			break;			
+		case INDEX_SAR:
+			noteDenoValue = SAR_NOTE_VALUE[currentNoteType];
+			break;		
+		case INDEX_AED:
+			noteDenoValue = AED_NOTE_VALUE[currentNoteType];
+			break;	
+		case INDEX_GBP:
+			noteDenoValue = GBP_NOTE_VALUE[currentNoteType];
+			break;
+		case INDEX_ARS:
+			noteDenoValue = ARS_NOTE_VALUE[currentNoteType];
+			break;		
+		case INDEX_THB:
+			noteDenoValue = THB_NOTE_VALUE[currentNoteType];
+			break;		
+		case INDEX_TWD:
+			noteDenoValue = TWD_NOTE_VALUE[currentNoteType];
+			break;
+		case INDEX_CNY:
+			noteDenoValue = CNY_NOTE_VALUE[currentNoteType];
+			break;
+		case INDEX_BYR:
+			noteDenoValue = BYR_NOTE_VALUE[currentNoteType];
+			break;		
+		case INDEX_UZS:
+			noteDenoValue = UZS_NOTE_VALUE[currentNoteType];
+			break;	
+		case INDEX_KZT:
+			noteDenoValue = KZT_NOTE_VALUE[currentNoteType];
+			break;			
+		default:
+			noteDenoValue = USD_NOTE_VALUE[currentNoteType];
+			break;
+		
 	}
-	else if(g_currency == INDEX_EUR)
-	{
-		noteDenoValue = EUR_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_RUB)
-	{
-		noteDenoValue = RUB_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_TRY)
-	{
-		noteDenoValue = TRY_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_IQD)
-	{
-		noteDenoValue = IQD_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_SAR)
-	{
-		noteDenoValue = SAR_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_AED)
-	{
-		noteDenoValue = AED_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_GBP)
-	{
-		noteDenoValue = GBP_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_ARS)
-	{
-		noteDenoValue = ARS_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_THB)
-	{
-		noteDenoValue = THB_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_TWD)
-	{
-		noteDenoValue = TWD_NOTE_VALUE[currentNoteType];
-	}
-	else if(g_currency == INDEX_CNY)
-	{
-		noteDenoValue = CNY_NOTE_VALUE[currentNoteType];
-	}
+
+
 	noteSum += noteDenoValue;
 	if(noteSum > 9999999)
 	{
@@ -3960,7 +4106,8 @@ void DispDetailNoteNum(void)//显示明细
 	j=0;
 	if(g_currency == INDEX_EUR
 		||g_currency == INDEX_USD
-		||g_currency == INDEX_SAR)//7
+		||g_currency == INDEX_SAR
+		||g_currency == INDEX_BYR)//7
 	{
 		for(i = 0;i < 7;i++)
 		{
@@ -4018,7 +4165,8 @@ void DispDetailNoteNum(void)//显示明细
 		}
 	}
 	else if((g_currency == INDEX_TRY)
-			||(g_currency == INDEX_CNY))//6
+			||(g_currency == INDEX_CNY)
+			|| (g_currency == INDEX_KZT))//6
 	{
 		for(i = 0;i < 6;i++)
 		{
@@ -4163,7 +4311,8 @@ void DispDetailNoteNum(void)//显示明细
 			}
 		}
 	}
-	else if(g_currency == INDEX_ARS)//9
+	else if(g_currency == INDEX_ARS
+					||g_currency == INDEX_UZS)//9
 	{
 		for(i = 0;i < 9;i++)
 		{

@@ -38,6 +38,9 @@
 #define BILL_INDEX_THB
 #define BILL_INDEX_TWD
 #define BILL_INDEX_CNY
+#define BILL_INDEX_BYR
+#define BILL_INDEX_KZT
+#define BILL_INDEX_UZS
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------
@@ -106,6 +109,7 @@ enum
 	INDEX_MAD,  //29摩洛哥
 	INDEX_LYD, //30利比亚
 	INDEX_LAK,	//31
+	
 	INDEX_ZAR,	//32南非
 	INDEX_KES,	//33
 	INDEX_ARS,	//34阿根廷
@@ -114,12 +118,15 @@ enum
 	INDEX_LKR,	//37斯里兰卡
 	INDEX_IDR,	//38印尼
 	INDEX_ILS,	//39以色列
+	
 	INDEX_AFN, 	//40阿富汗
 	INDEX_JOD, 	//41约旦
 	INDEX_IQD, 	//42伊拉克
 	INDEX_LBP, 	//43黎巴嫩
-	INDEX_SAR, 	//43沙特
-	INDEX_AED, 	//43阿联酋
+	INDEX_SAR, 	//44沙特
+	INDEX_AED, 	//45阿联酋
+	INDEX_BYR,  //46白俄罗斯
+	INDEX_UZS,  //47乌兹别克斯坦
 	NOTE_NUM
 };
 #define PROCESS_GBP
@@ -143,6 +150,9 @@ enum
 #define PROCESS_ILS
 #define PROCESS_AFN
 #define PROCESS_IQD
+#define PROCESS_KZT
+#define PROCESS_BYR
+#define PROCESS_UZS
 //---------------------------------------------------------------------
 //全局变量，可以被外部程序直接访问
 //---------------------------------------------------------------------
@@ -159,7 +169,7 @@ BILL_EXT_PARA u16 colorData_tmp[12][COLOR_DATA_RESIZE+8];
 
 BILL_EXT_PARA short colorFvtTotal[COLOR_DATA_RESIZE*COLOR_FIV_DIM*COLOR_DATA_NUM];
 
-BILL_EXT_PARA int projH[450];
+BILL_EXT_PARA int projH[IR_DATA_MAX_LEN];
 BILL_EXT_PARA u8 billIsFake;
 BILL_EXT_PARA u8 billValue;
 BILL_EXT_PARA u8 billFlag;
@@ -179,7 +189,7 @@ BILL_EXT_PARA u8 mgFvtFlag;
 BILL_EXT_PARA u16 iradImgW;
 BILL_EXT_PARA u16 iradImgH;
 //BILL_EXT_PARA I32 projH[IRAD_DATA_MAX_LEN];
-BILL_EXT_PARA I32 projH1[450];
+BILL_EXT_PARA I32 projH1[IR_DATA_MAX_LEN];
 
 /*公开的过程/函数*/
 //---------------------------------------------------------------------

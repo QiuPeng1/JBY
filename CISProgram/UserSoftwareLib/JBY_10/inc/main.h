@@ -958,8 +958,10 @@ u8 * const CURRENCY_INFO_STR[] =
 	"JOD", 	//41约旦
 	"IQD", 	//42伊拉克
 	"LBP", 	//43黎巴嫩
-	"SAR", 	//43沙特
-	"AED", 	//43阿联酋
+	"SAR", 	//44沙特
+	"AED", 	//45阿联酋
+	"BYR",  //46白俄罗斯
+	"UZS",  //47乌兹别克斯坦
 };
 	
 #define g_languageIndex INDEX_ENGLISH//savedPara.userWorkPara.d[INDEX_LANGUAGE]
@@ -994,9 +996,8 @@ u8 uart3toPCdebug[40];
 u16 gb_needOutPutLength;
 u32 noteNum = 0;
 u32 noteSum = 0;
-u16 noteDenoValue = 0;
+u32 noteDenoValue = 0;
 u16 denoNoteNum[10];
-u8 const RMB_NOTE_VALUE[] = {100,50,20,10,5,1,0,0,0};
 u8 const USD_NOTE_VALUE[] = {100,50,20,10,5,2,1,0,0,0};
 u16 const EUR_NOTE_VALUE[] = {500,200,100,50,20,10,5,0,0,0};
 u16 const RUB_NOTE_VALUE[] = {5000,2000,1000,500,200,100,50,10,0,0};
@@ -1009,6 +1010,9 @@ u16 const ARS_NOTE_VALUE[] = {1000,500,200,100,50,20,10,5,2,0};
 u16 const THB_NOTE_VALUE[] = {1000,500,100,50,20,0,0,0,0,0};
 u16 const TWD_NOTE_VALUE[] = {2000,1000,500,200,100,0,0,0,0,0};
 u16 const CNY_NOTE_VALUE[] = {100,50,20,10,5,1,0,0,0,0};
+u16 const BYR_NOTE_VALUE[] = {100,50,20,10,5,0,0,0,0,0};
+u32 const UZS_NOTE_VALUE[] = {100000,50000,10000,5000,1000,500,200,100,0,0};
+u16 const KZT_NOTE_VALUE[] = {10000,5000,2000,1000,500,200,100,0,0,0};
 u32 JbmpAddress[]={BMP_AJ0,BMP_AJ1,BMP_AJ2,BMP_AJ3,BMP_AJ4,BMP_AJ5,BMP_AJ6,BMP_AJ7,BMP_AJ8,BMP_AJ9,BMP_AJB};
 u32 YbmpAddress[]={BMP_AY0,BMP_AY1,BMP_AY2,BMP_AY3,BMP_AY4,BMP_AY5,BMP_AY6,BMP_AY7,BMP_AY8,BMP_AY9,BMP_AYB};
 u32 SbmpAddress[]={BMP_AS0,BMP_AS1,BMP_AS2,BMP_AS3,BMP_AS4,BMP_AS5,BMP_AS6,BMP_AS7,BMP_AS8,BMP_AS9,BMP_ASB};
