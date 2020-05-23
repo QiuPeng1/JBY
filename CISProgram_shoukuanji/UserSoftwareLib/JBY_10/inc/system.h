@@ -113,7 +113,8 @@ V6.1.1 20200320 1、禁止连续进钞需要把数据读走
 V6.1.2 20200321 1、优化连续进钞逻辑
 V6.1.3 20200322 1、去除边上一个灯
                 3、测试调试串口默认打开
-
+V6.1.4 20200323 1、开机自检时去除边上一个灯
+ 
 
 **************************************************************************/
 
@@ -155,9 +156,9 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V6.1.3"
+#define VERSION  "V6.1.4"
 #define USER1_VERSION "SKJ_HW_V100"
-#define USER2_VERSION "SKJ_SW_V113"
+#define USER2_VERSION "SKJ_SW_V114"
 
 typedef enum
 {

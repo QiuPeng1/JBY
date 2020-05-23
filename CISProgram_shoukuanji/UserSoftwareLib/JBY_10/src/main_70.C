@@ -6175,12 +6175,12 @@ void SampleOneRow(void)
 		switch(chanelIndexOf4051)
 		{
 			case 0:
-				irValue[0] = adData[5];
+				//irValue[0] = adData[5];
 				irValue[7] = adData[6];
 				irValue[14] = adData[7];
 				break;
 			case 1:
-				irValue[1] = adData[5];
+				irValue[0] = irValue[1] = adData[5];
 				irValue[8] = adData[6];
 				irValue[15] = adData[7];
 				break;
@@ -6238,7 +6238,7 @@ void SampleOneRow(void)
 			case 5:
 				irValue[5] = adData[5];
 				irValue[12] = adData[6];
-				irValue[19] = adData[7];
+				irValue[20] = irValue[19] = adData[7];
 				if(g_colorFsRGB == FS_RED)
 				{
 					colorRGB[3][0] = adData[2];
@@ -6255,7 +6255,7 @@ void SampleOneRow(void)
 			case 6:
 				irValue[6] = adData[5];
 				irValue[13] = adData[6];
-				irValue[20] = adData[7];
+				//irValue[20] = adData[7];
 				break;
 		}
 		chanelIndexOf4051 ++;
