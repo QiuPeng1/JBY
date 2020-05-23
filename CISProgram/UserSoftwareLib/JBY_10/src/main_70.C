@@ -165,82 +165,14 @@ void ChangeCurrency(void)
 }
 void DispCurrency(void)
 {
-	if(g_currency == INDEX_EUR)
+	if(g_currency > NOTE_NUM)
 	{
-		disp_DrawPic(0,0,BMP_BFLAGEUR);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTEUR);
+		g_currency = 	INDEX_USD;
 	}
-	else if(g_currency == INDEX_RUB)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGRUB);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTRUB);
-	}
-	else if(g_currency == INDEX_TRY)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGTRY);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTRY);
-	}
-	else if(g_currency == INDEX_IQD)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGIQD);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTIQD);
-	}
-	else if(g_currency == INDEX_SAR)
-	{
-		disp_DrawPic(0,0,BMP_CBFLAGSAR);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTSAR);
-	}	
-	else if(g_currency == INDEX_AED)
-	{
-		disp_DrawPic(0,0,BMP_CBFLAGAED);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTAED);
-	}
-	else if(g_currency == INDEX_GBP)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGGBP);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTGBP);
-	}
-	else if(g_currency == INDEX_ARS)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGARS);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
-	}
-	else if(g_currency == INDEX_THB)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGTHB);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTHB);
-	}	
-	else if(g_currency == INDEX_TWD)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGTWD);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTWD);
-	}
-	else if(g_currency == INDEX_CNY)
-	{
-		disp_DrawPic(0,0,BMP_BFLAGCNY);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTCNY);
-	}
-	else if(g_currency == INDEX_BYR)
-	{
-		disp_DrawPic(0,0,BMP_GLBYR);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GMBYR);
-	}
-	else if(g_currency == INDEX_KZT)
-	{
-		disp_DrawPic(0,0,BMP_GJKZT);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GKKZT);
-	}
-		else if(g_currency == INDEX_UZS)
-	{
-		disp_DrawPic(0,0,BMP_GHUZS);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GIUZS);
-	}
-	else
-	{
-		g_currency = INDEX_USD;
-		disp_DrawPic(0,0,BMP_BFLAGUSD);
-		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
-	}			
+	disp_DrawPic(0,0,NationFlagBMP[g_currency][0]);
+	disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,NationFlagBMP[g_currency][1]);
+	
+	
 	ClearAllNoteNum();
 	DispNoteNumValSum();
 }
@@ -1385,129 +1317,17 @@ void DispIdentificationWays(void)
 }
 void DispMainMenuBackground(void)
 {
-	//DispClassicBar(TOP_BAR_COLOR,0);
-	//DispClassicBar(MID_BAR_COLOR,1);
-	//DispClassicBar(BOTTOM_BAR_COLOR,2);
-	//disp_drawRectangle(0,TOP_BAR_Y+TOP_BAR_H,SCREEN_WIDTH,BAR_LINE_H,BAR_LINE_COLOR);
-	//disp_drawRectangle(0,BOTTOM_BAR_Y-BAR_LINE_H,SCREEN_WIDTH,BAR_LINE_H,BAR_LINE_COLOR);
-	
-//	//detailNote
-//	disp_DrawChart(DETAIL_NOTE_CHART_X,DETAIL_NOTE_CHART_Y,DETAIL_NOTE_CHART_ONE_COL_W*DETAIL_NOTE_CHART_COL_NUM,DETAIL_NOTE_CHART_ONE_ROW_H*DETAIL_NOTE_CHART_ROW_NUM+8,DETAIL_NOTE_CHART_COL_NUM,DETAIL_NOTE_CHART_ROW_NUM,BLACK);
-//	//显示面额
-//	
-//	disp_setFont(DETAIL_NOTE_CHART_FONT);
-//	disp_setPenColor(BLACK);
-//	disp_setBackColor(MID_BAR_COLOR);
-//	if(g_currency == INDEX_USD)
-//	{
-//		for(i = 0;i < 7;i++)
-//		{
-//			U32ToStr(USD_NOTE_VALUE[i],dispStr,4);
-//			disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*0+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
-//		}
-//	}
-//	else
-//	{
-//		for(i = 0;i < 7;i++)
-//		{
-//			U32ToStr(EUR_NOTE_VALUE[i],dispStr,4);
-//			disp_string(dispStr,DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*0+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
-//		}
 
-//	}
-//	disp_string(" SUM ",DETAIL_NOTE_CHART_X+DETAIL_NOTE_CHART_ONE_COL_W*0+1,DETAIL_NOTE_CHART_Y+DETAIL_NOTE_CHART_ONE_ROW_H*i+2);
-
-//	disp_setFont(NOTESUM_FONT);
-//	disp_setPenColor(BLACK);
-// 	disp_setBackColor(MID_BAR_COLOR);
-//	disp_string(" SUM:",NOTESUM_TITLE_X,NOTESUM_Y);
-//	disp_string(" PCS:",NOTENUM_TITLE_X,NOTENUM_Y);
-//	disp_string("DENO:",DENO_NUM_TITLE_X,DENO_NUM_Y);
 		disp_DrawPic(0,0,BMP_BOPENBLACK);
 
 		DispIdentificationWays();
+		if(g_currency > NOTE_NUM)
+		{
+			g_currency = 	INDEX_USD;
+		}
+		disp_DrawPic(0,0,NationFlagBMP[g_currency][0]);
+		disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,NationFlagBMP[g_currency][1]);
 		
-		if(g_currency == INDEX_USD)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGUSD);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
-		}
-		else if(g_currency == INDEX_EUR)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGEUR);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTEUR);
-		}
-		else if(g_currency == INDEX_RUB)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGRUB);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTRUB);
-		}
-		else if(g_currency == INDEX_TRY)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGTRY);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTRY);
-		}	
-		else if(g_currency == INDEX_IQD)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGIQD);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTIQD);
-		}	
-		else if(g_currency == INDEX_SAR)
-		{
-			disp_DrawPic(0,0,BMP_CBFLAGSAR);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTSAR);
-		}	
-		else if(g_currency == INDEX_AED)
-		{
-			disp_DrawPic(0,0,BMP_CBFLAGAED);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_CBLISTAED);
-		}
-		else if(g_currency == INDEX_GBP)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGGBP);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTGBP);
-		}		
-		else if(g_currency == INDEX_ARS)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGARS);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTARS);
-		}	
-		else if(g_currency == INDEX_THB)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGTHB);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTHB);
-		}	
-		else if(g_currency == INDEX_TWD)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGTWD);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTTWD);
-		}		
-		else if(g_currency == INDEX_CNY)
-		{
-			disp_DrawPic(0,0,BMP_BFLAGCNY);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTCNY);
-		}	
-		else if(g_currency == INDEX_BYR)
-		{
-			disp_DrawPic(0,0,BMP_GLBYR);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GMBYR);
-		}
-		else if(g_currency == INDEX_KZT)
-		{
-			disp_DrawPic(0,0,BMP_GJKZT);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GKKZT);
-		}
-			else if(g_currency == INDEX_UZS)
-		{
-			disp_DrawPic(0,0,BMP_GHUZS);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_GIUZS);
-		}
-		else 
-		{
-			disp_DrawPic(0,0,BMP_BFLAGUSD);
-			disp_DrawPic(BMP_LIST_X,BMP_LIST_Y,BMP_BLISTUSD);
-			g_currency = INDEX_USD;
-		}
 		disp_DrawPic(BMP_PCS_X,BMP_PCS_Y,BMP_APCS);
 }
 #define IR_X 45
@@ -2930,564 +2750,625 @@ void DealNoteType(void)
 		{
 			gb_billValue = billValue;
 		}
-		if(g_currency == INDEX_USD)
+		switch(g_currency)
 		{
-			switch(gb_billValue)
-			{
-				case 0:
-				case 1:
-				case 2:
-					currentNoteType = 0;
-					break;
-				case 3:
-				case 4:
-				case 5:
-					currentNoteType = 1;
-					break;
-				case 6:
-				case 7:
-				case 8:
-					currentNoteType = 2; 
-					break;
-				case 9:
-				case 10:
-				case 11:
-					currentNoteType = 3;
-					break;
-				case 12:
-				case 13:
-				case 14:
-					currentNoteType = 4;
-					break;
-				case 15:
-					currentNoteType = 5;
-					break;	
-				case 18:
-					currentNoteType = 6;
-					break;
-				default:
-					currentNoteType = 0xFF;
-					g_errFlag |= ERR_VALUE;
-					break;
+			case INDEX_USD:
+				{
+				switch(gb_billValue)
+				{
+					case 0:
+					case 1:
+					case 2:
+						currentNoteType = 0;
+						break;
+					case 3:
+					case 4:
+					case 5:
+						currentNoteType = 1;
+						break;
+					case 6:
+					case 7:
+					case 8:
+						currentNoteType = 2; 
+						break;
+					case 9:
+					case 10:
+					case 11:
+						currentNoteType = 3;
+						break;
+					case 12:
+					case 13:
+					case 14:
+						currentNoteType = 4;
+						break;
+					case 15:
+						currentNoteType = 5;
+						break;	
+					case 18:
+						currentNoteType = 6;
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}	
 				}
-			}
-		else if(g_currency == INDEX_EUR)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//500
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//200
-				break;
-			case 4:
-			case 5:
-				currentNoteType = 2; //100
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//50
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//20
-				break;
-			case 10:
-			case 11:
-				currentNoteType = 5;//10
-				break;	
-			case 12:
-			case 13:		
-				currentNoteType = 6;//5
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}
-		}
-		else if(g_currency == INDEX_RUB)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-			case 2:			
-				currentNoteType = 0;//5000
-				break;
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-				currentNoteType = 1;//2000
-				break;
-			case 9:
-			case 7:
-			case 8:
-				currentNoteType = 2; //1000
-				break;
-			case 12:
-			case 10:
-			case 11:
-				currentNoteType = 3;//500
-				break;
-			case 15:
-			case 13:
-			case 14:
-			case 16:
-				currentNoteType = 4;//200
-				break;
-			case 17:
-			case 18:
-			case 19:
-				currentNoteType = 5;//100
-				break;	
-			case 20:
-			case 21:
-			case 22:	
-				currentNoteType = 6;//50
-				break;	
-			case 23:
-			case 24:
-			case 25:	
-				currentNoteType = 7;//10
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_TRY)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-				currentNoteType = 0;//200
-				break;
-			case 1:
-				currentNoteType = 1;//100
-				break;
-			case 2:
-				currentNoteType = 2; //50
-				break;
-			case 3:
-				currentNoteType = 3;//20
-				break;
-			case 4:
-				currentNoteType = 4;//10
-				break;
-			case 5:
-				currentNoteType = 5;//5
-				break;	
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}
-		}
-		else if(g_currency == INDEX_IQD)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-				currentNoteType = 0;//50000
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//25000
-				break;
-			case 4:
-			case 5:	
-				currentNoteType = 2; //10000
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//5000
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//1000
-				break;
-			case 10:
-			case 11:
-				currentNoteType = 5;//250
-				break;	
-			case 12:
-			case 13:
-				currentNoteType = 6;//50
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_SAR)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//500
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//100
-				break;
-			case 4:
-			case 5:	
-				currentNoteType = 2; //50
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//20
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//10
-				break;
-			case 10:
-			case 11:
-				currentNoteType = 5;//5
-				break;	
-			case 12:
-			case 13:
-				currentNoteType = 6;//1
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_AED)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//1000
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//500
-				break;
-			case 4:
-			case 5:	
-				currentNoteType = 2; //200
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//100
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//50
-				break;
-			case 10:
-			case 11:
-				currentNoteType = 5;//20
-				break;	
-			case 12:
-			case 13:
-				currentNoteType = 6;//10
-				break;
-			case 14:
-			case 15:
-				currentNoteType = 7;//5
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_GBP)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-				currentNoteType = 0;//50
-				break;
-			case 1:
-				currentNoteType = 1;//20
-				break;
-			case 2:
-				currentNoteType = 2; //10
-				break;
-			case 3:
-				currentNoteType = 3;//5
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_ARS)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//1000
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//500
-				break;
-			case 4:
-			case 5:
-				currentNoteType = 2; //200
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//100
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//50
-				break;
-			case 10:
-			case 11:
-				currentNoteType = 5;//20
-				break;
-			case 12:
-			case 13:
-				currentNoteType = 6;//10
-				break;
-			case 14:
-			case 15:
-				currentNoteType = 7;//5
-				break;
-			case 16:
-			case 17:
-				currentNoteType = 8;//2
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_THB)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-			case 10:
-				currentNoteType = 0;//1000
-				break;
-			case 2:
-			case 3:
-			case 11:
-				currentNoteType = 1;//500
-				break;
-			case 4:
-			case 5:
-			case 12:
-				currentNoteType = 2; //100
-				break;
-			case 6:
-			case 7:
-			case 13:
-				currentNoteType = 3;//50
-				break;
-			case 8:
-			case 9:
-			case 14:
-				currentNoteType = 4;//20
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_TWD)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//2000
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//1000
-				break;
-			case 4:
-			case 5:
-				currentNoteType = 2; //500
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//200
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//100
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_CNY)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-			case 2:
-				currentNoteType = 0;//100
-				break;
-			case 3:
-			case 4:
-			case 5:
-				currentNoteType = 1;//50
-				break;
-			case 6:
-			case 7:
-			case 8:
-				currentNoteType = 2; //20
-				break;
-			case 9:
-			case 10:
-			case 11:
-				currentNoteType = 3;//10
-				break;
-			case 12:
-			case 13:
-			case 14:
-				currentNoteType = 4;//5
-				break;
-			case 15:
-			case 16:
-			case 17:
-				currentNoteType = 5;//1
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_BYR)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//100
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//50
-				break;
-			case 4:
-			case 5:
-				currentNoteType = 2; //20
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//10
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//5
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_UZS)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//100000
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//50000
-				break;
-			case 4:
-			case 5:
-				currentNoteType = 2; //10000
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//5000
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//1000
-				break;
-			case 10:
-			case 11:
-				currentNoteType = 5;//500
-				break;
-			case 12:
-			case 13:
-				currentNoteType = 6;//200
-				break;
-			case 14:
-			case 15:
-				currentNoteType = 7;//100
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
-		}
-		else if(g_currency == INDEX_KZT)
-		{
-			switch(gb_billValue)
-			{
-			case 0:
-			case 1:
-				currentNoteType = 0;//10000
-				break;
-			case 2:
-			case 3:
-				currentNoteType = 1;//5000
-				break;
-			case 4:
-			case 5:
-				currentNoteType = 2; //2000
-				break;
-			case 6:
-			case 7:
-				currentNoteType = 3;//1000
-				break;
-			case 8:
-			case 9:
-				currentNoteType = 4;//500
-				break;
-			case 10:
-			case 11:
-				currentNoteType = 5;//200
-				break;
-			case 12:
-			case 13:
-				currentNoteType = 6;//100
-				break;
-			default:
-				currentNoteType = 0xFF;
-				g_errFlag |= ERR_VALUE;
-				break;
-			}				
+			break;
+				case INDEX_EUR:
+					{
+						switch(gb_billValue)
+						{
+						case 0:
+						case 1:
+							currentNoteType = 0;//500
+							break;
+						case 2:
+						case 3:
+							currentNoteType = 1;//200
+							break;
+						case 4:
+						case 5:
+							currentNoteType = 2; //100
+							break;
+						case 6:
+						case 7:
+							currentNoteType = 3;//50
+							break;
+						case 8:
+						case 9:
+							currentNoteType = 4;//20
+							break;
+						case 10:
+						case 11:
+							currentNoteType = 5;//10
+							break;	
+						case 12:
+						case 13:		
+							currentNoteType = 6;//5
+							break;
+						default:
+							currentNoteType = 0xFF;
+							g_errFlag |= ERR_VALUE;
+							break;
+						}
+					}
+				break;
+				case INDEX_RUB:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+					case 2:			
+						currentNoteType = 0;//5000
+						break;
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+						currentNoteType = 1;//2000
+						break;
+					case 9:
+					case 7:
+					case 8:
+						currentNoteType = 2; //1000
+						break;
+					case 12:
+					case 10:
+					case 11:
+						currentNoteType = 3;//500
+						break;
+					case 15:
+					case 13:
+					case 14:
+					case 16:
+						currentNoteType = 4;//200
+						break;
+					case 17:
+					case 18:
+					case 19:
+						currentNoteType = 5;//100
+						break;	
+					case 20:
+					case 21:
+					case 22:	
+						currentNoteType = 6;//50
+						break;	
+					case 23:
+					case 24:
+					case 25:	
+						currentNoteType = 7;//10
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_TRY:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+						currentNoteType = 0;//200
+						break;
+					case 1:
+						currentNoteType = 1;//100
+						break;
+					case 2:
+						currentNoteType = 2; //50
+						break;
+					case 3:
+						currentNoteType = 3;//20
+						break;
+					case 4:
+						currentNoteType = 4;//10
+						break;
+					case 5:
+						currentNoteType = 5;//5
+						break;	
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}
+				}
+				break;
+				case INDEX_IQD:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+						currentNoteType = 0;//50000
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//25000
+						break;
+					case 4:
+					case 5:	
+						currentNoteType = 2; //10000
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//5000
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//1000
+						break;
+					case 10:
+					case 11:
+						currentNoteType = 5;//250
+						break;	
+					case 12:
+					case 13:
+						currentNoteType = 6;//50
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_SAR:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+						currentNoteType = 0;//500
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//100
+						break;
+					case 4:
+					case 5:	
+						currentNoteType = 2; //50
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//20
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//10
+						break;
+					case 10:
+					case 11:
+						currentNoteType = 5;//5
+						break;	
+					case 12:
+					case 13:
+						currentNoteType = 6;//1
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_AED:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+						currentNoteType = 0;//1000
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//500
+						break;
+					case 4:
+					case 5:	
+						currentNoteType = 2; //200
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//100
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//50
+						break;
+					case 10:
+					case 11:
+						currentNoteType = 5;//20
+						break;	
+					case 12:
+					case 13:
+						currentNoteType = 6;//10
+						break;
+					case 14:
+					case 15:
+						currentNoteType = 7;//5
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_GBP:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+						currentNoteType = 0;//50
+						break;
+					case 1:
+						currentNoteType = 1;//20
+						break;
+					case 2:
+						currentNoteType = 2; //10
+						break;
+					case 3:
+						currentNoteType = 3;//5
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_ARS:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+						currentNoteType = 0;//1000
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//500
+						break;
+					case 4:
+					case 5:
+						currentNoteType = 2; //200
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//100
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//50
+						break;
+					case 10:
+					case 11:
+						currentNoteType = 5;//20
+						break;
+					case 12:
+					case 13:
+						currentNoteType = 6;//10
+						break;
+					case 14:
+					case 15:
+						currentNoteType = 7;//5
+						break;
+					case 16:
+					case 17:
+						currentNoteType = 8;//2
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_THB:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+					case 10:
+						currentNoteType = 0;//1000
+						break;
+					case 2:
+					case 3:
+					case 11:
+						currentNoteType = 1;//500
+						break;
+					case 4:
+					case 5:
+					case 12:
+						currentNoteType = 2; //100
+						break;
+					case 6:
+					case 7:
+					case 13:
+						currentNoteType = 3;//50
+						break;
+					case 8:
+					case 9:
+					case 14:
+						currentNoteType = 4;//20
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_TWD:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+						currentNoteType = 0;//2000
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//1000
+						break;
+					case 4:
+					case 5:
+						currentNoteType = 2; //500
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//200
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//100
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_CNY:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+					case 2:
+						currentNoteType = 0;//100
+						break;
+					case 3:
+					case 4:
+					case 5:
+						currentNoteType = 1;//50
+						break;
+					case 6:
+					case 7:
+					case 8:
+						currentNoteType = 2; //20
+						break;
+					case 9:
+					case 10:
+					case 11:
+						currentNoteType = 3;//10
+						break;
+					case 12:
+					case 13:
+					case 14:
+						currentNoteType = 4;//5
+						break;
+					case 15:
+					case 16:
+					case 17:
+						currentNoteType = 5;//1
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_BYR:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+						currentNoteType = 0;//100
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//50
+						break;
+					case 4:
+					case 5:
+						currentNoteType = 2; //20
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//10
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//5
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_UZS:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+						currentNoteType = 0;//100000
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//50000
+						break;
+					case 4:
+					case 5:
+						currentNoteType = 2; //10000
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//5000
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//1000
+						break;
+					case 10:
+					case 11:
+						currentNoteType = 5;//500
+						break;
+					case 12:
+					case 13:
+						currentNoteType = 6;//200
+						break;
+					case 14:
+					case 15:
+						currentNoteType = 7;//100
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}				
+				}
+				break;
+				case INDEX_KZT:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+						currentNoteType = 0;//10000
+						break;
+					case 2:
+					case 3:
+						currentNoteType = 1;//5000
+						break;
+					case 4:
+					case 5:
+						currentNoteType = 2; //2000
+						break;
+					case 6:
+					case 7:
+						currentNoteType = 3;//1000
+						break;
+					case 8:
+					case 9:
+						currentNoteType = 4;//500
+						break;
+					case 10:
+					case 11:
+						currentNoteType = 5;//200
+						break;
+					case 12:
+					case 13:
+						currentNoteType = 6;//100
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}	
+				}					
+				break;
+				case INDEX_MAD:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+					case 2:
+						currentNoteType = 0;//200
+						break;
+					case 3:
+					case 4:
+					case 5:
+						currentNoteType = 1;//100
+						break;
+					case 6:
+					case 7:
+					case 8:
+						currentNoteType = 2; //50
+						break;
+					case 9:
+					case 10:
+					case 11:
+						currentNoteType = 3;//20
+						break;
+					case 12:
+					case 13:
+					case 14:
+						currentNoteType = 4;//10
+						break;
+					case 15:
+					case 16:
+					case 17:
+						currentNoteType = 5;//5
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}		
+				}
+				break;
+				default:
+					break;
 		}
 	}
 }
@@ -3962,6 +3843,9 @@ void IncNoteNum(void)
 			break;	
 		case INDEX_KZT:
 			noteDenoValue = KZT_NOTE_VALUE[currentNoteType];
+			break;	
+		case INDEX_MAD:
+			noteDenoValue = MAD_NOTE_VALUE[currentNoteType];
 			break;			
 		default:
 			noteDenoValue = USD_NOTE_VALUE[currentNoteType];
@@ -4099,49 +3983,95 @@ void DispDetailNoteNum(void)//显示明细
 	u8 i,j;
 	u32 d;
 	u8 result;
+	u8 noteMaxNum;
+	u8 noteCnt1,note1PositionOffset,note2PositionOffset;
+	u8 noteCnt2;
 	
 	//disp_setFont(DETAIL_NOTE_CHART_FONT);
 	//disp_setPenColor(BLACK);
 	//disp_setBackColor(MID_BAR_COLOR);
 	j=0;
-	if(g_currency == INDEX_EUR
-		||g_currency == INDEX_USD
-		||g_currency == INDEX_SAR
-		||g_currency == INDEX_BYR)//7
+	switch(g_currency)
 	{
-		for(i = 0;i < 7;i++)
+		case INDEX_GBP:
+			noteMaxNum = 4;
+		break;
+		case INDEX_IQD:
+		case INDEX_THB:
+		case INDEX_TWD:
+				noteMaxNum = 5;
+		break;		
+		case INDEX_TRY:
+		case INDEX_CNY:
+		case INDEX_KZT:
+		case INDEX_MAD:
+				noteMaxNum = 6;
+		break;				
+		case INDEX_EUR:
+		case INDEX_USD:
+		case INDEX_SAR:
+		case INDEX_BYR:
+				noteMaxNum = 7;
+		break;			
+		case INDEX_RUB:
+		case INDEX_AED:
+				noteMaxNum = 8;
+		break;	
+		case INDEX_ARS:
+		case INDEX_UZS:
+				noteMaxNum = 9;
+		break;		
+		default:
+			noteMaxNum = 0;
+		break;
+	}
+	/***********************************************************************
+	明细排列             总共面额数/2  有余数放后一列
+	××0   ××5        
+	××1   ××6
+	××2   ××7
+	××3   ××8
+	××4   ××9
+	***********************************************************************/
+	if(noteMaxNum > 0)
+	{
+		noteCnt1 = noteMaxNum/2;
+		noteCnt2 = noteMaxNum%2;
+		note1PositionOffset = 5-noteCnt1;
+		note2PositionOffset = note1PositionOffset+(5-(noteCnt1+noteCnt2));
+		for(i = 0;i < noteMaxNum;i++)
 		{
 			d = denoNoteNum[i];
 			if(d == 0)
 			{	
-				if(i<3)
+				if(i<noteCnt1)
 				{
-					disp_DrawPic(SBmpDispXY[(i+2)*2]-24,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+2)*2]-12,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+2)*2],SBmpDispXY[(i+2)*2+1],SbmpAddress[0]);
+					disp_DrawPic(SBmpDispXY[(i+note1PositionOffset)*2]-24,SBmpDispXY[(i+note1PositionOffset)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+note1PositionOffset)*2]-12,SBmpDispXY[(i+note1PositionOffset)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+note1PositionOffset)*2],SBmpDispXY[(i+note1PositionOffset)*2+1],SbmpAddress[0]);
 				}
 				else
 				{
-					disp_DrawPic(SBmpDispXY[(i+3)*2]-24,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+3)*2]-12,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+3)*2],SBmpDispXY[(i+3)*2+1],SbmpAddress[0]);					
+					disp_DrawPic(SBmpDispXY[(i+note2PositionOffset)*2]-24,SBmpDispXY[(i+note2PositionOffset)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+note2PositionOffset)*2]-12,SBmpDispXY[(i+note2PositionOffset)*2+1],SbmpAddress[10]);
+					disp_DrawPic(SBmpDispXY[(i+note2PositionOffset)*2],SBmpDispXY[(i+note2PositionOffset)*2+1],SbmpAddress[0]);					
 				}
 			}	
 			else
 			{
-				if(i < 3)
+				if(i < noteCnt1)
 				{
 					for(j=0; j<3; j++)
 					{
 						if(d > 0)
 						{
 							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j, SBmpDispXY[(i+2)*2+1], SbmpAddress[result]);
+							disp_DrawPic(SBmpDispXY[(i+note1PositionOffset)*2]-12*j, SBmpDispXY[(i+note1PositionOffset)*2+1], SbmpAddress[result]);
 							d /= 10;
 						}
 						else
 						{
-							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j,SBmpDispXY[(i+2)*2+1], SbmpAddress[10]);
+							disp_DrawPic(SBmpDispXY[(i+note1PositionOffset)*2]-12*j,SBmpDispXY[(i+note1PositionOffset)*2+1], SbmpAddress[10]);
 						}
 					}
 				}
@@ -4152,281 +4082,49 @@ void DispDetailNoteNum(void)//显示明细
 						if(d > 0)
 						{
 							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j, SBmpDispXY[(i+3)*2+1], SbmpAddress[result]);
+							disp_DrawPic(SBmpDispXY[(i+note2PositionOffset)*2]-12*j, SBmpDispXY[(i+note2PositionOffset)*2+1], SbmpAddress[result]);
 							d /= 10;
 						}
 						else
 						{
-							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
+							disp_DrawPic(SBmpDispXY[(i+note2PositionOffset)*2]-12*j,SBmpDispXY[(i+note2PositionOffset)*2+1],SbmpAddress[10]);
 						}
 					}
 				}	
 			}
 		}
 	}
-	else if((g_currency == INDEX_TRY)
-			||(g_currency == INDEX_CNY)
-			|| (g_currency == INDEX_KZT))//6
-	{
-		for(i = 0;i < 6;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
-				if (i < 3)
-				{
-					disp_DrawPic(SBmpDispXY[(i+2)*2]-24,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+2)*2]-12,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+2)*2],SBmpDispXY[(i+2)*2+1],SbmpAddress[0]);
-				}
-				else
-				{
-					disp_DrawPic(SBmpDispXY[(i+4)*2]-24,SBmpDispXY[(i+4)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+4)*2]-12,SBmpDispXY[(i+4)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+4)*2],SBmpDispXY[(i+4)*2+1],SbmpAddress[0]);
-				}
 
-			}	
-			else
-			{
-				if (i < 3)
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j, SBmpDispXY[(i+2)*2+1], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-						}
-					}
-				}
-				else
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+4)*2]-12*j, SBmpDispXY[(i+4)*2+1], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[(i+4)*2]-12*j,SBmpDispXY[(i+4)*2+1],SbmpAddress[10]);
-						}
-					}
-				}
-			}
-		}
-	}
-	else if(g_currency == INDEX_RUB
-			||g_currency == INDEX_AED)//8
-	{
-		for(i = 0;i < 8;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
-				if(i<4)
-				{
-					disp_DrawPic(SBmpDispXY[(i+1)*2]-24,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+1)*2]-12,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+1)*2],SBmpDispXY[(i+1)*2+1],SbmpAddress[0]);
-				}
-				else
-				{
-					disp_DrawPic(SBmpDispXY[(i+2)*2]-24,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+2)*2]-12,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+2)*2],SBmpDispXY[(i+2)*2+1],SbmpAddress[0]);
-				}
-			}	
-			else
-			{
-				if(i < 4)
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j, SBmpDispXY[(i+1)*2+1], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
-						}
-					}
-				}
-				else
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j, SBmpDispXY[(i+2)*2+1], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[(i+2)*2]-12*j,SBmpDispXY[(i+2)*2+1],SbmpAddress[10]);
-						}
-					}
-				}
-			}
-		}
-	}
-	else if(g_currency == INDEX_GBP)//4
-	{
-		for(i = 0;i < 4;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
-				disp_DrawPic(SBmpDispXY[(i+6)*2]-24,SBmpDispXY[(i+6)*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[(i+6)*2]-12,SBmpDispXY[(i+6)*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[(i+6)*2],SBmpDispXY[(i+6)*2+1],SbmpAddress[0]);
-			}	
-			else
-			{
-				for(j=0; j<3; j++)
-				{
-					if(d > 0)
-					{
-						result = d%10;
-						disp_DrawPic(SBmpDispXY[(i+6)*2]-12*j, SBmpDispXY[(i+6)*2+1], SbmpAddress[result]);
-						d /= 10;
-					}
-					else
-					{
-						disp_DrawPic(SBmpDispXY[(i+6)*2]-12*j,SBmpDispXY[(i+6)*2+1],SbmpAddress[10]);
-					}
-				}
-			}
-		}
-	}
-	else if(g_currency == INDEX_ARS
-					||g_currency == INDEX_UZS)//9
-	{
-		for(i = 0;i < 9;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
-				disp_DrawPic(SBmpDispXY[(i+1)*2]-24,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[(i+1)*2]-12,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[(i+1)*2],SBmpDispXY[(i+1)*2+1],SbmpAddress[0]);
-			}	
-			else
-			{
-				for(j=0; j<3; j++)
-				{
-					if(d > 0)
-					{
-						result = d%10;
-						disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j, SBmpDispXY[(i+1)*2+1], SbmpAddress[result]);
-						d /= 10;
-					}
-					else
-					{
-						disp_DrawPic(SBmpDispXY[(i+1)*2]-12*j,SBmpDispXY[(i+1)*2+1],SbmpAddress[10]);
-					}
-				}
-			}
-		}
-	}	
-	else if((g_currency == INDEX_THB)||(g_currency == INDEX_TWD))//5
-	{
-		for(i = 0;i < 5;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
-				disp_DrawPic(SBmpDispXY[(i+5)*2]-24,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[(i+5)*2]-12,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
-				disp_DrawPic(SBmpDispXY[(i+5)*2],SBmpDispXY[(i+5)*2+1],SbmpAddress[0]);
-			}	
-			else
-			{
-				for(j=0; j<3; j++)
-				{
-					if(d > 0)
-					{
-						result = d%10;
-						disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j, SBmpDispXY[(i+5)*2+1], SbmpAddress[result]);
-						d /= 10;
-					}
-					else
-					{
-						disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
-					}
-				}
-			}
-		}
-	}
-	else if(g_currency == INDEX_IQD)//5（2和3）
-	{
-		for(i = 0;i < 5;i++)
-		{
-			d = denoNoteNum[i];
-			if(d == 0)
-			{	
-				if(i<2)
-				{
-					disp_DrawPic(SBmpDispXY[(i+3)*2]-24,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+3)*2]-12,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+3)*2],SBmpDispXY[(i+3)*2+1],SbmpAddress[0]);
-				}
-				else
-				{
-					disp_DrawPic(SBmpDispXY[(i+5)*2]-24,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+5)*2]-12,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
-					disp_DrawPic(SBmpDispXY[(i+5)*2],SBmpDispXY[(i+5)*2+1],SbmpAddress[0]);
-				}
-			}	
-			else
-			{
-				if(i < 2)
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j, SBmpDispXY[(i+3)*2+1], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[(i+3)*2]-12*j,SBmpDispXY[(i+3)*2+1],SbmpAddress[10]);
-						}
-					}
-				}
-				else
-				{
-					for(j=0; j<3; j++)
-					{
-						if(d > 0)
-						{
-							result = d%10;
-							disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j, SBmpDispXY[(i+5)*2+1], SbmpAddress[result]);
-							d /= 10;
-						}
-						else
-						{
-							disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
-						}
-					}
-				}
-			}
-		}
-	}
+//	if((g_currency == INDEX_THB)||(g_currency == INDEX_TWD))//5
+//	{
+//		for(i = 0;i < 5;i++)
+//		{
+//			d = denoNoteNum[i];
+//			if(d == 0)
+//			{	
+//				disp_DrawPic(SBmpDispXY[(i+5)*2]-24,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+//				disp_DrawPic(SBmpDispXY[(i+5)*2]-12,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+//				disp_DrawPic(SBmpDispXY[(i+5)*2],SBmpDispXY[(i+5)*2+1],SbmpAddress[0]);
+//			}	
+//			else
+//			{
+//				for(j=0; j<3; j++)
+//				{
+//					if(d > 0)
+//					{
+//						result = d%10;
+//						disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j, SBmpDispXY[(i+5)*2+1], SbmpAddress[result]);
+//						d /= 10;
+//					}
+//					else
+//					{
+//						disp_DrawPic(SBmpDispXY[(i+5)*2]-12*j,SBmpDispXY[(i+5)*2+1],SbmpAddress[10]);
+//					}
+//				}
+//			}
+//		}
+//	}
+	
 }
 		
 

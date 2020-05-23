@@ -41,6 +41,7 @@
 #define BILL_INDEX_BYR
 #define BILL_INDEX_KZT
 #define BILL_INDEX_UZS
+#define BILL_INDEX_MAD
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------
@@ -109,7 +110,6 @@ enum
 	INDEX_MAD,  //29摩洛哥
 	INDEX_LYD, //30利比亚
 	INDEX_LAK,	//31
-	
 	INDEX_ZAR,	//32南非
 	INDEX_KES,	//33
 	INDEX_ARS,	//34阿根廷
@@ -118,7 +118,6 @@ enum
 	INDEX_LKR,	//37斯里兰卡
 	INDEX_IDR,	//38印尼
 	INDEX_ILS,	//39以色列
-	
 	INDEX_AFN, 	//40阿富汗
 	INDEX_JOD, 	//41约旦
 	INDEX_IQD, 	//42伊拉克
@@ -153,6 +152,7 @@ enum
 #define PROCESS_KZT
 #define PROCESS_BYR
 #define PROCESS_UZS
+#define PROCESS_MAD
 //---------------------------------------------------------------------
 //全局变量，可以被外部程序直接访问
 //---------------------------------------------------------------------

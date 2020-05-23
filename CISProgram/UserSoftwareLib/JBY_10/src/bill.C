@@ -78,6 +78,11 @@
 #include "LW_UZS_ColorFvt.h"
 #endif
 /***********************************************/
+#ifdef  BILL_INDEX_MAD
+#include "LW_MAD_ValueFvt.h"
+#include "LW_MAD_ColorFvt.h"
+#endif
+/***********************************************/
 
 //#define DRAW_STATE
 //#define DRAW_STATE2
@@ -283,6 +288,14 @@ u8 billRGB_Judge(int noteType)
 		pNoteClass = g_KZT_Color_noteClass;
 		pFvt = (short *)KZT_colorFvt_Int;
 		Class = KZT_COLOR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_MAD
+	if (noteType == INDEX_MAD)
+	{
+		pNoteClass = g_MAD_Color_noteClass;
+		pFvt = (short *)MAD_colorFvt_Int;
+		Class = MAD_COLOR_NOTE_CLASS;
 	}
 #endif
 	max_t = 0.0;
@@ -671,6 +684,14 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		pNoteClass = g_UZS_noteClass;
 		pFvt = (short *)UZS_iradFvt_Int;
 		Class = UZS_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_MAD
+	if (noteType == INDEX_MAD)
+	{
+		pNoteClass = g_MAD_noteClass;
+		pFvt = (short *)MAD_iradFvt_Int;
+		Class = MAD_NOTE_CLASS;
 	}
 #endif
 	max_t = 0.0;
