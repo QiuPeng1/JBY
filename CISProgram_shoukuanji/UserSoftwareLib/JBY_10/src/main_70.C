@@ -4005,14 +4005,14 @@ void DealNoteType(void)
 			case 2:
 				currentNoteType = 0;//100
 				gb_CurrentValue = 7;
-				gb_CurrentHaveBill = 0;
+				//gb_CurrentHaveBill = 0;
 				break;
 			case 3:
 			case 4:
 			case 5:
 				currentNoteType = 1;//50
 				gb_CurrentValue = 6;
-				gb_CurrentHaveBill = 0;
+				//gb_CurrentHaveBill = 0;
 				break;
 			case 6:
 			case 7:
@@ -4204,7 +4204,7 @@ void DealNotePass(void)
 				}
 				else
 				{
-					if((gb_CurrentValue == 7)||(gb_CurrentValue == 6))//100元退钞
+					/*if((gb_CurrentValue == 7)||(gb_CurrentValue == 6))//100元退钞
 					{
 						gb_billState = BILL_REJECT;
 						noteState |= STATE_BACKWARD_NOTE_LEAVE;
@@ -4214,7 +4214,7 @@ void DealNotePass(void)
 						motor1_BackwardRun();//向后转
 						gb_noteState = NOTE_BACKWARD;					
 					}
-					else
+					else*/
 					{
 						noteState |= STATE_FORWARD_NOTE_LEAVE;
 						motor1_ForwardRun();//向前转
