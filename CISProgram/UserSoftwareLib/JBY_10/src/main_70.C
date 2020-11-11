@@ -3219,24 +3219,30 @@ void DealNoteType(void)
 					{
 					case 0:
 					case 1:
-						currentNoteType = 0;//100
+						currentNoteType = 2;//100
 						break;
 					case 2:
 					case 3:
-						currentNoteType = 1;//50
+						currentNoteType = 3;//50
 						break;
 					case 4:
 					case 5:
-						currentNoteType = 2; //20
+						currentNoteType = 4; //20
 						break;
 					case 6:
 					case 7:
-						currentNoteType = 3;//10
+						currentNoteType = 5;//10
 						break;
 					case 8:
 					case 9:
-						currentNoteType = 4;//5
+						currentNoteType = 6;//5
 						break;
+                    case 10:
+                        currentNoteType = 1;
+                    break;
+                    case 12:
+                         currentNoteType = 0;
+                    break;                      
 					default:
 						currentNoteType = 0xFF;
 						g_errFlag |= ERR_VALUE;

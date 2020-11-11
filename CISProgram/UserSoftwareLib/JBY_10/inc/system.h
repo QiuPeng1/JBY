@@ -113,6 +113,8 @@ V1.6.7 20200324 1、UZS误报优化
 V1.6.8 20200410 1、增加摩洛哥MAD
 V1.6.9 20200411 1、修改图片地址
 V1.7.0 20200411 1、修改明细显示
+V1.7.1 20200818 1、修改BYR明细显示  V8.0.0
+V1.7.2 20200910 1、增加白俄500  200  v8.0.1
 **************************************************************************/
 
 /*防止重复引用 */
@@ -151,9 +153,13 @@ enum
 #define LENGTH_HAVENOTE_VALUE_THRES 10
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
-
-#define VERSION  "V1.7.0"
-
+//#define PIC_NEW_ADDR
+#ifdef PIC_NEW_ADDR
+#define VERSION  "V1.7.2"
+#else
+#define VERSION  "V8.0.1"
+#endif
+//#define PIC_NEW_ADDR
 
 typedef enum
 {
