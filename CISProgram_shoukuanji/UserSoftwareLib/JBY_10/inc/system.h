@@ -157,9 +157,10 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21Â·²â³¤ 1Â·ÂëÅÌ
 
-#define VERSION  "V6.1.5"
+#define VERSION  "V6.1.6"
 #define USER1_VERSION "SKJ_HW_V100"
-#define USER2_VERSION "SKJ_SW_V115"
+#define USER2_VERSION "SKJ_SW_V116"
+#define PIC_NEW_ADDR
 
 typedef enum
 {
