@@ -1685,7 +1685,7 @@ void DealPackageFromUart3(void)
                             {
                                 uart3toPCdebug[i+1] = g_debugMpInfo.mp_cnt[i];
                             }
-							
+							uart3toPCdebug[i] = g_mpInterval.ave;i++;
 							uart3toPCdebug[i] = 0x55;i++;
 							uart_SendDataToUart3(uart3toPCdebug,i);
                         break;
@@ -1798,6 +1798,8 @@ void DealScanEnteracneSensor(void)
                 g_debugMpInfo.mp_intervalCnt = 0;//开始记录码盘间隔
                 g_debugMpInfo.mp_backIntervalCnt = 0;
                 g_debugMpInfo.mp_intervalFlag = 1;
+                g_mpInterval.aveFlag=0;
+                g_mpInterval.ave=0;
 				g_maxMpFromEnteranceToPs1 = MP_FROM_ENTERANCE_TO_Ps1;
 				tempMgDataLen = 0;
 				gb_haveNoteInEntergate = 0;
@@ -7126,6 +7128,7 @@ void ClearJamFlag(void)
 	g_maxMpFromComputeToPS1 = 0;
 	gb_needStopMotorTimeout = 0;
     g_debugMpInfo.mp_intervalFlag = 0;
+    g_mpInterval.aveFlag=0;
 	
 }
 //位置管1，给测长触发 给颜色触发
@@ -7170,7 +7173,8 @@ void DealPS1INT(void)
 					{
 						if(g_currency != INDEX_GBP)
 						{
-                            g_debugMpInfo.mp_cnt[MP_EN_TO_PS1] = MP_FROM_ENTERANCE_TO_Ps1-g_maxMpFromEnteranceToPs1; 
+                            g_debugMpInfo.mp_cnt[MP_EN_TO_PS1] = MP_FROM_ENTERANCE_TO_Ps1-g_maxMpFromEnteranceToPs1;
+                            g_mpInterval.aveFlag = 1;
 							g_maxMpFromEnteranceToPs1 = 0;
 							g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
 							noteState |= STATE_FORWARD_COVER_PS1;
@@ -7354,7 +7358,6 @@ void DealPS2INT(void)
 						//开始刹车
 						motor1_ForwardRun();
 						g_needSaveMpPeriodFlag = 1;
-						gb_mpPeriodRecordCnt = 0;
 						
 						gb_needStopMotorTimeout = 50;//35;
 
@@ -7958,17 +7961,24 @@ void EXTI9_5_IRQHandler(void)
 			}
 			TIM_Cmd(TIM5, DISABLE);
 			mpPeriodCnt = TIM5->CNT;
+            if(g_mpInterval.aveFlag==1)
+            {
+                if(g_mpInterval.ave==0)
+                {
+                    g_mpInterval.ave=mpPeriodCnt;
+                }
+                else
+                {
+                    g_mpInterval.ave=(g_mpInterval.ave+mpPeriodCnt)/2;
+                }
+            }
             if(g_debugMpInfo.mp_intervalFlag == 1)
             {
                 g_debugMpInfo.mp_interval[MIN(g_debugMpInfo.mp_intervalCnt++,MAX_MP_CNT)]=mpPeriodCnt;
             }
 			if(g_needSaveMpPeriodFlag == 1)
 			{
-				if(gb_mpPeriodRecordCnt < 100)
-				{
-					gb_mpPeriodRecord[gb_mpPeriodRecordCnt++] = mpPeriodCnt;
-				}
-				if (mpPeriodCnt > 55)
+				if (mpPeriodCnt > MAX(g_mpInterval.ave*2,60))
 				{
 					motor1_Stop();//停转
                     g_debugMpInfo.mp_intervalFlag = 0;
@@ -8070,8 +8080,8 @@ void EXTI9_5_IRQHandler(void)
 				{
 				//	test_On();
 					motor1_BackwardRun();
+                    g_mpInterval.aveFlag=0;
 					g_needSaveMpPeriodFlag = 1;
-					gb_mpPeriodRecordCnt = 0;
 					gb_needStopMotorTimeout = 35;
 				}
 			}

@@ -184,9 +184,7 @@ u8 g_motorRunState = 0;
 
 u8 g_colorFsStopWork = 0;
 u8 gb_needStopMotorTimeout = 0;
-u8 gb_mpPeriodRecordCnt = 0;
 u8 g_needSaveMpPeriodFlag = 0;
-u8 gb_mpPeriodRecord[100];
 // #define A1_GPIO_PORT           GPIOB
 // #define A1_GPIO_PIN            GPIO_Pin_1
 // #define A1_GPIO_MODE           GPIO_Mode_Out_PP
@@ -473,6 +471,11 @@ typedef struct{
 
 _DEBUG_MP_INFO g_debugMpInfo;
 
+typedef struct{
+    u16 ave;
+    u16 aveFlag;
+}_MP_AVE;
+_MP_AVE g_mpInterval;
 u16 irHaveNoteContinuslyCnt = 0;
 
 #define MIN_NOTE_NUM 30
