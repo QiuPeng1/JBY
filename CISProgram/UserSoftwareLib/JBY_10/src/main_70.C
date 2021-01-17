@@ -2959,6 +2959,7 @@ void DealNoteType(void)
 					{
 					case 0:
 					case 1:
+                    case 16:
 						currentNoteType = 0;//500
 						break;
 					case 2:
@@ -2967,22 +2968,27 @@ void DealNoteType(void)
 						break;
 					case 4:
 					case 5:	
+                    case 20:
 						currentNoteType = 2; //50
 						break;
 					case 6:
 					case 7:
+                    case 24:
 						currentNoteType = 3;//20
 						break;
 					case 8:
 					case 9:
+                    case 26:
 						currentNoteType = 4;//10
 						break;
 					case 10:
 					case 11:
+                    case 28:
 						currentNoteType = 5;//5
 						break;	
 					case 12:
 					case 13:
+                    case 30:
 						currentNoteType = 6;//1
 						break;
 					default:
