@@ -115,8 +115,13 @@ V6.1.3 20200322 1、去除边上一个灯
                 3、测试调试串口默认打开
 V6.1.4 20200323 1、开机自检时去除边上一个灯
 V6.1.5 20201111 1、人民币面额支持5-100
- 
-
+V6.1.6 20201113 1、人民币新5元
+                2、新显示
+V6.1.7 20201115 1、人民币算法优化
+V6.1.8 20201115 1、人民币算法优化
+V6.1.9 20201225 1、人民币算法优化
+V6.2.0 20210115 1、速度快后优化刹车
+V6.2.1 20210117 1、速度快后优化刹车
 **************************************************************************/
 
 /*防止重复引用 */
@@ -157,9 +162,9 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V6.1.6"
+#define VERSION  "V6.2.1"
 #define USER1_VERSION "SKJ_HW_V100"
-#define USER2_VERSION "SKJ_SW_V116"
+#define USER2_VERSION "SKJ_SW_V121"
 #define PIC_NEW_ADDR
 
 typedef enum

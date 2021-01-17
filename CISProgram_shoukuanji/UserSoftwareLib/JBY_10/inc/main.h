@@ -395,10 +395,12 @@ u32 PS1Flag = 0;
 u8 motor1StopRecord = 0;
 u8 motor1SataRecord = 0;
 u8 motor1SataRecord2 = 0;
-u8 PS1ValueRecord[1500];
-u8 PS2ValueRecord[1500];
-u16 PS1ValueRecordCnt = 0;
-u16 PS2ValueRecordCnt = 0;
+#ifdef DEBUG_MODE
+    u8 PS1ValueRecord[1500];
+    u8 PS2ValueRecord[1500];
+    u16 PS1ValueRecordCnt = 0;
+    u16 PS2ValueRecordCnt = 0;
+#endif
 u8 mpCntRecode[1000];
 u8 msCntRecode[1000];
 u8 ententernce[500];
@@ -444,36 +446,32 @@ u32 msecCnt = 0;
 	
 enum
 {
-	DEBUG_MODE,//调试串口
-	DISPLAY_MODE,
+	UART_DEBUG_MODE,//调试串口
+	UART_DISPLAY_MODE,
 };
-u8 gb_uartWorkMode = DEBUG_MODE;//DISPLAY_MODE;
+u8 gb_uartWorkMode = UART_DEBUG_MODE;//DISPLAY_MODE;
 
-//#define IR_HAVENOTE_THRES 150
-// #define ir2_HaveNote() (irValue[2] < irHaveNoteThres)//(psValue[0] < irHaveNoteThres)
-// #define ir3_HaveNote() (irValue[5] < irHaveNoteThres)//(psValue[1] < irHaveNoteThres)
-// #define ir1_HaveNote() (irValue[1] < irHaveNoteThres)
-// #define ir4_HaveNote() (irValue[4] < irHaveNoteThres)
+#define MAX_MP_CNT 1000
+#define MAX_BACKMP_CNT 24
+enum{
+MP_EN_TO_PS1,
+MP_PS1_TO_PS2,
+MP_PS2_TO_LEAVE,
+MP_COMPUTE_TO_PS1,
+MP_DEBUG_NUM_INDEX,
 
-// u8 gb_ps2LeftHaveNote,gb_ps2RightHaveNote;
+};
 
-// volatile s8  currentCountNum;
-// volatile u8  lowCountNum;
-// volatile u16  noteWidth = 0;
-// volatile u8  noteWidthGrade;
+typedef struct{
+    u16 mp_interval[MAX_MP_CNT];
+    u16 mp_intervalCnt;
+    u16 mp_backInterval[MAX_BACKMP_CNT*2];
+    u16 mp_backIntervalCnt;
+    u16 mp_cnt[MP_DEBUG_NUM_INDEX];
+    u8 mp_intervalFlag;
+}_DEBUG_MP_INFO;
 
-// volatile u8  ir2IrNum = 0,ir3IrNum = 0;
-// u8  ps2LeftIrNum = 0,ps2RightIrNum = 0;
-// volatile u16  countIrNum = 0;
-// volatile u8  oneCountIrNum = 0;
-// u8 irWidth = 0;
-// u8 irGap = 0;
-// u8 gb_irCovered = 0;
-// u8 irWidthSaved = 0;
-// u8 irGapSaved = 0;
-// u8 minGapWidthProp = 0xff;
-// u8 leftIrCovered = 0;
-// u8 rightIrCovered = 0;
+_DEBUG_MP_INFO g_debugMpInfo;
 
 u16 irHaveNoteContinuslyCnt = 0;
 
@@ -714,6 +712,7 @@ u8 gb_uvNeedStartSampleCnt = 0;
 u8 gb_uvNeedEndSampleCnt = 0;
 u8 gb_needStopMotorCnt = 0;
 u8 gb_needBackMotorCnt = 0;
+u8 gb_needBackMotorCntflag = 0;
 u8 gb_lengthIrNeedStartSampleflag = 0;
 u8 gb_lengthIrNeedStartSampleCnt = 0;
 u8 gb_lengthIrNeedEndSampleCnt = 0;

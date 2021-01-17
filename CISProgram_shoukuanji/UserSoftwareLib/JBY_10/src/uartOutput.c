@@ -510,6 +510,7 @@ void OutputALLDetailData(void)
 }
 void OutPutPsHWRecordData(void)
 {
+ #ifdef DEBUG_MODE
 	u16 i;
 	u8 buffer[7];
 	u16 maxoutLen;
@@ -565,6 +566,58 @@ void OutPutPsHWRecordData(void)
 		buffer[3] = 0xFF;
 		buffer[4] = 0xFF;
 		buffer[5] = 0XFF;
+		uart_SendDataToUart3(buffer,7);
+
+		//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+	}
+#endif
+
+}
+
+void OutPutMPRecordData(void)
+{
+	u16 i;
+	u8 buffer[5];
+	u16 maxoutLen;
+	memset(buffer, 0, sizeof(buffer));
+	buffer[0] = 0xc6;
+	buffer[1] = 2;
+	buffer[4] = 0x55;
+
+    maxoutLen=MIN(g_debugMpInfo.mp_intervalCnt,MAX_MP_CNT);
+	for(i = 0; i < maxoutLen; i++)
+	{
+		if (i <= g_debugMpInfo.mp_intervalCnt)//gb_needOutPutLength)
+		{
+			buffer[2] = g_debugMpInfo.mp_interval[i];
+		}
+		else
+		{
+			buffer[2] = 0;
+		}
+        if (i <= g_debugMpInfo.mp_backIntervalCnt)//gb_needOutPutLength)
+		{
+			buffer[3] = g_debugMpInfo.mp_backInterval[i];
+		}
+		else
+		{
+			buffer[3] = 0;
+		}
+		uart_SendDataToUart3(buffer,5);
+
+		//等待串口发送完毕
+		while(uart3outfifo_count> 0)
+		{
+		}
+
+	}
+	for (i = 0; i < 6; ++i)
+	{
+		buffer[2] = 0xFF;
+		buffer[3] = 0xFF;
 		uart_SendDataToUart3(buffer,7);
 
 		//等待串口发送完毕

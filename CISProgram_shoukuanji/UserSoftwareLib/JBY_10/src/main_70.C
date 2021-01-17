@@ -1413,7 +1413,7 @@ void DealPackageFromUart3(void)
 		else
 		{	
 			cmd = uart3infifo_DataOut();//命令
-			if(gb_uartWorkMode == DEBUG_MODE)
+			if(gb_uartWorkMode == UART_DEBUG_MODE)
 			{
 				switch (cmd)
 				{
@@ -1457,7 +1457,8 @@ void DealPackageFromUart3(void)
 						break;
 					case 'g'://厚度下 获取当前纸币
 						//OutputMgColorDetailData();
-						OutPutPsHWRecordData();
+                        OutPutMPRecordData();
+						//OutPutPsHWRecordData();
 						break;
 					case 0xa0://采集一轮数据并输出
 						DispSensorViewMenu();
@@ -1677,7 +1678,17 @@ void DealPackageFromUart3(void)
 								gb_debugErrFlag = 1;
 								DispString("调试串口打开",1);
 							}			
-						break;													
+						break;	
+                        case 0xf1:  
+                            uart3toPCdebug[0] = 0xf1;
+                            for(i=0;i<MP_DEBUG_NUM_INDEX;i++)
+                            {
+                                uart3toPCdebug[i+1] = g_debugMpInfo.mp_cnt[i];
+                            }
+							
+							uart3toPCdebug[i] = 0x55;i++;
+							uart_SendDataToUart3(uart3toPCdebug,i);
+                        break;
 	 					case 0xf0:
 							i = 0;
 #ifdef DEBUG_MODE
@@ -1776,17 +1787,22 @@ void DealScanEnteracneSensor(void)
 				//test_Off();
 				motor1SataRecord2 = 3; 
 				motor1SataRecord = 0; 
-				PS2ValueRecordCnt = 0;
-				PS1ValueRecordCnt = 0;
+
 				noteState |= STATE_FORWARD_COVER_ENTERANCE;
 #ifdef DEBUG_MODE
+				PS2ValueRecordCnt = 0;
+				PS1ValueRecordCnt = 0;
 				testflag[2] = 1;
 				testflag2[2] = testflag2Cnt++;
 #endif
+                g_debugMpInfo.mp_intervalCnt = 0;//开始记录码盘间隔
+                g_debugMpInfo.mp_backIntervalCnt = 0;
+                g_debugMpInfo.mp_intervalFlag = 1;
 				g_maxMpFromEnteranceToPs1 = MP_FROM_ENTERANCE_TO_Ps1;
 				tempMgDataLen = 0;
 				gb_haveNoteInEntergate = 0;
 				gb_needScanEteranceSensor = 0;
+                gb_needBackMotorCntflag = 0;
 				gb_billState = BILL_READ;
 				
 			}
@@ -4087,7 +4103,7 @@ void DealNotePass(void)
 				g_timetest[1] = timeCnt;
 				billRGB_Judge(g_currency);//0909改U16注释
 				g_timetest[2] = timeCnt;
-				billMG_Judge(g_currency);//0909改U16注释
+				//billMG_Judge(g_currency);//0909改U16注释
 				g_timetest[3] = timeCnt;
 
 				billUV_Judge(g_currency,gb_uvTher[savedPara.uvGrade]);
@@ -4167,64 +4183,41 @@ void DealNotePass(void)
 			testflag[4] = 1;
 			testflag2[4] = testflag2Cnt++;
 #endif			
-//			//根据计算结果来决定钱去前面还是回转  
-//			if(savedPara.noteLeaveRoads == 0)
-//			{
-//				noteState |= STATE_FORWARD_NOTE_LEAVE;
-//				motor1_ForwardRun();//向前转
-//				motor1SataRecord2 = 2; 
-//				g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
-//				gb_noteState = NOTE_IDEL;
-//			}
-//			else if(savedPara.noteLeaveRoads == 1)
-//			{
-//				noteState |= STATE_BACKWARD_NOTE_LEAVE;
-//				gb_haveNoteInPS3 = 0;
-//				PS3FlagCnt = 0;
-//				motor1SataRecord = 1;
-//				motor1_BackwardRun();//向后转
-//				gb_noteState = NOTE_BACKWARD;
+            gb_billState = BILL_ESCROW;
+            if(g_errFlag > 0)//假币向后走，真币向前走
+            {
+                gb_billState = BILL_FRAUD;
+                noteState |= STATE_BACKWARD_NOTE_LEAVE;
+                gb_haveNoteInPS3 = 0;
+                PS3FlagCnt = 0;
+                motor1SataRecord = 1;
+                motor1_BackwardRun();//向后转
+                gb_noteState = NOTE_BACKWARD;
 
-//				g_maxMpFromComputeToPS1 = MP_FROM_COMPUTE_TO_PS1;			
-//			}
-//			else
-//			{
-				gb_billState = BILL_ESCROW;
-				if(g_errFlag > 0)//假币向后走，真币向前走
-				{
-					gb_billState = BILL_FRAUD;
-					noteState |= STATE_BACKWARD_NOTE_LEAVE;
-					gb_haveNoteInPS3 = 0;
-					PS3FlagCnt = 0;
-					motor1SataRecord = 1;
-					motor1_BackwardRun();//向后转
-					gb_noteState = NOTE_BACKWARD;
-
-					g_maxMpFromComputeToPS1 = MP_FROM_COMPUTE_TO_PS1;			
-				}
-				else
-				{
-					/*if((gb_CurrentValue == 7)||(gb_CurrentValue == 6))//100元退钞
-					{
-						gb_billState = BILL_REJECT;
-						noteState |= STATE_BACKWARD_NOTE_LEAVE;
-						gb_haveNoteInPS3 = 0;
-						PS3FlagCnt = 0;
-						motor1SataRecord = 1;
-						motor1_BackwardRun();//向后转
-						gb_noteState = NOTE_BACKWARD;					
-					}
-					else*/
-					{
-						noteState |= STATE_FORWARD_NOTE_LEAVE;
-						motor1_ForwardRun();//向前转
-						motor1SataRecord2 = 2; 
-						g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
-						gb_noteState = NOTE_IDEL;
-						gb_billState = BILL_STACKED;
-					}
-				}
-			//}
+                g_maxMpFromComputeToPS1 = MP_FROM_COMPUTE_TO_PS1;			
+            }
+            else
+            {
+                /*if((gb_CurrentValue == 7)||(gb_CurrentValue == 6))//100元退钞
+                {
+                    gb_billState = BILL_REJECT;
+                    noteState |= STATE_BACKWARD_NOTE_LEAVE;
+                    gb_haveNoteInPS3 = 0;
+                    PS3FlagCnt = 0;
+                    motor1SataRecord = 1;
+                    motor1_BackwardRun();//向后转
+                    gb_noteState = NOTE_BACKWARD;					
+                }
+                else*/
+                {
+                    noteState |= STATE_FORWARD_NOTE_LEAVE;
+                    motor1_ForwardRun();//向前转
+                    motor1SataRecord2 = 2; 
+                    g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
+                    gb_noteState = NOTE_IDEL;
+                    gb_billState = BILL_STACKED;
+                }
+            }
 		}
 	}
 }
@@ -4234,7 +4227,7 @@ void DispString(u8 *str,u8 enter)
 	u16 len;
 	u8 buf[8];
 	
-	if(gb_uartWorkMode != DEBUG_MODE)
+	if(gb_uartWorkMode != UART_DEBUG_MODE)
 	{
 		return;
 	}
@@ -6788,6 +6781,7 @@ void SysTick_Handler(void)
 			if(systemState == NORMAL)
 			{
 				motor1_Stop();//停转
+                motor1StopRecord = 3;
 				g_needSaveMpPeriodFlag = 0;
 				//test_Off();
 				if (gb_noteState == NOTE_FORWARD)
@@ -6803,8 +6797,8 @@ void SysTick_Handler(void)
 #ifdef DEBUG_MODE	
 					testflag[7] = 1;
 					testflag2[7] = testflag2Cnt++;
-#endif
 					gb_needOutPutLength = MAX(PS1ValueRecordCnt,PS2ValueRecordCnt);
+#endif
 				}
 				else if (gb_noteState == NOTE_BACKWARD)
 				{
@@ -7131,6 +7125,7 @@ void ClearJamFlag(void)
 	g_maxMpFromPs2ToLeave = 0;
 	g_maxMpFromComputeToPS1 = 0;
 	gb_needStopMotorTimeout = 0;
+    g_debugMpInfo.mp_intervalFlag = 0;
 	
 }
 //位置管1，给测长触发 给颜色触发
@@ -7139,10 +7134,12 @@ void DealPS1INT(void)
 	if(gb_hwVccIsOn == 1)//开灯时
 	{
 		PS1Flag <<= 1;
+#ifdef DEBUG_MODE
 		if(PS1ValueRecordCnt < 1500)
 		{
 			PS1ValueRecord[PS1ValueRecordCnt++] = tdjsValue[0];
 		}
+#endif
 		if(tdjsValue[0] < (TONGDAO_HAVENOTE_THRES))
 		{
 			PS1Flag ++;
@@ -7158,6 +7155,7 @@ void DealPS1INT(void)
 					{
 						if(g_currency != INDEX_GBP)
 						{
+                            g_debugMpInfo.mp_cnt[MP_COMPUTE_TO_PS1]=MP_FROM_COMPUTE_TO_PS1-g_maxMpFromComputeToPS1;
 							g_maxMpFromComputeToPS1 = 0;
 							gb_haveNoteInEntergate = 1;
 							noteState |= STATE_BACKWARD_COVER_PS1;
@@ -7172,6 +7170,7 @@ void DealPS1INT(void)
 					{
 						if(g_currency != INDEX_GBP)
 						{
+                            g_debugMpInfo.mp_cnt[MP_EN_TO_PS1] = MP_FROM_ENTERANCE_TO_Ps1-g_maxMpFromEnteranceToPs1; 
 							g_maxMpFromEnteranceToPs1 = 0;
 							g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
 							noteState |= STATE_FORWARD_COVER_PS1;
@@ -7254,11 +7253,13 @@ void DealPS2INT(void)
 		{
 			PS2Flag ++;
 		}
+#ifdef DEBUG_MODE
 		if(PS2ValueRecordCnt < 1500)
 		{
 			//PS2ValueRecord2[PS2ValueRecordCnt] = PS2FlagCnt;
 			PS2ValueRecord[PS2ValueRecordCnt++] = irValue[13];
 		}
+#endif
 		if(systemState == NORMAL)
 		{
 			if(gb_haveNoteInPS2 == 0)
@@ -7286,7 +7287,6 @@ void DealPS2INT(void)
 						g_maxMpFromEnteranceToPs1 = 0;
 						if(g_currency == INDEX_GBP)
 						{
-							g_maxMpFromEnteranceToPs1 = 0;
 							g_maxMpFromPs1ToPs2 = MP_FROM_PS1_TO_PS2;
 							noteState |= STATE_FORWARD_COVER_PS1;
 							noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
@@ -7318,7 +7318,7 @@ void DealPS2INT(void)
 			}
 			else if(gb_haveNoteInPS2 == 1)
 			{
-				if(gb_noteState == NOTE_FORWARD)
+				if(gb_noteState == NOTE_FORWARD&& noteState == STATE_FORWARD_COVER_PS1)
 				{
 					if((PS2Flag&0x0f) == 0x00 && gb_haveNoteInPS1 == 0)//离开PS2
 					{
@@ -7331,7 +7331,8 @@ void DealPS2INT(void)
 							colorDataLen = g_colorSampleIndex;
 						}
 						gb_uvNeedEndSampleCnt = 30;//40;//50;
-						gb_needBackMotorCnt = 20;
+						gb_needBackMotorCnt = MAX_BACKMP_CNT;
+                        gb_needBackMotorCntflag++;
 						gb_lengthIrNeedEndSampleCnt = 2;//30;
 						if(mpCnt < 1000)
 						{
@@ -7343,7 +7344,7 @@ void DealPS2INT(void)
 						}
 					}
 				}
-				else if(gb_noteState == NOTE_BACKWARD)
+				else if(gb_noteState == NOTE_BACKWARD&& noteState == STATE_BACKWARD_COVER_PS1)
 				{
 					//gb_motorNeedEndOneNoteCnt = 10;
 					if((PS2Flag&0x0f) == 0x00)
@@ -7400,6 +7401,7 @@ void DealPS3INT(void)
 					}
 					else if(gb_noteState == NOTE_FORWARD)
 					{
+                        g_debugMpInfo.mp_cnt[MP_PS1_TO_PS2]=MP_FROM_PS1_TO_PS2-g_maxMpFromPs1ToPs2;
 						g_maxMpFromPs1ToPs2 = 0;
 						if(mpCnt < 1000)
 						{
@@ -7956,15 +7958,20 @@ void EXTI9_5_IRQHandler(void)
 			}
 			TIM_Cmd(TIM5, DISABLE);
 			mpPeriodCnt = TIM5->CNT;
+            if(g_debugMpInfo.mp_intervalFlag == 1)
+            {
+                g_debugMpInfo.mp_interval[MIN(g_debugMpInfo.mp_intervalCnt++,MAX_MP_CNT)]=mpPeriodCnt;
+            }
 			if(g_needSaveMpPeriodFlag == 1)
 			{
 				if(gb_mpPeriodRecordCnt < 100)
 				{
 					gb_mpPeriodRecord[gb_mpPeriodRecordCnt++] = mpPeriodCnt;
 				}
-				if (mpPeriodCnt > 160)
+				if (mpPeriodCnt > 55)
 				{
 					motor1_Stop();//停转
+                    g_debugMpInfo.mp_intervalFlag = 0;
 					gb_needStopMotorTimeout = 0;
 					g_needSaveMpPeriodFlag = 0;
 					//test_Off();
@@ -7981,8 +7988,9 @@ void EXTI9_5_IRQHandler(void)
 #ifdef DEBUG_MODE
 						testflag[13] = 1;
 						testflag2[13] = testflag2Cnt++;
-#endif						
 						gb_needOutPutLength = MAX(PS1ValueRecordCnt,PS2ValueRecordCnt);
+#endif						
+
 					}
 					else if (gb_noteState == NOTE_BACKWARD)
 					{
@@ -8052,6 +8060,11 @@ void EXTI9_5_IRQHandler(void)
 			}
 			if(gb_needBackMotorCnt > 0)
 			{
+                if(g_debugMpInfo.mp_intervalFlag == 1)
+                {
+                    g_debugMpInfo.mp_backInterval[MIN(g_debugMpInfo.mp_backIntervalCnt++,MAX_BACKMP_CNT*2)]=g_debugMpInfo.mp_intervalCnt;
+                    g_debugMpInfo.mp_backInterval[MIN(g_debugMpInfo.mp_backIntervalCnt++,MAX_BACKMP_CNT*2)]=mpPeriodCnt;
+                }
 				gb_needBackMotorCnt--;
 				if(gb_needBackMotorCnt == 0)
 				{
