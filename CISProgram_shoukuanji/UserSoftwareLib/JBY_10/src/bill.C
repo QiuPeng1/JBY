@@ -63,6 +63,27 @@
 #include "LW_CNY_ColorFvt.h"
 #endif
 /***********************************************/
+#ifdef  BILL_INDEX_BYR
+#include "LW_BYR_ValueFvt.h"
+#include "LW_BYR_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_KZT
+#include "LW_KZT_ValueFvt.h"
+#include "LW_KZT_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_UZS
+#include "LW_UZS_ValueFvt.h"
+#include "LW_UZS_ColorFvt.h"
+#endif
+/***********************************************/
+#ifdef  BILL_INDEX_MAD
+#include "LW_MAD_ValueFvt.h"
+#include "LW_MAD_ColorFvt.h"
+#endif
+/***********************************************/
+
 //#define DRAW_STATE
 //#define DRAW_STATE2
 
@@ -245,6 +266,38 @@ u8 billRGB_Judge(int noteType)
 		Class = CNY_COLOR_NOTE_CLASS;
 	}
 #endif
+#ifdef  BILL_INDEX_UZS
+	if (noteType == INDEX_UZS)
+	{
+		pNoteClass = g_UZS_Color_noteClass;
+		pFvt = (short *)UZS_colorFvt_Int;
+		Class = UZS_COLOR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_BYR
+	if (noteType == INDEX_BYR)
+	{
+		pNoteClass = g_BYR_Color_noteClass;
+		pFvt = (short *)BYR_colorFvt_Int;
+		Class = BYR_COLOR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_KZT
+	if (noteType == INDEX_KZT)
+	{
+		pNoteClass = g_KZT_Color_noteClass;
+		pFvt = (short *)KZT_colorFvt_Int;
+		Class = KZT_COLOR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_MAD
+	if (noteType == INDEX_MAD)
+	{
+		pNoteClass = g_MAD_Color_noteClass;
+		pFvt = (short *)MAD_colorFvt_Int;
+		Class = MAD_COLOR_NOTE_CLASS;
+	}
+#endif
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
@@ -333,7 +386,7 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 
 u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 {
-	int i, j, k, sum, count, count1;
+	int i, j, k, sum, count, count1, t1;
 	short sx, ex, sw, sh, sy, ey, t, wirePos;
 	int Min, MinPos, Max0, Max1, Max, MaxPos, whitePaperVal,iradAve;
 	static POS_INFOR posMin[21];
@@ -347,16 +400,14 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	pImg = (u8 *)lengthData;
 	billIradMask = 0;
 
-	if (lengthDataLen < 100||lengthDataLen > 500)
+	if (lengthDataLen < 190||lengthDataLen > 500)
 	{
 		billIradMask = 1;
 		return 0;
 	}
 
 
-#ifdef DRAW_STATE
-	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
-#endif
+
 
 	memset(projH, 0, sizeof(int)*IR_DATA_MAX_LEN);
 	
@@ -375,50 +426,56 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	projH[i] = 0;
 	sx = 8;
 	Max = 99999999;
-	for (i = 0; i < 120; i++)
+	for (i = 80; i > 0; i--)
 	{
 		if (Max > projH[i])
 		{
 			count = 0;
 			for (j = 0; j < 21; j++)
 			{
-				if (lengthData[j][max(i-2, 0)] > 240)
+				if (lengthData[j][max(i-2, 0)] > 246)
 				{
 					count ++;
 				}
 			}
-			if (count > 8)
+			if (count > 16)
 			{
 				Max = projH[i];
 				sx = i;
+				break;
 			}
 			
 		}
 	}
 	Max = 0;
 	ex = lengthDataLen-8;
-	for (i = lengthDataLen-3; i > lengthDataLen-80; i--)
+	for (i = lengthDataLen-60; i < lengthDataLen-3; i++)
 	{
 		if (Max < projH[i])
 		{
 			count = 0;
 			for (j = 0; j < 21; j++)
 			{
-				if (lengthData[j][min(i+2, lengthDataLen-1)] > 240)
+				if (lengthData[j][min(i+2, lengthDataLen-1)] > 246)
 				{
 					count ++;
 				}
 			}
-			if (count > 8)
+			if (count > 16)
 			{
 				Max = projH[i];
 				ex = i;
+				break;
 			}
 		}
 	}
 	sy = 0;
 	ey = 21;
-	
+#ifdef DRAW_STATE
+	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
+	Draw_Line(1200+ex,200,1200+ex,230);
+	Draw_Line(1200+sx,200,1200+sx,230);
+#endif	
 	for (i = 0; i < 21; i++)
 	{
 		count = 0;
@@ -437,7 +494,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 				count1++;
 			}
 		}
-		if (count < lengthDataLen/3 && count1 < lengthDataLen/3)
+		if (count < (lengthDataLen/3+18) && count1 < (lengthDataLen/3+18))
 		{
 			sy = i+1;
 			break;
@@ -609,6 +666,38 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		Class = CNY_NOTE_CLASS;
 	}
 #endif
+#ifdef  BILL_INDEX_BYR
+	if (noteType == INDEX_BYR)
+	{
+		pNoteClass = g_BYR_noteClass;
+		pFvt = (short *)BYR_iradFvt_Int;
+		Class = BYR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_KZT
+	if (noteType == INDEX_KZT)
+	{
+		pNoteClass = g_KZT_noteClass;
+		pFvt = (short *)KZT_iradFvt_Int;
+		Class = KZT_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_UZS
+	if (noteType == INDEX_UZS)
+	{
+		pNoteClass = g_UZS_noteClass;
+		pFvt = (short *)UZS_iradFvt_Int;
+		Class = UZS_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_MAD
+	if (noteType == INDEX_MAD)
+	{
+		pNoteClass = g_MAD_noteClass;
+		pFvt = (short *)MAD_iradFvt_Int;
+		Class = MAD_NOTE_CLASS;
+	}
+#endif
 	max_t = 0.0;
 	for (i = 0; i < Class; i++)
 	{
@@ -655,7 +744,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 #endif
 		Min = 99999;
 		MinPos = lengthDataLen/2;
-		for (i = 72; i < lengthDataLen-72; i++)
+		for (i = sx+82; i < ex-80; i++)
 		{
 			if (Min > projH[i])
 			{
@@ -698,7 +787,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		Display_Int(abs(MaxPos-MinPos), 0+1200-40, 20+200);
 #endif
 		
-		if ((Max-Min) < 150 || abs(MaxPos-MinPos) > 12)
+		if ((Max-Min) < 100 || abs(MaxPos-MinPos) > 23)
 		{
 			billIradMask = 1;
 		}
@@ -717,78 +806,165 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		{
 			wirePos = lengthDataLen-20;
 		}
-		count1 = 0;
-		for (i = sy, k = 0; i < ey; i++, k++)
+		
+	
+		if (billValue == 0 || billValue == 4 || billValue == 7 || billValue == 10 || billValue < 6)
 		{
-			sum = 0;
-			count = 0;
-			Min = 255;
-			count1 ++;
-			for (j = wirePos-20; j < wirePos+20; j++)
-				//for (j = 60; j < dataIradLen-60; j++)
+			count1 = 0;
+			if (billValue == 0 || billValue == 4 || billValue == 7 || billValue == 10)
 			{
-				sum += lengthData[i][j];
-				count++;
-				if (Min > lengthData[i][j])
+				if (wirePos<(ex-sx)/2)
 				{
-					Min = lengthData[i][j];
-					MinPos = j;
+					for (i = sy, k = 0; i < ey; i++, k++)
+					{
+						sum = 0;
+						count = 0;
+						Min = 255;
+						count1 ++;
+						for (j = ex-80; j < ex; j++)
+						{
+							sum += lengthData[i][j];
+							count++;
+							if (Min > lengthData[i][j])
+							{
+								Min = lengthData[i][j];
+								MinPos = j;
+							}
+						}
+						posMin[k].index = i;
+						posMin[k].pos = MinPos;
+						posMin[k].val = Min;
+						sum /= count;
+						posMin[k].ave = sum;
+						iradAve += sum;
+						
+	#ifdef DRAW_STATE
+						
+						Display_Int(sum, 0, i*60);
+						Display_Int(Min, 0, i*60+20);
+						Draw_Line(MinPos, i*60, MinPos, (i+1)*60);
+						Draw_BlueLine(MinPos-5, i*60, MinPos-5, (i+1)*60);
+						Draw_BlueLine(MinPos+5, i*60, MinPos+5, (i+1)*60);
+	#endif
+					}
+				}
+				else
+				{
+					for (i = sy, k = 0; i < ey; i++, k++)
+					{
+						sum = 0;
+						count = 0;
+						Min = 255;
+						count1 ++;
+						for (j = sx; j < sx+80; j++)
+							//for (j = 60; j < dataIradLen-60; j++)
+						{
+							sum += lengthData[i][j];
+							count++;
+							if (Min > lengthData[i][j])
+							{
+								Min = lengthData[i][j];
+								MinPos = j;
+							}
+						}
+						posMin[k].index = i;
+						posMin[k].pos = MinPos;
+						posMin[k].val = Min;
+						sum /= count;
+						posMin[k].ave = sum;
+						iradAve += sum;
+						
+	#ifdef DRAW_STATE
+						
+						Display_Int(sum, 0, i*60);
+						Display_Int(Min, 0, i*60+20);
+						Draw_Line(MinPos, i*60, MinPos, (i+1)*60);
+						Draw_BlueLine(MinPos-5, i*60, MinPos-5, (i+1)*60);
+						Draw_BlueLine(MinPos+5, i*60, MinPos+5, (i+1)*60);
+	#endif
+					}
 				}
 			}
-			posMin[k].index = i;
-			posMin[k].pos = MinPos;
-			posMin[k].val = Min;
-			sum /= count;
-			posMin[k].ave = sum;
-			iradAve += sum;
-			
-#ifdef DRAW_STATE
-			
-			Display_Int(sum, 0, i*60);
-			Display_Int(Min, 0, i*60+20);
-			Draw_Line(MinPos, i*60, MinPos, (i+1)*60);
-			Draw_BlueLine(MinPos-5, i*60, MinPos-5, (i+1)*60);
-			Draw_BlueLine(MinPos+5, i*60, MinPos+5, (i+1)*60);
-#endif
-		}
-
-		t = 0;
-		sum = 0;
-		for (i = 0; i < count1; i++)
-		{
-			if (abs(posMin[i].pos-posMin[count1/2].pos) < 16)
+			else
 			{
-				t++;
-				//posMin[i].mask = 1;
+				for (i = sy, k = 0; i < ey; i++, k++)
+				{
+					sum = 0;
+					count = 0;
+					Min = 255;
+					count1 ++;
+					for (j = wirePos-20; j < wirePos+20; j++)
+						//for (j = 60; j < dataIradLen-60; j++)
+					{
+						sum += lengthData[i][j];
+						count++;
+						if (Min > lengthData[i][j])
+						{
+							Min = lengthData[i][j];
+							MinPos = j;
+						}
+					}
+					posMin[k].index = i;
+					posMin[k].pos = MinPos;
+					posMin[k].val = Min;
+					sum /= count;
+					posMin[k].ave = sum;
+					iradAve += sum;
+					
+		#ifdef DRAW_STATE
+					
+					Display_Int(sum, 0, i*60);
+					Display_Int(Min, 0, i*60+20);
+					Draw_Line(MinPos, i*60, MinPos, (i+1)*60);
+					Draw_BlueLine(MinPos-5, i*60, MinPos-5, (i+1)*60);
+					Draw_BlueLine(MinPos+5, i*60, MinPos+5, (i+1)*60);
+		#endif
+				}
 			}
-			sum += (posMin[i].pos-posMin[count1/2].pos);
-		}
-		if (count1 > 0)
-		{
-			iradAve = sum/count1;
+			
+			t = 0;
 			sum = 0;
-			for (i = 0; i < count1; i++)
+			for (i = 1; i < count1; i++)
 			{
-	
-				sum += (posMin[i].pos-posMin[count1/2].pos-iradAve)*(posMin[i].pos-posMin[count1/2].pos-iradAve);
+				if (abs(posMin[i].pos-posMin[count1/2].pos) < 16)
+				{
+					t++;
+					//posMin[i].mask = 1;
+				}
+				sum += (posMin[i].pos-posMin[count1/2].pos);
 			}
-			sum = sqrt(sum)*1000/count1;
-		}
-		else
-		{
-			billIradMask = 1;
-		}
-
-		if (t < 12 || sum > 1600)
-		{
-			billIradMask = 1;
-		}
-#ifdef DRAW_STATE
+			if (count1 > 1)
+			{
+				iradAve = sum/(count1-1);
+				sum = 0;
+				for (i = 1; i < count1; i++)
+				{
 		
-		Display_Int(t, 200, 0);
-		Display_Int(sum, 200, 20);
+					sum += (posMin[i].pos-posMin[count1/2].pos-iradAve)*(posMin[i].pos-posMin[count1/2].pos-iradAve);
+				}
+				sum = sqrt(sum)*1000/(count1-1);
+			}
+			else
+			{
+				billIradMask = 1;
+			}
 
-#endif
+			t1 = 1200;
+			if (billValue == 0 || billValue == 4 || billValue == 7 || billValue == 10)
+			{
+				t1 = 1600;
+			}
+			if (t < 10 || sum > t1)
+			{
+				billIradMask = 1;
+			}
+	#ifdef DRAW_STATE
+			
+			Display_Int(t, 200, 0);
+			Display_Int(sum, 200, 20);
+
+	#endif
+		}
 	}
 	return 0;
 }
@@ -808,7 +984,7 @@ u8 billMG_Judge(int noteType)
 
 	Max0 = 0;
 	Min0 = 255*10;
-
+	
 	Max1 = 0;
 	Min1 = 255*10;
 
