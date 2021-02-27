@@ -3303,34 +3303,40 @@ void DealNoteType(void)
 				{
 					switch(gb_billValue)
 					{
+                    case 14:
+					case 15:
+						currentNoteType = 0;//20000
+						break;
 					case 0:
 					case 1:
-						currentNoteType = 0;//10000
+						currentNoteType = 1;//10000
 						break;
 					case 2:
 					case 3:
-						currentNoteType = 1;//5000
+						currentNoteType = 2;//5000
 						break;
 					case 4:
 					case 5:
-						currentNoteType = 2; //2000
+                    case 16:
+						currentNoteType = 3; //2000
 						break;
 					case 6:
 					case 7:
-						currentNoteType = 3;//1000
+						currentNoteType = 4;//1000
 						break;
 					case 8:
 					case 9:
-						currentNoteType = 4;//500
+						currentNoteType = 5;//500
 						break;
 					case 10:
 					case 11:
-						currentNoteType = 5;//200
+						currentNoteType = 6;//200
 						break;
 					case 12:
 					case 13:
-						currentNoteType = 6;//100
+						currentNoteType = 7;//100
 						break;
+
 					default:
 						currentNoteType = 0xFF;
 						g_errFlag |= ERR_VALUE;
@@ -4015,23 +4021,23 @@ void DispDetailNoteNum(void)//显示明细
 		break;		
 		case INDEX_TRY:
 		case INDEX_CNY:
-		case INDEX_KZT:
 		case INDEX_MAD:
-				noteMaxNum = 6;
+            noteMaxNum = 6;
 		break;				
 		case INDEX_EUR:
 		case INDEX_USD:
 		case INDEX_SAR:
 		case INDEX_BYR:
-				noteMaxNum = 7;
+        case INDEX_KZT:
+			noteMaxNum = 7;
 		break;			
 		case INDEX_RUB:
 		case INDEX_AED:
-				noteMaxNum = 8;
+			noteMaxNum = 8;
 		break;	
 		case INDEX_ARS:
 		case INDEX_UZS:
-				noteMaxNum = 9;
+			noteMaxNum = 9;
 		break;		
 		default:
 			noteMaxNum = 0;
@@ -4049,8 +4055,19 @@ void DispDetailNoteNum(void)//显示明细
 	{
 		noteCnt1 = noteMaxNum/2;
 		noteCnt2 = noteMaxNum%2;
+        if(g_currency == INDEX_KZT)
+        {
+            noteCnt1++;
+        }
 		note1PositionOffset = 5-noteCnt1;
-		note2PositionOffset = note1PositionOffset+(5-(noteCnt1+noteCnt2));
+        if(g_currency == INDEX_KZT)
+        {
+            note2PositionOffset = note1PositionOffset+(5-(noteCnt1-noteCnt2));
+        }
+        else
+        {
+            note2PositionOffset = note1PositionOffset+(5-(noteCnt1+noteCnt2));
+        }
 		for(i = 0;i < noteMaxNum;i++)
 		{
 			d = denoNoteNum[i];
