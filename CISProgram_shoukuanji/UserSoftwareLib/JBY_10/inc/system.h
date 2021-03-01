@@ -123,6 +123,7 @@ V6.1.9 20201225 1、人民币算法优化
 V6.2.0 20210115 1、速度快后优化刹车
 V6.2.1 20210117 1、速度快后优化刹车
 V6.2.2 20210117 1、速度快后优化刹车
+V6.2.3 20210301 1、人民币1元算法优化
 **************************************************************************/
 
 /*防止重复引用 */
@@ -163,9 +164,9 @@ enum
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
-#define VERSION  "V6.2.2"
+#define VERSION  "V6.2.3"
 #define USER1_VERSION "SKJ_HW_V100"
-#define USER2_VERSION "SKJ_SW_V122"
+#define USER2_VERSION "SKJ_SW_V123"
 #define PIC_NEW_ADDR
 
 typedef enum
