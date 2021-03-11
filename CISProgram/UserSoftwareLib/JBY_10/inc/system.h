@@ -155,13 +155,12 @@ enum
 #define LENGTH_HAVENOTE_VALUE_THRES 10
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21Â·²â³¤ 1Â·ÂëÅÌ
-//#define PIC_NEW_ADDR
+#define PIC_NEW_ADDR
 #ifdef PIC_NEW_ADDR
 #define VERSION  "V1.7.4"
 #else
 #define VERSION  "V8.0.3"
 #endif
-//#define PIC_NEW_ADDR
 
 typedef enum
 {
