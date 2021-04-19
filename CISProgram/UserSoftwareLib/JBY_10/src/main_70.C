@@ -216,7 +216,11 @@ void DealKeyDownOnNormal(u8 key)
 				gb_ChangeCurrencyDelay = 500;
 			break;
 			case KEY_FUN:
-				modifiIdentificationWays();
+                
+//				modifiIdentificationWays();
+                savedPara.noteLeaveRoads++;
+                savedPara.noteLeaveRoads%=2;
+                gb_modifiIdentificationWaysDealy = 500;
 			break;
 			case LONG_KEY_FUN:
 				if(g_needAddValue == WORK_ADD)

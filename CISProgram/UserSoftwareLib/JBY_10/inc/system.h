@@ -118,6 +118,7 @@ V1.7.2 20200910 1、增加白俄500  200   v8.0.1
 V1.7.3 20200910 1、沙特新增5，20      v8.0.2
 V1.7.4 20210227 1、KZT 新增20K        v8.0.3
 V1.7.5 20210325 1、优化欧元           v8.0.4
+V1.7.6 20210420 1、修改短按fun功能           v8.0.5
 **************************************************************************/
 
 /*防止重复引用 */
@@ -158,9 +159,9 @@ enum
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 #define PIC_NEW_ADDR
 #ifdef PIC_NEW_ADDR
-#define VERSION  "V1.7.5"
+#define VERSION  "V1.7.6"
 #else
-#define VERSION  "V8.0.4"
+#define VERSION  "V8.0.5"
 #endif
 
 typedef enum
