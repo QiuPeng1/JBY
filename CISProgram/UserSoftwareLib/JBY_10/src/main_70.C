@@ -220,6 +220,7 @@ void DealKeyDownOnNormal(u8 key)
 //				modifiIdentificationWays();
                 savedPara.noteLeaveRoads++;
                 savedPara.noteLeaveRoads%=2;
+                DispDirectionInfo();
                 gb_modifiIdentificationWaysDealy = 500;
 			break;
 			case LONG_KEY_FUN:
@@ -2201,6 +2202,7 @@ void DispMainMenu(void)
 	DispNoteNumValSum();
 	
 	DispJamInfo();
+    DispDirectionInfo();
 }
 void DispUdiskInfo(void)
 {
@@ -2217,6 +2219,20 @@ void DispUdiskInfo(void)
 		disp_setPenColor(BLACK);
 	}
 	disp_string("U",BMP_FADD_X,BMP_FADD_Y-24);
+}
+void DispDirectionInfo(void)
+{
+    disp_setFont(FONT_24);
+    disp_setBackColor(BLACK);
+    disp_setPenColor(WHITE);
+	if(savedPara.noteLeaveRoads == 1)
+	{
+		disp_string("B",BMP_FADD_X,BMP_FADD_Y+24);	
+	}
+	else
+	{
+        disp_string("F",BMP_FADD_X,BMP_FADD_Y+24);
+	}
 }
 void DispFunInfo(void)
 {

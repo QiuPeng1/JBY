@@ -1190,6 +1190,7 @@ void DispSettingSelected(void);
 void DealKeyDownOnMenu1(u8 key);
 void DealKeyDownOnCalibration(u8 key);
 void DispUdiskInfo(void);
+void DispDirectionInfo(void);
 
 void ClearAllNoteNum(void);
 void ClearPSIrFlag(void);
