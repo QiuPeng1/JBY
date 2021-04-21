@@ -158,9 +158,15 @@ enum
 #define LENGTH_HAVENOTE_VALUE_THRES 10
 #define LENGTH_HAVENOTE_NUM_THRES 3
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
-#define PIC_NEW_ADDR
+
+#define PIC_NEW_ADDR    //新图库
+#define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
-#define VERSION  "V1.7.7"
+    #ifdef RUB_VERSION
+        #define VERSION  "V177RU"
+    #else
+        #define VERSION  "V1.7.7"
+    #endif
 #else
 #define VERSION  "V8.0.6"
 #endif
