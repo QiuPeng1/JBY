@@ -120,6 +120,7 @@ V1.7.4 20210227 1、KZT 新增20K        v8.0.3
 V1.7.5 20210325 1、优化欧元           v8.0.4
 V1.7.6 20210420 1、修改短按fun功能           v8.0.5
 V1.7.7 20210420 1、修改短按fun功能           v8.0.6
+V1.7.7 20210420 1、不显示功能明细           v8.0.6   V178RU
 **************************************************************************/
 
 /*防止重复引用 */
@@ -163,7 +164,7 @@ enum
 #define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
-        #define VERSION  "V177RU"
+        #define VERSION  "V178RU"
     #else
         #define VERSION  "V1.7.7"
     #endif

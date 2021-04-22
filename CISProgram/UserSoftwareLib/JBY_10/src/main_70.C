@@ -1327,7 +1327,7 @@ void DispMainMenuBackground(void)
 
 		disp_DrawPic(0,0,BMP_BOPENBLACK);
 
-		DispIdentificationWays();
+//		DispIdentificationWays();
 		if(g_currency > NOTE_NUM)
 		{
 			g_currency = 	INDEX_USD;
