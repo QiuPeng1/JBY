@@ -307,12 +307,16 @@ int main(void)
 	IWDG_ReloadCounter();		
 	IWDG_Enable();
 	#endif
-	
+
+#ifdef RUB_VERSION
+    disp_DrawPic(0,0,BMP_CADSHUAEN);
+#else	
 	disp_clearScreen(BLACK);
 	disp_setPenColor(RED);
 	disp_setBackColor(BLACK);
 	disp_setFont(24);
 	disp_string("WELCOME",SCREEN_WIDTH/2-12*3,SCREEN_HEIGHT/2-12);
+#endif
 	delay_DelayMs(500);
 	
 	UpdateDataFromSavedData();

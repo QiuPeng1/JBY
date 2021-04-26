@@ -151,6 +151,8 @@
 #define	BMP_GMBYR	0x002c4310
 #define	BMP_GNMAD	0x002ceb20
 #define	BMP_GOMAD	0x002d2268
+#define	BMP_GPACAD	0x002dca78
+#define	BMP_GPCAD	0x002e01c0
 #else
 #define	BMP_ADS	    0x00000800
 #define	BMP_AF3D	0x00026048
