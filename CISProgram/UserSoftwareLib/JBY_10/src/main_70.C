@@ -310,6 +310,7 @@ int main(void)
 
 #ifdef RUB_VERSION
     disp_DrawPic(0,0,BMP_CADSHUAEN);
+    delay_DelayMs(1500);
 #else	
 	disp_clearScreen(BLACK);
 	disp_setPenColor(RED);

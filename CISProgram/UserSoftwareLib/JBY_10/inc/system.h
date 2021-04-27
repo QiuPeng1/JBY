@@ -1,6 +1,7 @@
 /***************************************************************************
 
 版本   日期      修改内容                旧图库版本号        俄罗斯专用版本号
+V1.7.7 20210426 1、开机logo显示时间加长      v8.0.6           V180RU
 V1.7.7 20210426 1、开机logo显示              v8.0.6           V179RU
 V1.7.7 20210420 1、不显示功能明细            v8.0.6           V178RU
 V1.7.7 20210420 1、修改短按fun功能           v8.0.6
@@ -168,7 +169,7 @@ enum
 #define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
-        #define VERSION  "V179RU"
+        #define VERSION  "V180RU"
     #else
         #define VERSION  "V1.7.7"
     #endif
