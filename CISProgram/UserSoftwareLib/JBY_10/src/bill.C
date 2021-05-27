@@ -787,7 +787,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		Display_Int(abs(MaxPos-MinPos), 0+1200-40, 20+200);
 #endif
 		
-		if ((Max-Min) < 100 || abs(MaxPos-MinPos) > 23)
+		if (((Max-Min) < 100 || abs(MaxPos-MinPos) > 23) & (billValue != 15))
 		{
 			billIradMask = 1;
 		}
