@@ -2642,6 +2642,24 @@ void DealNoteType(void)
 			{
 				g_errFlag = 0;
 			}
+            else if(g_currency == INDEX_KZT)
+            {
+                if(billValue==4||billValue==5||billValue==16)
+                {
+                    if(colorJudgeValue==4||colorJudgeValue==5||colorJudgeValue==16)
+                    {
+                        g_errFlag=0;
+                    }
+                    else
+                    {
+                        g_errFlag = 1;
+                    }
+                }
+                else
+                {
+                    g_errFlag = 1;
+                }
+            }
 			else if(g_currency == INDEX_CNY)
 			{
 				switch(billValue)

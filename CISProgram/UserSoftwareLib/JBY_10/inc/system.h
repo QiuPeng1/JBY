@@ -1,7 +1,9 @@
 /***************************************************************************
 
 版本   日期      修改内容                旧图库版本号        俄罗斯专用版本号
-V1.7.8 20210426 1、优化美元和卢布            v8.0.6           
+V1.7.8 20210618 1、优化哈萨克斯坦和美元      v8.0.6           V183RU
+V1.7.8 20210617 1、优化哈萨克斯坦和卢布      v8.0.6           V182RU
+V1.7.8 20210426 1、优化美元和卢布            v8.0.6           V181RU
 V1.7.7 20210426 1、开机logo显示时间加长      v8.0.6           V180RU
 V1.7.7 20210426 1、开机logo显示              v8.0.6           V179RU
 V1.7.7 20210420 1、不显示功能明细            v8.0.6           V178RU
@@ -166,10 +168,10 @@ enum
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
 #define PIC_NEW_ADDR    //新图库
-//#define RUB_VERSION     //俄罗斯专用版本
+#define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
-        #define VERSION  "V180RU"
+        #define VERSION  "V183RU"
     #else
         #define VERSION  "V1.7.8"
     #endif
