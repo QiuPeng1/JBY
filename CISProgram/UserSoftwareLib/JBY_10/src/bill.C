@@ -471,11 +471,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	}
 	sy = 0;
 	ey = 21;
-#ifdef DRAW_STATE
-	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
-	Draw_Line(1200+ex,200,1200+ex,230);
-	Draw_Line(1200+sx,200,1200+sx,230);
-#endif	
+	
 	for (i = 0; i < 21; i++)
 	{
 		count = 0;
@@ -525,7 +521,13 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 			break;
 		}
 	}
-
+	billSyPos = sy;
+#ifdef DRAW_STATE
+	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
+	Draw_Line(1200+ex,200,1200+ex,230);
+	Draw_Line(1200+sx,200,1200+sx,230);
+	Draw_Line(1200+sx, 200+sy, 1200+ex, 200+sy);
+#endif
 //	ex = lengthDataLen-8;
 //	for (i = lengthDataLen-8; i > lengthDataLen-)
 //	{

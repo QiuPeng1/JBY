@@ -184,7 +184,7 @@ BILL_EXT_PARA u8 colorJudgeFlag;
 BILL_EXT_PARA u8 g_IradRes;
 BILL_EXT_PARA u8 noteType;
 BILL_EXT_PARA u8 mgFvtFlag;
-
+BILL_EXT_PARA u8 billSyPos;
 
 BILL_EXT_PARA u16 iradImgW;
 BILL_EXT_PARA u16 iradImgH;

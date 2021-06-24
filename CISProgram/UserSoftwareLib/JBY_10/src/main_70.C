@@ -2638,118 +2638,226 @@ void DealNoteType(void)
 	{
 		if(((savedPara.identificationWays&IR_WAY) == IR_WAY)&&((savedPara.identificationWays&RGB_WAY) == RGB_WAY))
 		{
-			if(g_currency == INDEX_USD)
-			{
-				g_errFlag = 0;
-			}
-            else if(g_currency == INDEX_KZT)
+            g_errFlag = 1;
+            switch(g_currency)
             {
-                if(billValue==4||billValue==5||billValue==16)
+                case INDEX_USD:
                 {
-                    if(colorJudgeValue==4||colorJudgeValue==5||colorJudgeValue==16)
+                    g_errFlag = 0;
+                }
+                break;
+                case INDEX_KZT:
+                {
+                    if(billValue==4||billValue==5||billValue==16)//2000
                     {
-                        g_errFlag=0;
+                        if(colorJudgeValue==4||colorJudgeValue==5||colorJudgeValue==16)
+                        {
+                            g_errFlag=0;
+                        }
                     }
-                    else
+                }
+                break;
+                case INDEX_CNY:
+                {
+                    switch(billValue)
                     {
+                    case 0:
+                    case 1:
+                    case 2:
+                        if(colorJudgeValue == 0)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+                        break;
+                    case 3:
+                    case 4:
+                    case 5:
+                        if(colorJudgeValue == 3)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+                        break;
+                        break;
+                    case 6:
+                    case 7:
+                    case 8:
+                        if(colorJudgeValue == 6)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+                        break;
+                        break;
+                    case 9:
+                    case 10:
+                    case 11:
+                        if(colorJudgeValue == 9)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+                        break;
+                        break;
+                    case 12:
+                    case 13:
+                    case 14:
+                        if(colorJudgeValue == 12)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+                        break;
+                        break;
+                    case 15:
+                    case 16:
+                    case 17:
+                        if(colorJudgeValue == 15)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+                        break;
+                        break;
+                    default:
                         g_errFlag = 1;
-                    }
+                        break;
+                    }		
                 }
-                else
-                {
-                    g_errFlag = 1;
-                }
-            }
-			else if(g_currency == INDEX_CNY)
-			{
-				switch(billValue)
+                break;
+                case INDEX_RUB:
 				{
-				case 0:
-				case 1:
-				case 2:
-					if(colorJudgeValue == 0)
+					switch(billValue)
 					{
-						g_errFlag = 0;
-					}
-					else
-					{
-						g_errFlag = 1;
-					}
-					break;
-				case 3:
-				case 4:
-				case 5:
-					if(colorJudgeValue == 3)
-					{
-						g_errFlag = 0;
-					}
-					else
-					{
-						g_errFlag = 1;
-					}
-					break;
-					break;
-				case 6:
-				case 7:
-				case 8:
-					if(colorJudgeValue == 6)
-					{
-						g_errFlag = 0;
-					}
-					else
-					{
-						g_errFlag = 1;
-					}
-					break;
-					break;
-				case 9:
-				case 10:
-				case 11:
-					if(colorJudgeValue == 9)
-					{
-						g_errFlag = 0;
-					}
-					else
-					{
-						g_errFlag = 1;
-					}
-					break;
-					break;
-				case 12:
-				case 13:
-				case 14:
-					if(colorJudgeValue == 12)
-					{
-						g_errFlag = 0;
-					}
-					else
-					{
-						g_errFlag = 1;
-					}
-					break;
-					break;
-				case 15:
-				case 16:
-				case 17:
-					if(colorJudgeValue == 15)
-					{
-						g_errFlag = 0;
-					}
-					else
-					{
-						g_errFlag = 1;
-					}
-					break;
-					break;
-				default:
-					g_errFlag = 1;
-					break;
-				}			
-			}
-			else
-			{
-				g_errFlag = 1;
-			}
+					case 0:
+					case 1:
+					case 2:			
+						 if(colorJudgeValue == 0||colorJudgeValue == 1||colorJudgeValue == 2)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+						if(colorJudgeValue == 3||colorJudgeValue == 4||colorJudgeValue == 5||colorJudgeValue == 6)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;
+					case 9:
+					case 7:
+					case 8:
+						if(colorJudgeValue == 7||colorJudgeValue == 8||colorJudgeValue == 9)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;
+					case 12:
+					case 10:
+					case 11:
+						if(colorJudgeValue == 10||colorJudgeValue == 11||colorJudgeValue == 12)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;
+						break;
+					case 15:
+					case 13:
+					case 14:
+					case 16:
+						if(colorJudgeValue == 13||colorJudgeValue == 14||colorJudgeValue == 15||colorJudgeValue == 16)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;
+					case 17:
+					case 18:
+					case 19:
+						if(colorJudgeValue == 17||colorJudgeValue == 18||colorJudgeValue == 19)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;	
+					case 20:
+					case 21:
+					case 22:	
+						if(colorJudgeValue == 20||colorJudgeValue == 21||colorJudgeValue == 22)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;	
+					case 23:
+					case 24:
+					case 25:	
+						if(colorJudgeValue == 23||colorJudgeValue == 24||colorJudgeValue == 25)
+                        {
+                            g_errFlag = 0;
+                        }
+                        else
+                        {
+                            g_errFlag = 1;
+                        }
+						break;
+					default:
+
+						break;
+					}				
+				}
+				break;
+                default:
+                    g_errFlag = 1;
+                break;
+            }
+
 		}
 	}
 	
@@ -3437,6 +3545,7 @@ void DealNoteType(void)
 }
 void DealNotePass(void)
 {
+    //u8 j,d,result;
 	if(gb_oneNotePass == 1)
 	{
 		gb_oneNotePass = 0;
@@ -3501,10 +3610,14 @@ void DealNotePass(void)
 					disp_DrawPic(BMP_YD_X, BMP_YD_Y, BMP_AHE);
 					disp_DrawPic(BMP_YE_X, BMP_YE_Y, BMP_AHG);
 					disp_DrawPic(BMP_YF_X, BMP_YF_Y, BMP_AY1);*/
-					if((g_errFlag == ERR_VALUE)||(g_errFlag == ERR_IR)||(g_errFlag == ERR_COLOR))
+					if(g_errFlag == ERR_IR)
 					{
 						disp_DrawPic(80, 240-72, BMP_CGCIS);
 					}
+                    else if(g_errFlag == ERR_VALUE)
+                    {
+                        disp_DrawPic(80, 240-72, BMP_CGRGB);
+                    }
 					else if(g_errFlag == ERR_MG)
 					{
 						disp_DrawPic(80, 240-72, BMP_CGMG);
@@ -3536,7 +3649,21 @@ void DealNotePass(void)
 					//disp_string(" SUSP",DENO_NUM_X,DENO_NUM_Y);		
 				}
 
-				
+				    //显示调试信息
+//                d = billSyPos;
+//                for(j=0; j<3; j++)
+//                {
+//                    if(d > 0)
+//                    {
+//                        result = d%10;
+//                        disp_DrawPic(BMP_S6C_X-12*j, BMP_S6A_Y, SbmpAddress[result]);
+//                        d /= 10;
+//                    }
+//                    else
+//                    {
+//                        disp_DrawPic(BMP_S6C_X-12*j,BMP_S6A_Y, SbmpAddress[10]);
+//                    }
+//                }
 				if(gb_autoOutputDetailData == 1||gb_needOutPutErrData == 2)
 				{
 //					OutputLengthDetailData();
@@ -4088,6 +4215,7 @@ void DispDetailNoteNum(void)//显示明细
 			noteMaxNum = 0;
 		break;
 	}
+
 	/***********************************************************************
 	明细排列             总共面额数/2  有余数放后一列
 	××0   ××5        
