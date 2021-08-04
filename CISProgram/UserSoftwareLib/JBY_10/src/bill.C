@@ -83,6 +83,11 @@
 #include "LW_MAD_ColorFvt.h"
 #endif
 /***********************************************/
+#ifdef  BILL_INDEX_UAH
+#include "LW_UAH_ValueFvt.h"
+#include "LW_UAH_ColorFvt.h"
+#endif
+/***********************************************/
 
 //#define DRAW_STATE
 //#define DRAW_STATE2
@@ -296,6 +301,14 @@ u8 billRGB_Judge(int noteType)
 		pNoteClass = g_MAD_Color_noteClass;
 		pFvt = (short *)MAD_colorFvt_Int;
 		Class = MAD_COLOR_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_UAH
+	if (noteType == INDEX_UAH)
+	{
+		pNoteClass = g_UAH_Color_noteClass;
+		pFvt = (short *)UAH_colorFvt_Int;
+		Class = UAH_COLOR_NOTE_CLASS;
 	}
 #endif
 	max_t = 0.0;
@@ -698,6 +711,14 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		pNoteClass = g_MAD_noteClass;
 		pFvt = (short *)MAD_iradFvt_Int;
 		Class = MAD_NOTE_CLASS;
+	}
+#endif
+#ifdef  BILL_INDEX_UAH
+	if (noteType == INDEX_UAH)
+	{
+		pNoteClass = g_UAH_noteClass;
+		pFvt = (short *)UAH_iradFvt_Int;
+		Class = UAH_NOTE_CLASS;
 	}
 #endif
 	max_t = 0.0;

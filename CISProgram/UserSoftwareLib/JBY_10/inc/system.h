@@ -1,6 +1,8 @@
 /***************************************************************************
 
 版本   日期      修改内容                旧图库版本号        俄罗斯专用版本号
+V192TY 20210804 1、增加乌克兰UAH           v8.0.6           V191RU
+V1.9.1 20210707 1、通用版本                v8.0.6           V191RU
 V1.7.8 20210703 1、优化卢布                v8.0.6           V191RU
 V1.7.8 20210624 1、去除显示调试参数         v8.0.6           V190RU
 V1.7.8 20210624 1、优化卢布红外颜色判读逻辑  v8.0.6           V189RU
@@ -176,12 +178,12 @@ enum
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
 #define PIC_NEW_ADDR    //新图库
-#define RUB_VERSION     //俄罗斯专用版本
+//#define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
         #define VERSION  "V191RU"
     #else
-        #define VERSION  "V1.7.8"
+        #define VERSION  "V192TY"
     #endif
 #else
 #define VERSION  "V8.0.6"

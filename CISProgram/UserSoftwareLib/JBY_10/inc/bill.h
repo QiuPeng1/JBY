@@ -42,6 +42,7 @@
 #define BILL_INDEX_KZT
 #define BILL_INDEX_UZS
 #define BILL_INDEX_MAD
+#define BILL_INDEX_UAH
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------
@@ -153,6 +154,7 @@ enum
 #define PROCESS_BYR
 #define PROCESS_UZS
 #define PROCESS_MAD
+#define PROCESS_UAH
 //---------------------------------------------------------------------
 //全局变量，可以被外部程序直接访问
 //---------------------------------------------------------------------

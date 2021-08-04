@@ -968,7 +968,7 @@ const u32 NationFlagBMP[][2] = {//国旗图标，金额明细
 	{BMP_BFLAGCNY,BMP_BLISTCNY}/*人民币*/,		{BMP_BFLAGUSD,BMP_BLISTUSD}/*  美元*/,  {BMP_BFLAGEUR,BMP_BLISTEUR}/*  欧元*/,  {0,0}/*  日元*/,
 	{BMP_BFLAGGBP,BMP_BLISTGBP}/*  英磅*/,	{0,0}/*  港币*/,	                      {0,0}/*澳元币*/,					                {0,0}/*加元币*/,
 	{0,0}/*新加坡*/,		                      {0,0}/*  韩元*/,	                      {BMP_BFLAGTWD,BMP_BLISTTWD}/*  台币*/,  {BMP_BFLAGRUB,BMP_BLISTRUB},/*卢布币*/
-	{0,0}/*加纳塞*/,		                      {0,0}/*乌克兰*/,		                      {0,0}/*尼日利*/,				              		{0,0}/*阿尔巴*/,
+	{0,0}/*加纳塞*/,		                      {BMP_GQAUAH,BMP_GQUAH}/*乌克兰*/,		  {0,0}/*尼日利*/,				              		{0,0}/*阿尔巴*/,
 	{0,0}/*马其顿*/,		                      {0,0}/*澳门币*/,                     		{0,0}/*瑞士币*/,					              	{0,0}/*瑞典币*/,
 	{BMP_GJKZT,BMP_GKKZT}/*哈萨克*/,	      	{BMP_BFLAGTRY,BMP_BLISTTRY}/*土尔其*/,		{0,0}/*印度币*/,	                        {0,0}/*越南币*/,
 	{0,0}/*马来币*/,	                      	{0,0}/*巴西币*/,		                      {0,0}/*****币*/,					              {BMP_BFLAGCNY,BMP_BLISTCNY}/*人民币*/,
@@ -1029,6 +1029,7 @@ u16 const BYR_NOTE_VALUE[] = {500,200,100,50,20,10,5,0,0,0};
 u32 const UZS_NOTE_VALUE[] = {100000,50000,10000,5000,1000,500,200,100,0,0};
 u16 const KZT_NOTE_VALUE[] = {20000,10000,5000,2000,1000,500,200,100,0,0};
 u16 const MAD_NOTE_VALUE[] = {200,100,50,20,10,5,0,0,0,0,0};
+u16 const UAH_NOTE_VALUE[] = {1000,500,200,100,50,20,0,0,0,0,0};
 u32 JbmpAddress[]={BMP_AJ0,BMP_AJ1,BMP_AJ2,BMP_AJ3,BMP_AJ4,BMP_AJ5,BMP_AJ6,BMP_AJ7,BMP_AJ8,BMP_AJ9,BMP_AJB};
 u32 YbmpAddress[]={BMP_AY0,BMP_AY1,BMP_AY2,BMP_AY3,BMP_AY4,BMP_AY5,BMP_AY6,BMP_AY7,BMP_AY8,BMP_AY9,BMP_AYB};
 u32 SbmpAddress[]={BMP_AS0,BMP_AS1,BMP_AS2,BMP_AS3,BMP_AS4,BMP_AS5,BMP_AS6,BMP_AS7,BMP_AS8,BMP_AS9,BMP_ASB};

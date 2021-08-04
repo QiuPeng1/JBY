@@ -1332,7 +1332,9 @@ void DispMainMenuBackground(void)
 
 		disp_DrawPic(0,0,BMP_BOPENBLACK);
 
-//		DispIdentificationWays();
+ #ifndef RUB_VERSION
+		DispIdentificationWays();
+#endif
 		if(g_currency > NOTE_NUM)
 		{
 			g_currency = 	INDEX_USD;
@@ -2209,7 +2211,9 @@ void DispMainMenu(void)
 	DispNoteNumValSum();
 	
 	DispJamInfo();
+#ifdef RUB_VERSION 
     DispDirectionInfo();
+#endif
 }
 void DispUdiskInfo(void)
 {
@@ -3538,6 +3542,47 @@ void DealNoteType(void)
 					}		
 				}
 				break;
+                case INDEX_UAH:
+				{
+					switch(gb_billValue)
+					{
+					case 0:
+					case 1:
+					case 2:
+						currentNoteType = 0;//1000
+						break;
+					case 3:
+					case 4:
+					case 5:
+						currentNoteType = 1;//500
+						break;
+					case 6:
+					case 7:
+					case 8:
+						currentNoteType = 2; //200
+						break;
+					case 9:
+					case 10:
+					case 11:
+						currentNoteType = 3;//100
+						break;
+					case 12:
+					case 13:
+					case 14:
+						currentNoteType = 4;//50
+						break;
+					case 15:
+					case 16:
+					case 17:
+						currentNoteType = 5;//20
+						break;
+					default:
+						currentNoteType = 0xFF;
+						g_errFlag |= ERR_VALUE;
+						break;
+					}		
+				}
+				break;
 				default:
 					break;
 		}
@@ -4036,7 +4081,10 @@ void IncNoteNum(void)
 			break;	
 		case INDEX_MAD:
 			noteDenoValue = MAD_NOTE_VALUE[currentNoteType];
-			break;			
+			break;	
+		case INDEX_UAH:
+			noteDenoValue = UAH_NOTE_VALUE[currentNoteType];
+			break;		
 		default:
 			noteDenoValue = USD_NOTE_VALUE[currentNoteType];
 			break;
@@ -4194,6 +4242,7 @@ void DispDetailNoteNum(void)//ÏÔÊ¾Ã÷Ï¸
 		case INDEX_TRY:
 		case INDEX_CNY:
 		case INDEX_MAD:
+        case INDEX_UAH:
             noteMaxNum = 6;
 		break;				
 		case INDEX_EUR:
