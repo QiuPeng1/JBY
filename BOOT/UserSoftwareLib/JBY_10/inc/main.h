@@ -374,8 +374,8 @@ u8 readBuffer[BUF_LEN];
 #define FLASH_ONE_SECTOR 2048
 #define FLASH2_ONE_SECTOR 4096
 #define USER_FLASH_BANK1_END_ADDRESS   ((uint32_t)0x807FFFF)
-
-u8 flashBuffer[FLASH_ONE_SECTOR];
+#define USER_FLASH_BANK2_END_ADDRESS ((u32)0x080FF000)
+u8 flashBuffer[FLASH2_ONE_SECTOR];
 
 u8 gb_udsikIsOnLine = 0;
 u8 gb_udiskPlugIn = 0;

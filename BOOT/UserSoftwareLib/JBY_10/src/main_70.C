@@ -171,7 +171,7 @@ int main(void)
 	disp_setPenColor(RED);
 	disp_setBackColor(WHITE);
 	disp_setFont(24);
-	disp_string("BootloaderV12",0,dispIndex++*ONE_LINE_H);
+	disp_string("BootloaderV14",0,dispIndex++*ONE_LINE_H);
 	disp_string(upgradeFileName,0,dispIndex++*ONE_LINE_H);
 	
 	readBuffer[0] = 0;
@@ -247,11 +247,16 @@ int main(void)
 								flash_WriteData(APP_ADDR+readLen+n,(u32 *)(readBuffer+n),FLASH_ONE_SECTOR);
 								n += FLASH_ONE_SECTOR;	
 							}
-							else
+							else if((APP_ADDR+readLen+n)<USER_FLASH_BANK2_END_ADDRESS)
 							{
 								flash_WriteData(APP_ADDR+readLen+n,(u32 *)(readBuffer+n),FLASH2_ONE_SECTOR);
 								n += FLASH2_ONE_SECTOR;	
 							}
+                            else
+                            {
+                                disp_string("ERROR4",12*13+12*7,dispIndex*ONE_LINE_H);//µØÖ·²»¶Ô
+                                goto UPGRADE_ERROR;	
+                            }
 							//delay_DelayMs(10);
 							U32ToStr(n,dispStr,6);
 							disp_string(dispStr,12*13+12*7,dispIndex*ONE_LINE_H);
