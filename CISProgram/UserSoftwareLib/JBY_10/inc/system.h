@@ -179,12 +179,21 @@ enum
 #define LENGTH_IR_CHANNEL_NUM (REAL_IR_NUM+1) //21路测长 1路码盘
 
 #define PIC_NEW_ADDR    //新图库
+//#define VERSION_A
+//#define VERSION_B
+#define VERSION_ALL
 //#define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
         #define VERSION  "V191RU"
     #else
-        #define VERSION  "V192TY"
+        #if defined VERSION_ALL
+            #define VERSION  "V193TY"
+        #elif defined VERSION_A
+            #define VERSION  "V193TA"
+        #else
+            #define VERSION  "V193TB"
+        #endif
     #endif
 #else
 #define VERSION  "V8.0.6"
