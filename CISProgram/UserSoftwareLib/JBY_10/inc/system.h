@@ -1,11 +1,11 @@
 /***************************************************************************
 
 版本   日期      修改内容                旧图库版本号        俄罗斯专用版本号
-V193TY 20210911 1、优化欧元和卢布          v8.0.6           V192RU
+V194TY 20210911 1、优化欧元和卢布          v8.0.6           V192RU
                 2、增加前进和后退选项
                 (MODE3 真币向前假币向后)
                 (MODE4 真币向后假币向前)
-                3、修复快速放钞死机BUG
+                3、修复快速连续放钞死机BUG
                 4、优化美元
 V193TY 20210810 1、乌克兰UAH不区分版本     v8.0.6           V191RU
 V192TY 20210804 1、增加乌克兰UAH           v8.0.6           V191RU
@@ -188,7 +188,7 @@ enum
 //#define VERSION_A
 //#define VERSION_B
 #define VERSION_ALL
-//#define RUB_VERSION     //俄罗斯专用版本
+#define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
         #define VERSION  "V192RU"

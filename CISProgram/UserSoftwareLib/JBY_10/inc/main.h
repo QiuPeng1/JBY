@@ -441,10 +441,10 @@ u32 msecCnt = 0;
 	
 enum
 {
-	DEBUG_MODE,//调试串口
+	UART_DEBUG_MODE,//调试串口
 	DISPLAY_MODE,
 };
-u8 gb_uartWorkMode = DEBUG_MODE;//DISPLAY_MODE;
+u8 gb_uartWorkMode = UART_DEBUG_MODE;//DISPLAY_MODE;
 
 //#define IR_HAVENOTE_THRES 150
 // #define ir2_HaveNote() (irValue[2] < irHaveNoteThres)//(psValue[0] < irHaveNoteThres)

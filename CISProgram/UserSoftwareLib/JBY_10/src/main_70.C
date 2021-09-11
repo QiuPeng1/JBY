@@ -672,7 +672,7 @@ void DealPackageFromUart3(void)
 		else
 		{	
 			cmd = uart3infifo_DataOut();//ÃüÁî
-			if(gb_uartWorkMode == DEBUG_MODE)
+			if(gb_uartWorkMode == UART_DEBUG_MODE)
 			{
 				switch (cmd)
 				{
@@ -3815,6 +3815,10 @@ void DealNotePass(void)
 				}
 			}
 			//¼ÆËã½áÊø
+            if(noteState == STATE_FORWARD_COVER_ENTERANCE)
+            {
+                noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
+            }
 			noteState &= (~STATE_COMPUTE);
 #ifdef DEBUG_MODE			
 			testflag[4] = 1;
@@ -3893,7 +3897,7 @@ void DispString(u8 *str,u8 enter)
 	u16 len;
 	u8 buf[8];
 	
-	if(gb_uartWorkMode != DEBUG_MODE)
+	if(gb_uartWorkMode != UART_DEBUG_MODE)
 	{
 		return;
 	}
@@ -7439,10 +7443,15 @@ void EXTI9_5_IRQHandler(void)
 						gb_oneNotePass = 1;	
 						noteState |= STATE_COMPUTE;	
 						noteState &= (~STATE_FORWARD_COVER_PS1);
+                        if((noteState&STATE_FORWARD_COVER_ENTERANCE) > 0)
+                        {
+                            noteState &= (~STATE_FORWARD_COVER_ENTERANCE);
 #ifdef DEBUG_MODE
 						testflag[13] = 1;
 						testflag2[13] = testflag2Cnt++;
-#endif						
+#endif		
+                        }
+				
 						gb_needOutPutLength = MAX(PS1ValueRecordCnt,PS2ValueRecordCnt);
 					}
 					else if (gb_noteState == NOTE_BACKWARD)
