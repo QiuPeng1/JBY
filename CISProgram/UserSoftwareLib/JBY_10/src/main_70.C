@@ -220,7 +220,7 @@ void DealKeyDownOnNormal(u8 key)
 				modifiIdentificationWays();
 #else
                 savedPara.noteLeaveRoads++;
-                savedPara.noteLeaveRoads%=2;
+                savedPara.noteLeaveRoads%=3;
                 DispDirectionInfo();
                 gb_modifiIdentificationWaysDealy = 500;
 #endif
@@ -1540,7 +1540,8 @@ u8 * const Direction_STR[] =
 {
 	"Forward ",
 	"Backward",
-	"MODE3   ",
+    "Mode3   ",
+	"Mode4   ",
 	"OFF     ",
 };
 u8 * const UVgrade_STR[] = 
@@ -2098,7 +2099,7 @@ void SettingParaInc(void)
 		break;
 		case 1:
  			savedPara.noteLeaveRoads ++;
- 			savedPara.noteLeaveRoads %= 3;
+ 			savedPara.noteLeaveRoads %= 4;
 			gb_paraChanged = 1;
 		break;
 		case 2:
@@ -2239,6 +2240,14 @@ void DispDirectionInfo(void)
 	if(savedPara.noteLeaveRoads == 1)
 	{
 		disp_string("B",BMP_FADD_X,BMP_FADD_Y+24);	
+	}
+    else if(savedPara.noteLeaveRoads == 3)
+	{
+		disp_string("N",BMP_FADD_X,BMP_FADD_Y+24);	
+	}
+    else if(savedPara.noteLeaveRoads == 4)
+	{
+		disp_string("M",BMP_FADD_X,BMP_FADD_Y+24);	
 	}
 	else
 	{
@@ -3831,7 +3840,7 @@ void DealNotePass(void)
 
 				g_maxMpFromComputeToPS1 = MP_FROM_COMPUTE_TO_PS1;			
 			}
-			else
+			else if(savedPara.noteLeaveRoads == 2)
 			{
 				if(g_errFlag > 0)//假币向后走，真币向前走
 				{
@@ -3853,6 +3862,28 @@ void DealNotePass(void)
 					gb_noteState = NOTE_IDEL;
 				}
 			}
+            else
+            {
+                if(g_errFlag == 0)//假币向前走，真币向后走
+				{
+					noteState |= STATE_BACKWARD_NOTE_LEAVE;
+					gb_haveNoteInPS3 = 0;
+					PS3FlagCnt = 0;
+					motor1SataRecord = 1;
+					motor1_BackwardRun();//向后转
+					gb_noteState = NOTE_BACKWARD;
+
+					g_maxMpFromComputeToPS1 = MP_FROM_COMPUTE_TO_PS1;			
+				}
+				else
+				{
+					noteState |= STATE_FORWARD_NOTE_LEAVE;
+					motor1_ForwardRun();//向前转
+					motor1SataRecord2 = 2; 
+					g_maxMpFromPs2ToLeave = MP_FROM_PS2_TO_LEAVE;
+					gb_noteState = NOTE_IDEL;
+				}
+            }
 		}
 	}
 }
