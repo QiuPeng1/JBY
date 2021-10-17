@@ -906,6 +906,8 @@ enum
 	NOTE_BACKWARD,
 };
 u8 gb_noteState = NOTE_IDEL;
+u16 gb_RubWaitNextNoteDelay = 0;
+u8 gb_RubWaitNextNoteFlag = 0;
 u8 CurrencyStr[4];
 u8 * const CURRENCY_INFO_STR[] = 
 {

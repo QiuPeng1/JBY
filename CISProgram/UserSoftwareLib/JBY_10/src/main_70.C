@@ -511,6 +511,10 @@ int main(void)
 				testflag[1] = 1;
 				testflag2[1] = noteState;
 #endif
+#ifdef RUB_VERSION
+                gb_RubWaitNextNoteFlag = 1;
+                gb_RubWaitNextNoteDelay = 500;
+#endif
 				initEteranceSensor();
 				ToggleJinChaoFaShe();
 				ententernceCnt = 0;
@@ -997,7 +1001,7 @@ void DealScanEnteracneSensor(void)
 	{
 		if(gb_haveNoteInEntergate == 1)
 		{
-			if((noteState == 0)&&(g_motor1State == MOTOR_STOP))//&&(gb_notebackInEnteranceFlag == 0))//空闲态
+			if((gb_RubWaitNextNoteFlag == 0)&&(noteState == 0)&&(g_motor1State == MOTOR_STOP))//&&(gb_notebackInEnteranceFlag == 0))//空闲态
 			{
 				//开传感器
 				if(gb_lcdBacklightOn == 0)
@@ -6272,7 +6276,16 @@ void SysTick_Handler(void)
 				}
 			}
 		}
+
 	}
+    if(gb_RubWaitNextNoteDelay > 0)
+    {
+        gb_RubWaitNextNoteDelay--;
+        if(gb_RubWaitNextNoteDelay == 0)
+        {
+            gb_RubWaitNextNoteFlag = 0;
+        }
+    }
 	//电机减速超时处理
 	if(gb_needStopMotorTimeout > 0)
 	{
