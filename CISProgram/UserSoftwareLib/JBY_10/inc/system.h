@@ -1,6 +1,7 @@
 /***************************************************************************
 
 版本   日期      修改内容                旧图库版本号        俄罗斯专用版本号
+V194TY 20210911 1、连张逻辑处理            v8.0.6           V196RU
 V194TY 20210911 1、卢布版本下次进钞间隔加长 v8.0.6           V195RU
 V194TY 20210911 1、优化欧元和卢布          v8.0.6           V192RU
                 2、增加前进和后退选项
@@ -192,7 +193,7 @@ enum
 #define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
-        #define VERSION  "V195RU"
+        #define VERSION  "V196RU"
     #else
         #if defined VERSION_ALL
             #define VERSION  "V194TY"

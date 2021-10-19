@@ -370,6 +370,7 @@ u8 gb_lengthHaveNote = 0;
 u8 gb_lengthCovered = 0;
 
 u8 dubiRecoverCnt = 0;
+u8 g_fristDubiFlag = 0;
 
 u16 lastFsOffVal = 0xff;
 u16 lastFsOnVal = 0xff;
@@ -741,6 +742,7 @@ enum
 	JAM_PS2_IR,
 	JAM_ENTERANCE_TO_LENGTH,
 	JAM_LENGTH_TO_ENTERANCE,
+    JAM_TO_LEAVE,
 };
 u8 gb_isJammed = JAM_OK;
 u8 gb_dispJamInfo = 0;
@@ -1211,6 +1213,7 @@ void DispEngModeSettingSelected(void);
 void DispEngModeSetting(void);
 void DispEngModeValue(void);
 void EngModeParaInc(void);
+void DealJamAtOnce(void);
 // void InitIrData(void);
 // void DealIr2Data(u8 d);
 // void DealIr3Data(u8 d);

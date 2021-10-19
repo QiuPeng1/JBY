@@ -495,7 +495,18 @@ int main(void)
 			}
 			else
 			{
-				dubiRecoverCnt = 0;
+                dubiRecoverCnt = 0;
+                if(g_fristDubiFlag > 0)
+                {
+                    g_fristDubiFlag ++ ;
+                    if(g_fristDubiFlag == 2) g_fristDubiFlag = 0;
+                    hwfs_On();
+                    motor1_BackwardRun();
+                    delay_DelayMs(700);
+                    motor1_Stop();
+                    motor1StopRecord = 1;
+                    delay_DelayMs(200);
+                }
 			}
 		}
 		
@@ -507,10 +518,17 @@ int main(void)
 			if((noteState&STATE_FORWARD_NOTE_LEAVE) == STATE_FORWARD_NOTE_LEAVE)
 			{
 	 			noteState &= (~STATE_FORWARD_NOTE_LEAVE);
+                if((gb_haveNoteInEntergate == 1)||(gb_lengthCovered == 1))
+                {
+                    /*½øÈë¶Â±Ò»Ö¸´Âß¼­*/
+                    gb_isJammed = JAM_TO_LEAVE;
+                    DealJamAtOnce();	
 #ifdef DEBUG_MODE
 				testflag[1] = 1;
 				testflag2[1] = noteState;
 #endif
+                }
+
 #ifdef RUB_VERSION
                 gb_RubWaitNextNoteFlag = 1;
                 gb_RubWaitNextNoteDelay = 500;
@@ -5035,6 +5053,7 @@ void DealJamAtOnce(void)
 		LongBeep(3);
 		gb_dispJamInfo = 1;
 	}
+    g_fristDubiFlag = 1;
 	//gb_needRecordIr = 0;
 	//irSampleDelayNum = 20;
 }
