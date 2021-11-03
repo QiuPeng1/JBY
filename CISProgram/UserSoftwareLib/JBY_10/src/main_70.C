@@ -199,8 +199,15 @@ void DealKeyDownOnNormal(u8 key)
 				gb_enableSample = 1;
 				noteState = 0;
 				gb_isJammed = 0;
-				ClearAllNoteNum();
-				DispNoteNumValSum();
+                ClearAllNoteNum();
+                if((g_errFlag&ERR_QING_XIE) == ERR_QING_XIE)
+                {
+                    DispMainMenu();
+                }
+                else
+                {
+                    DispNoteNumValSum();
+                }
 
 			break;
 			case LONG_KEY_RESTART:			
@@ -531,7 +538,7 @@ int main(void)
 
 #ifdef RUB_VERSION
                 gb_RubWaitNextNoteFlag = 1;
-                gb_RubWaitNextNoteDelay = 500;
+                gb_RubWaitNextNoteDelay = 200;
 #endif
 				initEteranceSensor();
 				ToggleJinChaoFaShe();
@@ -542,7 +549,14 @@ int main(void)
 		{
 			gb_errflagClearDisp = 0;
 			noteDenoValue = 0;
-			DispNoteSum();
+            if((g_errFlag&ERR_QING_XIE) == ERR_QING_XIE)
+            {
+                DispMainMenu();
+            }
+            else
+            {
+                DispNoteSum();
+            }
 			//DispMainMenu();
 		}
 		DealScanEnteracneSensor();
@@ -1031,6 +1045,14 @@ void DealScanEnteracneSensor(void)
 				{
 					gb_errflagOverTime = 0;
 					noteDenoValue = 0;
+                    if((g_errFlag&ERR_QING_XIE) == ERR_QING_XIE)
+                    {
+                        DispMainMenu();
+                    }
+                    else
+                    {
+                        DispNoteSum();
+                    }
 					DispNoteSum();
 					//DispMainMenu();
 				}
@@ -1047,7 +1069,13 @@ void DealScanEnteracneSensor(void)
 				redFs_On();
 				greenFs_Off();
 				blueFs_Off();
-				
+                delay_DelayMs(300);
+				if((gb_haveNoteInPS3 == 1)||(gb_haveNoteInPS1 == 1)||(gb_lengthCovered == 1))
+                {
+                    gb_isJammed = JAM_SHANG_GAI;	
+					DealJamAtOnce();
+                    return;
+                }
 				mpCnt = 0;
 				timeCnt = 0;
 				gb_noteState = NOTE_FORWARD;
@@ -3000,6 +3028,10 @@ void DealNoteType(void)
 			g_errFlag |= ERR_UV;
 		}
 	}
+    if(isQingXie == 1)
+    {
+        g_errFlag |= ERR_QING_XIE;
+    }
 	if(g_errFlag == 0)
 	{
 		if((savedPara.identificationWays&IR_WAY) == IR_WAY)
@@ -3769,7 +3801,17 @@ void DealNotePass(void)
 					disp_DrawPic(BMP_YD_X, BMP_YD_Y, BMP_AHE);
 					disp_DrawPic(BMP_YE_X, BMP_YE_Y, BMP_AHG);
 					disp_DrawPic(BMP_YF_X, BMP_YF_Y, BMP_AY1);*/
-					if(g_errFlag == ERR_IR)
+                    if((g_errFlag&ERR_QING_XIE) == ERR_QING_XIE)
+                    {
+                        disp_DrawPic(80, 0, BMP_CCF);
+                        disp_setPenColor(WHITE);
+                        disp_setBackColor(BLACK);
+                        disp_setFont(24);
+                        disp_string("Slant Note,",100,20);
+                        disp_string("Please feed the",100,50);
+                        disp_string("note correctly!",100,80);
+                    }
+					else if(g_errFlag == ERR_IR)
 					{
 						disp_DrawPic(80, 240-72, BMP_CGCIS);
 					}
@@ -5048,7 +5090,7 @@ void DealJamAtOnce(void)
 	uvfs_Off();
 	motor1_Stop();
 	motor1StopRecord = 4;
-	if(gb_isJammed != JAM_ENTERANCE_TO_LENGTH)
+	if((gb_isJammed != JAM_ENTERANCE_TO_LENGTH)&&(gb_isJammed != JAM_SHANG_GAI))
 	{
 		LongBeep(3);
 		gb_dispJamInfo = 1;

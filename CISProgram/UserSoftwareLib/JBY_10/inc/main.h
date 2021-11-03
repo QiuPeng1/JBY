@@ -743,6 +743,7 @@ enum
 	JAM_ENTERANCE_TO_LENGTH,
 	JAM_LENGTH_TO_ENTERANCE,
     JAM_TO_LEAVE,
+    JAM_SHANG_GAI,
 };
 u8 gb_isJammed = JAM_OK;
 u8 gb_dispJamInfo = 0;
@@ -893,6 +894,7 @@ enum
 	ERR_MG = 0x0008,
 	ERR_ALL= 0x0010,
 	ERR_UV = 0x0020,
+    ERR_QING_XIE = 0x0040,
 };
 u16 gb_errflagOverTime = 0;
 u8 gb_errflagClearDisp = 0;

@@ -1,6 +1,12 @@
 /***************************************************************************
 
 版本   日期      修改内容                旧图库版本号        俄罗斯专用版本号
+V198TY 20211104 1、增加斜钞报警界面        v8.0.6           V199RU
+V197TY 20211028 1、优化卢布                v8.0.6           V199RU
+V197TY 20211021 1、优化卢布                v8.0.6           V198RU
+                2、误计数逻辑修复
+V196TY 20211021 1、增加重张判断            v8.0.6           V197RU
+V195TY 20211020 1、优化美元斜钞            v8.0.6           V197RU
 V194TY 20210911 1、连张逻辑处理            v8.0.6           V196RU
 V194TY 20210911 1、卢布版本下次进钞间隔加长 v8.0.6           V195RU
 V194TY 20210911 1、优化欧元和卢布          v8.0.6           V192RU
@@ -190,15 +196,15 @@ enum
 #define VERSION_A
 //#define VERSION_B
 //#define VERSION_ALL
-#define RUB_VERSION     //俄罗斯专用版本
+//#define RUB_VERSION     //俄罗斯专用版本
 #ifdef PIC_NEW_ADDR
     #ifdef RUB_VERSION
-        #define VERSION  "V196RU"
+        #define VERSION  "V199RU"
     #else
         #if defined VERSION_ALL
             #define VERSION  "V194TY"
         #elif defined VERSION_A
-            #define VERSION  "V194TA"
+            #define VERSION  "V198TA"
         #else
             #define VERSION  "V194TB"
         #endif
@@ -355,6 +361,7 @@ enum
 	#define HighByte(x) ((u8)(x>>8))
 	#define LowByte(x) ((u8)(x))
 	#define BIN_DATA(a,b,c,d,e,f,g,h) (a<<7 | b<<6 | c<<5 | <<4 | e<<3 | f<<2 | g<<1 | h<<0)
+    #define PI 3.1415926
 	
 	
 	/* Private typedef -----------------------------------------------------------*/

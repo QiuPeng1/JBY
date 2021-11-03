@@ -349,7 +349,7 @@ u8 billRGB_Judge(int noteType)
 }
 
 //最小二乘法直线拟合
-I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
+I32 LwCalculateLineKD(short *x,short *y,I32 n,float *k,float *d)
 {
 	//拟合直线方程(Y=kX+b)
 	float mX,mY,mXX,mXY;
@@ -374,10 +374,7 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 	count = 0;
 	for(i = 0; i < n; i++)
 	{
-		if (i == t)
-		{
-			continue;
-		}
+		
 		count++;
 		mX += x[i];
 		mY += y[i];
@@ -396,7 +393,7 @@ I32 LwCalculateLineKD(I32 *x,I32 *y,I32 n,float *k,float *d)
 	return 1;
 }
 
-
+short pointX[IR_DATA_MAX_LEN], pointY[IR_DATA_MAX_LEN];
 u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 {
 	int i, j, k, sum, count, count1, t1;
@@ -408,8 +405,9 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	short *pFvt;
 	u8 *pNoteClass, *pf1;
 	u8 Class, min_i;
-	int fvtInt;
-
+	int fvtInt, line_n1;
+	int w, h, ret;
+	float kk, d;
 	pImg = (u8 *)lengthData;
 	billIradMask = 0;
 
@@ -419,9 +417,40 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		return 0;
 	}
 
-
-
-
+#ifdef DRAW_STATE
+	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 200, 100, 1);
+	Draw_Line(200+ex,100,200+ex,230);
+	Draw_Line(200+sx,100,200+sx,230);
+	Draw_Line(200+sx, 100+sy, 200+ex, 100+sy);
+#endif
+	line_n1 = 0;
+	w = lengthDataLen;
+	h = 21;
+	for(j=50;j<w-50;j+=8)
+	{
+		for(i=1;i<h/2;i++)
+		{
+			if(pImg[i*IR_DATA_MAX_LEN+j]< 200)
+			{
+				if(line_n1>100)
+				{
+					break;
+				}
+				pointY[line_n1]=(i+1)*32;
+				pointX[line_n1]=j;
+			
+				line_n1++;
+#ifdef DRAW_STATE
+				Draw_Cross(200+j+1,100+i,2);
+#endif
+				break;
+			}
+			
+		}
+	}
+	
+	LwCalculateLineKD(pointX,pointY,line_n1,&kk,&d);
+	ret = (int)(abs(atan(kk)*180/PI));
 	memset(projH, 0, sizeof(int)*IR_DATA_MAX_LEN);
 	
 	for (i = 5; i < 21-5; i++)
@@ -536,10 +565,11 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 	}
 	billSyPos = sy;
 #ifdef DRAW_STATE
-	Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 1200, 200, 1);
-	Draw_Line(1200+ex,200,1200+ex,230);
-	Draw_Line(1200+sx,200,1200+sx,230);
-	Draw_Line(1200+sx, 200+sy, 1200+ex, 200+sy);
+	//Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 200, 100, 1);
+	Draw_Line(200+ex,100,200+ex,230);
+	Draw_Line(200+sx,100,200+sx,230);
+	Draw_Line(200+sx, 100+sy, 200+ex, 100+sy);
+	Display_Int(ret, 200, 80);
 #endif
 //	ex = lengthDataLen-8;
 //	for (i = lengthDataLen-8; i > lengthDataLen-)
@@ -554,7 +584,7 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		count = 0;
 		for (j = 8; j < lengthDataLen-16; j++)
 		{
-			if (lengthData[i][j+0] == 0)
+			if (lengthData[i][j+0] < 30)
 			{
 				count++;
 			}
@@ -575,14 +605,54 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		billIradMask = 1;
 		return 0;
 	}
+	isQingXie = 0;
+	if (ret > 12);// && noteType == INDEX_USD)
+	{
+		isQingXie = 1;
+	}
 	sw = k/sh;
 	iradImgW = sw;
 	iradImgH = sh;
 	memset(lengthData_Tmp2, 0, IRAD_FVT_DIM);
 	ResizeCharImgGray(lengthData_Tmp,sw,sh, lengthData_Tmp2, IRAD_DATA_RESIZE_W,IRAD_DATA_RESIZE_H);
 	//sh = 20;
-	
 
+#ifdef DRAW_STATE
+	//Display_Int(count, 200, 100);
+	Draw_Gray_Image(lengthData_Tmp2, IRAD_DATA_RESIZE_W,IRAD_DATA_RESIZE_H, 200, 50, 1);
+	//Draw_Line(200+ex,100,200+ex,230);
+	//Draw_Line(200+sx,100,200+sx,230);
+	//Draw_Line(200+sx, 100+sy, 200+ex, 100+sy);
+#endif
+	
+	count = 0;
+	for (i = 0; i < IRAD_DATA_RESIZE_H; i++)
+	{
+		for (j = 0; j < IRAD_DATA_RESIZE_W; j++)
+		{
+			if (lengthData_Tmp2[i*IRAD_DATA_RESIZE_W+j]< 20)
+			{
+				count++;
+#ifdef DRAW_STATE
+				//Display_Int(count, 200, 100);
+				Draw_Gray_Image(lengthData_Tmp2, IRAD_DATA_RESIZE_W,IRAD_DATA_RESIZE_H, 200, 150, 1);
+				Draw_Cross(200+j, 50+i,2);
+#endif
+			}
+		}
+	}
+#ifdef DRAW_STATE
+	Display_Int(count, 240, 100);
+	//Draw_Gray_Image(pImg, IR_DATA_MAX_LEN, 21, 200, 100, 1);
+	//Draw_Line(200+ex,100,200+ex,230);
+	//Draw_Line(200+sx,100,200+sx,230);
+	//Draw_Line(200+sx, 100+sy, 200+ex, 100+sy);
+#endif
+	
+	if (count > IRAD_DATA_RESIZE_W*IRAD_DATA_RESIZE_H/2 )
+	{
+		billIradMask = 1;
+	}
 //	return;
 	pf1 = lengthData_Tmp2;
 #ifdef  BILL_INDEX_USD
