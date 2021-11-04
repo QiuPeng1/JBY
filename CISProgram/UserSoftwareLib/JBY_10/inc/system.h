@@ -1,6 +1,7 @@
 /***************************************************************************
 
 版本   日期      修改内容                旧图库版本号        俄罗斯专用版本号
+V199TY 20211104 1、bill.h                 v8.0.6           V199RU
 V198TY 20211104 1、增加斜钞报警界面        v8.0.6           V199RU
 V197TY 20211028 1、优化卢布                v8.0.6           V199RU
 V197TY 20211021 1、优化卢布                v8.0.6           V198RU
@@ -204,7 +205,7 @@ enum
         #if defined VERSION_ALL
             #define VERSION  "V194TY"
         #elif defined VERSION_A
-            #define VERSION  "V198TA"
+            #define VERSION  "V199TA"
         #else
             #define VERSION  "V194TB"
         #endif

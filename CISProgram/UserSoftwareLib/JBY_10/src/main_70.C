@@ -3810,6 +3810,9 @@ void DealNotePass(void)
                         disp_string("Slant Note,",100,20);
                         disp_string("Please feed the",100,50);
                         disp_string("note correctly!",100,80);
+                        
+//                        U32ToStr(QingXieValue,dispStr,8);
+//                        disp_string(dispStr,100,2);
                     }
 					else if(g_errFlag == ERR_IR)
 					{

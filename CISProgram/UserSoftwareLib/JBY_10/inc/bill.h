@@ -24,25 +24,46 @@
 
 //#define DRAW_STATE1
 
-#define BILL_INDEX_USD
-#define BILL_INDEX_EUR
-#define BILL_INDEX_TRY
-#define BILL_INDEX_RUB
-#define BILL_INDEX_IQD
-
-#define BILL_INDEX_SAR
-#define BILL_INDEX_AED
-#define BILL_INDEX_GBP
-#define BILL_INDEX_ARS
-#define BILL_INDEX_IQD
-#define BILL_INDEX_THB
-#define BILL_INDEX_TWD
-#define BILL_INDEX_CNY
-#define BILL_INDEX_BYR
-#define BILL_INDEX_KZT
-#define BILL_INDEX_UZS
-#define BILL_INDEX_MAD
-#define BILL_INDEX_UAH
+#if defined VERSION_ALL
+    #define BILL_INDEX_USD
+    #define BILL_INDEX_EUR
+    #define BILL_INDEX_TRY
+    #define BILL_INDEX_ARS
+    #define BILL_INDEX_BYR
+    #define BILL_INDEX_RUB
+    #define BILL_INDEX_UZS
+    #define BILL_INDEX_KZT
+    #define BILL_INDEX_MAD
+    #define BILL_INDEX_UAH
+    #define BILL_INDEX_GBP      
+    #define BILL_INDEX_CNY        
+    #define BILL_INDEX_IQD
+    #define BILL_INDEX_SAR
+    #define BILL_INDEX_AED
+    #define BILL_INDEX_THB
+    #define BILL_INDEX_TWD        
+#elif defined VERSION_A
+    #define BILL_INDEX_USD
+    #define BILL_INDEX_EUR
+    #define BILL_INDEX_TRY
+    #define BILL_INDEX_ARS
+    #define BILL_INDEX_BYR
+    #define BILL_INDEX_RUB
+    #define BILL_INDEX_UZS
+    #define BILL_INDEX_KZT
+    #define BILL_INDEX_MAD
+    #define BILL_INDEX_UAH
+    #define BILL_INDEX_GBP                  
+#else
+    #define BILL_INDEX_USD
+    #define BILL_INDEX_EUR 
+    #define BILL_INDEX_CNY        
+    #define BILL_INDEX_IQD
+    #define BILL_INDEX_SAR
+    #define BILL_INDEX_AED
+    #define BILL_INDEX_THB
+    #define BILL_INDEX_TWD
+#endif
 #define BILL_VERSION "V1.0.5"
 
 //---------------------------------------------------------------------
@@ -193,6 +214,8 @@ BILL_EXT_PARA u16 iradImgH;
 //BILL_EXT_PARA I32 projH[IRAD_DATA_MAX_LEN];
 BILL_EXT_PARA I32 projH1[IR_DATA_MAX_LEN];
 BILL_EXT_PARA u8 isQingXie;
+BILL_EXT_PARA u32 QingXieValue;
+
 
 /*公开的过程/函数*/
 //---------------------------------------------------------------------
