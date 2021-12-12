@@ -606,11 +606,9 @@ u8 billIrad_Judge(u8 *lengthData_Tmp, int noteType)
 		return 0;
 	}
 	isQingXie = 0;
-    QingXieValue = 0;
 	if (ret > 12)// && noteType == INDEX_USD)
 	{
 		isQingXie = 1;
-        QingXieValue = ret;
 	}
 	sw = k/sh;
 	iradImgW = sw;
