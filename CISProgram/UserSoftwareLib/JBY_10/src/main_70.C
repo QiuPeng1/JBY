@@ -277,6 +277,7 @@ void DealKeyDownOnCalibration(u8 key)
 	{
 		case KEY_RESTART:
 		case LONG_KEY_RESTART:		
+            gb_inCollabration = 0;
 			gb_incalibrationByKey = 0;			
 			selectedItemIndex = 0;
 			lastSelectedItemIndex = 0;
